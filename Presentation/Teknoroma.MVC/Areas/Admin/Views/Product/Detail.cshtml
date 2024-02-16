@@ -1,0 +1,154 @@
+﻿@using Teknoroma.Application.Features.Products.Models
+
+@model ProductViewModel
+@{
+	ViewData["Title"] = "Detail";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row mx-4">
+	<div class="col-md-12 mx-auto">
+		<div class="card card-primary">
+			<div class="card-header">
+				<div class="form-group">
+					<label>Ürün Seçiniz</label>
+					<select class="form-control" onchange="redirectToSelectedPage(this)">
+						@foreach (var product in ViewBag.ProductList)
+						{
+							@if (Model == null)
+							{
+								<option value="@product.ID" href="@product.ID">@product.ProductName</option>
+							}
+							else if (product.ID != Model.ID)
+							{
+								<option value="@product.ID" href="@product.ID">@product.ProductName</option>
+							}
+							else if (product.ID == Model.ID)
+							{
+								<option value="@product.ID" selected>@product.ProductName</option>
+							}
+						}
+					</select>
+				</div>
+			</div>
+			<div class="row mx-4">
+				<div class="col-md-4 item-center">
+					<div class="card mx-center my-5">
+						@if (Model != null)
+						{
+							<img src="~/images/product/@Model.ImagePath" alt="" id="productImg" />
+						}
+						else
+						{
+							<img src="~/images/product/placeholder.jpg" alt="" id="productImg" />
+						}
+					</div>
+				</div>
+				<div class="col-md-7">
+					<form>
+						<div class="card-body">
+							<div asp-validation-summary="All">
+							</div>
+							<div class="form-group">
+								<label asp-for="ProductName"></label>
+								<input type="text" class="form-control" asp-for="@Model.ProductName">
+							</div>
+							<div class="form-group">
+								<label asp-for="CategoryId"></label>
+								<select class="form-control" aria-label="Default select example">
+									@foreach (var category in ViewBag.CategoryList)
+									{
+										@if (Model == null)
+										{
+											<option value="@category.ID">@category.CategoryName</option>
+										}
+										else if (category.ID != Model.CategoryId)
+										{
+
+										}
+										else if (category.ID == Model.CategoryId)
+										{
+											<option value="@category.ID" selected>@category.CategoryName</option>
+										}
+									}
+								</select>
+							</div>
+							<div class="form-group">
+								<label asp-for="BrandId"></label>
+								<select class="form-control">
+									@foreach (var brand in ViewBag.BrandList)
+									{
+										@if (Model == null)
+										{
+											<option value="@brand.ID">@brand.BrandName</option>
+										}
+										else if (brand.ID != Model.BrandId)
+										{
+											<option value="@brand.ID">@brand.BrandName</option>
+										}
+										else if (brand.ID != Model.BrandId)
+										{
+											<option value="@brand.ID" selected>@brand.BrandName</option>
+										}
+									}
+								</select>
+							</div>
+							<div class="form-group">
+								<label asp-for="UnitPrice"></label>
+								<input type="text" class="form-control" asp-for="@Model.UnitPrice">
+							</div>
+							<div class="form-group">
+								<label asp-for="UnitsInStock"></label>
+								<input type="text" class="form-control" asp-for="@Model.UnitsInStock">
+							</div>
+							<div class="form-group">
+								<label asp-for="CriticalStock"></label>
+								<input type="text" class="form-control" asp-for="@Model.CriticalStock">
+							</div>
+							<div class="form-group">
+								<label asp-for="Description"></label>
+								<textarea class="form-control" asp-for="@Model.Description" rows="3" cols="4"></textarea>
+							</div>
+							<div class="btn-group btn-group-toggle" data-toggle="buttons">
+								@if (Model != null && Model.IsActive == true)
+								{
+									<label class="btn bg-olive active">
+										<input type="radio" name="IsActive" id="option_b1" autocomplete="off" checked="checked" value="true">
+										Aktif
+									</label>
+									<label class="btn bg-olive">
+										<input type="radio" name="IsActive" id="option_b2" autocomplete="off" value="false">
+										Pasif
+									</label>
+								}
+								else
+								{
+									<label class="btn bg-olive active">
+										<input type="radio" name="IsActive" id="option_b1" autocomplete="off" value="true">
+										Aktif
+									</label>
+									<label class="btn bg-olive">
+										<input type="radio" name="IsActive" id="option_b2" autocomplete="off" checked="checked" value="false">
+										Pasif
+									</label>
+								}
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	function redirectToSelectedPage(selectElement) {
+		// Seçili değeri al
+		var selectedValue = selectElement.value;
+
+		// Yönlendirme yapmak istediğiniz URL'yi oluşturun
+		var redirectUrl = '/Admin/Product/Detail/' + selectedValue;
+
+		// Yönlendirme işlemi
+		window.location.href = redirectUrl;
+	}
+</script>

@@ -1,0 +1,49 @@
+﻿
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="row mx-4">
+    <div class="col-md-6 mx-auto">
+        <div asp-validation-summary="All" style="background-color:gray; color:white;">
+        </div>
+        <form method="post">
+            <div class="form-group my-1">
+                <label asp-for="UserName"></label>
+                <input class="form-control" type="text" asp-for="UserName" />
+            </div>
+            <div class="form-group my-1">
+                <label asp-for="Password"></label>
+                <input class="form-control"  type="password" asp-for="Password"/>
+            </div>
+            <div class="form-group my-1">
+                <label asp-for="Email"></label>
+                <input class="form-control" type="email" asp-for="Email"/>
+            </div>
+            <div class="form-group my-1">
+                <label asp-for="FirstName"></label>
+                <input class="form-control" type="text" asp-for="FirstName" />
+            </div>
+            <div class="form-group my-1">
+                <label asp-for="LastName"></label>
+                <input class="form-control" type="text" asp-for="LastName" />
+            </div>
+            <div class="form-group my-1">
+                <label asp-for="PhoneNumber"></label>
+                <input class="form-control" type="number" asp-for="PhoneNumber" />
+            </div>
+            <div class="form-group my-1">
+                <label asp-for="Address"></label>
+                <textarea class="form-control" rows="3" cols="6" asp-for="Address"></textarea>
+            </div>
+            <div class="d-grid gap-2 my-1">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </form>
+    </div>
+
+</div>

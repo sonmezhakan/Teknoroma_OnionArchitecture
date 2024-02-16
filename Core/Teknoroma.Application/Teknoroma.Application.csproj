@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="MediatR" Version="11.1.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Teknoroma.Domain\Teknoroma.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Branches\Constants\" />
+    <Folder Include="Features\BranchProducts\Command\NewFolder\" />
+    <Folder Include="Features\BranchProducts\Contants\" />
+    <Folder Include="Features\Brands\Contants\" />
+    <Folder Include="Features\Categories\Constants\" />
+    <Folder Include="Features\Customers\Contants\" />
+    <Folder Include="Features\Departments\Contants\" />
+    <Folder Include="Features\Products\Constants\" />
+  </ItemGroup>
+
+</Project>

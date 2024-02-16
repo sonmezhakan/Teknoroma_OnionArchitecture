@@ -1,0 +1,74 @@
+﻿@model List<CategoryViewModel>
+@{
+	ViewData["Title"] = "CategoryList";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h1>Kategori Listesi</h1>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table table-bordered table-hover dataTable dtr-inline">
+							<thead>
+							<th rowspan="1" colspan="1">Kategori Adı</th>
+							<th rowspan="1" colspan="1">Açıklama </th>
+							<th rowspan="1" colspan="1">Aktif/Pasif</th>
+							<th>
+
+							</th>
+							</tr>
+							</thead>
+							<tbody>
+								@foreach (var item in Model)
+								{
+									<tr>
+										<td>
+											@item.CategoryName
+										</td>
+										<td>
+											@item.Description
+										</td>
+										<td>
+											@if (item.IsActive == true)
+											{
+												<span class="badge badge-success">Aktif</span>
+											}
+											else
+											{
+												<span class="badge badge-danger">Pasif</span>
+											}
+										</td>
+										<td>
+											<a class="btn bg-gradient-info" asp-controller="Category" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
+											<a class="btn bg-gradient-warning" asp-controller="Category" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
+											<a class="btn bg-gradient-danger" asp-controller="Category" asp-action="Delete" asp-route-id="@item.ID">Kalıcı Sil</a>
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div><div class="row">
+					<div class="col-sm-12 col-md-5">
+						<div>
+							@if (Model != null)
+							{
+								@Model.Count()
+							}
+							else
+							{
+								<a>0</a>
+							}
+							adet kategori bulunmaktadır.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

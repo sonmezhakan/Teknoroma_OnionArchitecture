@@ -1,0 +1,189 @@
+﻿@using Teknoroma.Application.Features.Branches.Models
+@model BranchViewModel
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row mx-4">
+    <div class="col-md-12 mx-auto">
+        <div class="card card-primary">
+            <div class="card-header">
+                <div class="form-group">
+                    <label>Şube Seçiniz</label>
+                    <select class="form-control"  onchange="redirectToSelectedPage(this)">
+                        @foreach (var branch in ViewBag.BranchList)
+                        {
+                            @if (Model == null)
+                            {
+                                <option value="@branch.ID" href="@branch.ID">@branch.BranchName</option>
+                            }
+                            else if (branch.ID == Model.ID)
+                            {
+                                <option value="@branch.ID" selected>@branch.BranchName</option>
+                            }
+                            else
+                            {
+                                <option value="@branch.ID" href="@branch.ID">@branch.BranchName</option>
+                            }
+                        }
+
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mx-auto">
+                    <form>
+                        <div class="card-body">
+                            <div asp-validation-summary="All">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ID"></label>
+                                <input type="text" class="form-control" asp-for="@Model.ID" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="BranchName"></label>
+                                <input type="text" class="form-control" asp-for="BranchName">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PhoneNumber"></label>
+                                <input type="text" class="form-control" asp-for="PhoneNumber">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Address"></label>
+                                <textarea class="form-control" cols="4" rows="3" asp-for="Address"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description"></label>
+                                <textarea class="form-control" cols="4" rows="3" asp-for="Description"></textarea>
+                            </div>
+
+                            @if (Model != null && Model.IsActive == true)
+                            {
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn bg-olive active">
+                                        <input type="radio" name="IsActive" id="option_b1" autocomplete="off" checked="" value="true">
+                                        Aktif
+                                    </label>
+                                    <label class="btn bg-olive">
+                                        <input type="radio" name="IsActive" id="option_b2" autocomplete="off" value="false">
+                                        Pasif
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn bg-olive active">
+                                        <input type="radio" name="IsActive" id="option_b1" autocomplete="off">
+                                        Aktif
+                                    </label>
+                                    <label class="btn bg-olive">
+                                        <input type="radio" name="IsActive" id="option_b2" autocomplete="off" value="false" checked="" value="true">
+                                        Pasif
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-8 mx-auto">
+                    <div class="card-body">
+                        <div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
+                                        <thead>
+                                        <th rowspan="1" colspan="1">Ürün Adı</th>
+                                        <th rowspan="1" colspan="1">Fiyat</th>
+                                        <th rowspan="1" colspan="1">Stok Miktarı</th>
+                                        <th  rowspan="1" colspan="1">Kritik Miktar</th>
+                                        <th  rowspan="1" colspan="1">Şubedeki Toplam Satış</th>
+                                        <th rowspan="1" colspan="1">Aktif/Pasif</th>
+                                        <th>
+
+                                        </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                             @if(Model != null)
+                                            {
+                                                @foreach (var product in ViewBag.BranchProductList)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @product.ProductName
+                                                        </td>
+                                                        <td>
+                                                            @product.UnitPrice
+                                                        </td>
+                                                        <td>
+                                                            @product.UnitsInStock
+                                                        </td>
+                                                        @if (product.CriticalStock > product.UnitsInStock)
+                                                        {
+                                                            <td style="background-color:indianred">
+                                                                @product.CriticalStock
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>
+                                                                @product.CriticalStock
+                                                            </td>
+                                                        }
+                                                        <td>
+                                                            0
+                                                        </td>
+                                                        <td>
+                                                            @if (product.IsActive == true)
+                                                            {
+                                                                <span class="badge badge-success">Aktif</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-danger">Pasif</span>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div><div class="row">
+                                <div class="col-sm-12 col-md-5">
+                                    <div>
+                                        @if (Model != null)
+                                        {
+                                            @ViewBag.BranchProductList.Count
+                                        }
+                                        else
+                                        {
+                                            <a>0</a>
+                                        }
+                                        adet ürün bulunmaktadır.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function redirectToSelectedPage(selectElement) {
+        // Seçili değeri al
+        var selectedValue = selectElement.value;
+
+        // Yönlendirme yapmak istediğiniz URL'yi oluşturun
+        var redirectUrl = '/Admin/Branch/Detail/' + selectedValue;
+
+        // Yönlendirme işlemi
+        window.location.href = redirectUrl;
+    }
+</script>
+
+

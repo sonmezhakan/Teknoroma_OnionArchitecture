@@ -1,0 +1,89 @@
+﻿@using Teknoroma.Application.Features.Departments.Models
+@model List<DepartmentViewModel>
+@{
+	ViewData["Title"] = "DepartmentList";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+	<div class="col-12">
+		<div class="card card-primary">
+			<div class="card-header">
+				<h1>Departman Listesi</h1>
+			</div>
+			<!-- /.card-header -->
+			<div class="card-body">
+
+				<div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div class="row">
+					<div class="col-sm-12">
+						<table id="example2" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
+							<thead>
+							<th rowspan="1" colspan="1">Department Name</th>
+							<th rowspan="1" colspan="1">Employee Count</th>
+							<th rowspan="1" colspan="1">Description</th>
+							<th rowspan="1" colspan="1">Active/Passive</th>
+							<th>
+
+							</th>
+							</tr>
+							</thead>
+							<tbody>
+								@if (Model != null)
+								{
+									@foreach (var item in Model)
+									{
+										<tr>
+											<td>
+												@item.DepartmentName
+											</td>
+											<td>
+												0
+											</td>
+											<td>
+												@item.Description
+											</td>
+											<td>
+												@if (item.IsActive == true)
+												{
+													<span class="badge badge-success">Active</span>
+												}
+												else
+												{
+													<span class="badge badge-danger">Passive</span>
+												}
+											</td>
+											<td>
+												<a class="btn bg-gradient-info" asp-controller="Department" asp-action="Detail" asp-route-id="@item.ID">Detail</a>
+												<a class="btn bg-gradient-warning" asp-controller="Department" asp-action="Update" asp-route-id="@item.ID">Update</a>
+												<a class="btn bg-gradient-success" asp-controller="Department" asp-action="UnDelete" asp-route-id="@item.ID">Active</a>
+												<a class="btn bg-gradient-primary" asp-controller="Department" asp-action="Delete" asp-route-id="@item.ID">Passive</a>
+												<a class="btn bg-gradient-danger" asp-controller="Department" asp-action="Destroy" asp-route-id="@item.ID">Destroy</a>
+											</td>
+										</tr>
+									}
+								}
+
+							</tbody>
+
+						</table>
+					</div>
+				</div><div class="row">
+					<div class="col-sm-12 col-md-5">
+						<div class="dataTables_info" id="example2_info" role="status" aria-live="polite">
+						  @if (Model != null)
+							{
+								@Model.Count()
+							} 
+							else
+							{
+								<a>0</a>
+							}
+							adet departman bulunmaktadır.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
