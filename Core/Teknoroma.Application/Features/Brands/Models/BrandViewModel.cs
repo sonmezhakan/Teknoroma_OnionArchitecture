@@ -23,8 +23,5 @@ namespace Teknoroma.Application.Features.Brands.Models
         [Range(0, int.MaxValue, ErrorMessage = "Telefon Numarasını Doğru Giriniz!")]
         [Display(Name = "Phone Number")]
         public string? PhoneNumber { get; set; }
-
-        [Display(Name = "Statu")]
-        public bool? IsActive { get; set; }
     }
 }

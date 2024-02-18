@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Teknoroma.Application.Features.Branches.Command.Delete
 {
-	public class DeleteBranchCommandRequest:IRequest<string>
+	public class DeleteBranchCommandRequest:IRequest<Unit>
 	{
         public Guid ID { get; set; }
     }

@@ -15,8 +15,5 @@ namespace Teknoroma.Application.Features.Departments.Models
 
         [Display(Name = "Açıklama")]
         public string? Description { get; set; }
-
-        [Display(Name = "Durum")]
-        public bool? IsActive { get; set; }
     }
 }

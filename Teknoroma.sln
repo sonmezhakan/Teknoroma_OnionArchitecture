@@ -9,22 +9,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{27195DAD-9A62-4EC6-B527-3874A86874B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teknoroma.Domain", "Core\Teknoroma.Domain\Teknoroma.Domain.csproj", "{29B05C66-04C5-4B83-AEF2-C5992A7084F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teknoroma.Domain", "Core\Teknoroma.Domain\Teknoroma.Domain.csproj", "{29B05C66-04C5-4B83-AEF2-C5992A7084F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teknoroma.WebApi", "Presentation\Teknoroma.WebApi\Teknoroma.WebApi.csproj", "{72A27C19-29EE-4E8C-867D-89008C8109A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teknoroma.WebApi", "Presentation\Teknoroma.WebApi\Teknoroma.WebApi.csproj", "{72A27C19-29EE-4E8C-867D-89008C8109A6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F35BAAE6-9AA4-4782-948A-5690AD3D2A0D}"
 	ProjectSection(SolutionItems) = preProject
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teknoroma.Application", "Core\Teknoroma.Application\Teknoroma.Application.csproj", "{63BB25C5-E18E-4746-9D28-767EC9E1A4FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teknoroma.Application", "Core\Teknoroma.Application\Teknoroma.Application.csproj", "{63BB25C5-E18E-4746-9D28-767EC9E1A4FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teknoroma.Infrastructure", "Infrastructure\Teknoroma.Infrastructure\Teknoroma.Infrastructure.csproj", "{DCE603E0-EA96-44C5-ACFD-B180258F8A68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teknoroma.Infrastructure", "Infrastructure\Teknoroma.Infrastructure\Teknoroma.Infrastructure.csproj", "{DCE603E0-EA96-44C5-ACFD-B180258F8A68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teknoroma.Persistence", "Infrastructure\Teknoroma.Persistence\Teknoroma.Persistence.csproj", "{3CAF893C-98A4-4619-98A2-B68329F6AB09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teknoroma.Persistence", "Infrastructure\Teknoroma.Persistence\Teknoroma.Persistence.csproj", "{3CAF893C-98A4-4619-98A2-B68329F6AB09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teknoroma.MVC", "Presentation\Teknoroma.MVC\Teknoroma.MVC.csproj", "{728F1929-DD66-45D4-AD46-5F81645E631E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teknoroma.MVC", "Presentation\Teknoroma.MVC\Teknoroma.MVC.csproj", "{728F1929-DD66-45D4-AD46-5F81645E631E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

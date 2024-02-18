@@ -24,7 +24,6 @@
 						<th rowspan="1" colspan="1">Stok Miktarı</th>
 						<th rowspan="1" colspan="1">Kritik Stok Miktarı</th>
 						<th rowspan="1" colspan="1">Açıklama</th>
-						<th rowspan="1" colspan="1">Aktif/Pasif</th>
 						<th>
 
 						</th>
@@ -68,19 +67,9 @@
 										@item.Description
 									</td>
 									<td>
-										@if (item.IsActive == true)
-										{
-											<span class="badge badge-success">Aktif</span>
-										}
-										else
-										{
-											<span class="badge badge-danger">Pasif</span>
-										}
-									</td>
-									<td>
 										<a class="btn bg-gradient-info" asp-controller="Product" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
 										<a class="btn bg-gradient-warning" asp-controller="Product" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
-										<a class="btn bg-gradient-danger" asp-controller="Product" asp-action="Destroy" asp-route-id="@item.ID">Sil</a>
+										<a class="btn bg-gradient-danger" asp-controller="Product" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
 									</td>
 								</tr>
 							}

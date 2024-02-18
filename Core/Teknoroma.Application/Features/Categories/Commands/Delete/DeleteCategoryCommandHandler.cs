@@ -10,7 +10,7 @@ using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Categories.Commands.Delete
 {
-    public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommandRequest, string>
+    public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommandRequest, Unit>
     {
         private readonly IMapper _mapper;
         private readonly ICategoryRepository _categoryRepository;
@@ -21,13 +21,13 @@ namespace Teknoroma.Application.Features.Categories.Commands.Delete
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<string> Handle(DeleteCategoryCommandRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteCategoryCommandRequest request, CancellationToken cancellationToken)
         {
             Category category = await _categoryRepository.GetAsync(x => x.ID == request.ID);
 
             await _categoryRepository.DeleteAsync(category);
 
-            return "Kalıcı Olarak Silindi!";
-        }
+			return Unit.Value;
+		}
     }
 }

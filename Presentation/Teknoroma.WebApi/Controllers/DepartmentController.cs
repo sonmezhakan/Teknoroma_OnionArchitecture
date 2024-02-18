@@ -38,14 +38,14 @@ namespace Teknoroma.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-			var result = await Mediator.Send(new GetByIdDepartmentCommandRequest { ID = id });
+			var result = await Mediator.Send(new GetByIdDepartmentQueryRequest { ID = id });
 
 			return Ok(result);
 		}
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-			var result = await Mediator.Send(new GetAllDepartmentCommandRequest());
+			var result = await Mediator.Send(new GetAllDepartmentQueryRequest());
 
 			return Ok(result);
 		}

@@ -20,13 +20,13 @@ namespace Teknoroma.Application.Features.Departments.Profiles
             CreateMap<Department,CreateDepartmentCommandRequest>().ReverseMap();
             CreateMap<Department,UpdateDepartmentCommandRequest>().ReverseMap();
 
-            CreateMap<Department,GetByIdDepartmentCommandResponse>().ReverseMap();
-            CreateMap<Department,GetAllDepartmentCommandResponse>().ReverseMap();
+            CreateMap<Department,GetByIdDepartmentQueryResponse>().ReverseMap();
+            CreateMap<Department,GetAllDepartmentQueryResponse>().ReverseMap();
 
             CreateMap<CreateDepartmentViewModel, CreateDepartmentCommandRequest>().ReverseMap();
-            CreateMap<DepartmentViewModel, GetByIdDepartmentCommandResponse>().ReverseMap();
-			CreateMap<DepartmentViewModel, GetAllDepartmentCommandResponse>().ReverseMap();
-			CreateMap<DepartmentListViewModel, GetAllDepartmentCommandResponse>().ReverseMap();
+            CreateMap<DepartmentViewModel, GetByIdDepartmentQueryResponse>().ReverseMap();
+			CreateMap<DepartmentViewModel, GetAllDepartmentQueryResponse>().ReverseMap();
+			CreateMap<DepartmentListViewModel, GetAllDepartmentQueryResponse>().ReverseMap();
         }
     }
 }

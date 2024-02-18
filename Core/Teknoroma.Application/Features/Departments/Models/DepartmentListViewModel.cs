@@ -16,7 +16,5 @@ namespace Teknoroma.Application.Features.Departments.Models
         public int EmployeeCount { get; set; }
 
         public string Description { get; set; }
-
-        public bool IsActive { get; set; }
     }
 }

@@ -13,6 +13,5 @@ namespace Teknoroma.Application.Features.BranchProducts.Models
         public decimal UnitPrice { get; set; }
         public int UnitsInStock { get; set; }
         public int CriticalStock { get; set; }
-        public bool? IsActive { get; set; }
     }
 }

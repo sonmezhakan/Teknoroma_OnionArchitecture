@@ -10,7 +10,7 @@ using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Products.Command.Create
 {
-	public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest, string>
+	public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
 		private readonly IProductRepository _productRepository;
@@ -24,7 +24,7 @@ namespace Teknoroma.Application.Features.Products.Command.Create
 			_branchRepository = branchRepository;
 			_branchProductRepository = branchProductRepository;
 		}
-        public async Task<string> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
 		{
 			Product product = _mapper.Map<Product>(request);
 
@@ -47,7 +47,7 @@ namespace Teknoroma.Application.Features.Products.Command.Create
 
 			await _branchProductRepository.AddRangeAsync(branchProducts);
 
-			return "Kayıt Başarılı!";
+			return Unit.Value;
 		}
 	}
 }

@@ -16,13 +16,13 @@ namespace Teknoroma.Application.Features.Customers.Profiles
 			CreateMap<Customer,CreateCustomerCommandRequest>().ReverseMap();
 			CreateMap<Customer,UpdateCustomerCommandRequest>().ReverseMap();
 			
-			CreateMap<Customer,GetByIdCustomerCommandResponse>().ReverseMap();
-			CreateMap<Customer, GetAllCustomerCommandResponse>().ReverseMap();
+			CreateMap<Customer,GetByIdCustomerQueryResponse>().ReverseMap();
+			CreateMap<Customer, GetAllCustomerQueryResponse>().ReverseMap();
 
 			CreateMap<CreateCustomerViewModel, CreateCustomerCommandRequest>().ReverseMap();
 			CreateMap<CustomerViewModel, UpdateCustomerCommandRequest>().ReverseMap();
-			CreateMap<CustomerViewModel, GetByIdBrandCommandResponse>().ReverseMap();
-			CreateMap<CustomerViewModel, GetAllCustomerCommandResponse>().ReverseMap();
+			CreateMap<CustomerViewModel, GetByIdCustomerQueryResponse>().ReverseMap();
+			CreateMap<CustomerViewModel, GetAllCustomerQueryResponse>().ReverseMap();
 
 		}
     }

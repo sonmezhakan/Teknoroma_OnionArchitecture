@@ -6,8 +6,6 @@ namespace Teknoroma.Application.Repositories
     public interface IBaseRepository<TEntity> where TEntity : class, IEntity
     {
         Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null);
-        Task<List<TEntity>> GetAllActivesAsync(Expression<Func<TEntity, bool>> filter = null);
-        Task<List<TEntity>> GetAllPassivesAsync(Expression<Func<TEntity, bool>> filter = null);
 
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter);
 

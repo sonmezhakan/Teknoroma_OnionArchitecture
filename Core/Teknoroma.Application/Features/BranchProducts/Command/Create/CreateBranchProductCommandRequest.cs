@@ -12,6 +12,5 @@ namespace Teknoroma.Application.Features.BranchProducts.Command.Create
 		public Guid BranchId { get; set; }
 		public Guid ProductId { get; set; }
 		public int UnitsInStock { get; set; }
-		public bool? IsActive { get; set; }
 	}
 }

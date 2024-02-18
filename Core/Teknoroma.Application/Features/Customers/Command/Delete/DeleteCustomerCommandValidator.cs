@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
+using Teknoroma.Application.Features.Customers.Contants;
 
 namespace Teknoroma.Application.Features.Customers.Command.Delete
 {
-	internal class DeleteCustomerCommandValidator
+	public class DeleteCustomerCommandValidator:AbstractValidator<DeleteCustomerCommandRequest>
 	{
-	}
+        public DeleteCustomerCommandValidator()
+        {
+            RuleFor(x=>x.ID).NotEmpty().WithMessage(CustomersMessages.IDNotNull);
+        }
+    }
 }

@@ -1,35 +1,36 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Teknoroma.Application.Features.Departments.Rules;
 using Teknoroma.Application.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Departments.Command.Update
 {
-	public class UpdateDepartmentCommandHandler:IRequestHandler<UpdateDepartmentCommandRequest,string>
+	public class UpdateDepartmentCommandHandler:IRequestHandler<UpdateDepartmentCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
 		private readonly IDepartmentRepository _departmentRepository;
+		private readonly DepartmentBusinessRules _departmentBusinessRules;
 
-		public UpdateDepartmentCommandHandler(IMapper mapper, IDepartmentRepository departmentRepository)
+		public UpdateDepartmentCommandHandler(IMapper mapper, IDepartmentRepository departmentRepository,DepartmentBusinessRules departmentBusinessRules)
 		{
 			_mapper = mapper;
 			_departmentRepository = departmentRepository;
+			_departmentBusinessRules = departmentBusinessRules;
 		}
 
-		public async Task<string> Handle(UpdateDepartmentCommandRequest request, CancellationToken cancellationToken)
+		public async Task<Unit> Handle(UpdateDepartmentCommandRequest request, CancellationToken cancellationToken)
 		{
 			Department department = await _departmentRepository.GetAsync(x=>x.ID == request.ID);
+
+			//BusinessRules
+			await _departmentBusinessRules.UpdateDepartmentNameCannotBeDuplicatedWhenInserted(department.DepartmentName,request.DepartmentName);
 
 			department = _mapper.Map(request, department);
 
 			await _departmentRepository.UpdateAsync(department);
 
-			return "Güncelleme Başarılı!";
+			return Unit.Value;
 		}
 	}
 }

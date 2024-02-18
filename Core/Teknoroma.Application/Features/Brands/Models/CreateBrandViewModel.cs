@@ -9,18 +9,15 @@ namespace Teknoroma.Application.Features.Brands.Models
 {
     public class CreateBrandViewModel
     {
-        [Required]
+        //[Required]
         [Display(Name = "Brand Name*")]
         public string BrandName { get; set; }
 
         [Display(Name = "Description")]
         public string? Description { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Telefon Numarasını Doğru Giriniz!")]
+        //[Range(0, int.MaxValue, ErrorMessage = "Telefon Numarasını Doğru Giriniz!")]
         [Display(Name = "Phone Number")]
         public string? PhoneNumber { get; set; }
-
-        [Display(Name = "Statu")]
-        public bool? IsActive { get; set; }
     }
 }

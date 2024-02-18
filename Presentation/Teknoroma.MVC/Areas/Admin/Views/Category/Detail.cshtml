@@ -48,30 +48,6 @@
 						<label asp-for="Description"></label>
 						<textarea class="form-control" asp-for="@Model.Description" rows="3" cols="4"></textarea>
 					</div>
-					<div class="btn-group btn-group-toggle" data-toggle="buttons">
-						@if (Model != null && Model.IsActive == true)
-						{
-							<label class="btn bg-olive active">
-								<input type="radio" name="IsActive" id="option_b1" autocomplete="off" checked="checked" value="true">
-								Aktif
-							</label>
-							<label class="btn bg-olive">
-								<input type="radio" name="IsActive" id="option_b2" autocomplete="off" value="false">
-								Pasif
-							</label>
-						}
-						else
-						{
-							<label class="btn bg-olive active">
-								<input type="radio" name="IsActive" id="option_b1" autocomplete="off" value="true">
-								Aktif
-							</label>
-							<label class="btn bg-olive">
-								<input type="radio" name="IsActive" id="option_b2" autocomplete="off" checked="checked" value="false">
-								Pasif
-							</label>
-						}
-					</div>
 				</div>
 			</form>
 		</div>

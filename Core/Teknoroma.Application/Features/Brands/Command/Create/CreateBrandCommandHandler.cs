@@ -1,33 +1,34 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Teknoroma.Application.Features.Brands.Rules;
 using Teknoroma.Application.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Brands.Command.Create
 {
-	public class CreateBrandCommandHandler:IRequestHandler<CreateBrandCommandRequest,string>
+	public class CreateBrandCommandHandler:IRequestHandler<CreateBrandCommandRequest,Unit>
 	{
 		private readonly IMapper _mapper;
 		private readonly IBrandRepository _brandRepository;
+        private readonly BrandBusinessRules _brandBusinessRules;
 
-		public CreateBrandCommandHandler(IMapper mapper,IBrandRepository brandRepository)
+        public CreateBrandCommandHandler(IMapper mapper,IBrandRepository brandRepository,BrandBusinessRules brandBusinessRules)
         {
 			_mapper = mapper;
 			_brandRepository = brandRepository;
-		}
+            _brandBusinessRules = brandBusinessRules;
+        }
 
-		public async Task<string> Handle(CreateBrandCommandRequest request, CancellationToken cancellationToken)
+		public async Task<Unit> Handle(CreateBrandCommandRequest request, CancellationToken cancellationToken)
 		{
+			//BusinessRules
+			await _brandBusinessRules.BrandNameCannotBeDuplicatedWhenInserted(request.BrandName);
+			
 			Brand brand = _mapper.Map<Brand>(request);
 
 			await _brandRepository.AddAsync(brand);
 
-			return "Kayıt Başarılı!";
+			return Unit.Value;
 		}
 	}
 }

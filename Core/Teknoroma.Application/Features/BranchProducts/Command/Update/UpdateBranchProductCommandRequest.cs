@@ -13,6 +13,5 @@ namespace Teknoroma.Application.Features.BranchProducts.Command.Update
 		public Guid ProductId { get; set; }
 		public int Quantity { get; set; }
         public bool? Process { get; set; }
-        public bool? IsActive { get; set; }
 	}
 }

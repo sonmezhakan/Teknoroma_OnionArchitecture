@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Teknoroma.Application.Features.Products.Command.Update
 {
-	public class UpdateProductCommandRequest:IRequest<string>
+	public class UpdateProductCommandRequest:IRequest<Unit>
 	{
         public Guid ID { get; set; }
         public string ProductName { get; set; }
@@ -18,6 +18,5 @@ namespace Teknoroma.Application.Features.Products.Command.Update
 		public string? ImagePath { get; set; }
 		public Guid? BrandId { get; set; }
 		public Guid CategoryId { get; set; }
-		public bool? IsActive { get; set; }
 	}
 }

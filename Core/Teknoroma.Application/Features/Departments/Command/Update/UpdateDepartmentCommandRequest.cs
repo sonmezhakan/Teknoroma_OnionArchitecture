@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace Teknoroma.Application.Features.Departments.Command.Update
 {
-	public class UpdateDepartmentCommandRequest:IRequest<string>
+	public class UpdateDepartmentCommandRequest:IRequest<Unit>
 	{
 		public Guid ID { get; set; }
 		public string DepartmentName { get; set; }
 		public string? Description { get; set; }
-		public bool? IsActive { get; set; }
 	}
 }

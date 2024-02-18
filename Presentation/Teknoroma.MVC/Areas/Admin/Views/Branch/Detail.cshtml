@@ -57,33 +57,6 @@
                                 <label asp-for="Description"></label>
                                 <textarea class="form-control" cols="4" rows="3" asp-for="Description"></textarea>
                             </div>
-
-                            @if (Model != null && Model.IsActive == true)
-                            {
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn bg-olive active">
-                                        <input type="radio" name="IsActive" id="option_b1" autocomplete="off" checked="" value="true">
-                                        Aktif
-                                    </label>
-                                    <label class="btn bg-olive">
-                                        <input type="radio" name="IsActive" id="option_b2" autocomplete="off" value="false">
-                                        Pasif
-                                    </label>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn bg-olive active">
-                                        <input type="radio" name="IsActive" id="option_b1" autocomplete="off">
-                                        Aktif
-                                    </label>
-                                    <label class="btn bg-olive">
-                                        <input type="radio" name="IsActive" id="option_b2" autocomplete="off" value="false" checked="" value="true">
-                                        Pasif
-                                    </label>
-                                </div>
-                            }
                         </div>
                     </form>
                 </div>
@@ -99,7 +72,6 @@
                                         <th rowspan="1" colspan="1">Stok Miktarı</th>
                                         <th  rowspan="1" colspan="1">Kritik Miktar</th>
                                         <th  rowspan="1" colspan="1">Şubedeki Toplam Satış</th>
-                                        <th rowspan="1" colspan="1">Aktif/Pasif</th>
                                         <th>
 
                                         </th>
@@ -134,17 +106,7 @@
                                                         }
                                                         <td>
                                                             0
-                                                        </td>
-                                                        <td>
-                                                            @if (product.IsActive == true)
-                                                            {
-                                                                <span class="badge badge-success">Aktif</span>
-                                                            }
-                                                            else
-                                                            {
-                                                                <span class="badge badge-danger">Pasif</span>
-                                                            }
-                                                        </td>
+                                                        </td>  
                                                     </tr>
                                                 }
                                             }

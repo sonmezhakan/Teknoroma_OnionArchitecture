@@ -10,6 +10,7 @@ using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Application.Features.Products.Queries.GetList;
 using Teknoroma.Infrastructure.ImageHelpers;
 using Teknoroma.Infrastructure.WebApiService;
+using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
@@ -48,20 +49,27 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
                 HttpResponseMessage response = await _apiService.HttpClient.PostAsJsonAsync("product/create", createProduct);
 
-                if (response.IsSuccessStatusCode) return RedirectToAction("Create", "Product");
+				if (!response.IsSuccessStatusCode)
+				{
+					await ErrorResponseViewModel.Instance.CopyForm(response);
 
-                ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
+					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
 
-                ImageFileDelete(model.ImagePath);
+					ImageFileDelete(model.ImagePath);
 
-                await CategoryViewBag();
-                await BrandViewBag();
+					await CategoryViewBag();
+					await BrandViewBag();
+
+					return View(model);
+				}
                 
-                return View(model);
+                return View();
             }
             else
             {
-                ImageFileDelete(model.ImagePath);
+				ModelState.AddModelError(string.Empty, "Hatalı İşlem");
+
+				ImageFileDelete(model.ImagePath);
 
                 await CategoryViewBag();
                 await BrandViewBag();
@@ -96,7 +104,6 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
                 //Yeni resmi yükle
                 model.ImagePath = await ImageFile(productImage);
-
                 model.UnitsInStock = oldProduct.UnitsInStock;
 
                 UpdateProductCommandRequest productDTO = _mapper.Map<UpdateProductCommandRequest>(model);
@@ -108,20 +115,19 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
                     //Eski resmi sil
                     ImageFileDelete(oldProduct.ImagePath);
 
-                    return RedirectToAction("Update", new { id= model.ID});
-                }
-                    
+					return RedirectToAction("Update", model.ID);
+				}
+                else
+                {
+					await ErrorResponseViewModel.Instance.CopyForm(response);
 
-                ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
+					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
 
-                //Eğer hata olursa eski resmin yolunu modele tekrardan aktarıp geriye döndürsün
-                model.ImagePath = oldProduct.ImagePath;
+					//Eğer hata olursa eski resmin yolunu modele tekrardan aktarıp geriye döndürsün
+					model.ImagePath = oldProduct.ImagePath;
 
-                await ProductViewBag();
-                await CategoryViewBag();
-                await BrandViewBag();
-
-                return View(model.ID);
+					return View(model);
+				}
             }
             else
             {
@@ -148,9 +154,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
                 ImageFileDelete(oldImagePath);
 
                 return RedirectToAction("ProductList", "Product");
-            }
-            
-            ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
+            }    
 
             return RedirectToAction("ProductList", "Product");
         }

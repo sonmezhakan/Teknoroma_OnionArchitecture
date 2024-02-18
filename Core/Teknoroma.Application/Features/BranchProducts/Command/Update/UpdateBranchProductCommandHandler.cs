@@ -21,7 +21,7 @@ namespace Teknoroma.Application.Features.BranchProducts.Command.Update
 			_branchProductRepository = branchProductRepository;
 		}
 
-		public async Task<Unit> Handle(UpdateBranchProductCommandRequest request, CancellationToken cancellationToken)
+		public async Task Handle(UpdateBranchProductCommandRequest request, CancellationToken cancellationToken)
 		{
 			BranchProduct branchProduct = await _branchProductRepository.GetAsync(x=>x.BranchId == request.BranchId && x.ProductId == request.ProductId);
 
@@ -39,8 +39,6 @@ namespace Teknoroma.Application.Features.BranchProducts.Command.Update
 				branchProduct = _mapper.Map(request, branchProduct);
 				await _branchProductRepository.UpdateAsync(branchProduct);
 			}
-
-			return Unit.Value;
 		}
 	}
 }

@@ -19,13 +19,13 @@ namespace Teknoroma.Application.Features.Brands.Profiles
 		{
 			CreateMap<Brand, CreateBrandCommandRequest>().ReverseMap();
 			CreateMap<Brand, UpdateBrandCommandRequest>().ReverseMap();
-			CreateMap<Brand, GetByIdBrandCommandResponse>().ReverseMap();
+			CreateMap<Brand, GetByIdBrandQueryResponse>().ReverseMap();
 			CreateMap<Brand, GetAllBrandCommandResponse>().ReverseMap();
 
 			CreateMap<CreateBrandViewModel, CreateBrandCommandRequest>().ReverseMap();
 			CreateMap<BrandViewModel, UpdateBrandCommandRequest>().ReverseMap();
 
-			CreateMap<BrandViewModel, GetByIdBrandCommandResponse>().ReverseMap();
+			CreateMap<BrandViewModel, GetByIdBrandQueryResponse>().ReverseMap();
 			CreateMap<BrandViewModel, GetAllBrandCommandResponse>().ReverseMap();
 
 			

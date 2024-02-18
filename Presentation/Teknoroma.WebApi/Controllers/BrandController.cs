@@ -38,7 +38,7 @@ namespace Teknoroma.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-			var result = await Mediator.Send(new GetByIdBrandCommandRequest { ID = id });
+			var result = await Mediator.Send(new GetByIdBrandQueryRequest { ID = id });
 
 			return Ok(result);
 		}

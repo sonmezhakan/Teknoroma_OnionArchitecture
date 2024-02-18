@@ -17,6 +17,5 @@ namespace Teknoroma.Application.Features.Products.Queries.GetById
 		public string ImagePath { get; set; }
 		public Guid BrandId { get; set; }
 		public Guid CategoryId { get; set; }
-		public bool IsActive { get; set; }
 	}
 }

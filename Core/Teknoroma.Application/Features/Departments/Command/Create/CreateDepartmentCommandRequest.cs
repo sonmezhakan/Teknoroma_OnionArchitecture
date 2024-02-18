@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Teknoroma.Application.Features.Departments.Command.Create
 {
-	public class CreateDepartmentCommandRequest:IRequest<string>
+	public class CreateDepartmentCommandRequest:IRequest<Unit>
 	{
 		public string DepartmentName { get; set; }
 		public string? Description { get; set; }
-		public bool? IsActive { get; set; }
+		
 	}
 }

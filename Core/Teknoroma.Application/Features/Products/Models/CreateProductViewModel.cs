@@ -42,8 +42,5 @@ namespace Teknoroma.Application.Features.Products.Models
         [Required(ErrorMessage = "Kategori Boş Olamaz!")]
         [Display(Name = "Category*")]
         public Guid CategoryId { get; set; }
-
-        [Display(Name = "Statu")]
-        public bool? IsActive { get; set; }
     }
 }

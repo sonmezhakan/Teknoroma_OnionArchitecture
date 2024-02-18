@@ -20,13 +20,12 @@ namespace Teknoroma.Application.Features.BranchProducts.Command.Create
 			_mapper = mapper;
 			_branchProductRepository = branchProductRepository;
 		}
-        public async Task<Unit> Handle(CreateBranchProductCommandRequest request, CancellationToken cancellationToken)
+        public async Task Handle(CreateBranchProductCommandRequest request, CancellationToken cancellationToken)
 		{
 			BranchProduct branchProduct = _mapper.Map<BranchProduct>(request);
 
 			await _branchProductRepository.AddAsync(branchProduct);
 
-			return Unit.Value;
 		}
 	}
 }

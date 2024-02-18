@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Teknoroma.Application.Features.Branches.Command.Create;
 using Teknoroma.Application.Features.Branches.Command.Update;
 using Teknoroma.Application.Features.Branches.Models;
 using Teknoroma.Application.Features.Branches.Queries.GetAll;
 using Teknoroma.Application.Features.Branches.Queries.GetById;
+using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Branches.Profiles
@@ -28,6 +24,8 @@ namespace Teknoroma.Application.Features.Branches.Profiles
             CreateMap<BranchViewModel, GetByIdBranchQueryResponse>().ReverseMap();
             CreateMap<BranchViewModel,GetAllBranchQueryResponse>().ReverseMap();
             CreateMap<BranchListViewModel, GetAllBranchQueryResponse>().ReverseMap();
+
+            CreateMap<CreateBranchViewModel, BranchViewModel>().ReverseMap();
         }
     }
 }

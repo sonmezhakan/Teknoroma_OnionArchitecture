@@ -40,45 +40,29 @@ namespace Teknoroma.Persistence.Repositories
         #region Update
         public async Task UpdateAsync(TEntity entity)
         {
-            try
+            //todo: ip işlemleri
+            entity.UpdatedDate = DateTime.Now;
+            entity.UpdatedComputerName = Environment.MachineName;
+            entity.UpdatedIpAddress = "";
+            entity.Status = Domain.Enums.DataStatus.Updated;
+
+            _entities.Update(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateRangeAsync(List<TEntity> entities)
+        {
+            entities.ForEach(entity =>
             {
                 //todo: ip işlemleri
                 entity.UpdatedDate = DateTime.Now;
                 entity.UpdatedComputerName = Environment.MachineName;
                 entity.UpdatedIpAddress = "";
                 entity.Status = Domain.Enums.DataStatus.Updated;
+            });
 
-                _entities.Update(entity);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public async Task UpdateRangeAsync(List<TEntity> entities)
-        {
-            try
-            {
-                entities.ForEach(entity =>
-                {
-                    //todo: ip işlemleri
-                    entity.UpdatedDate = DateTime.Now;
-                    entity.UpdatedComputerName = Environment.MachineName;
-                    entity.UpdatedIpAddress = "";
-                    entity.Status = Domain.Enums.DataStatus.Updated;
-                });
-
-                _entities.UpdateRange(entities);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            _entities.UpdateRange(entities);
+            await _context.SaveChangesAsync();
         }
         #endregion
      
@@ -86,12 +70,29 @@ namespace Teknoroma.Persistence.Repositories
         
         public async Task DeleteAsync(TEntity entity)
         {
+            //todo: ip işlemleri
+            entity.DeletedDate = DateTime.Now;
+            entity.DeletedComputerName = Environment.MachineName;
+            entity.DeletedIpAddress = "";
+            entity.Status = Domain.Enums.DataStatus.Deleted;
+            entity.IsActive = false;
+
             _entities.Remove(entity);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteRangeAsync(List<TEntity> entities)
         {
+            entities.ForEach(entity =>
+            {
+                //todo: ip işlemleri
+                entity.DeletedDate = DateTime.Now;
+                entity.DeletedComputerName = Environment.MachineName;
+                entity.DeletedIpAddress = "";
+                entity.Status = Domain.Enums.DataStatus.Deleted;
+                entity.IsActive = false;
+            });
+
             _entities.RemoveRange(entities);
            await _context.SaveChangesAsync();
         }
@@ -99,84 +100,30 @@ namespace Teknoroma.Persistence.Repositories
         #region Get
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter)
         {
-            return _entities.AnyAsync(filter).Result;
+            return _entities.Where(x => x.IsActive == true).AnyAsync(filter).Result;
         }
 
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter)
         {
-            return await _entities.FirstOrDefaultAsync(filter);
+            return await _entities.Where(x=>x.IsActive == true).FirstOrDefaultAsync(filter);
         }
         #endregion
         #region GetAll
         
         public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null)
         {
-            try
+            if (filter == null)
             {
-                if(filter == null)
-                {
-                    var getList = await _entities.ToListAsync();
-                    return getList;
-                }
-                else
-                {
-                    var getList = await _entities.Where(filter).ToListAsync();
-                    return getList;
-                }
-                
+                var getList = await _entities.Where(x => x.IsActive == true).ToListAsync();
+                return getList;
             }
-            catch (Exception)
+            else
             {
-
-                throw;
+                var getList = await _entities.Where(x => x.IsActive == true).Where(filter).ToListAsync();
+                return getList;
             }
         }
-       
-        public async Task<List<TEntity>> GetAllActivesAsync(Expression<Func<TEntity, bool>> filter = null)
-        {
-            try
-            {
-                if(filter != null)
-                {
-                    var getList = await _entities.Where(x => x.IsActive == true).Where(filter).ToListAsync();
-                    return getList;
-                }
-                else
-                {
-                    var getList = await _entities.Where(x => x.IsActive == true).ToListAsync();
-                    return getList;
-                }
-            }
-            catch (Exception)
-            {
 
-                throw;
-            }
-            
-        }
-        
-        public async Task<List<TEntity>> GetAllPassivesAsync(Expression<Func<TEntity, bool>> filter = null)
-        {
-            try
-            {
-                if (filter != null)
-                {
-                    var getList = await _entities.Where(x => x.IsActive == false).Where(filter).ToListAsync();
-                    return getList;
-                }
-                else
-                {
-                    var getList = await _entities.Where(x => x.IsActive == false).ToListAsync();
-                    return getList;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-        }
         #endregion
     }
 }

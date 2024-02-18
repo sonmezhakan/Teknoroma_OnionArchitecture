@@ -10,7 +10,7 @@ using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Customers.Command.Delete
 {
-	public class DeleteCustomerCommandHandler:IRequestHandler<DeleteCustomerCommandRequest,string>
+	public class DeleteCustomerCommandHandler:IRequestHandler<DeleteCustomerCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
 		private readonly ICustomerRepository _customerRepository;
@@ -21,13 +21,13 @@ namespace Teknoroma.Application.Features.Customers.Command.Delete
 			_customerRepository = customerRepository;
 		}
 
-		public async Task<string> Handle(DeleteCustomerCommandRequest request, CancellationToken cancellationToken)
+		public async Task<Unit> Handle(DeleteCustomerCommandRequest request, CancellationToken cancellationToken)
 		{
 			Customer customer = await _customerRepository.GetAsync(x => x.ID == request.ID);
 
 			await _customerRepository.DeleteAsync(customer);
 
-			return "Kalıcı Olarak Silindi!";
+			return Unit.Value;
 		}
 	}
 }

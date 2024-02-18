@@ -1,0 +1,93 @@
+﻿@using Teknoroma.Application.Features.Suppliers.Models
+@model SupplierViewModel
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row mx-4">
+    <div class="col-md-12 mx-auto">
+        <div class="card card-primary">
+            <div class="card-header">
+                <div class="form-group">
+                    <label>Tedarikçi Seçiniz</label>
+                    <select class="form-control" onchange="redirectToSelectedPage(this)">
+                        @foreach (var item in ViewBag.SupplierList)
+                        {
+                            @if (Model == null)
+                            {
+                                <option value="@item.ID" href="@item.ID">@item.CompanyName</option>
+                            }
+                            else if (item.ID == Model.ID)
+                            {
+                                <option value="@item.ID" selected>@item.CompanyName</option>
+                            }
+                            else
+                            {
+                                <option value="@item.ID" href="@item.ID">@item.CompanyName</option>
+                            }
+                        }
+
+                    </select>
+                </div>
+            </div>
+            <form method="post">
+                <div class="card-body">
+                    <div asp-validation-summary="All">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ID"></label>
+                        <input type="text" class="form-control" asp-for="@Model.ID" disabled />
+                        <input type="hidden" asp-for="@Model.ID" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CompanyName"></label>
+                        <input type="text" class="form-control" asp-for="@Model.CompanyName">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ContactName"></label>
+                        <input type="text" class="form-control" asp-for="@Model.ContactName">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ContactTitle"></label>
+                        <input type="text" class="form-control" asp-for="@Model.ContactTitle">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input type="email" class="form-control" asp-for="@Model.Email">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PhoneNumber"></label>
+                        <input type="text" class="form-control" asp-for="@Model.PhoneNumber">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address"></label>
+                        <textarea class="form-control" asp-for="@Model.Address" rows="3" cols="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WebSite"></label>
+                        <input type="url" class="form-control" asp-for="@Model.WebSite">
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-block bg-gradient-warning">Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function redirectToSelectedPage(selectElement) {
+        // Seçili değeri al
+        var selectedValue = selectElement.value;
+
+        // Yönlendirme yapmak istediğiniz URL'yi oluşturun
+        var redirectUrl = '/Admin/Supplier/Update/' + selectedValue;
+
+        // Yönlendirme işlemi
+        window.location.href = redirectUrl;
+    }
+</script>

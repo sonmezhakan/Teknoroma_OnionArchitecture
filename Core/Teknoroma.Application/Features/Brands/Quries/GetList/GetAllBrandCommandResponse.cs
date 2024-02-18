@@ -12,6 +12,5 @@ namespace Teknoroma.Application.Features.Brands.Quries.GetList
 		public string BrandName { get; set; }
 		public string Description { get; set; }
 		public string PhoneNumber { get; set; }
-		public bool IsActive { get; set; }
 	}
 }

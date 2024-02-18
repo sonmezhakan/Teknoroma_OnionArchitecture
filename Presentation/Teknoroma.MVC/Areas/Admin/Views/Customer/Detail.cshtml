@@ -88,33 +88,6 @@
 								<label asp-for="Address"></label>
 								<textarea class="form-control" rows="3" cols="4" asp-for="@Model.Address"></textarea>
 							</div>
-
-							@if (Model != null && Model.IsActive == true)
-							{
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label class="btn bg-olive active" asp-for="IsActive">
-										<input type="radio" name="IsActive" id="option_b1" autocomplete="off" checked="" value="true">
-										Aktif
-									</label>
-									<label class="btn bg-olive">
-										<input type="radio" name="IsActive" id="option_b2" autocomplete="off" value="false">
-										Pasif
-									</label>
-								</div>
-							}
-							else
-							{
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label class="btn bg-olive active" asp-for="IsActive">
-										<input type="radio" name="IsActive" id="option_b1" autocomplete="off">
-										Aktif
-									</label>
-									<label class="btn bg-olive">
-										<input type="radio" name="IsActive" id="option_b2" autocomplete="off" value="false" checked="" value="true">
-										Pasif
-									</label>
-								</div>
-							}
 						</div>
 					</form>
 				</div>

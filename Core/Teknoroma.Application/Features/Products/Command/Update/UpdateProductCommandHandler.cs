@@ -10,7 +10,7 @@ using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Products.Command.Update
 {
-	public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommandRequest, string>
+	public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
 		private readonly IProductRepository _productRepository;
@@ -20,7 +20,7 @@ namespace Teknoroma.Application.Features.Products.Command.Update
 			_mapper = mapper;
 			_productRepository = productRepository;
 		}
-        public async Task<string> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
 		{
 			Product product = await _productRepository.GetAsync(x => x.ID == request.ID);
 
@@ -28,7 +28,7 @@ namespace Teknoroma.Application.Features.Products.Command.Update
 
 			await _productRepository.UpdateAsync(product);
 
-			return "Güncelleme Başarılı!";
+			return Unit.Value;
 		}
 	}
 }

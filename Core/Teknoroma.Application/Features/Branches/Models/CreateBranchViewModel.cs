@@ -22,8 +22,5 @@ namespace Teknoroma.Application.Features.Branches.Models
 
         [Display(Name = "Description")]
         public string? Description { get; set; }
-
-        [Display(Name = "Statu")]
-        public bool? IsActive { get; set; }
     }
 }

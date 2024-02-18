@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Teknoroma.Application.Features.Brands.Command.Delete
 {
-	public class DeleteBrandCommandRequest:IRequest<string>
+	public class DeleteBrandCommandRequest:IRequest<Unit>
 	{
         public Guid ID { get; set; }
     }

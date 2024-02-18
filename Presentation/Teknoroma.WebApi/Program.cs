@@ -1,9 +1,14 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
 using System.Text;
+using Teknoroma.Application.Exceptions.Extensions;
+using Teknoroma.Application.Features.Brands.Command.Create;
+using Teknoroma.Application.Features.Brands.Rules;
+using Teknoroma.Application.Pipelines.Validation;
 using Teknoroma.Persistence.DependencyResolvers;
 namespace Teknoroma.WebApi
 {
@@ -20,25 +25,11 @@ namespace Teknoroma.WebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            
-            //DbContext Service
-            builder.Services.AddDbContextServiceRegistration();
+			builder.Services.AddAplicationServiceRegistration();
+			builder.Services.AddPersistenceServiceRegistration();
 
-            //Repository  DependencyInjection
-            builder.Services.AddRegisterServiceRegistration();
-
-            //Auto Mapper Service
-            builder.Services.AddAutoMapperServiceRegistration();
-
-            //Email Service
-            builder.Services.AddEmailServiceRegistration();
-
-            //builder.Services.AddMediatR(Assembly.GetExecutingAssembly());   
-            builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
-            builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
-            //JWT Configuration
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+			//JWT Configuration
+			builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
@@ -79,15 +70,19 @@ namespace Teknoroma.WebApi
                 app.UseSwaggerUI();
             }
 
+            
 
             app.UseHttpsRedirection();
 
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
 
-            app.MapControllers();
+			//if (app.Environment.IsProduction())
+				//Exceptiom Middleware
+				app.ConfigureCustomExceptionMiddleWare();
+
+			app.MapControllers();
 
             app.Run();
         }

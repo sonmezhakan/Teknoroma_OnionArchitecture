@@ -245,6 +245,15 @@ namespace Teknoroma.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -292,6 +301,15 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.Property<string>("CreatedIpAddress")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -344,6 +362,15 @@ namespace Teknoroma.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -394,6 +421,15 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.Property<string>("CreatedIpAddress")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
@@ -452,6 +488,15 @@ namespace Teknoroma.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -502,6 +547,15 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.Property<string>("CreatedIpAddress")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DepartmentName")
@@ -555,6 +609,15 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.Property<string>("CreatedIpAddress")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
@@ -621,6 +684,15 @@ namespace Teknoroma.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -665,6 +737,15 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("EmployeId")
                         .HasColumnType("uniqueidentifier");
@@ -713,6 +794,15 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.Property<string>("CreatedIpAddress")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<float?>("Discount")
@@ -777,6 +867,15 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.Property<int>("CriticalStock")
                         .HasColumnType("int");
+
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(255)
@@ -855,6 +954,15 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.Property<string>("CreatedIpAddress")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")

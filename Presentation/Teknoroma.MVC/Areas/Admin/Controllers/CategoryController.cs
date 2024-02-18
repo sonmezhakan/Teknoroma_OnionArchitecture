@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.Categories.Commands.Create;
 using Teknoroma.Application.Features.Categories.Commands.Update;
-using Teknoroma.Application.Features.Categories.DTO;
 using Teknoroma.Application.Features.Categories.Models;
 using Teknoroma.Application.Features.Categories.Queries.GetById;
 using Teknoroma.Application.Features.Categories.Queries.GetList;
 using Teknoroma.Infrastructure.WebApiService;
+using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
@@ -45,15 +45,23 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
                 HttpResponseMessage response = await _apiService.HttpClient.PostAsJsonAsync("category/create", createCategoryCommandRequest);
 
-                if (!response.IsSuccessStatusCode) return View();
+				if (!response.IsSuccessStatusCode)
+				{
+					await ErrorResponseViewModel.Instance.CopyForm(response);
 
-                ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
+					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
 
-                return View(model);
+					return View(model);
+				}
+
+				return View();
             }
-            ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
+            else
+            {
+				ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
 
-            return View(model);
+				return View(model);
+			} 
         }
 
         [HttpGet]
@@ -71,36 +79,41 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(CategoryViewModel categoryViewModel)
+        public async Task<IActionResult> Update(CategoryViewModel model)
         {
             if(ModelState.IsValid)
             {
-                UpdateCategoryCommandRequest updateCategoryCommandRequest = _mapper.Map<UpdateCategoryCommandRequest>(categoryViewModel);
+                UpdateCategoryCommandRequest updateCategoryCommandRequest = _mapper.Map<UpdateCategoryCommandRequest>(model);
 
                 HttpResponseMessage response = await _apiService.HttpClient.PutAsJsonAsync("category/Update", updateCategoryCommandRequest);
 
-                if (response.IsSuccessStatusCode) return RedirectToAction("Update", new { id = categoryViewModel.ID });
+				if (!response.IsSuccessStatusCode)
+				{
+					await ErrorResponseViewModel.Instance.CopyForm(response);
 
-                ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
+					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
 
-                return View(categoryViewModel.ID);
-            }
+					await CategoryViewBag();
+
+					return View(model);
+				}
+
+				return RedirectToAction("Update", model.ID);
+			}
             else
             {
                 ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
 
-                return View(categoryViewModel.ID);
+				await CategoryViewBag();
+
+				return View(model);
             }
             
         }
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var response = await _apiService.HttpClient.DeleteAsync($"category/Delete/{id}");
-
-            if (response.IsSuccessStatusCode) return RedirectToAction("CategoryList", "Category");
-
-            ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
+            await _apiService.HttpClient.DeleteAsync($"category/Delete/{id}");
 
             return RedirectToAction("CategoryList","Category");
         }

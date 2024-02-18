@@ -5,31 +5,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Teknoroma.Application.Features.Brands.Rules;
 using Teknoroma.Application.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Brands.Command.Update
 {
-	public class UpdateBrandCommandHandler:IRequestHandler<UpdateBrandCommandRequest,string>
+	public class UpdateBrandCommandHandler:IRequestHandler<UpdateBrandCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
 		private readonly IBrandRepository _brandRepository;
+		private readonly BrandBusinessRules _brandBusinessRules;
 
-		public UpdateBrandCommandHandler(IMapper mapper, IBrandRepository brandRepository)
+		public UpdateBrandCommandHandler(IMapper mapper, IBrandRepository brandRepository,BrandBusinessRules brandBusinessRules)
 		{
 			_mapper = mapper;
 			_brandRepository = brandRepository;
+			_brandBusinessRules = brandBusinessRules;
 		}
 
-		public async Task<string> Handle(UpdateBrandCommandRequest request, CancellationToken cancellationToken)
+		public async Task<Unit> Handle(UpdateBrandCommandRequest request, CancellationToken cancellationToken)
 		{
 			Brand brand = await _brandRepository.GetAsync(x=>x.ID == request.ID);
+
+			//BusinessRules
+			await _brandBusinessRules.UpdateBrandNameCannotBeDuplicatedWhenInserted(brand.BrandName,request.BrandName);
+			await _brandBusinessRules.UpdatePhoneNumberCannotBeDuplicatedWhenInserted(brand.PhoneNumber, request.PhoneNumber);
 
 			brand = _mapper.Map(request, brand);
 
 			await _brandRepository.UpdateAsync(brand);
 
-			return "Güncelleme Başarılı!";
+			return Unit.Value;
 		}
 	}
 }

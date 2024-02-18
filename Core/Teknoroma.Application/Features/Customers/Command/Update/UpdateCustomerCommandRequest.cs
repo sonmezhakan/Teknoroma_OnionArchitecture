@@ -8,7 +8,7 @@ using Teknoroma.Domain.Enums;
 
 namespace Teknoroma.Application.Features.Customers.Command.Update
 {
-	public class UpdateCustomerCommandRequest:IRequest<string>
+	public class UpdateCustomerCommandRequest:IRequest<Unit>
 	{
 		public Guid ID { get; set; }
 		public string FullName { get; set; }
@@ -17,6 +17,5 @@ namespace Teknoroma.Application.Features.Customers.Command.Update
 		public string PhoneNumber { get; set; }
 		public string? Address { get; set; }
 		public InvoiceEnum Invoice { get; set; }
-		public bool? IsActive { get; set; }
 	}
 }

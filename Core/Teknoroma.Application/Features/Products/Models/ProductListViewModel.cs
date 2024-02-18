@@ -35,8 +35,5 @@ namespace Teknoroma.Application.Features.Products.Models
 
         [Display(Name = "Category*")]
         public string CategoryName { get; set; }
-
-        [Display(Name = "Statu")]
-        public bool IsActive { get; set; }
     }
 }

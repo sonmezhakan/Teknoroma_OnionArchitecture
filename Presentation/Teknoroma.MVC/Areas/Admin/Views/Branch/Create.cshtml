@@ -1,5 +1,5 @@
 ﻿@using Teknoroma.Application.Features.Branches.Models
-@model BranchViewModel
+@model CreateBranchViewModel
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -32,20 +32,8 @@
                             <div class="form-group">
                                 <label asp-for="Description"></label>
                                 <textarea class="form-control" cols="4" rows="3" asp-for="Description"></textarea>
-                            </div>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn bg-olive active">
-                                    <input type="radio" name="IsActive" id="option_b1" autocomplete="off" checked="" value="true">
-                                    Aktif
-                                </label>
-                                <label class="btn bg-olive">
-                                    <input type="radio" name="IsActive" id="option_b2" autocomplete="off" value="false">
-                                    Pasif
-                                </label>
-                            </div>
+                            </div>    
                         </div>
-                        <!-- /.card-body -->
-
                         <div class="card-footer">
                             <button type="submit" class="btn btn-block bg-gradient-primary">Ekle</button>
                         </div>

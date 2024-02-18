@@ -1,0 +1,54 @@
+﻿@using Teknoroma.Application.Features.Suppliers.Models
+@model CreateSupplierViewModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row mx-4">
+    <div class="col-md-12 mx-auto">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Tedarikçi Ekle</h3>
+            </div>
+            <form method="post">
+                <div class="card-body">
+                    <div asp-validation-summary="All">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CompanyName"></label>
+                        <input type="text" class="form-control" asp-for="CompanyName">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ContactName"></label>
+                        <input type="text" class="form-control" asp-for="ContactName">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ContactTitle"></label>
+                        <input type="text" class="form-control" asp-for="ContactTitle">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input type="email" class="form-control" asp-for="Email">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PhoneNumber"></label>
+                        <input type="number" class="form-control" asp-for="PhoneNumber">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address"></label>
+                        <textarea class="form-control" asp-for="Address" rows="3" cols="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WebSite"></label>
+                        <input type="url" class="form-control" asp-for="WebSite">
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-block bg-gradient-primary">Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

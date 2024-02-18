@@ -28,6 +28,8 @@ namespace Teknoroma.Application.Features.BranchProducts.Profiles
             CreateMap<BranchProduct, GetAllBranchProductQueryResponse>()
                 .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.BranchName))
                 .ForMember(dest=>dest.ProductName, opt=>opt.MapFrom(src=>src.Product.ProductName))
+                .ForMember(dest=>dest.UnitPrice, opt=>opt.MapFrom(src=>src.Product.UnitPrice))
+                .ForMember(dest=>dest.CriticalStock, opt=>opt.MapFrom(src=>src.Product.CriticalStock))
                 .ReverseMap();
             CreateMap<BranchProductListViewModel, GetAllBranchProductQueryResponse>().ReverseMap();
         }

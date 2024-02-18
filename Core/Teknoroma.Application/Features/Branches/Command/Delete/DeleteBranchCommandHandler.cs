@@ -10,7 +10,7 @@ using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Branches.Command.Delete
 {
-	public class DeleteBranchCommandHandler : IRequestHandler<DeleteBranchCommandRequest, string>
+	public class DeleteBranchCommandHandler : IRequestHandler<DeleteBranchCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
 		private readonly IBranchRepository _branchRepository;
@@ -20,13 +20,13 @@ namespace Teknoroma.Application.Features.Branches.Command.Delete
 			_mapper = mapper;
 			_branchRepository = branchRepository;
 		}
-        public async Task<string> Handle(DeleteBranchCommandRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteBranchCommandRequest request, CancellationToken cancellationToken)
 		{
 			Branch branch = await _branchRepository.GetAsync(x=>x.ID == request.ID);
 
 			await _branchRepository.DeleteAsync(branch);
 
-			return "Kalıcı Olarak Silindi!";
+			return Unit.Value;
 		}
 	}
 }

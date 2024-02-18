@@ -34,8 +34,12 @@ namespace Teknoroma.Domain.Abstracts
         public string? UpdatedComputerName { get; set; }
         public string? UpdatedIpAddress { get; set; }
 
+        public DateTime? DeletedDate { get; set; }
+        public string? DeletedComputerName { get; set; }
+        public string? DeletedIpAddress { get; set; }
+
         public DataStatus Status { get; set; }
         public bool IsActive { get; set; }
-
+        
     }
 }

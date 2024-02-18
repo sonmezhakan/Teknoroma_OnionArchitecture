@@ -10,6 +10,7 @@ using Teknoroma.Application.Features.BranchProducts.Models;
 using Teknoroma.Application.Features.BranchProducts.Queries.GetList;
 using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Infrastructure.WebApiService;
+using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
@@ -40,11 +41,16 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 				HttpResponseMessage response = await _apiService.HttpClient.PostAsJsonAsync("branch/create", createBranch);
 
-				if (response.IsSuccessStatusCode) return View();
+				if (!response.IsSuccessStatusCode)
+				{
+					await ErrorResponseViewModel.Instance.CopyForm(response);
 
-				ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
+					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
 
-				return View(model);
+					return View(model);
+				}
+
+				return RedirectToAction("Create", "Branch");		
 			}
 			else
 			{
@@ -61,7 +67,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			if (id == null) return View();
 
-			var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"branch/getbyid/{id}");
+			var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdBranchQueryResponse>($"branch/getbyid/{id}");
 
 			if(response == null) return View();
 
@@ -79,18 +85,25 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 				HttpResponseMessage response = await _apiService.HttpClient.PutAsJsonAsync("branch/update", updateBranch);
 
-				if(response.IsSuccessStatusCode) return RedirectToAction("Update",new { id= model.ID});
+				if (!response.IsSuccessStatusCode)
+				{
+					await ErrorResponseViewModel.Instance.CopyForm(response);
 
-				ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
+					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
 
-				await BranchViewBag();
-				return View(model);
+					await BranchViewBag();
+
+					return View(model);
+				}
+
+				return RedirectToAction("Update", model.ID);
 			}
 			else
 			{
 				ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
 
 				await BranchViewBag();
+
 				return View(model);
 			}
 		}
@@ -98,11 +111,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			HttpResponseMessage response = await _apiService.HttpClient.DeleteAsync($"branch/delete/{id}");
-
-			if (response.IsSuccessStatusCode) return RedirectToAction("BranchList", "Branch");
-
-			ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
+			await _apiService.HttpClient.DeleteAsync($"branch/delete/{id}");
 
 			return RedirectToAction("BranchList", "Branch");
 		}

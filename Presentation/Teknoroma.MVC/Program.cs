@@ -1,3 +1,5 @@
+using System.Reflection;
+using Teknoroma.Application.Exceptions.Extensions;
 using Teknoroma.Persistence.DependencyResolvers;
 
 namespace Teknoroma.MVC
@@ -12,21 +14,11 @@ namespace Teknoroma.MVC
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            //DbContext Service
-            builder.Services.AddDbContextServiceRegistration();
+			builder.Services.AddAplicationServiceRegistration();
+			builder.Services.AddPersistenceServiceRegistration();
 
-            //Repository  DependencyInjection
-            builder.Services.AddRegisterServiceRegistration();
-
-            //Auto Mapper Service
-            builder.Services.AddAutoMapperServiceRegistration();
-
-            //Email Service
-            builder.Services.AddEmailServiceRegistration();
-
-
-            //Cookie
-            builder.Services.ConfigureApplicationCookie(x =>
+			//Cookie
+			builder.Services.ConfigureApplicationCookie(x =>
             {
                 x.Cookie = new CookieBuilder
                 {
@@ -49,7 +41,7 @@ namespace Teknoroma.MVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -59,7 +51,11 @@ namespace Teknoroma.MVC
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSession();
+			//if (app.Environment.IsProduction())
+				//Exceptiom Middleware
+				app.ConfigureCustomExceptionMiddleWare();
+
+			app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
@@ -121,6 +117,7 @@ namespace Teknoroma.MVC
                       pattern: "{area:exists}/{controller=Department}/{action=Index}/{id?}"
                     );
                 });
+
 
                 app.MapControllerRoute(
 

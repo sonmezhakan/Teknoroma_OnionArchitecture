@@ -10,7 +10,7 @@ using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Brands.Command.Delete
 {
-	public class DeleteBrandCommandHandler:IRequestHandler<DeleteBrandCommandRequest, string>
+	public class DeleteBrandCommandHandler:IRequestHandler<DeleteBrandCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
 		private readonly IBrandRepository _brandRepository;
@@ -21,13 +21,13 @@ namespace Teknoroma.Application.Features.Brands.Command.Delete
 			_brandRepository = brandRepository;
 		}
 
-		public async Task<string> Handle(DeleteBrandCommandRequest request, CancellationToken cancellationToken)
+		public async Task<Unit> Handle(DeleteBrandCommandRequest request, CancellationToken cancellationToken)
 		{
 			Brand brand = await _brandRepository.GetAsync(x => x.ID == request.ID);
 
 			await _brandRepository.DeleteAsync(brand);
 
-			return "Kalıcı Olarak Silindi!";
+			return Unit.Value;
 		}
 	}
 }

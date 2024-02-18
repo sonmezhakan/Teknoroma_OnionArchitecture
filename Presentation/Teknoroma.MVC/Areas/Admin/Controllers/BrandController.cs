@@ -2,12 +2,15 @@
 using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json;
 using Teknoroma.Application.Features.Brands.Command.Create;
 using Teknoroma.Application.Features.Brands.Command.Update;
 using Teknoroma.Application.Features.Brands.Models;
 using Teknoroma.Application.Features.Brands.Quries.GetById;
 using Teknoroma.Application.Features.Brands.Quries.GetList;
 using Teknoroma.Infrastructure.WebApiService;
+using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
@@ -43,12 +46,17 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
                 HttpResponseMessage response = await _apiService.HttpClient.PostAsJsonAsync("brand/create", createBrand);
 
-                if (response.IsSuccessStatusCode) return RedirectToAction("Create", "Brand");
-				
-                ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
+				if (!response.IsSuccessStatusCode)
+				{
+					await ErrorResponseViewModel.Instance.CopyForm(response);
 
-                return View(model);
-            }
+					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
+
+					return View(model);
+				}
+
+				return RedirectToAction("Create", "Brand");
+			}
             else
 			{
                 ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
@@ -64,7 +72,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (id == null) return View();
 
-            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdBrandCommandResponse>($"brand/getbyid/{id}");
+            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdBrandQueryResponse>($"brand/getbyid/{id}");
 
 			BrandViewModel brandViewModel = _mapper.Map<BrandViewModel>(response);
 
@@ -80,28 +88,33 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 				HttpResponseMessage response = await _apiService.HttpClient.PutAsJsonAsync("brand/update", updateBrand);
 
-				if (response.IsSuccessStatusCode) return RedirectToAction("Update", new { id = model.ID });
+				if (!response.IsSuccessStatusCode)
+				{
+					await ErrorResponseViewModel.Instance.CopyForm(response);
 
-				ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
+					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
 
-				return View(model.ID);
+					await BrandViewBag();
+
+					return View(model);
+				}
+
+				return RedirectToAction("Update", model.ID);
 			}
 			else
 			{
 				ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
 
-				return View(model.ID);
+				await BrandViewBag();
+
+				return View(model);
 			}
 		}
 
         [HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			HttpResponseMessage response = await _apiService.HttpClient.DeleteAsync($"brand/delete/{id}");
-
-			if (response.IsSuccessStatusCode) return RedirectToAction("BrandList", "Brand");
-
-			ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
+			await _apiService.HttpClient.DeleteAsync($"brand/delete/{id}");
 
 			return RedirectToAction("BrandList", "Brand");
         }
@@ -113,7 +126,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			if (id == null) return View();
 
-            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdBrandCommandResponse>($"brand/getbyid/{id}");
+            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdBrandQueryResponse>($"brand/getbyid/{id}");
 
 			BrandViewModel brandViewModel = _mapper.Map<BrandViewModel>(response);
 

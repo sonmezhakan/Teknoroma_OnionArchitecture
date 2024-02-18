@@ -18,7 +18,5 @@ namespace Teknoroma.Application.Features.Products.Queries.GetList
 		public string ImagePath { get; set; }
 		public string BrandName { get; set; }
 		public string CategoryName { get; set; }
-		public bool IsActive { get; set; }
-
 	}
 }

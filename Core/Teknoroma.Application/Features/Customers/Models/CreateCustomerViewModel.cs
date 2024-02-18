@@ -31,8 +31,5 @@ namespace Teknoroma.Application.Features.Customers.Models
         [Required]
         [Display(Name = "Invoice*")]
         public InvoiceEnum Invoice { get; set; }
-
-        [Display(Name = "Statu")]
-        public bool? IsActive { get; set; }
     }
 }

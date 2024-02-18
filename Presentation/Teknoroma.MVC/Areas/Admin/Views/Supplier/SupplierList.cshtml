@@ -1,0 +1,85 @@
+﻿@using Teknoroma.Application.Features.Suppliers.Models
+@model List<SupplierViewModel>
+@{
+    ViewData["Title"] = "SupplierList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row">
+	<div class="col-12">
+		<div class="card card-primary">
+			<div class="card-header">
+				<h1>Marka Listesi</h1>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table table-bordered table-hover dataTable dtr-inline">
+							<thead>
+							<th rowspan="1" colspan="1">Firma Adı</th>
+							<th rowspan="1" colspan="1">İletişim Kurulacak Kişi</th>
+							<th rowspan="1" colspan="1">İletişim Kurulacak Kişinin Departmanı</th>
+							<th rowspan="1" colspan="1">Mail</th>
+							<th rowspan="1" colspan="1">Telefon Numarası</th>
+							<th rowspan="1" colspan="1">Adres</th>
+							<th rowspan="1" colspan="1">Web Site</th>
+							<th>
+
+							</th>
+							</tr>
+							</thead>
+							<tbody>
+								@foreach (var item in Model)
+								{
+									<tr>
+										<td>
+											@item.CompanyName
+										</td>
+										<td>
+											@item.ContactName
+										</td>
+										<td>
+											@item.ContactTitle
+										</td>
+										<td>
+											@item.Email
+										</td>
+										<td>
+											@item.PhoneNumber
+										</td>
+										<td>
+											@item.Address
+										</td>
+										<td>
+											@item.WebSite
+										</td>
+										<td>
+											<a class="btn bg-gradient-info" asp-controller="Supplier" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
+											<a class="btn bg-gradient-warning" asp-controller="Supplier" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
+											<a class="btn bg-gradient-danger" asp-controller="Supplier" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div><div class="row">
+					<div class="col-sm-12 col-md-5">
+						<div>
+							@if (Model != null)
+							{
+								@Model.Count()
+							}
+							else
+							{
+								<a>0</a>
+							}
+							adet tedarikçi bulunmaktadır.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

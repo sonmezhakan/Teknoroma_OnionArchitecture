@@ -7,6 +7,7 @@ using Teknoroma.Application.Features.Customers.Models;
 using Teknoroma.Application.Features.Customers.Queries.GetById;
 using Teknoroma.Application.Features.Customers.Queries.GetList;
 using Teknoroma.Infrastructure.WebApiService;
+using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
@@ -37,11 +38,16 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
                 HttpResponseMessage response = await _apiService.HttpClient.PostAsJsonAsync("customer/create", createCustomer);
 
-                if (response.IsSuccessStatusCode) return View();
+				if (!response.IsSuccessStatusCode)
+				{
+					await ErrorResponseViewModel.Instance.CopyForm(response);
 
-                ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
+					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
 
-                return View(model);
+					return View(model);
+				}
+
+				return View();
             }
             else
             {
@@ -59,7 +65,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (id == null) return View();
 
-            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdCustomerCommandResponse>($"customer/getbyid/{id}");
+            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdCustomerQueryResponse>($"customer/getbyid/{id}");
     
             CustomerViewModel customerViewModel = _mapper.Map<CustomerViewModel>(response);
 
@@ -74,13 +80,18 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
                 HttpResponseMessage response = await _apiService.HttpClient.PutAsJsonAsync("customer/update", updateCustomer);
 
-                if (response.IsSuccessStatusCode) return RedirectToAction("Update", new { id = model.ID });
+				if (!response.IsSuccessStatusCode)
+				{
+					await ErrorResponseViewModel.Instance.CopyForm(response);
 
-                ModelState.AddModelError(string.Empty,response.Content.ReadAsStringAsync().Result);
+					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
 
-                await CustomerViewBag();
+					await CustomerViewBag();
 
-                return View(model);
+					return View(model);
+				}
+
+				return RedirectToAction("Update",model.ID);
             }
             else
             {
@@ -95,11 +106,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            HttpResponseMessage response = await _apiService.HttpClient.DeleteAsync($"customer/delete/{id}");
-
-            if (response.IsSuccessStatusCode) return RedirectToAction("CustomerList", "Customer");
-
-            ModelState.AddModelError(string.Empty, response.Content.ReadAsStringAsync().Result);
+             await _apiService.HttpClient.DeleteAsync($"customer/delete/{id}");
 
             return RedirectToAction("CustomerList", "Customer");
         }
@@ -111,7 +118,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if(id == null) return View();
 
-            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdCustomerCommandResponse>($"customer/getbyid/{id}");
+            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdCustomerQueryResponse>($"customer/getbyid/{id}");
 
             if(response == null) return View();
 
@@ -123,7 +130,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> CustomerList()
         {
-            var response = await _apiService.HttpClient.GetFromJsonAsync<List<GetAllCustomerCommandResponse>>("customer/getall");
+            var response = await _apiService.HttpClient.GetFromJsonAsync<List<GetAllCustomerQueryResponse>>("customer/getall");
 
             if(response == null) return View();
 
@@ -134,7 +141,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         private async Task CustomerViewBag()
         {
-            var response = _apiService.HttpClient.GetFromJsonAsync<List<GetAllCustomerCommandResponse>>("customer/getall").Result.Select(x => new GetAllCustomerCommandResponse { ID = x.ID, FullName = x.FullName }).ToList();
+            var response = _apiService.HttpClient.GetFromJsonAsync<List<GetAllCustomerQueryResponse>>("customer/getall").Result.Select(x => new GetAllCustomerQueryResponse { ID = x.ID, FullName = x.FullName }).ToList();
 
                 ViewBag.CustomerList = response;
         }

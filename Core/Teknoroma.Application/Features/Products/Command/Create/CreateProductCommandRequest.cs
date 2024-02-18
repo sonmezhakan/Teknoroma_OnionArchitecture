@@ -2,7 +2,7 @@
 
 namespace Teknoroma.Application.Features.Products.Command.Create
 {
-	public class CreateProductCommandRequest:IRequest<string>
+	public class CreateProductCommandRequest:IRequest<Unit>
 	{
 		public string ProductName { get; set; }
 		public decimal? UnitPrice { get; set; }
@@ -12,6 +12,5 @@ namespace Teknoroma.Application.Features.Products.Command.Create
 		public string? ImagePath { get; set; }
 		public Guid? BrandId { get; set; }
 		public Guid CategoryId { get; set; }
-		public bool? IsActive { get; set; }
 	}
 }
