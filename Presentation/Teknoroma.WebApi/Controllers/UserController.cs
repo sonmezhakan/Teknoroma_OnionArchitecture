@@ -7,7 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Teknoroma.Application.DTOs.AccountDTOs;
-
+using Teknoroma.Application.Features.AppUsers.Queries.GetByUserName;
 using Teknoroma.Application.ViewModel;
 using Teknoroma.Domain.Entities;
 
@@ -15,7 +15,7 @@ namespace Teknoroma.WebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
         private readonly IMapper _mapper;
         private readonly UserManager<AppUser> _userManager;
@@ -79,6 +79,13 @@ namespace Teknoroma.WebApi.Controllers
             
             var token = GetJwtToken(appUser);
             return Ok(token);
+        }
+
+        [HttpGet("{userName}")]
+        public async Task<IActionResult> GetByUserName(string userName)
+        {
+            var result = await Mediator.Send(new GetByUserNameAppUserQueryRequest { UserName = userName});
+            return Ok(result);
         }
 
 

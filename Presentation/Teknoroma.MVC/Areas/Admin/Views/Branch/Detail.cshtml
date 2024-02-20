@@ -80,7 +80,7 @@
                                         <tbody>
                                              @if(Model != null)
                                             {
-                                                @foreach (var product in ViewBag.BranchProductList)
+                                                @foreach (var product in ViewBag.stockList)
                                                 {
                                                     <tr>
                                                         <td>
@@ -118,7 +118,7 @@
                                     <div>
                                         @if (Model != null)
                                         {
-                                            @ViewBag.BranchProductList.Count
+                                            @ViewBag.stockList.Count
                                         }
                                         else
                                         {

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace Teknoroma.Application.Features.Products.Command.Create
 {
@@ -12,5 +13,5 @@ namespace Teknoroma.Application.Features.Products.Command.Create
 		public string? ImagePath { get; set; }
 		public Guid? BrandId { get; set; }
 		public Guid CategoryId { get; set; }
-	}
+    }
 }

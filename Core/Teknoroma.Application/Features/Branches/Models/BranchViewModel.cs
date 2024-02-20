@@ -1,30 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using Teknoroma.Application.Features.Branches.Constants;
 
 namespace Teknoroma.Application.Features.Branches.Models
 {
     public class BranchViewModel
     {
-        [Required]
-        [Display(Name = "ID")]
+        [Display(Name = BranchColumnNames.ID)]
         public Guid ID { get; set; }
 
-        [Required]
-        [Display(Name = "Branch Name*")]
+        [Display(Name = BranchColumnNames.BranchName)]
         public string BranchName { get; set; }
 
-        [Display(Name = "Address")]
+        [Display(Name = BranchColumnNames.Address)]
         public string? Address { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Telefon Numarasını Doğru Giriniz!")]
-        [Display(Name = "Phone Number")]
+        [Display(Name = BranchColumnNames.PhoneNumber)]
         public string? PhoneNumber { get; set; }
 
-        [Display(Name = "Description")]
+        [Display(Name = BranchColumnNames.Description)]
         public string? Description { get; set; }
     }
 }

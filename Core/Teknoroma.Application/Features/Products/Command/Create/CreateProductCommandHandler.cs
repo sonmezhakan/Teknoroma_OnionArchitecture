@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Teknoroma.Application.Repositories;
 using Teknoroma.Domain.Entities;
 
@@ -15,14 +10,14 @@ namespace Teknoroma.Application.Features.Products.Command.Create
 		private readonly IMapper _mapper;
 		private readonly IProductRepository _productRepository;
 		private readonly IBranchRepository _branchRepository;
-		private readonly IBranchProductRepository _branchProductRepository;
+		private readonly IStockRepository _stockRepository;
 
-		public CreateProductCommandHandler(IMapper mapper,IProductRepository productRepository,IBranchRepository branchRepository,IBranchProductRepository branchProductRepository)
+		public CreateProductCommandHandler(IMapper mapper,IProductRepository productRepository,IBranchRepository branchRepository,IStockRepository stockRepository)
         {
 			_mapper = mapper;
 			_productRepository = productRepository;
 			_branchRepository = branchRepository;
-			_branchProductRepository = branchProductRepository;
+			_stockRepository = stockRepository;
 		}
         public async Task<Unit> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
 		{
@@ -30,14 +25,16 @@ namespace Teknoroma.Application.Features.Products.Command.Create
 
 			await _productRepository.AddAsync(product);
 
+
+
 			//Tüm şubelere ürünün eklenmesi sağlanıyor
 			var branches = await _branchRepository.GetAllAsync();
 
-			List<BranchProduct> branchProducts = new List<BranchProduct>();
+			List<Stock> stocks = new List<Stock>();
 
 			foreach (var branch in branches)
 			{
-				branchProducts.Add(new BranchProduct
+				stocks.Add(new Stock
 				{
 					BranchId = branch.ID,
 					ProductId = product.ID,
@@ -45,7 +42,7 @@ namespace Teknoroma.Application.Features.Products.Command.Create
 				});
 			}
 
-			await _branchProductRepository.AddRangeAsync(branchProducts);
+			await _stockRepository.AddRangeAsync(stocks);
 
 			return Unit.Value;
 		}

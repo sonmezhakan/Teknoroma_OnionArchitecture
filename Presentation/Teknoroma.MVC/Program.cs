@@ -106,7 +106,7 @@ namespace Teknoroma.MVC
                 {
                     endpoints.MapControllerRoute(
                       name: "areas",
-                      pattern: "{area:exists}/{controller=BranchProduct}/{action=Index}/{id?}"
+                      pattern: "{area:exists}/{controller=stock}/{action=Index}/{id?}"
                     );
                 });
 
@@ -118,6 +118,20 @@ namespace Teknoroma.MVC
                     );
                 });
 
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                      name: "areas",
+                      pattern: "{area:exists}/{controller=StockInput}/{action=Index}/{id?}"
+                    );
+                });
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                      name: "areas",
+                      pattern: "{area:exists}/{controller=Supplier}/{action=Index}/{id?}"
+                    );
+                });
 
                 app.MapControllerRoute(
 

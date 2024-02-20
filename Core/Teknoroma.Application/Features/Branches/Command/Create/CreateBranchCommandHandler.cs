@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Teknoroma.Application.Features.Branches.Rules;
 using Teknoroma.Application.Repositories;
 using Teknoroma.Domain.Entities;
@@ -16,15 +11,15 @@ namespace Teknoroma.Application.Features.Branches.Command.Create
 		private readonly IMapper _mapper;
 		private readonly IBranchRepository _branchRepository;
 		private readonly IProductRepository _productRepository;
-		private readonly IBranchProductRepository _branchProductRepository;
+		private readonly IStockRepository _stockRepository;
 		private readonly BranchBusinessRules _branchBusinessRules;
 
-		public CreateBranchCommandHandler(IMapper mapper,IBranchRepository branchRepository,IProductRepository productRepository,IBranchProductRepository branchProductRepository,BranchBusinessRules branchBusinessRules)
+		public CreateBranchCommandHandler(IMapper mapper,IBranchRepository branchRepository,IProductRepository productRepository,IStockRepository stockRepository,BranchBusinessRules branchBusinessRules)
         {
 			_mapper = mapper;
 			_branchRepository = branchRepository;
 			_productRepository = productRepository;
-			_branchProductRepository = branchProductRepository;
+			_stockRepository = stockRepository;
 			_branchBusinessRules = branchBusinessRules;
 		}
 		public async Task<Unit> Handle(CreateBranchCommandRequest request, CancellationToken cancellationToken)
@@ -40,11 +35,11 @@ namespace Teknoroma.Application.Features.Branches.Command.Create
 			//Yeni eklenen şubeye tüm ürünler ekleniyor
 			var products = await _productRepository.GetAllAsync();
 
-			List<BranchProduct> branchProducts = new List<BranchProduct>();
+			List<Stock> stocks = new List<Stock>();
 
 			foreach (var product in products)
 			{
-				branchProducts.Add(new BranchProduct
+				stocks.Add(new Stock
 				{
 					BranchId = branch.ID,
 					ProductId = product.ID,
@@ -52,7 +47,7 @@ namespace Teknoroma.Application.Features.Branches.Command.Create
 				});
 			}
 
-			await _branchProductRepository.AddRangeAsync(branchProducts);
+			await _stockRepository.AddRangeAsync(stocks);
 
 			return Unit.Value;
 		}

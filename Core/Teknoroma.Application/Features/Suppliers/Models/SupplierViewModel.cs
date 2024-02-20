@@ -1,39 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using Teknoroma.Application.Features.Suppliers.Contants;
 
 namespace Teknoroma.Application.Features.Suppliers.Models
 {
 	public class SupplierViewModel
 	{
-		[Required]
-		[Display(Name = "ID")]
+		[Display(Name = SupplierColumnNames.ID)]
 		public Guid ID { get; set; }
 
-		[Required]
-		[Display(Name = "Firma Adı*")]
+		[Display(Name = SupplierColumnNames.ID)]
 		public string CompanyName { get; set; }
 
-		[Display(Name = "İletişim Kurulacak Kişi")]
+		[Display(Name = SupplierColumnNames.ID)]
 		public string? ContactName { get; set; }
 
-		[Display(Name = "İletşimde Kurulan Kişinin Departmanı")]
+		[Display(Name = SupplierColumnNames.ID)]
 		public string? ContactTitle { get; set; }
 
-		[Display(Name = "Email")]
+		[Display(Name = SupplierColumnNames.ID)]
 		public string? Email { get; set; }
 
-		[Range(0, int.MaxValue, ErrorMessage = "Telefon Numarasını Doğru Giriniz!")]
-		[Display(Name = "Telefon Numarası")]
+		[Display(Name = SupplierColumnNames.ID)]
 		public string? PhoneNumber { get; set; }
 
-		[Display(Name = "Adres")]
+		[Display(Name = SupplierColumnNames.ID)]
 		public string? Address { get; set; }
 
-		[Display(Name = "Web Site")]
+		[Display(Name = SupplierColumnNames.ID)]
 		public string? WebSite { get; set; }
     }
 }

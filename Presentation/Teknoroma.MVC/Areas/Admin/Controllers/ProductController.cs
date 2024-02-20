@@ -42,7 +42,10 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateProductViewModel model,IFormFile? productImage)
         {
-            model.ImagePath = await ImageFile(productImage);
+			await CategoryViewBag();
+			await BrandViewBag();
+
+			model.ImagePath = await ImageHelper.ImageFile(productImage);
             if(ModelState.IsValid)
             {
                 CreateProductCommandRequest createProduct = _mapper.Map<CreateProductCommandRequest>(model);
@@ -55,10 +58,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
 
-					ImageFileDelete(model.ImagePath);
-
-					await CategoryViewBag();
-					await BrandViewBag();
+                    ImageHelper.ImageFileDelete(model.ImagePath);
 
 					return View(model);
 				}
@@ -69,10 +69,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             {
 				ModelState.AddModelError(string.Empty, "Hatalı İşlem");
 
-				ImageFileDelete(model.ImagePath);
-
-                await CategoryViewBag();
-                await BrandViewBag();
+                ImageHelper.ImageFileDelete(model.ImagePath);
 
                 return View(model);
             }
@@ -96,27 +93,39 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(ProductViewModel model,IFormFile? productImage)
         {
-            
-            if (ModelState.IsValid)
+			await ProductViewBag();
+			await CategoryViewBag();
+			await BrandViewBag();
+
+			if (ModelState.IsValid)
             {
                 //ürünün eski resim yolunu alıyoruz
                 var oldProduct = await _apiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"product/getbyid/{model.ID}");
 
-                //Yeni resmi yükle
-                model.ImagePath = await ImageFile(productImage);
+                if (productImage == null)
+                    model.ImagePath = oldProduct.ImagePath;
+                else
+                    model.ImagePath = await ImageHelper.ImageFile(productImage);//Yeni resmi yükle
+
                 model.UnitsInStock = oldProduct.UnitsInStock;
+
 
                 UpdateProductCommandRequest productDTO = _mapper.Map<UpdateProductCommandRequest>(model);
 
                 HttpResponseMessage response = await _apiService.HttpClient.PutAsJsonAsync("product/update", productDTO);
 
-                if (response.IsSuccessStatusCode)
+                //İşlem başarılı ise ve yeni resim yüklendi ise bu işlemi yap
+                if (response.IsSuccessStatusCode && productImage != null)
                 {
                     //Eski resmi sil
-                    ImageFileDelete(oldProduct.ImagePath);
+                    ImageHelper.ImageFileDelete(oldProduct.ImagePath);
 
 					return RedirectToAction("Update", model.ID);
 				}
+                else if(response.IsSuccessStatusCode && productImage == null)//İşlem başarılı ise ve yeni resim yüklenmedi ise sayfaya yönlendir
+                {
+                    return RedirectToAction("Update", model.ID);
+                }
                 else
                 {
 					await ErrorResponseViewModel.Instance.CopyForm(response);
@@ -133,10 +142,6 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
 
-                await ProductViewBag();
-                await CategoryViewBag();
-                await BrandViewBag();
-
                 return View(model);
             }
         }
@@ -151,7 +156,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                ImageFileDelete(oldImagePath);
+                ImageHelper.ImageFileDelete(oldImagePath);
 
                 return RedirectToAction("ProductList", "Product");
             }    
@@ -192,7 +197,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			{
 				ProductName = x.ProductName,
 				ID = x.ID
-			}).ToList();
+			});
 
 			ViewBag.ProductList = getProductList;
 		}
@@ -203,11 +208,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			{
 				CategoryName = x.CategoryName,
 				ID = x.ID
-			}).ToList();
-            if (ViewBag.CategoryList == null)
-            {
-                ViewBag.CategoryList = getCategoryList;
-            }
+			});
+
+            ViewBag.CategoryList = getCategoryList;
         }
 
         private async Task BrandViewBag()
@@ -216,51 +219,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			{
 				BrandName = x.BrandName,
 				ID = x.ID
-			}); ;
+			});
 
 			ViewBag.BrandList = getBrandList;
 		}
 
-        //ImageUpload Metot
-        private async Task<string> ImageFile(IFormFile formFile)
-        {
-            if (formFile != null)
-            {
-                string path = "";
-                var imageResult = ImageHelper.ImageUpload(formFile.FileName);
-
-                if (imageResult != "0")
-                {
-                    path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\product", imageResult);
-
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        await formFile.CopyToAsync(stream);
-                    };
-
-                    return imageResult;
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty,"Görsel formatı uygun değil.");
-                    return "placeholer.jpg";
-                }
-            }
-            else
-            {
-                return "placeholer.jpg";
-            }
-        }
-
-        //Ürün resimlerinde değişiklik yapılacağı zaman ilk önce eski resmi silen metot
-        public void ImageFileDelete(string imagePath)
-        {
-            if (!string.IsNullOrEmpty(imagePath) && imagePath != "placeholder.svg")
-            {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\product", imagePath);
-
-                System.IO.File.Delete(path);
-            }
-        }
+      
     }
 }

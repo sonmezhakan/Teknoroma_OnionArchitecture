@@ -11,5 +11,7 @@ namespace Teknoroma.Domain.Entities
         public string? PhoneNumber { get; set; }
         public string? Address { get; set; }
         public string? WebSite { get; set; }
+
+        public virtual List<StockInput> StockInputs { get; set; }
     }
 }

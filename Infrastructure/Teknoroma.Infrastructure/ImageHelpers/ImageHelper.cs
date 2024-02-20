@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,48 @@ namespace Teknoroma.Infrastructure.ImageHelpers
             else
             {
                 return "0";
+            }
+        }
+
+
+        //ImageUpload Metot
+        public static async Task<string> ImageFile(IFormFile? formFile)
+        {
+            if (formFile != null)
+            {
+                string path = "";
+                var imageResult = ImageHelper.ImageUpload(formFile.FileName);
+
+                if (imageResult != "0")
+                {
+                    path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\product", imageResult);
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await formFile.CopyToAsync(stream);
+                    };
+
+                    return imageResult;
+                }
+                else
+                {
+                    return "placeholer.jpg";
+                }
+            }
+            else
+            {
+                return "placeholer.jpg";
+            }
+        }
+
+        //Ürün resimlerinde değişiklik yapılacağı zaman ilk önce eski resmi silen metot
+        public static void ImageFileDelete(string imagePath)
+        {
+            if (!string.IsNullOrEmpty(imagePath) && imagePath != "placeholder.svg")
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\product", imagePath);
+
+                System.IO.File.Delete(path);
             }
         }
     }

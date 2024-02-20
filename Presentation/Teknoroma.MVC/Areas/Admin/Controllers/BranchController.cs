@@ -6,9 +6,8 @@ using Teknoroma.Application.Features.Branches.Command.Update;
 using Teknoroma.Application.Features.Branches.Models;
 using Teknoroma.Application.Features.Branches.Queries.GetAll;
 using Teknoroma.Application.Features.Branches.Queries.GetById;
-using Teknoroma.Application.Features.BranchProducts.Models;
-using Teknoroma.Application.Features.BranchProducts.Queries.GetList;
-using Teknoroma.Application.Features.Products.Queries.GetById;
+using Teknoroma.Application.Features.Stocks.Models;
+using Teknoroma.Application.Features.Stocks.Queries.GetList;
 using Teknoroma.Infrastructure.WebApiService;
 using Teknoroma.MVC.Models;
 
@@ -127,7 +126,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			if (response == null) return View();
 
-			await BranchProductViewBag(response.ID);
+			await stockViewBag(response.ID);
 
             BranchViewModel branchViewModel = _mapper.Map<BranchViewModel>(response);
 
@@ -157,13 +156,13 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			ViewBag.BranchList = getBranchList;
 
 		}
-		private async Task BranchProductViewBag(Guid id)
+		private async Task stockViewBag(Guid id)
 		{
-			var getBranchProductList = _apiService.HttpClient.GetFromJsonAsync<List<GetAllBranchProductQueryResponse>>("branchProduct/Getall").Result;
+			var getstockList = _apiService.HttpClient.GetFromJsonAsync<List<GetAllStockQueryResponse>>($"stock/Getall/{id}").Result;
 
-			List< BranchProductListViewModel> branchProductListView = _mapper.Map<List<BranchProductListViewModel>>(getBranchProductList);
+			List< StockListViewModel> stockListView = _mapper.Map<List<StockListViewModel>>(getstockList);
 
-			ViewBag.BranchProductList = branchProductListView;
+			ViewBag.stockList = stockListView;
 
         }
 	}

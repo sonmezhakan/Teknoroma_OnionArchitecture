@@ -21,12 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\AppUsers\Command\" />
+    <Folder Include="Features\AppUsers\Command\Delete\" />
+    <Folder Include="Features\AppUsers\Command\Update\" />
+    <Folder Include="Features\AppUsers\Command\Create\" />
     <Folder Include="Features\AppUsers\Models\" />
-    <Folder Include="Features\AppUsers\Contants\" />
-    <Folder Include="Features\AppUsers\Profiles\" />
-    <Folder Include="Features\AppUsers\Queries\" />
-    <Folder Include="Features\BranchProducts\Contants\" />
+    <Folder Include="Features\AppUsers\Rules\" />
+    <Folder Include="Features\Stocks\Contants\" />
   </ItemGroup>
 
 </Project>

@@ -284,62 +284,6 @@ namespace Teknoroma.Persistence.Migrations
                     b.ToTable("Branches");
                 });
 
-            modelBuilder.Entity("Teknoroma.Domain.Entities.BranchProduct", b =>
-                {
-                    b.Property<Guid>("BranchId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedComputerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedIpAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DeletedComputerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedIpAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("MasterId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UnitsInStock")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdatedComputerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedIpAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BranchId", "ProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("BranchProducts");
-                });
-
             modelBuilder.Entity("Teknoroma.Domain.Entities.Brand", b =>
                 {
                     b.Property<Guid>("ID")
@@ -922,6 +866,146 @@ namespace Teknoroma.Persistence.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Teknoroma.Domain.Entities.Stock", b =>
+                {
+                    b.Property<Guid>("BranchId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedComputerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedIpAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("MasterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnitsInStock")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BranchId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Stocks");
+                });
+
+            modelBuilder.Entity("Teknoroma.Domain.Entities.StockInput", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppUserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BranchID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedComputerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedIpAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("InoviceNumber")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("MasterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StockEntryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("SupplierID")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UpdatedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("AppUserID");
+
+                    b.HasIndex("BranchID");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("SupplierID");
+
+                    b.ToTable("StockInputs");
+                });
+
             modelBuilder.Entity("Teknoroma.Domain.Entities.Supplier", b =>
                 {
                     b.Property<Guid>("ID")
@@ -1050,25 +1134,6 @@ namespace Teknoroma.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Teknoroma.Domain.Entities.BranchProduct", b =>
-                {
-                    b.HasOne("Teknoroma.Domain.Entities.Branch", "Branch")
-                        .WithMany("BranchProducts")
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Teknoroma.Domain.Entities.Product", "Product")
-                        .WithMany("BranchProducts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Branch");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Teknoroma.Domain.Entities.Employee", b =>
                 {
                     b.HasOne("Teknoroma.Domain.Entities.AppUser", "AppUser")
@@ -1154,14 +1219,72 @@ namespace Teknoroma.Persistence.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Teknoroma.Domain.Entities.Stock", b =>
+                {
+                    b.HasOne("Teknoroma.Domain.Entities.Branch", "Branch")
+                        .WithMany("stocks")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Teknoroma.Domain.Entities.Product", "Product")
+                        .WithMany("stocks")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Teknoroma.Domain.Entities.StockInput", b =>
+                {
+                    b.HasOne("Teknoroma.Domain.Entities.AppUser", "AppUser")
+                        .WithMany("StockInputs")
+                        .HasForeignKey("AppUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Teknoroma.Domain.Entities.Branch", "Branch")
+                        .WithMany("StockInputs")
+                        .HasForeignKey("BranchID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Teknoroma.Domain.Entities.Product", "Product")
+                        .WithMany("StockInputs")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Teknoroma.Domain.Entities.Supplier", "Supplier")
+                        .WithMany("StockInputs")
+                        .HasForeignKey("SupplierID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Supplier");
+                });
+
             modelBuilder.Entity("Teknoroma.Domain.Entities.AppUser", b =>
                 {
                     b.Navigation("Employees");
+
+                    b.Navigation("StockInputs");
                 });
 
             modelBuilder.Entity("Teknoroma.Domain.Entities.Branch", b =>
                 {
-                    b.Navigation("BranchProducts");
+                    b.Navigation("StockInputs");
+
+                    b.Navigation("stocks");
                 });
 
             modelBuilder.Entity("Teknoroma.Domain.Entities.Brand", b =>
@@ -1198,9 +1321,16 @@ namespace Teknoroma.Persistence.Migrations
 
             modelBuilder.Entity("Teknoroma.Domain.Entities.Product", b =>
                 {
-                    b.Navigation("BranchProducts");
-
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("StockInputs");
+
+                    b.Navigation("stocks");
+                });
+
+            modelBuilder.Entity("Teknoroma.Domain.Entities.Supplier", b =>
+                {
+                    b.Navigation("StockInputs");
                 });
 #pragma warning restore 612, 618
         }

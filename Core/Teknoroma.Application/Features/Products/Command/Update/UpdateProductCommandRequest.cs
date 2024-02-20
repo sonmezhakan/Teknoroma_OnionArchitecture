@@ -1,9 +1,5 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Teknoroma.Application.Features.Products.Command.Update
 {
@@ -18,5 +14,6 @@ namespace Teknoroma.Application.Features.Products.Command.Update
 		public string? ImagePath { get; set; }
 		public Guid? BrandId { get; set; }
 		public Guid CategoryId { get; set; }
-	}
+        public bool? Process { get; set; }
+    }
 }

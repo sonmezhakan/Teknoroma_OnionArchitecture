@@ -39,12 +39,15 @@ namespace Teknoroma.Application.Features.Branches.Rules
 			
 		}
 
-		public async Task PhoneNumberCannotBeDuplicatedWhenInserted(string phoneNumber)
+		public async Task PhoneNumberCannotBeDuplicatedWhenInserted(string? phoneNumber)
 		{
-			bool result = await _branchRepository.AnyAsync(x=>x.PhoneNumber == phoneNumber);
+			if(phoneNumber != null)
+			{
+                bool result = await _branchRepository.AnyAsync(x => x.PhoneNumber == phoneNumber);
 
-			if (result)
-				throw new BusinessException(BranchesMessages.PhoneNumberExists);
+                if (result)
+                    throw new BusinessException(BranchesMessages.PhoneNumberExists);
+            }
 		}
 
 		public async Task UpdatePhoneNumberCannotBeDuplicatedWhenInserted(string oldPhoneNumber, string newPhoneNumber)

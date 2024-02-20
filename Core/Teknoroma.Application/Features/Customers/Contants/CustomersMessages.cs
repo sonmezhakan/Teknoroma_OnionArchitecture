@@ -16,6 +16,7 @@ namespace Teknoroma.Application.Features.Customers.Contants
 		public const string ContactNameMaxLenght = "İsim En Fazla 128 Karakter Olabilir!";
 		public const string ContactTitleMaxLenght = "İsim En Fazla 64 Karakter Olabilir!";
 
+		public const string PhoneNumberNotNull = "Telefon Numarası Boş Olamaz!";
 		public const string PhoneNumberExists = "Telefon Numarası Mevcut!";
 		public const string PhoneNumberError = "Telefon Numarasını Doğru Giriniz!";
 		public const string PhoneNumberMaxLenght = "Telefon Numarası En Fazla 11 Karakter Olabilir!";

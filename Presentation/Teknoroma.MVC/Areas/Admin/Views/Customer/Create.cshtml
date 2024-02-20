@@ -22,11 +22,11 @@
 								<label asp-for="Invoice"></label>
 								<div class="form-group">
 									<div class="form-check">
-										<input class="form-check-input" type="radio" value="Person" name="Invoice" checked="">
+										<input class="form-check-input" type="radio" value="Person" name="Invoice" checked="" onclick="CheckSelectInvoice(Person)">
 										<label class="form-check-label">Bireysel</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="radio" value="Company" name="Invoice">
+										<input class="form-check-input" type="radio" value="Company" name="Invoice" onclick="CheckSelectInvoice(Company)">
 										<label class="form-check-label">Kurumsal</label>
 									</div>
 								</div>
@@ -37,11 +37,11 @@
 							</div>
 							<div class="form-group">
 								<label asp-for="ContactName"></label>
-								<input type="text" class="form-control" asp-for="ContactName">
+								<input type="text" class="form-control" asp-for="ContactName" id="ContactName">
 							</div>
 							<div class="form-group">
 								<label asp-for="ContactTitle"></label>
-								<input type="text" class="form-control" asp-for="ContactTitle">
+								<input type="text" class="form-control" asp-for="ContactTitle" id="ContactTitle">
 							</div>
 							<div class="form-group">
 								<label asp-for="PhoneNumber"></label>
@@ -62,3 +62,33 @@
 		</div>
 	</div>
 </div>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		var invoiceRadios = document.querySelectorAll('input[name="Invoice"]');
+		var contactNameInput = document.getElementById('ContactName');
+		var contactTitleInput = document.getElementById('ContactTitle');
+
+		// Radiobutton değiştiğinde tetiklenecek fonksiyon
+		function handleInvoiceChange() {
+			if (this.value === 'Person') {
+				// "Person" seçildiğinde
+				contactNameInput.value = '';
+				contactTitleInput.value = '';
+				contactNameInput.disabled = true;
+				contactTitleInput.disabled = true;
+			} else {
+				// "Company" seçildiğinde
+				contactNameInput.disabled = false;
+				contactTitleInput.disabled = false;
+			}
+		}
+
+		// Her radio için değişiklik dinleyicisi ekleyin
+		invoiceRadios.forEach(function (radio) {
+			radio.addEventListener('change', handleInvoiceChange);
+		});
+
+		// Sayfa yüklendiğinde varsayılan durumu kontrol etmek için tetikleme
+		handleInvoiceChange.call(invoiceRadios[0]);
+	});
+</script>

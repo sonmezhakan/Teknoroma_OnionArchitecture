@@ -14,7 +14,8 @@ namespace Teknoroma.Application.Features.Customers.Command.Create
 
 			RuleFor(x => x.ContactTitle).MaximumLength(64).WithMessage(CustomersMessages.ContactTitleMaxLenght);
 
-			RuleFor(x => x.PhoneNumber).Must(BeNumeric).WithMessage(CustomersMessages.PhoneNumberError)
+			RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage(CustomersMessages.PhoneNumberNotNull)
+				.Must(BeNumeric).WithMessage(CustomersMessages.PhoneNumberError)
 				.MaximumLength(11).WithMessage(CustomersMessages.PhoneNumberMaxLenght);
 
 			RuleFor(x => x.Address).MaximumLength(255).WithMessage(CustomersMessages.AddressMaxLenght);
@@ -22,9 +23,6 @@ namespace Teknoroma.Application.Features.Customers.Command.Create
 		}
 		protected bool BeNumeric(string phoneNumber)
 		{
-			if (string.IsNullOrEmpty(phoneNumber))
-				return true;
-
 			return int.TryParse(phoneNumber, out _);
 		}
 	}

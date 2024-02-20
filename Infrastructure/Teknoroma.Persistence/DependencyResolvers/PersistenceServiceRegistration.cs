@@ -30,7 +30,7 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			//Repository Service
 			services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 			services.AddScoped<IBranchRepository, BranchRepository>();
-			services.AddScoped<IBranchProductRepository, BranchProductRepository>();
+			services.AddScoped<IStockRepository, StockRepository>();
 			services.AddScoped<IBrandRepository, BrandRepository>();
 			services.AddScoped<ICategoryRepository, CategoryRepository>();
 			services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -41,6 +41,7 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddScoped<IProductRepository, ProductRepository>();
 			services.AddScoped<ISupplierRepository, SupplierRepository>();
 			services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+			services.AddScoped<IStockInputRepository, StockInputRepository>();
 
 			//Identity Service
 			services.AddIdentity<AppUser, AppUserRole>().AddEntityFrameworkStores<TeknoromaContext>().AddDefaultTokenProviders();

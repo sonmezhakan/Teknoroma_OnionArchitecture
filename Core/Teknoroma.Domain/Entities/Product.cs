@@ -16,7 +16,8 @@ namespace Teknoroma.Domain.Entities
         public virtual Category Category { get; set; }
         public virtual Brand? Brand { get; set; }
 
-        public virtual List<BranchProduct> BranchProducts { get; set; }
+        public virtual List<Stock> stocks { get; set; }
         public virtual List<OrderDetail> OrderDetails { get; set; }
+        public virtual List<StockInput> StockInputs { get; set; }
     }
 }

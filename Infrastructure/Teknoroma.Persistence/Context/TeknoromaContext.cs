@@ -35,7 +35,8 @@ namespace Teknoroma.Persistence.Context
         public DbSet<Product> Products { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<EmployeeDepartment> EmployeeDepartments { get; set; }
-        public DbSet<BranchProduct> BranchProducts { get; set; }
+        public DbSet<Stock> Stocks { get; set; }
+        public DbSet<StockInput> StockInputs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -50,7 +51,8 @@ namespace Teknoroma.Persistence.Context
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new SupplierConfiguration());
             builder.ApplyConfiguration(new EmployeeDepartmentConfiguration());
-            builder.ApplyConfiguration(new BranchProductConfiguration());
+            builder.ApplyConfiguration(new StockConfiguration());
+            builder.ApplyConfiguration(new StockInputConfiguration());
 
             base.OnModelCreating(builder);
         }

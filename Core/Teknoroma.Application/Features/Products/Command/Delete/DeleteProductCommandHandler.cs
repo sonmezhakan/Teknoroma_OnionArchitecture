@@ -12,14 +12,14 @@ namespace Teknoroma.Application.Features.Products.Command.Delete
 {
 	public class DeleteProductCommandHandler:IRequestHandler<DeleteProductCommandRequest, Unit>
 	{
-		private readonly IMapper _mapper;
 		private readonly IProductRepository _productRepository;
+        private readonly IStockRepository _stockRepository;
 
-		public DeleteProductCommandHandler(IMapper mapper, IProductRepository productRepository)
+        public DeleteProductCommandHandler(IProductRepository productRepository,IStockRepository stockRepository)
         {
-			_mapper = mapper;
 			_productRepository = productRepository;
-		}
+            _stockRepository = stockRepository;
+        }
 
 		public async Task<Unit> Handle(DeleteProductCommandRequest request, CancellationToken cancellationToken)
 		{
@@ -27,7 +27,12 @@ namespace Teknoroma.Application.Features.Products.Command.Delete
 
 			await _productRepository.DeleteAsync(product);
 
-			return Unit.Value;
+			//Branchlerde bulunan productlar IsActive yapılıyor.
+			var branches = await _stockRepository.GetAllAsync(x=>x.ProductId == request.ID);
+
+            await _stockRepository.DeleteRangeAsync(branches);
+
+            return Unit.Value;
 		}
 	}
 }

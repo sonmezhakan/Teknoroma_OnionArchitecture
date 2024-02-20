@@ -1,0 +1,104 @@
+﻿@using Teknoroma.Application.Features.StockInputs.Models
+@model List<StockInputListViewModel>
+@{
+    ViewData["Title"] = "StockInputList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row mx-4">
+    <div class="col-md-12 mx-auto">
+        <div class="card card-primary">
+            <div class="card-header">
+                <div class="form-group">
+                    <label>Stok Girişleri</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mx-auto">
+                    <div class="card-body">
+                        <div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
+                                        <thead>
+                                        <th rowspan="1" colspan="1">Şube Adı</th>
+                                        <th rowspan="1" colspan="1">Ürün Adı</th>
+                                        <th rowspan="1" colspan="1">Tedarikçi Firma</th>
+                                        <th rowspan="1" colspan="1">Fatura No</th>
+                                        <th rowspan="1" colspan="1">Adet</th>
+                                        <th rowspan="1" colspan="1">Description</th>
+                                        <th rowspan="1" colspan="1">İşlem Yapan</th>
+                                        <th rowspan="1" colspan="1">Giriş Tarihi</th>
+
+                                        <th>
+
+                                        </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model != null)
+                                            {
+                                                @foreach (var stockInput in Model)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @stockInput.BranchName
+                                                        </td>
+                                                        <td>
+                                                            @stockInput.ProductName
+                                                        </td>
+                                                        <td>
+                                                            @stockInput.CompanyName
+                                                        </td>
+                                                        <td>
+                                                            @stockInput.InoviceNumber
+                                                        </td>
+                                                        <td>
+                                                            @stockInput.Quantity
+                                                        </td>
+                                                        <td>
+                                                            @stockInput.Description
+                                                        </td>
+                                                        <td>
+                                                            @stockInput.AppUserName
+                                                        </td>
+                                                        <td>
+                                                            @stockInput.StockEntryDate
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn bg-gradient-info" asp-controller="StockInput" asp-action="Detail" asp-route-id="@stockInput.ID">Detaylar</a>
+                                                            <a class="btn bg-gradient-warning" asp-controller="StockInput" asp-action="Update" asp-route-id="@stockInput.ID">Güncelle</a>
+                                                            <a class="btn bg-gradient-danger" asp-controller="StockInput" asp-action="Delete" asp-route-id="@stockInput.ID">Sil</a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div><div class="row">
+                                <div class="col-sm-12 col-md-5">
+                                    <div>
+                                        @if (Model != null)
+                                        {
+                                            @Model.Count
+                                        }
+                                        else
+                                        {
+                                            <a>0</a>
+                                        }
+                                        adet stok girişi yapılmıştır.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

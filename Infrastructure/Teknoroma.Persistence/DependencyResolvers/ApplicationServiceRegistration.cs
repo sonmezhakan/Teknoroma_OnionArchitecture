@@ -37,7 +37,7 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddTransient<DepartmentBusinessRules>();
 			services.AddTransient<ProductBusinessRules>();
 			services.AddTransient<SupplierBusinessRules>();
-
+			
 
 			return services;
 		}
