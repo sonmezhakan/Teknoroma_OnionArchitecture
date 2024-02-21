@@ -1,36 +1,18 @@
-﻿using AutoMapper;
-using Azure;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Newtonsoft.Json;
 using Teknoroma.Application.Features.Brands.Command.Create;
 using Teknoroma.Application.Features.Brands.Command.Update;
 using Teknoroma.Application.Features.Brands.Models;
 using Teknoroma.Application.Features.Brands.Quries.GetById;
 using Teknoroma.Application.Features.Brands.Quries.GetList;
-using Teknoroma.Infrastructure.WebApiService;
 using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
 	[Authorize]
-	public class BrandController : Controller
+	public class BrandController : BaseController
 	{
-		private readonly IMapper _mapper;
-		private readonly IApiService _apiService;
-
-		public BrandController(IMapper mapper, IApiService apiService)
-        {
-			_mapper = mapper;
-			_apiService = apiService;
-		}
-		[HttpGet]
-        public IActionResult Index()
-		{
-			return View();
-		}
 		[HttpGet]
 		public IActionResult Create()
 		{
@@ -42,9 +24,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		{
 			if(ModelState.IsValid)
 			{
-                CreateBrandCommandRequest createBrand= _mapper.Map<CreateBrandCommandRequest>(model);
+                CreateBrandCommandRequest createBrand= Mapper.Map<CreateBrandCommandRequest>(model);
 
-                HttpResponseMessage response = await _apiService.HttpClient.PostAsJsonAsync("brand/create", createBrand);
+                HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("brand/create", createBrand);
 
 				if (!response.IsSuccessStatusCode)
 				{
@@ -72,9 +54,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (id == null) return View();
 
-            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdBrandQueryResponse>($"brand/getbyid/{id}");
+            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdBrandQueryResponse>($"brand/getbyid/{id}");
 
-			BrandViewModel brandViewModel = _mapper.Map<BrandViewModel>(response);
+			BrandViewModel brandViewModel = Mapper.Map<BrandViewModel>(response);
 
             return View(brandViewModel);
 		}
@@ -84,9 +66,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		{
 			if(ModelState.IsValid)
 			{
-                UpdateBrandCommandRequest updateBrand = _mapper.Map<UpdateBrandCommandRequest>(model);
+                UpdateBrandCommandRequest updateBrand = Mapper.Map<UpdateBrandCommandRequest>(model);
 
-				HttpResponseMessage response = await _apiService.HttpClient.PutAsJsonAsync("brand/update", updateBrand);
+				HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("brand/update", updateBrand);
 
 				if (!response.IsSuccessStatusCode)
 				{
@@ -114,7 +96,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			await _apiService.HttpClient.DeleteAsync($"brand/delete/{id}");
+			await ApiService.HttpClient.DeleteAsync($"brand/delete/{id}");
 
 			return RedirectToAction("BrandList", "Brand");
         }
@@ -126,9 +108,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			if (id == null) return View();
 
-            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdBrandQueryResponse>($"brand/getbyid/{id}");
+            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdBrandQueryResponse>($"brand/getbyid/{id}");
 
-			BrandViewModel brandViewModel = _mapper.Map<BrandViewModel>(response);
+			BrandViewModel brandViewModel = Mapper.Map<BrandViewModel>(response);
 
 			return View(brandViewModel);
 
@@ -137,18 +119,18 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> BrandList()
 		{
-			var response = await _apiService.HttpClient.GetFromJsonAsync<List<GetAllBrandCommandResponse>>("brand/getall");
+			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllBrandCommandResponse>>("brand/getall");
 
 			if (response == null) return View();
 
-			List<BrandViewModel> brandViewModels = _mapper.Map<List<BrandViewModel>>(response);
+			List<BrandViewModel> brandViewModels = Mapper.Map<List<BrandViewModel>>(response);
 
 			return View(brandViewModels);
 		}
 
         public async Task BrandViewBag()
         {
-            var getBrandList = _apiService.HttpClient.GetFromJsonAsync<List<GetAllBrandCommandResponse>>("brand/getall").Result.Select(x => new GetAllBrandCommandResponse
+            var getBrandList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllBrandCommandResponse>>("brand/getall").Result.Select(x => new GetAllBrandCommandResponse
 			{
 				BrandName = x.BrandName,
 				ID = x.ID

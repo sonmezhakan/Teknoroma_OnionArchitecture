@@ -1,31 +1,18 @@
-﻿using AutoMapper;
-using Azure;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Application.Features.Suppliers.Command.Create;
 using Teknoroma.Application.Features.Suppliers.Command.Update;
 using Teknoroma.Application.Features.Suppliers.Models;
 using Teknoroma.Application.Features.Suppliers.Queries.GetById;
 using Teknoroma.Application.Features.Suppliers.Queries.GetList;
-using Teknoroma.Application.Repositories;
-using Teknoroma.Infrastructure.WebApiService;
 using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
-	[Area("Admin")]
+    [Area("Admin")]
 	[Authorize]
-	public class SupplierController : Controller
+	public class SupplierController : BaseController
 	{
-		private readonly IMapper _mapper;
-		private readonly IApiService _apiService;
-
-		public SupplierController(IMapper mapper,IApiService apiService)
-        {
-			_mapper = mapper;
-			_apiService = apiService;
-		}
         public IActionResult Index()
 		{
 			return View();
@@ -41,9 +28,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		{
 			if(ModelState.IsValid)
 			{
-				CreateSupplierCommandRequest createSupplier = _mapper.Map<CreateSupplierCommandRequest>(model);
+				CreateSupplierCommandRequest createSupplier = Mapper.Map<CreateSupplierCommandRequest>(model);
 
-				HttpResponseMessage response = await _apiService.HttpClient.PostAsJsonAsync("supplier/create", createSupplier);
+				HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("supplier/create", createSupplier);
 
 				if (!response.IsSuccessStatusCode)
 				{
@@ -70,9 +57,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			await SupplierViewBag();
 			if (id == null) return View();
 
-			var getSupplier = await _apiService.HttpClient.GetFromJsonAsync<GetByIdSupplierQueryResponse>($"supplier/getbyid/{id}");
+			var getSupplier = await ApiService.HttpClient.GetFromJsonAsync<GetByIdSupplierQueryResponse>($"supplier/getbyid/{id}");
 
-			SupplierViewModel supplierViewModel = _mapper.Map<SupplierViewModel>(getSupplier);
+			SupplierViewModel supplierViewModel = Mapper.Map<SupplierViewModel>(getSupplier);
 
 			return View(supplierViewModel);
 		}
@@ -81,9 +68,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		{
 			if(ModelState.IsValid)
 			{
-				UpdateSupplierCommandRequest updateSupplier = _mapper.Map<UpdateSupplierCommandRequest>(model);
+				UpdateSupplierCommandRequest updateSupplier = Mapper.Map<UpdateSupplierCommandRequest>(model);
 
-				HttpResponseMessage response = await _apiService.HttpClient.PutAsJsonAsync("supplier/update", updateSupplier);
+				HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("supplier/update", updateSupplier);
 
 				if (!response.IsSuccessStatusCode)
 				{
@@ -110,7 +97,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			await _apiService.HttpClient.DeleteAsync($"supplier/delete/{id}");
+			await ApiService.HttpClient.DeleteAsync($"supplier/delete/{id}");
 
 			return RedirectToAction("SupplierList", "Supplier");
 		}
@@ -121,25 +108,25 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			if (id == null) return View();
 
-			var getSupplier = await _apiService.HttpClient.GetFromJsonAsync<GetByIdSupplierQueryResponse>($"supplier/getbyid/{id}");
+			var getSupplier = await ApiService.HttpClient.GetFromJsonAsync<GetByIdSupplierQueryResponse>($"supplier/getbyid/{id}");
 
-			SupplierViewModel supplierViewModel = _mapper.Map<SupplierViewModel>(getSupplier);
+			SupplierViewModel supplierViewModel = Mapper.Map<SupplierViewModel>(getSupplier);
 
 			return View(supplierViewModel);
 		}
 		[HttpGet]
 		public async Task<IActionResult> SupplierList()
 		{
-			var response = await _apiService.HttpClient.GetFromJsonAsync<List<GetAllSupplierQueryResponse>>("supplier/getall");
+			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSupplierQueryResponse>>("supplier/getall");
 
-			List< SupplierViewModel> supplierViewModel = _mapper.Map<List<SupplierViewModel>>(response);
+			List< SupplierViewModel> supplierViewModel = Mapper.Map<List<SupplierViewModel>>(response);
 
 			return View(supplierViewModel);
 		}
 
 		public async Task SupplierViewBag()
 		{
-			var getSupplierList = _apiService.HttpClient.GetFromJsonAsync<List<GetAllSupplierQueryResponse>>("supplier/getall").Result.Select(x=> new GetAllSupplierQueryResponse
+			var getSupplierList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllSupplierQueryResponse>>("supplier/getall").Result.Select(x=> new GetAllSupplierQueryResponse
 			{
 				ID = x.ID,
 				CompanyName = x.CompanyName

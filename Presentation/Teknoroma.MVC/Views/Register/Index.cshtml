@@ -1,5 +1,6 @@
-﻿
-@model RegisterViewModel
+﻿@using Teknoroma.Application.Features.AppUsers.Models
+
+@model CreateAppUserViewModel
 @{
     ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
@@ -36,12 +37,8 @@
                 <label asp-for="PhoneNumber"></label>
                 <input class="form-control" type="number" asp-for="PhoneNumber" />
             </div>
-            <div class="form-group my-1">
-                <label asp-for="Address"></label>
-                <textarea class="form-control" rows="3" cols="6" asp-for="Address"></textarea>
-            </div>
             <div class="d-grid gap-2 my-1">
-                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="submit" class="btn btn-primary">Kayıt Ol</button>
             </div>
         </form>
     </div>

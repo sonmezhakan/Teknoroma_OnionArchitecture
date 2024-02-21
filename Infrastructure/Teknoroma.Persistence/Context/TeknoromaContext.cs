@@ -24,6 +24,7 @@ namespace Teknoroma.Persistence.Context
            
         }
 
+        public DbSet<AppUserProfile> AppUserProfiles { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -40,6 +41,8 @@ namespace Teknoroma.Persistence.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new AppUserConfiguration());
+            builder.ApplyConfiguration(new AppUserProfileConfiguration());
             builder.ApplyConfiguration(new BranchConfiguration());
             builder.ApplyConfiguration(new BrandConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());

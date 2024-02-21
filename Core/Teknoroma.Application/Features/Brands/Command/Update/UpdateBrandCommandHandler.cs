@@ -29,8 +29,8 @@ namespace Teknoroma.Application.Features.Brands.Command.Update
 			Brand brand = await _brandRepository.GetAsync(x=>x.ID == request.ID);
 
 			//BusinessRules
-			await _brandBusinessRules.UpdateBrandNameCannotBeDuplicatedWhenInserted(brand.BrandName,request.BrandName);
-			await _brandBusinessRules.UpdatePhoneNumberCannotBeDuplicatedWhenInserted(brand.PhoneNumber, request.PhoneNumber);
+			await _brandBusinessRules.BrandNameCannotBeDuplicatedWhenUpdated(brand.BrandName,request.BrandName);
+			await _brandBusinessRules.PhoneNumberCannotBeDuplicatedWhenUpdated(brand.PhoneNumber, request.PhoneNumber);
 
 			brand = _mapper.Map(request, brand);
 

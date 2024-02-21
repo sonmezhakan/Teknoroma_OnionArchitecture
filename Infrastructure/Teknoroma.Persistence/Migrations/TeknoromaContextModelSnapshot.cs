@@ -191,6 +191,75 @@ namespace Teknoroma.Persistence.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Teknoroma.Domain.Entities.AppUserProfile", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("CreatedComputerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedIpAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<Guid>("MasterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NationalityNumber")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("AppUserProfiles");
+                });
+
             modelBuilder.Entity("Teknoroma.Domain.Entities.AppUserRole", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1134,6 +1203,17 @@ namespace Teknoroma.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Teknoroma.Domain.Entities.AppUserProfile", b =>
+                {
+                    b.HasOne("Teknoroma.Domain.Entities.AppUser", "AppUser")
+                        .WithOne("AppUserProfile")
+                        .HasForeignKey("Teknoroma.Domain.Entities.AppUserProfile", "ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("Teknoroma.Domain.Entities.Employee", b =>
                 {
                     b.HasOne("Teknoroma.Domain.Entities.AppUser", "AppUser")
@@ -1275,6 +1355,9 @@ namespace Teknoroma.Persistence.Migrations
 
             modelBuilder.Entity("Teknoroma.Domain.Entities.AppUser", b =>
                 {
+                    b.Navigation("AppUserProfile")
+                        .IsRequired();
+
                     b.Navigation("Employees");
 
                     b.Navigation("StockInputs");

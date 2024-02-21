@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Teknoroma.Application.Features.AppUserProfiles.Rules;
+using Teknoroma.Application.Features.AppUsers.Rules;
 using Teknoroma.Application.Features.Branches.Rules;
 using Teknoroma.Application.Features.Brands.Rules;
 using Teknoroma.Application.Features.Categories.Rules;
@@ -37,6 +39,8 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddTransient<DepartmentBusinessRules>();
 			services.AddTransient<ProductBusinessRules>();
 			services.AddTransient<SupplierBusinessRules>();
+			services.AddTransient<AppUserProfileBusinessRules>();
+			services.AddTransient<AppUserBusinessRules>();
 			
 
 			return services;

@@ -17,16 +17,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
     [Area("Admin")]
     [Authorize]
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
-        private readonly IMapper _mapper;
-        private readonly IApiService _apiService;
-
-        public ProductController(IMapper mapper, IApiService apiService)
-        {
-            _mapper = mapper;
-            _apiService = apiService;
-        }
         [HttpGet]
         public IActionResult Index()
         {
@@ -48,9 +40,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			model.ImagePath = await ImageHelper.ImageFile(productImage);
             if(ModelState.IsValid)
             {
-                CreateProductCommandRequest createProduct = _mapper.Map<CreateProductCommandRequest>(model);
+                CreateProductCommandRequest createProduct = Mapper.Map<CreateProductCommandRequest>(model);
 
-                HttpResponseMessage response = await _apiService.HttpClient.PostAsJsonAsync("product/create", createProduct);
+                HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("product/create", createProduct);
 
 				if (!response.IsSuccessStatusCode)
 				{
@@ -84,9 +76,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (id == null) return View();
 
-            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"product/getbyid/{id}");
+            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"product/getbyid/{id}");
 
-            ProductViewModel productViewModel = _mapper.Map<ProductViewModel>(response);
+            ProductViewModel productViewModel = Mapper.Map<ProductViewModel>(response);
             return View(productViewModel);
         }
 
@@ -100,7 +92,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			if (ModelState.IsValid)
             {
                 //ürünün eski resim yolunu alıyoruz
-                var oldProduct = await _apiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"product/getbyid/{model.ID}");
+                var oldProduct = await ApiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"product/getbyid/{model.ID}");
 
                 if (productImage == null)
                     model.ImagePath = oldProduct.ImagePath;
@@ -110,9 +102,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
                 model.UnitsInStock = oldProduct.UnitsInStock;
 
 
-                UpdateProductCommandRequest productDTO = _mapper.Map<UpdateProductCommandRequest>(model);
+                UpdateProductCommandRequest productDTO = Mapper.Map<UpdateProductCommandRequest>(model);
 
-                HttpResponseMessage response = await _apiService.HttpClient.PutAsJsonAsync("product/update", productDTO);
+                HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("product/update", productDTO);
 
                 //İşlem başarılı ise ve yeni resim yüklendi ise bu işlemi yap
                 if (response.IsSuccessStatusCode && productImage != null)
@@ -150,9 +142,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             //ürünün eski resim yolunu alıyoruz
-            string oldImagePath = _apiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"product/getbyid/{id}").Result.ImagePath;
+            string oldImagePath = ApiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"product/getbyid/{id}").Result.ImagePath;
 
-            HttpResponseMessage response = await _apiService.HttpClient.DeleteAsync($"product/delete/{id}");
+            HttpResponseMessage response = await ApiService.HttpClient.DeleteAsync($"product/delete/{id}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -167,9 +159,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ProductList()
         {
-            var response = await _apiService.HttpClient.GetFromJsonAsync<List<GetAllProductQueryResponse>>("product/getall");
+            var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllProductQueryResponse>>("product/getall");
 
-            List<ProductListViewModel> products = _mapper.Map<List<ProductListViewModel>>(response);
+            List<ProductListViewModel> products = Mapper.Map<List<ProductListViewModel>>(response);
 
             return View(products);
         }
@@ -183,9 +175,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (id == null) return View();
 
-            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"product/getbyid/{id}");
+            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"product/getbyid/{id}");
 
-            ProductViewModel productViewModel = _mapper.Map<ProductViewModel>(response);
+            ProductViewModel productViewModel = Mapper.Map<ProductViewModel>(response);
 
             return View(productViewModel);
         }
@@ -193,7 +185,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         private async Task ProductViewBag()
         {
-            var getProductList =  _apiService.HttpClient.GetFromJsonAsync<List<GetAllProductQueryResponse>>("product/getall").Result.Select(x => new GetAllProductQueryResponse
+            var getProductList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllProductQueryResponse>>("product/getall").Result.Select(x => new GetAllProductQueryResponse
 			{
 				ProductName = x.ProductName,
 				ID = x.ID
@@ -204,7 +196,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         private async Task CategoryViewBag()
         {
-            var getCategoryList =  _apiService.HttpClient.GetFromJsonAsync<List<GetAllCategoryQueryResponse>>("category/getall").Result.Select(x => new GetAllCategoryQueryResponse
+            var getCategoryList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllCategoryQueryResponse>>("category/getall").Result.Select(x => new GetAllCategoryQueryResponse
 			{
 				CategoryName = x.CategoryName,
 				ID = x.ID
@@ -215,7 +207,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         private async Task BrandViewBag()
         {
-            var getBrandList = _apiService.HttpClient.GetFromJsonAsync<List<GetAllBrandCommandResponse>>("brand/getall").Result.Select(x => new GetAllBrandCommandResponse
+            var getBrandList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllBrandCommandResponse>>("brand/getall").Result.Select(x => new GetAllBrandCommandResponse
 			{
 				BrandName = x.BrandName,
 				ID = x.ID

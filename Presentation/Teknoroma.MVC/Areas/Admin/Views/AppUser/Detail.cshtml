@@ -1,0 +1,95 @@
+﻿@using Teknoroma.Application.Features.AppUsers.Models
+
+@model AppUserViewModel
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row mx-4">
+    <div class="col-md-12 mx-auto">
+        <div class="card card-primary">
+            <div class="card-header">
+                <div class="form-group">
+                    <label>Kullanıcı Seçiniz</label>
+                    <select class="form-control" onchange="redirectToSelectedPage(this)">
+                        @foreach (var appUser in ViewBag.AppUserList)
+                        {
+                            @if (Model == null)
+                            {
+                                <option value="@appUser.ID" href="@appUser.ID">@appUser.UserName</option>
+                            }
+                            else if (appUser.ID == Model.ID)
+                            {
+                                <option value="@appUser.ID" selected>@appUser.UserName</option>
+                            }
+                            else
+                            {
+                                <option value="@appUser.ID" href="@appUser.ID">@appUser.UserName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mx-auto">
+                    <form>
+                        <div class="card-body">
+                            <div asp-validation-summary="All">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ID"></label>
+                                <input type="text" class="form-control" asp-for="@Model.ID" disabled>
+                                <input type="hidden" asp-for="@Model.ID" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="UserName"></label>
+                                <input type="text" class="form-control" asp-for="@Model.UserName" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email"></label>
+                                <input type="email" class="form-control" asp-for="@Model.Email">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="FirstName"></label>
+                                <input type="text" class="form-control" asp-for="@Model.FirstName">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="LastName"></label>
+                                <input type="text" class="form-control" asp-for="@Model.LastName">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PhoneNumber"></label>
+                                <input type="number" class="form-control" asp-for="@Model.PhoneNumber">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="NationalityNumber"></label>
+                                <input type="text" class="form-control" asp-for="@Model.NationalityNumber">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Address"></label>
+                                <textarea class="form-control" rows="3" cols="4" asp-for="@Model.Address"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function redirectToSelectedPage(selectElement) {
+        // Seçili değeri al
+        var selectedValue = selectElement.value;
+
+        // Yönlendirme yapmak istediğiniz URL'yi oluşturun
+        var redirectUrl = '/Admin/AppUser/Detail/' + selectedValue;
+
+        // Yönlendirme işlemi
+        window.location.href = redirectUrl;
+    }
+</script>
+
+

@@ -352,24 +352,35 @@
 							<a href="#" class="nav-link">
 								<i class="fa fa-users" aria-hidden="true"></i>
 								<p>
-									Users
+									Kullanıcılar
 									<i class="fas fa-angle-left right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="pages/UI/general.html" class="nav-link">
-										<i class="fa fa-list-ul" aria-hidden="true"></i>
-										<p>User List</p>
+									<a asp-controller="AppUser" asp-action="Create" class="nav-link">
+										<i class="fa fa-plus" aria-hidden="true"></i>
+										<p>Ekle</p>
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="pages/UI/icons.html" class="nav-link">
-										<i class="fa fa-plus" aria-hidden="true"></i>
-										<p>Create User</p>
+									<a asp-controller="AppUser" asp-action="Update" class="nav-link">
+										<i class="fa-solid fa-pen"></i>
+										<p>Güncelle</p>
 									</a>
 								</li>
-
+								<li class="nav-item">
+									<a asp-controller="AppUser" asp-action="Detail" class="nav-link">
+										<i class="fa-solid fa-circle-info"></i>
+										<p>Detaylar</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a asp-controller="AppUser" asp-action="AppUserList" class="nav-link">
+										<i class="fa fa-list-ul" aria-hidden="true"></i>
+										<p>Kullanıcı Listesi</p>
+									</a>
+								</li>
 							</ul>
 						</li>
 						<!--User Roles-->

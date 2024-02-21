@@ -19,7 +19,7 @@ namespace Teknoroma.Application.Features.Departments.Rules
 			if (result)
 				throw new BusinessException(DepartmentsMessages.DepartmentNameExists);
 		}
-		public async Task UpdateDepartmentNameCannotBeDuplicatedWhenInserted(string oldDepartmentName, string newDepartmentName)
+		public async Task DepartmentNameCannotBeDuplicatedWhenUpdated(string oldDepartmentName, string newDepartmentName)
 		{
 			if (oldDepartmentName != newDepartmentName)
 			{

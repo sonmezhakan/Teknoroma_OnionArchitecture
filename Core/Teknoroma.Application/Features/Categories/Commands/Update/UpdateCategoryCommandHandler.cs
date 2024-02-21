@@ -23,7 +23,7 @@ namespace Teknoroma.Application.Features.Categories.Commands.Update
             Category category = await _categoryRepository.GetAsync(x => x.ID == request.ID);
 
 			//BusinessRuless
-			await _categoryBusinessRules.UpdateCategoryNameCannotBeDuplicatedWhenInserted(category.CategoryName,request.CategoryName);
+			await _categoryBusinessRules.CategoryNameCannotBeDuplicatedWhenUpdated(category.CategoryName,request.CategoryName);
 
 			category = _mapper.Map(request, category);
 

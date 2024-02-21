@@ -24,7 +24,7 @@ namespace Teknoroma.Application.Features.Departments.Command.Update
 			Department department = await _departmentRepository.GetAsync(x=>x.ID == request.ID);
 
 			//BusinessRules
-			await _departmentBusinessRules.UpdateDepartmentNameCannotBeDuplicatedWhenInserted(department.DepartmentName,request.DepartmentName);
+			await _departmentBusinessRules.DepartmentNameCannotBeDuplicatedWhenUpdated(department.DepartmentName,request.DepartmentName);
 
 			department = _mapper.Map(request, department);
 

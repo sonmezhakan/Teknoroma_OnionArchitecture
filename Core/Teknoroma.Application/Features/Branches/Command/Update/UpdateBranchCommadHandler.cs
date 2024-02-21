@@ -24,8 +24,8 @@ namespace Teknoroma.Application.Features.Branches.Command.Update
 			Branch branch = await _branchRepository.GetAsync(x => x.ID == request.ID);
 
 			//BusinesRules
-			await _branchBusinessRules.UpdateBranchNameCannotBeDuplicatedWhenInserted(branch.BranchName,request.BranchName);
-			await _branchBusinessRules.UpdatePhoneNumberCannotBeDuplicatedWhenInserted(branch.PhoneNumber,request.PhoneNumber);
+			await _branchBusinessRules.BranchNameCannotBeDuplicatedWhenUpdated(branch.BranchName,request.BranchName);
+			await _branchBusinessRules.PhoneNumberCannotBeDuplicatedWhenUpdated(branch.PhoneNumber,request.PhoneNumber);
 
 			branch = _mapper.Map(request, branch);
 

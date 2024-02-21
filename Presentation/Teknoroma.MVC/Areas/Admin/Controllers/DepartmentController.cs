@@ -1,28 +1,19 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.Departments.Command.Create;
 using Teknoroma.Application.Features.Departments.Command.Update;
 using Teknoroma.Application.Features.Departments.Models;
 using Teknoroma.Application.Features.Departments.Queries.GetById;
 using Teknoroma.Application.Features.Departments.Queries.GetList;
-using Teknoroma.Infrastructure.WebApiService;
 using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
-    public class DepartmentController : Controller
+    public class DepartmentController : BaseController
     {
-        private readonly IMapper _mapper;
-        private readonly IApiService _apiService;
-
-        public DepartmentController(IMapper mapper,IApiService apiService)
-        {
-            _mapper = mapper;
-            _apiService = apiService;
-        }
+        
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -33,9 +24,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         {
             if(ModelState.IsValid)
             {
-                CreateDepartmentCommandRequest createDepartmentDTO = _mapper.Map<CreateDepartmentCommandRequest>(model);
+                CreateDepartmentCommandRequest createDepartmentDTO = Mapper.Map<CreateDepartmentCommandRequest>(model);
 
-                HttpResponseMessage response = await _apiService.HttpClient.PostAsJsonAsync("department/create", createDepartmentDTO);
+                HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("department/create", createDepartmentDTO);
 
 				if (!response.IsSuccessStatusCode)
 				{
@@ -63,11 +54,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (id == null) return View();
 
-            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdDepartmentQueryResponse>($"department/GetById/{id}");
+            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdDepartmentQueryResponse>($"department/GetById/{id}");
 
             if(response == null) return View();
 
-            DepartmentViewModel departmentViewModel = _mapper.Map<DepartmentViewModel>(response);
+            DepartmentViewModel departmentViewModel = Mapper.Map<DepartmentViewModel>(response);
 
             return View(departmentViewModel);
         }
@@ -76,9 +67,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         {
             if(ModelState.IsValid)
             {
-                UpdateDepartmentCommandRequest updateDepartment = _mapper.Map<UpdateDepartmentCommandRequest>(model);
+                UpdateDepartmentCommandRequest updateDepartment = Mapper.Map<UpdateDepartmentCommandRequest>(model);
 
-                HttpResponseMessage response = await _apiService.HttpClient.PutAsJsonAsync("department/update", updateDepartment);
+                HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("department/update", updateDepartment);
 
 				if (!response.IsSuccessStatusCode)
 				{
@@ -105,7 +96,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _apiService.HttpClient.DeleteAsync($"department/delete/{id}");
+            await ApiService.HttpClient.DeleteAsync($"department/delete/{id}");
 
             return RedirectToAction("DepartmentList", "Department");
         }
@@ -113,11 +104,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> DepartmentList()
         {
-            var response = await _apiService.HttpClient.GetFromJsonAsync<List<GetAllDepartmentQueryResponse>>("department/getall");
+            var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllDepartmentQueryResponse>>("department/getall");
 
             if (response.Count <= 0) return View();
 
-            List<DepartmentViewModel> departmentViewModels = _mapper.Map<List<DepartmentViewModel>>(response);
+            List<DepartmentViewModel> departmentViewModels = Mapper.Map<List<DepartmentViewModel>>(response);
 
             return View(departmentViewModels);
         }
@@ -129,16 +120,16 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (id == null) return View();
 
-            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdDepartmentQueryResponse>($"department/getbyid/{id}");
+            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdDepartmentQueryResponse>($"department/getbyid/{id}");
 
-            DepartmentViewModel departmentViewModel = _mapper.Map<DepartmentViewModel>(response);
+            DepartmentViewModel departmentViewModel = Mapper.Map<DepartmentViewModel>(response);
 
             return View(departmentViewModel);
         }
 
         private async Task DepartmentViewBag()
         {
-            var getDepartmentList = _apiService.HttpClient.GetFromJsonAsync<List<GetAllDepartmentQueryResponse>>("department/getall").Result.Select(x => new GetAllDepartmentQueryResponse
+            var getDepartmentList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllDepartmentQueryResponse>>("department/getall").Result.Select(x => new GetAllDepartmentQueryResponse
 			{
                 ID = x.ID,
                 DepartmentName = x.DepartmentName

@@ -1,5 +1,4 @@
 ﻿using Teknoroma.Application.Exceptions.Types;
-using Teknoroma.Application.Features.Branches.Constants;
 using Teknoroma.Application.Features.Brands.Contants;
 using Teknoroma.Application.Repositories;
 
@@ -20,7 +19,7 @@ namespace Teknoroma.Application.Features.Brands.Rules
             if(result)
 				throw new BusinessException(BrandsMessages.BrandNameExists);
 		}
-		public async Task UpdateBrandNameCannotBeDuplicatedWhenInserted(string oldBrandName, string newBrandName)
+		public async Task BrandNameCannotBeDuplicatedWhenUpdated(string oldBrandName, string newBrandName)
 		{
 			if(oldBrandName != newBrandName)
 			{
@@ -31,15 +30,18 @@ namespace Teknoroma.Application.Features.Brands.Rules
 			}
 		}
 
-		public async Task PhoneNumberCannotBeDuplicatedWhenInserted(string phoneNumber)
+		public async Task PhoneNumberCannotBeDuplicatedWhenInserted(string? phoneNumber)
 		{
-			bool result = await _brandRepository.AnyAsync(x => x.PhoneNumber == phoneNumber);
+			if(phoneNumber != null)
+			{
+                bool result = await _brandRepository.AnyAsync(x => x.PhoneNumber == phoneNumber);
 
-			if (result)
-				throw new BusinessException(BrandsMessages.PhoneNumberExists);
+                if (result)
+                    throw new BusinessException(BrandsMessages.PhoneNumberExists);
+            }
 		}
 
-		public async Task UpdatePhoneNumberCannotBeDuplicatedWhenInserted(string oldPhoneNumber, string newPhoneNumber)
+		public async Task PhoneNumberCannotBeDuplicatedWhenUpdated(string oldPhoneNumber, string newPhoneNumber)
 		{
 			if (oldPhoneNumber != newPhoneNumber)
 			{

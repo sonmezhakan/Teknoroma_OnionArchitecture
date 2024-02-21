@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Teknoroma.Application.Exceptions.Types;
+﻿using Teknoroma.Application.Exceptions.Types;
 using Teknoroma.Application.Features.Branches.Constants;
 using Teknoroma.Application.Repositories;
-using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Branches.Rules
 {
-	public class BranchBusinessRules
+    public class BranchBusinessRules
 	{
 		private readonly IBranchRepository _branchRepository;
 
@@ -27,7 +21,7 @@ namespace Teknoroma.Application.Features.Branches.Rules
 				throw new BusinessException(BranchesMessages.BranchNameExists);
 		}
 
-		public async Task UpdateBranchNameCannotBeDuplicatedWhenInserted(string oldBranchName,string newBranchName)
+		public async Task BranchNameCannotBeDuplicatedWhenUpdated(string oldBranchName,string newBranchName)
 		{
 			if (oldBranchName != newBranchName)
 			{
@@ -50,7 +44,7 @@ namespace Teknoroma.Application.Features.Branches.Rules
             }
 		}
 
-		public async Task UpdatePhoneNumberCannotBeDuplicatedWhenInserted(string oldPhoneNumber, string newPhoneNumber)
+		public async Task PhoneNumberCannotBeDuplicatedWhenUpdated(string oldPhoneNumber, string newPhoneNumber)
 		{
 			if(oldPhoneNumber != newPhoneNumber)
 			{

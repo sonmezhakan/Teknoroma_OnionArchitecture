@@ -12,15 +12,18 @@ namespace Teknoroma.Application.Features.Suppliers.Rules
 		{
 			_supplierRepository = supplierRepository;
 		}
-		public async Task PhoneNumberCannotBeDuplicatedWhenInserted(string phoneNumber)
+		public async Task PhoneNumberCannotBeDuplicatedWhenInserted(string? phoneNumber)
 		{
-			bool result = await _supplierRepository.AnyAsync(x => x.PhoneNumber == phoneNumber);
+			if(phoneNumber != null)
+			{
+                bool result = await _supplierRepository.AnyAsync(x => x.PhoneNumber == phoneNumber);
 
-			if (result)
-				throw new BusinessException(SuppliersMessages.PhoneNumberExists);
+                if (result)
+                    throw new BusinessException(SuppliersMessages.PhoneNumberExists);
+            }
 		}
 
-		public async Task UpdatePhoneNumberCannotBeDuplicatedWhenInserted(string oldPhoneNumber, string newPhoneNumber)
+		public async Task PhoneNumberCannotBeDuplicatedWhenUpdated(string oldPhoneNumber, string newPhoneNumber)
 		{
 			if (oldPhoneNumber != newPhoneNumber)
 			{

@@ -23,7 +23,7 @@ namespace Teknoroma.Application.Features.Suppliers.Command.Update
 			Teknoroma.Domain.Entities.Supplier supplier = await _supplierRepository.GetAsync(x => x.ID == request.ID);
 
 			//BusinessRules
-			await _supplierBusinessRules.UpdatePhoneNumberCannotBeDuplicatedWhenInserted(supplier.PhoneNumber,request.PhoneNumber);
+			await _supplierBusinessRules.PhoneNumberCannotBeDuplicatedWhenUpdated(supplier.PhoneNumber,request.PhoneNumber);
 
 			supplier = _mapper.Map(request, supplier);
 

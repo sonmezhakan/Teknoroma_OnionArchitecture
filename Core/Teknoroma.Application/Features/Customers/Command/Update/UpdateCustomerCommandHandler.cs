@@ -29,7 +29,7 @@ namespace Teknoroma.Application.Features.Customers.Command.Update
 			Customer customer = await _customerRepository.GetAsync(x => x.ID == request.ID);
 
 			//BusinessRules
-			await _customerBusinessRules.UpdatePhoneNumberCannotBeDuplicatedWhenInserted(customer.PhoneNumber,request.PhoneNumber);
+			await _customerBusinessRules.PhoneNumberCannotBeDuplicatedWhenUpdated(customer.PhoneNumber,request.PhoneNumber);
 
 			customer = _mapper.Map(request, customer);
 

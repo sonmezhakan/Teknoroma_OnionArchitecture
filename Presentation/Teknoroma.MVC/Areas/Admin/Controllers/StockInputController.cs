@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.AppUsers.Queries.GetByUserName;
 using Teknoroma.Application.Features.Branches.Queries.GetAll;
@@ -10,23 +9,14 @@ using Teknoroma.Application.Features.StockInputs.Models;
 using Teknoroma.Application.Features.StockInputs.Queries.GetById;
 using Teknoroma.Application.Features.StockInputs.Queries.GetList;
 using Teknoroma.Application.Features.Suppliers.Queries.GetList;
-using Teknoroma.Infrastructure.WebApiService;
 using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
-	[Area("Admin")]
+    [Area("Admin")]
 	[Authorize]
-	public class StockInputController : Controller
+	public class StockInputController : BaseController
     {
-        private readonly IApiService _apiService;
-        private readonly IMapper _mapper;
-
-        public StockInputController(IApiService apiService, IMapper mapper)
-        {
-            _apiService = apiService;
-            _mapper = mapper;
-        }
 
         [HttpGet]
         public async Task<IActionResult> Create()
@@ -43,12 +33,12 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         {
             if(ModelState.IsValid)
             {
-                var responseAppUser = await _apiService.HttpClient.GetFromJsonAsync<GetByUserNameAppUserQueryResponse>($"user/GetByUserName/{User.Identity.Name}");
+                var responseAppUser = await ApiService.HttpClient.GetFromJsonAsync<GetByUserNameAppUserQueryResponse>($"user/GetByUserName/{User.Identity.Name}");
 
-                CreateStockInputCommandRequest createStockInput = _mapper.Map<CreateStockInputCommandRequest>(model);
+                CreateStockInputCommandRequest createStockInput = Mapper.Map<CreateStockInputCommandRequest>(model);
                 createStockInput.AppUserID = responseAppUser.ID;
 
-                HttpResponseMessage response = await _apiService.HttpClient.PostAsJsonAsync("stockInput/create", createStockInput);
+                HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("stockInput/create", createStockInput);
 
                 if (response.IsSuccessStatusCode) return RedirectToAction("Create", "StockInput");
 
@@ -81,11 +71,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (id == null) return View();
 
-            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdStockInputQueryResponse>($"stockInput/getbyid/{id}");
+            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdStockInputQueryResponse>($"stockInput/getbyid/{id}");
 
             if(response == null) return View();
 
-            StockInputViewModel stockInputViewModel = _mapper.Map<StockInputViewModel>(response);
+            StockInputViewModel stockInputViewModel = Mapper.Map<StockInputViewModel>(response);
 
             return View(stockInputViewModel);
         }
@@ -95,9 +85,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         {
             if(ModelState.IsValid)
             {
-                UpdateStockInputCommandRequest updateStockInput = _mapper.Map<UpdateStockInputCommandRequest>(model);
+                UpdateStockInputCommandRequest updateStockInput = Mapper.Map<UpdateStockInputCommandRequest>(model);
 
-                HttpResponseMessage response = await _apiService.HttpClient.PutAsJsonAsync("stockInput/update", updateStockInput);
+                HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("stockInput/update", updateStockInput);
 
                 if (response.IsSuccessStatusCode) return RedirectToAction("Update", model.ID);
 
@@ -128,7 +118,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _apiService.HttpClient.DeleteAsync($"stockInput/delete/{id}");
+            await ApiService.HttpClient.DeleteAsync($"stockInput/delete/{id}");
 
             return RedirectToAction("StockInputList", "StockInput");
         }
@@ -143,11 +133,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (id == null) return View();
 
-            var response = await _apiService.HttpClient.GetFromJsonAsync<GetByIdStockInputQueryResponse>($"stockInput/getbyid/{id}");
+            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdStockInputQueryResponse>($"stockInput/getbyid/{id}");
 
             if (response == null) return View();
 
-            StockInputViewModel stockInputViewModel = _mapper.Map<StockInputViewModel>(response);
+            StockInputViewModel stockInputViewModel = Mapper.Map<StockInputViewModel>(response);
 
             return View(stockInputViewModel);
         }
@@ -155,25 +145,25 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> StockInputList()
         {
-            var response = await _apiService.HttpClient.GetFromJsonAsync<List<GetAllStockInputQueryResponse>>("stockInput/getall");
+            var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockInputQueryResponse>>("stockInput/getall");
 
             if (response == null) return View();
 
-            List<StockInputListViewModel> stockInputListViewModel = _mapper.Map<List<StockInputListViewModel>>(response);
+            List<StockInputListViewModel> stockInputListViewModel = Mapper.Map<List<StockInputListViewModel>>(response);
 
             return View(stockInputListViewModel);
         }
 
         private async Task StockInputViewBag()
         {
-            var stockInputs = await _apiService.HttpClient.GetFromJsonAsync<List<GetAllStockInputQueryResponse>>("stockInput/getall");
+            var stockInputs = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockInputQueryResponse>>("stockInput/getall");
 
             ViewBag.StockInputList = stockInputs;
         }
 
         private async Task BranchViewBag()
         {
-            var branches = _apiService.HttpClient.GetFromJsonAsync<List<GetAllBranchQueryResponse>>("branch/getall").Result
+            var branches = ApiService.HttpClient.GetFromJsonAsync<List<GetAllBranchQueryResponse>>("branch/getall").Result
                 .Select(branch => new GetAllBranchQueryResponse
                 {
                     BranchName = branch.BranchName,
@@ -185,7 +175,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         private async Task ProductViewBag()
         {
-            var products = _apiService.HttpClient.GetFromJsonAsync<List<GetAllProductQueryResponse>>("product/getall").Result
+            var products = ApiService.HttpClient.GetFromJsonAsync<List<GetAllProductQueryResponse>>("product/getall").Result
                 .Select(produduct => new GetAllProductQueryResponse
                 {
                     ProductName = produduct.ProductName,
@@ -196,7 +186,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
         private async Task SupplierViewBag()
         {
-            var suppliers = _apiService.HttpClient.GetFromJsonAsync<List<GetAllSupplierQueryResponse>>("supplier/getall").Result
+            var suppliers = ApiService.HttpClient.GetFromJsonAsync<List<GetAllSupplierQueryResponse>>("supplier/getall").Result
                 .Select(supplier => new GetAllSupplierQueryResponse
                 {
                     CompanyName = supplier.CompanyName,

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Teknoroma.Application.Exceptions.Types;
+﻿using Teknoroma.Application.Exceptions.Types;
 using Teknoroma.Application.Features.Categories.Constants;
 using Teknoroma.Application.Repositories;
 
 namespace Teknoroma.Application.Features.Categories.Rules
 {
-	public class CategoryBusinessRules
+    public class CategoryBusinessRules
 	{
 		private readonly ICategoryRepository _categoryRepository;
 
@@ -22,7 +19,7 @@ namespace Teknoroma.Application.Features.Categories.Rules
 			if (result)
 				throw new BusinessException(CategoryMessages.CategoryNameExists);
 		}
-		public async Task UpdateCategoryNameCannotBeDuplicatedWhenInserted(string oldCategoryName, string newCategoryName)
+		public async Task CategoryNameCannotBeDuplicatedWhenUpdated(string oldCategoryName, string newCategoryName)
 		{
 			if (oldCategoryName != newCategoryName)
 			{
