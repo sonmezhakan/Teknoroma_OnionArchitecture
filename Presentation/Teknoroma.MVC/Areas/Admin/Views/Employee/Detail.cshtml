@@ -12,7 +12,7 @@
 				<div class="form-group">
 					<label>Çalışan Seçiniz</label>
 					<select class="form-control" onchange="redirectToSelectedPage(this)">
-						@if(Model != null)
+						@if (ViewBag.AppUserList != null)
 						{
 							@foreach (var appUser in ViewBag.AppUserList)
 							{
@@ -34,7 +34,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-8 mx-auto">
+				<div class="col-md-12 mx-auto">
 					<form method="post" enctype="multipart/form-data">
 						<div class="card-body">
 							<div asp-validation-summary="All">
@@ -94,7 +94,7 @@
 		var selectedValue = selectElement.value;
 
 		// Yönlendirme yapmak istediğiniz URL'yi oluşturun
-		var redirectUrl = '/Admin/Employee/Detail/' + selectedValue;
+		var redirectUrl = '/Admin/AppUser/Detail/' + selectedValue;
 
 		// Yönlendirme işlemi
 		window.location.href = redirectUrl;

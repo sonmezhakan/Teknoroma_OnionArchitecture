@@ -1,14 +1,10 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Teknoroma.Application.Pipelines.Transaction;
 
 namespace Teknoroma.Application.Features.Categories.Commands.Delete
 {
-    public class DeleteCategoryCommandRequest:IRequest<Unit>
-    {
+	public class DeleteCategoryCommandRequest:IRequest<Unit>, ITransactionalRequest
+	{
         public Guid ID { get; set; }
     }
 }

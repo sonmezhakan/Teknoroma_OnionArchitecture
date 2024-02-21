@@ -1,9 +1,10 @@
 ﻿using MediatR;
+using Teknoroma.Application.Pipelines.Transaction;
 
 namespace Teknoroma.Application.Features.StockInputs.Command.Update
 {
-    public class UpdateStockInputCommandRequest:IRequest<Unit>
-    {
+    public class UpdateStockInputCommandRequest:IRequest<Unit>, ITransactionalRequest
+	{
         public Guid ID { get; set; }
         public Guid BranchID { get; set; }
         public Guid ProductID { get; set; }

@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
+using Teknoroma.Application.Pipelines.Transaction;
 
 namespace Teknoroma.Application.Features.Products.Command.Create
 {
-	public class CreateProductCommandRequest:IRequest<Unit>
+	public class CreateProductCommandRequest:IRequest<Unit>, ITransactionalRequest
 	{
 		public string ProductName { get; set; }
 		public decimal? UnitPrice { get; set; }

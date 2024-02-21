@@ -27,23 +27,6 @@ namespace Teknoroma.Application.Features.Employees.Queries.GetById
         {
             Employee employee = await _employeeRepository.GetAsync(x => x.ID == request.ID);
             GetByIdEmployeeQueryResponse getByIdEmployeeQueryResponse = _mapper.Map<GetByIdEmployeeQueryResponse>(employee);
-
-            /*var appUser = await _mediator.Send(new GetByIdAppUserQueryRequest { ID = request.ID });
-            var appUserProfile = await _mediator.Send(new GetByIdAppUserProfileQueryRequest { ID = request.ID });
-
-            GetByIdEmployeeQueryResponse getByAppUserIdEmployeeQueryResponse = new GetByIdEmployeeQueryResponse
-            {
-                ID = employee.ID,
-                UserName = appUser.UserName,
-                Email = appUser.Email,
-                PhoneNumber = appUser.PhoneNumber,
-                FirstName = appUserProfile.FirstName,
-                LastName = appUserProfile.LastName,
-                Address = appUserProfile.Address,
-                NationalityNumber = appUserProfile.NationalityNumber,
-                BranchName = _mediator.Send(new GetByIdBranchQueryRequest { ID = employee.BranchID }).Result.BranchName,
-                DepartmentName = _mediator.Send(new GetByIdDepartmentQueryRequest { ID = employee.DepartmentID }).Result.DepartmentName
-            };*/
             
             return getByIdEmployeeQueryResponse;
 

@@ -11,6 +11,7 @@ using Teknoroma.Application.Features.Departments.Rules;
 using Teknoroma.Application.Features.Employees.Rules;
 using Teknoroma.Application.Features.Products.Rules;
 using Teknoroma.Application.Features.Suppliers.Rules;
+using Teknoroma.Application.Pipelines.Transaction;
 using Teknoroma.Application.Pipelines.Validation;
 
 namespace Teknoroma.Persistence.DependencyResolvers
@@ -29,6 +30,7 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			{
 				configuration.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 				configuration.AddOpenBehavior(typeof(RequestValidationBehavior<,>));
+				configuration.AddOpenBehavior(typeof(TransactionScopeBehavior<,>));
 			});
 
 			//services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));

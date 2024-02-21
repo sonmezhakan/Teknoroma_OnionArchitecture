@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Teknoroma.Application.Features.AppUserRoles.Contants
+﻿namespace Teknoroma.Application.Features.AppUserRoles.Contants
 {
-    internal class AppUserRoleColumnNames
+	public class AppUserRoleColumnNames
     {
+        public const string ID = "ID";
+        public const string Name = "Yetki Adı*";
     }
 }

@@ -66,9 +66,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{id}");
 
-			GetByIdEmployeeQueryResponse getByIdEmployeeQueryResponse = Mapper.Map<GetByIdEmployeeQueryResponse>(response);
+			UpdateEmployeeViewModel updateEmployeeViewModel = Mapper.Map<UpdateEmployeeViewModel>(response);
 
-			return View(getByIdEmployeeQueryResponse);
+			return View(updateEmployeeViewModel);
 		}
 		[HttpPost]
 		public async Task<IActionResult> Update(UpdateEmployeeViewModel model)
@@ -83,7 +83,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 				HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("employee/update", updateEmployeeCommandRequest);
 
-				if (response.IsSuccessStatusCode) return View(model.ID);
+				if (response.IsSuccessStatusCode) return RedirectToAction("Update",model.ID);
 
 				await ErrorResponseViewModel.Instance.CopyForm(response);
 
@@ -117,16 +117,16 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{id}");
 
-			GetByIdEmployeeQueryResponse getByIdEmployeeQueryResponse = Mapper.Map<GetByIdEmployeeQueryResponse>(response);
+			EmployeeViewModel employeeViewModel = Mapper.Map<EmployeeViewModel>(response);
 
-			return View(getByIdEmployeeQueryResponse);
+			return View(employeeViewModel);
 		}
 		[HttpGet]
 		public async Task<IActionResult> EmployeeList()
 		{
 			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllEmployeeQueryResponse>>("employee/getall");
 
-			EmployeeViewModel employeeViewModel = Mapper.Map<EmployeeViewModel>(response);
+			List<EmployeeViewModel> employeeViewModel = Mapper.Map<List<EmployeeViewModel>>(response);
 
 			return View(employeeViewModel);
 		}

@@ -1,13 +1,9 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Teknoroma.Application.Pipelines.Transaction;
 
 namespace Teknoroma.Application.Features.Brands.Command.Update
 {
-	public class UpdateBrandCommandRequest:IRequest<Unit>
+	public class UpdateBrandCommandRequest:IRequest<Unit>, ITransactionalRequest
 	{
 		public Guid ID { get; set; }
 		public string BrandName { get; set; }

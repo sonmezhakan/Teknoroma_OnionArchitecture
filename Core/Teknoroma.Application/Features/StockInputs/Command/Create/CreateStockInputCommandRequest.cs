@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using Teknoroma.Application.Pipelines.Transaction;
 
 namespace Teknoroma.Application.Features.StockInputs.Command.Create
 {
-    public class CreateStockInputCommandRequest:IRequest<Unit>
+    public class CreateStockInputCommandRequest:IRequest<Unit>,ITransactionalRequest
     {
         public Guid BranchID { get; set; }
         public Guid ProductID { get; set; }

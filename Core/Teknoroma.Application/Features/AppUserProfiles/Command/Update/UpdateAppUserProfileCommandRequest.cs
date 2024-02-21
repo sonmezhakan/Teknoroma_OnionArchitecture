@@ -1,10 +1,11 @@
 ﻿
 using MediatR;
+using Teknoroma.Application.Pipelines.Transaction;
 
 namespace Teknoroma.Application.Features.AppUserProfiles.Command.Update
 {
-    public class UpdateAppUserProfileCommandRequest:IRequest<Unit>
-    {
+    public class UpdateAppUserProfileCommandRequest:IRequest<Unit>, ITransactionalRequest
+	{
         public Guid ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

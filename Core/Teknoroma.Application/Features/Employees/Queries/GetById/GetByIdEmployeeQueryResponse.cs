@@ -3,6 +3,8 @@
     public class GetByIdEmployeeQueryResponse
     {
         public Guid ID { get; set; }
+        public Guid BranchID { get; set; }
+        public Guid DepartmentID { get; set; }
         public string BranchName { get; set; }
         public string DepartmentName { get; set; }
         public string UserName { get; set; }

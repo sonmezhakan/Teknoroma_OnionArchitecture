@@ -1,9 +1,10 @@
 ﻿using MediatR;
+using Teknoroma.Application.Pipelines.Transaction;
 
 
 namespace Teknoroma.Application.Features.Products.Command.Update
 {
-	public class UpdateProductCommandRequest:IRequest<Unit>
+	public class UpdateProductCommandRequest:IRequest<Unit>, ITransactionalRequest
 	{
         public Guid ID { get; set; }
         public string ProductName { get; set; }

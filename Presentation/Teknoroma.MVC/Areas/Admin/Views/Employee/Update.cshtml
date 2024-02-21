@@ -1,8 +1,8 @@
 ﻿@using Teknoroma.Application.Features.Employees.Models
 @model UpdateEmployeeViewModel
 @{
-    ViewData["Title"] = "Update";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["Title"] = "Update";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 
@@ -13,7 +13,7 @@
 				<h3 class="card-title">Çalışan Ekle</h3>
 			</div>
 			<div class="row">
-				<div class="col-md-8 mx-auto">
+				<div class="col-md-12 mx-auto">
 					<form method="post" enctype="multipart/form-data">
 						<div class="card-body">
 							<div asp-validation-summary="All">
@@ -21,36 +21,69 @@
 							<div class="form-group">
 								<label asp-for="ID"></label>
 								<select class="form-control" aria-label="Default select example" asp-for="@Model.ID">
-									if@(ViewBag.AppUserList != null)
+									@if (ViewBag.AppUserList != null)
 									{
-									@foreach (var appUser in ViewBag.AppUserList)
-									{
-										<option value="@appUser.ID">@appUser.UserName</option>
-									}
+										@foreach (var appUser in ViewBag.AppUserList)
+										{
+											@if (Model == null)
+											{
+												<option value="@appUser.ID" href="@appUser.ID">@appUser.UserName</option>
+											}
+											else if (appUser.ID == Model.ID)
+											{
+												<option value="@appUser.ID" selected>@appUser.UserName</option>
+											}
+											else
+											{
+												<option value="@appUser.ID" href="@appUser.ID">@appUser.UserName</option>
+											}
+										}
 									}
 								</select>
 							</div>
 							<div class="form-group">
 								<label asp-for="BranchID"></label>
 								<select class="form-control" aria-label="Default select example" asp-for="@Model.BranchID">
-									@if(ViewBag.BranchList != null)
+									@if (ViewBag.BranchList != null)
 									{
-									@foreach (var branch in ViewBag.BranchList)
-									{
-										<option value="@branch.ID">@branch.BranchName</option>
-									}
+										@foreach (var branch in ViewBag.BranchList)
+										{
+											@if(Model == null)
+											{
+												<option value="@branch.ID">@branch.BranchName</option>
+											}
+											else if (branch.ID == Model.BranchID)
+											{
+												<option value="@branch.ID" selected>@branch.BranchName</option>
+											}
+											else
+											{
+												<option value="@branch.ID">@branch.BranchName</option>
+											}
+										}
 									}
 								</select>
 							</div>
 							<div class="form-group">
 								<label asp-for="DepartmentID"></label>
 								<select class="form-control" aria-label="Default select example" asp-for="@Model.DepartmentID">
-									@if(ViewBag.DepartmentList != null)
+									@if (ViewBag.DepartmentList != null)
 									{
-									@foreach (var department in ViewBag.DepartmentList)
-									{
-										<option value="@department.ID">@department.DepartmentName</option>
-									}
+										@foreach (var department in ViewBag.DepartmentList)
+										{
+											@if(Model == null)
+											{
+												<option value="@department.ID">@department.DepartmentName</option>
+											}
+											else if (department.ID == Model.DepartmentID)
+											{
+												<option value="@department.ID" selected>@department.DepartmentName</option>
+											}
+											else
+											{
+												<option value="@department.ID">@department.DepartmentName</option>
+											}
+										}
 									}
 								</select>
 							</div>
@@ -66,3 +99,15 @@
 </div>
 
 
+<script>
+	function redirectToSelectedPage(selectElement) {
+		// Seçili değeri al
+		var selectedValue = selectElement.value;
+
+		// Yönlendirme yapmak istediğiniz URL'yi oluşturun
+		var redirectUrl = '/Admin/AppUser/Update/' + selectedValue;
+
+		// Yönlendirme işlemi
+		window.location.href = redirectUrl;
+	}
+</script>

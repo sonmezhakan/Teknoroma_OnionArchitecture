@@ -1,13 +1,9 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Teknoroma.Application.Pipelines.Transaction;
 
 namespace Teknoroma.Application.Features.Departments.Command.Create
 {
-	public class CreateDepartmentCommandRequest:IRequest<Unit>
+	public class CreateDepartmentCommandRequest:IRequest<Unit>, ITransactionalRequest
 	{
 		public string DepartmentName { get; set; }
 		public string? Description { get; set; }

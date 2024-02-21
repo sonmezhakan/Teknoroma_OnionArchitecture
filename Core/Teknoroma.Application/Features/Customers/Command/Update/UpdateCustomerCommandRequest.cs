@@ -1,14 +1,10 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Teknoroma.Application.Pipelines.Transaction;
 using Teknoroma.Domain.Enums;
 
 namespace Teknoroma.Application.Features.Customers.Command.Update
 {
-	public class UpdateCustomerCommandRequest:IRequest<Unit>
+	public class UpdateCustomerCommandRequest:IRequest<Unit>, ITransactionalRequest
 	{
 		public Guid ID { get; set; }
 		public string FullName { get; set; }

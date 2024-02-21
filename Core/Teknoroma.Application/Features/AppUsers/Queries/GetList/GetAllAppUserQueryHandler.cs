@@ -22,28 +22,10 @@ namespace Teknoroma.Application.Features.AppUsers.Queries.GetList
         public async Task<List<GetAllAppUserQueryResponse>> Handle(GetAllAppUserQueryRequest request, CancellationToken cancellationToken)
         {
             var appUsers = await _userManager.Users.ToListAsync();
-            var appUserProfiles = await _mediator.Send(new GetAllAppUserProfileQueryRequest());
 
-            List<GetAllAppUserQueryResponse> getAllAppUserQueryResponses = new List<GetAllAppUserQueryResponse>();
+            List<GetAllAppUserQueryResponse> getAllAppUserQueryResponses = _mapper.Map<List<GetAllAppUserQueryResponse>>(appUsers);
 
-            foreach (var item in appUsers)
-            {
-                var getAppUserProfile = appUserProfiles.FirstOrDefault(x => x.ID == item.Id);
-
-                getAllAppUserQueryResponses.Add(new GetAllAppUserQueryResponse
-                {
-                    ID = item.Id,
-                    UserName = item.UserName,
-                    Email = item.Email,
-                    PhoneNumber = item.PhoneNumber,
-                    FirstName = getAppUserProfile.FirstName,
-                    LastName = getAppUserProfile.LastName,
-                    NationalityNumber = getAppUserProfile.NationalityNumber,
-                    Address = getAppUserProfile.Address
-                });
-            }
-
-            return getAllAppUserQueryResponses;
+			return getAllAppUserQueryResponses;
         }
     }
 }

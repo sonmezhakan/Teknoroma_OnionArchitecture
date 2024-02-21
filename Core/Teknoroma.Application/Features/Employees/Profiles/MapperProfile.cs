@@ -14,12 +14,11 @@ namespace Teknoroma.Application.Features.Employees.Profiles
         {
             CreateMap<Employee, CreateEmployeeCommandRequest>().ReverseMap();
             CreateMap<Employee, UpdateEmployeeCommandRequest>().ReverseMap();
-            /*CreateMap<Employee, GetByIdEmployeeQueryRequest>().ReverseMap();
-            CreateMap<Employee, GetAllEmployeeQueryRequest>().ReverseMap();*/
 
             CreateMap<CreateEmployeeViewModel, CreateEmployeeCommandRequest>().ReverseMap();
             CreateMap<UpdateEmployeeViewModel, UpdateEmployeeCommandRequest>().ReverseMap();
 
+            CreateMap<UpdateEmployeeViewModel, GetByIdEmployeeQueryResponse>().ReverseMap();
             CreateMap<EmployeeViewModel, GetByIdEmployeeQueryResponse>().ReverseMap();
             CreateMap<EmployeeViewModel, GetAllEmployeeQueryResponse>().ReverseMap();
 

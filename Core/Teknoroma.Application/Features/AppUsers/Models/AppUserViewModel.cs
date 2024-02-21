@@ -1,15 +1,35 @@
-﻿namespace Teknoroma.Application.Features.AppUsers.Models
+﻿using System.ComponentModel.DataAnnotations;
+using Teknoroma.Application.Features.AppUsers.Contants;
+
+namespace Teknoroma.Application.Features.AppUsers.Models
 {
     public class AppUserViewModel
     {
-        public Guid ID { get; set; }
-        public string UserName { get; set; }
-        public string Email { get; set; }
-        public string? Password { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
-        public string? NationalityNumber { get; set; }
-        public string? Address { get; set; }
+		[Display(Name = AppUserColumnNames.ID)]
+		public Guid ID { get; set; }
+
+		[Display(Name = AppUserColumnNames.UserName)]
+		public string UserName { get; set; }
+
+		[Display(Name = AppUserColumnNames.Email)]
+		public string Email { get; set; }
+
+		[Display(Name = AppUserColumnNames.Password)]
+		public string? Password { get; set; }
+
+		[Display(Name = AppUserColumnNames.FirstName)]
+		public string FirstName { get; set; }
+
+		[Display(Name = AppUserColumnNames.LastName)]
+		public string LastName { get; set; }
+
+		[Display(Name = AppUserColumnNames.PhoneNumber)]
+		public string PhoneNumber { get; set; }
+
+		[Display(Name = AppUserColumnNames.NationalityNumber)]
+		public string? NationalityNumber { get; set; }
+
+		[Display(Name = AppUserColumnNames.Address)]
+		public string? Address { get; set; }
     }
 }

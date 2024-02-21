@@ -17,7 +17,7 @@ namespace Teknoroma.Application.Features.Stocks.Queries.GetList
         public async Task<List<GetAllStockQueryResponse>> Handle(GetAllStockQueryRequest request, CancellationToken cancellationToken)
         {
             var stocks = request.ID == null ? await _stockRepository.GetAllAsync() :
-                                                      await _stockRepository.GetAllAsync(x => x.BranchId == request.ID);
+                                              await _stockRepository.GetAllAsync(x => x.BranchId == request.ID);
 
             List<GetAllStockQueryResponse> responses = _mapper.Map<List<GetAllStockQueryResponse>>(stocks);
 
