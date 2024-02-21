@@ -1,12 +1,14 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Teknoroma.Application.Features.AppUserProfiles.Rules;
+using Teknoroma.Application.Features.AppUserRoles.Rules;
 using Teknoroma.Application.Features.AppUsers.Rules;
 using Teknoroma.Application.Features.Branches.Rules;
 using Teknoroma.Application.Features.Brands.Rules;
 using Teknoroma.Application.Features.Categories.Rules;
 using Teknoroma.Application.Features.Customers.Rules;
 using Teknoroma.Application.Features.Departments.Rules;
+using Teknoroma.Application.Features.Employees.Rules;
 using Teknoroma.Application.Features.Products.Rules;
 using Teknoroma.Application.Features.Suppliers.Rules;
 using Teknoroma.Application.Pipelines.Validation;
@@ -41,6 +43,8 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddTransient<SupplierBusinessRules>();
 			services.AddTransient<AppUserProfileBusinessRules>();
 			services.AddTransient<AppUserBusinessRules>();
+			services.AddTransient<AppUserRoleBusinessRules>();
+			services.AddTransient<EmployeeBusinessRules>();
 			
 
 			return services;

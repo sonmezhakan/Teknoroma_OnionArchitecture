@@ -1,0 +1,66 @@
+﻿@using Teknoroma.Application.Features.AppUserRoles.Models
+@model List<AppUserRoleViewModel>
+@{
+    ViewData["Title"] = "AppUserRoleList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h1>Yetki Listesi</h1>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table table-bordered table-hover dataTable dtr-inline">
+							<thead>
+							<th rowspan="1" colspan="1">Yetki Adı</th>
+							<th>
+
+							</th>
+							</tr>
+							</thead>
+							<tbody>
+								@if(Model != null)
+								{
+									@foreach (var item in Model)
+									{
+										<tr>
+											<td>
+												@item.Name
+											</td>
+											<td>
+												<a class="btn bg-gradient-info" asp-controller="AppUserRole" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
+												<a class="btn bg-gradient-warning" asp-controller="AppUserRole" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
+												<a class="btn bg-gradient-danger" asp-controller="AppUserRole" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
+											</td>
+										</tr>
+									}
+								}
+							</tbody>
+						</table>
+					</div>
+				</div><div class="row">
+					<div class="col-sm-12 col-md-5">
+						<div>
+							@if (Model != null)
+							{
+								@Model.Count()
+							}
+							else
+							{
+								<a>0</a>
+							}
+							adet yetki bulunmaktadır.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

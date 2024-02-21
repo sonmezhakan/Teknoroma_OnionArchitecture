@@ -1,0 +1,99 @@
+﻿@using Teknoroma.Application.Features.Employees.Models
+@model List<EmployeeViewModel>
+@{
+    ViewData["Title"] = "EmployeeList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row">
+	<div class="col-12">
+		<div class="card card-primary">
+			<div class="card-header">
+				<h1>Müşteri Listesi</h1>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table table-bordered table-hover dataTable dtr-inline">
+							<thead>
+							<th rowspan="1" colspan="1">Şube</th>
+							<th rowspan="1" colspan="1">Departman</th>
+							<th rowspan="1" colspan="1">Kullanıcı Adı</th>
+							<th rowspan="1" colspan="1">Email</th>
+							<th rowspan="1" colspan="1">Ad</th>
+							<th rowspan="1" colspan="1">Soyad</th>
+							<th rowspan="1" colspan="1">Kimlik Numarası</th>
+							<th rowspan="1" colspan="1">Telefon Numarası</th>
+							<th rowspan="1" colspan="1">Adres</th>
+							<th>
+
+							</th>
+							</tr>
+							</thead>
+							<tbody>
+								@if(Model != null)
+								{
+									@foreach (var item in Model)
+									{
+										<tr>
+											<td>
+												@item.BranchName
+											</td>
+											<td>
+												@item.DepartmentName
+											</td>
+											<td>
+												@item.UserName
+											</td>
+											<td>
+												@item.Email
+											</td>
+											<td>
+												@item.FirstName
+											</td>
+											<td>
+												@item.LastName
+											</td>
+											<td>
+												@item.NationalityNumber
+											</td>
+											<td>
+												@item.PhoneNumber
+											</td>
+											<td>
+												@item.Address
+											</td>
+											<td>
+												<a class="btn bg-gradient-info" asp-controller="Employee" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
+												<a class="btn bg-gradient-warning" asp-controller="Employee" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
+												<a class="btn bg-gradient-danger" asp-controller="Employee" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
+											</td>
+										</tr>
+									}
+								}
+							</tbody>
+						</table>
+					</div>
+				</div><div class="row">
+					<div class="col-sm-12 col-md-5">
+						<div>
+							@if (Model != null)
+							{
+								@Model.Count()
+							}
+							else
+							{
+								<a>0</a>
+							}
+							adet çalışan bulunmaktadır.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+

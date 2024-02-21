@@ -35,7 +35,6 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddScoped<ICategoryRepository, CategoryRepository>();
 			services.AddScoped<ICustomerRepository, CustomerRepository>();
 			services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-			services.AddScoped<IEmployeeDepartmentRepository, EmployeeDepartmentRepository>();
 			services.AddScoped<IOrderRepository, OrderRepository>();
 			services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
 			services.AddScoped<IProductRepository, ProductRepository>();

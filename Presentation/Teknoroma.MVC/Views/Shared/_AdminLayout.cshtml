@@ -388,24 +388,35 @@
 							<a href="#" class="nav-link">
 								<i class="fa fa-user" aria-hidden="true"></i>
 								<p>
-									User Roles
+									Yetkiler
 									<i class="fas fa-angle-left right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="pages/forms/general.html" class="nav-link">
-										<i class="fa fa-list-ul" aria-hidden="true"></i>
-										<p>User Role List</p>
+									<a asp-controller="AppUserRole" asp-action="Create" class="nav-link">
+										<i class="fa fa-plus" aria-hidden="true"></i>
+										<p>Ekle</p>
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="pages/forms/advanced.html" class="nav-link">
-										<i class="fa fa-plus" aria-hidden="true"></i>
-										<p>Create User Role</p>
+									<a asp-controller="AppUserRole" asp-action="Update" class="nav-link">
+										<i class="fa-solid fa-pen"></i>
+										<p>Güncelle</p>
 									</a>
 								</li>
-
+								<li class="nav-item">
+									<a asp-controller="AppUserRole" asp-action="Detail" class="nav-link">
+										<i class="fa-solid fa-circle-info"></i>
+										<p>Detaylar</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a asp-controller="AppUserRole" asp-action="AppUserRoleList" class="nav-link">
+										<i class="fa fa-list-ul" aria-hidden="true"></i>
+										<p>Yetki Listesi</p>
+									</a>
+								</li>
 							</ul>
 						</li>
 						<!--Branch-->
@@ -485,24 +496,35 @@
 							<a href="#" class="nav-link">
 								<i class="fa-solid fa-address-book"></i>
 								<p>
-									Employees
+									Çalışanlar
 									<i class="fas fa-angle-left right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="pages/forms/general.html" class="nav-link">
-										<i class="fa fa-list-ul" aria-hidden="true"></i>
-										<p>Employee List</p>
+									<a asp-controller="Employee" asp-action="Create" class="nav-link">
+										<i class="fa fa-plus" aria-hidden="true"></i>
+										<p>Ekle</p>
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="pages/forms/advanced.html" class="nav-link">
-										<i class="fa fa-plus" aria-hidden="true"></i>
-										<p>Create Employee</p>
+									<a asp-controller="Employee" asp-action="Update" class="nav-link">
+										<i class="fa-solid fa-pen"></i>
+										<p>Güncelle</p>
 									</a>
 								</li>
-
+								<li class="nav-item">
+									<a asp-controller="Employee" asp-action="Detail" class="nav-link">
+										<i class="fa-solid fa-circle-info"></i>
+										<p>Detaylar</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a asp-controller="Employee" asp-action="EmployeeList" class="nav-link">
+										<i class="fa fa-list-ul" aria-hidden="true"></i>
+										<p>Çalışan Listesi</p>
+									</a>
+								</li>
 							</ul>
 						</li>
 
