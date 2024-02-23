@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Teknoroma.Application.Features.Orders.Models;
 using Teknoroma.Application.Features.Products.Command.Create;
 using Teknoroma.Application.Features.Products.Command.Update;
 using Teknoroma.Application.Features.Products.Models;
@@ -28,6 +29,8 @@ namespace Teknoroma.Application.Features.Products.Profiles
 				.ReverseMap();
 
 			CreateMap<GetByIdProductQueryResponse, UpdateProductCommandRequest>().ReverseMap();
+
+			CreateMap<GetByIdProductQueryResponse, CartItem>().ReverseMap();
 		}
     }
 }

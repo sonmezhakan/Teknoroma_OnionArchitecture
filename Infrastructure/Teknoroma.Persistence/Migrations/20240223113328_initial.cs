@@ -234,6 +234,40 @@ namespace Teknoroma.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AppUserProfiles",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    NationalityNumber = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MasterId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppUserProfiles", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_AppUserProfiles_AspNetUsers_ID",
+                        column: x => x.ID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -319,41 +353,6 @@ namespace Teknoroma.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employees",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "char(11)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ImagePath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    MasterId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employees", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Employees_AspNetUsers_ID",
-                        column: x => x.ID,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -396,49 +395,12 @@ namespace Teknoroma.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EmployeeDepartments",
-                columns: table => new
-                {
-                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MasterId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmployeeDepartments", x => new { x.EmployeeId, x.DepartmentId });
-                    table.ForeignKey(
-                        name: "FK_EmployeeDepartments_Departments_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "Departments",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmployeeDepartments_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "Employees",
                 columns: table => new
                 {
                     ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EmployeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BranchID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DepartmentID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MasterId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -454,17 +416,23 @@ namespace Teknoroma.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.ID);
+                    table.PrimaryKey("PK_Employees", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
+                        name: "FK_Employees_AspNetUsers_ID",
+                        column: x => x.ID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Employees_Branches_BranchID",
+                        column: x => x.BranchID,
+                        principalTable: "Branches",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_Employees_EmployeId",
-                        column: x => x.EmployeId,
-                        principalTable: "Employees",
+                        name: "FK_Employees_Departments_DepartmentID",
+                        column: x => x.DepartmentID,
+                        principalTable: "Departments",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -562,14 +530,59 @@ namespace Teknoroma.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BranchId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    OrderStatu = table.Column<short>(type: "smallint", nullable: false),
+                    MasterId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedIpAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Orders_Branches_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Branches",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderDetails",
                 columns: table => new
                 {
                     ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UnitPrice = table.Column<decimal>(type: "money", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    Discount = table.Column<float>(type: "real", nullable: true),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MasterId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedComputerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -640,9 +653,14 @@ namespace Teknoroma.Persistence.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmployeeDepartments_DepartmentId",
-                table: "EmployeeDepartments",
-                column: "DepartmentId");
+                name: "IX_Employees_BranchID",
+                table: "Employees",
+                column: "BranchID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_DepartmentID",
+                table: "Employees",
+                column: "DepartmentID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_ProductId",
@@ -650,14 +668,19 @@ namespace Teknoroma.Persistence.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_BranchId",
+                table: "Orders",
+                column: "BranchId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
                 table: "Orders",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_EmployeId",
+                name: "IX_Orders_EmployeeId",
                 table: "Orders",
-                column: "EmployeId");
+                column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_BrandId",
@@ -699,6 +722,9 @@ namespace Teknoroma.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AppUserProfiles");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -714,9 +740,6 @@ namespace Teknoroma.Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "EmployeeDepartments");
-
-            migrationBuilder.DropTable(
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
@@ -729,16 +752,10 @@ namespace Teknoroma.Persistence.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Departments");
-
-            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Suppliers");
-
-            migrationBuilder.DropTable(
-                name: "Branches");
 
             migrationBuilder.DropTable(
                 name: "Products");
@@ -757,6 +774,12 @@ namespace Teknoroma.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Branches");
+
+            migrationBuilder.DropTable(
+                name: "Departments");
         }
     }
 }

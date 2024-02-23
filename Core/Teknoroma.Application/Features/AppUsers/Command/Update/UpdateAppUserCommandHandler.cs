@@ -41,6 +41,12 @@ namespace Teknoroma.Application.Features.AppUsers.Command.Update
 
             if(result.Succeeded)
             {
+                //Roles Updated 
+                var currentRoles = await _userManager.GetRolesAsync(appUser);
+                await _userManager.RemoveFromRolesAsync(appUser, currentRoles);
+                await _userManager.AddToRolesAsync(appUser, request.AppUserRoles);
+
+                //Profile Uptated
                 UpdateAppUserProfileCommandRequest updateAppUserProfileCommandRequest = _mapper.Map<UpdateAppUserProfileCommandRequest>(request);
 
                 await _mediator.Send(updateAppUserProfileCommandRequest);

@@ -48,6 +48,7 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddTransient<AppUserRoleBusinessRules>();
 			services.AddTransient<EmployeeBusinessRules>();
 			
+			
 
 			return services;
 		}

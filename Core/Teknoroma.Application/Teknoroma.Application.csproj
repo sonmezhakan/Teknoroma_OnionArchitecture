@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Features\AppUserProfiles\Models\" />
+    <Folder Include="Features\OrderDetails\Models\" />
     <Folder Include="Features\Stocks\Contants\" />
   </ItemGroup>
 

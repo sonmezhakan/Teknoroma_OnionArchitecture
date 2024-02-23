@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Teknoroma.Application.Features.AppUserRoles.Models;
 using Teknoroma.Application.Pipelines.Transaction;
 
 namespace Teknoroma.Application.Features.Employees.Command.Create
@@ -8,5 +9,6 @@ namespace Teknoroma.Application.Features.Employees.Command.Create
 		public Guid ID { get; set; }
 		public Guid BranchID { get; set; }
 		public Guid DepartmentID { get; set; }
-	}
+        
+    }
 }

@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using Teknoroma.Application.Features.Customers.Contants;
 using Teknoroma.Domain.Enums;
 
 namespace Teknoroma.Application.Features.Customers.Models
 {
-    public class CreateCustomerViewModel
+	public class CreateCustomerViewModel
     {
-		[Display(Name = CustomerColumnNames.ID)]
-		public Guid ID { get; set; }
-
 		[Display(Name = CustomerColumnNames.FullName)]
 		public string FullName { get; set; }
 

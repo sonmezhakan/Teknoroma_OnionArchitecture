@@ -27,14 +27,22 @@ namespace Teknoroma.Persistence.Repositories
        
         public async Task AddAsync(TEntity entity)
         {
-            await _entities.AddAsync(entity);
-            await _context.SaveChangesAsync();
-        }
+			await _entities.AddAsync(entity);
+			await _context.SaveChangesAsync();
+		}
         
         public async Task AddRangeAsync(List<TEntity> entities)
         {
-            await _context.AddRangeAsync(entities);
-            await _context.SaveChangesAsync();
+            try
+            {
+				await _context.AddRangeAsync(entities);
+				await _context.SaveChangesAsync(); 
+			}
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
         #endregion
         #region Update

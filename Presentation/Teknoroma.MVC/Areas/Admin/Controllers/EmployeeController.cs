@@ -1,6 +1,6 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Teknoroma.Application.Features.AppUserRoles.Queries.GetList;
 using Teknoroma.Application.Features.AppUsers.Queries.GetList;
 using Teknoroma.Application.Features.Branches.Queries.GetAll;
 using Teknoroma.Application.Features.Departments.Queries.GetList;

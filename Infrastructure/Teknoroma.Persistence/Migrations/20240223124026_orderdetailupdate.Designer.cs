@@ -12,8 +12,8 @@ using Teknoroma.Persistence.Context;
 namespace Teknoroma.Persistence.Migrations
 {
     [DbContext(typeof(TeknoromaContext))]
-    [Migration("20240220084832_AppUserProfile")]
-    partial class AppUserProfile
+    [Migration("20240223124026_orderdetailupdate")]
+    partial class orderdetailupdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -227,6 +227,9 @@ namespace Teknoroma.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -608,10 +611,8 @@ namespace Teknoroma.Persistence.Migrations
                     b.Property<Guid>("ID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<Guid>("BranchID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedComputerName")
                         .IsRequired()
@@ -633,33 +634,14 @@ namespace Teknoroma.Persistence.Migrations
                     b.Property<string>("DeletedIpAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("ImagePath")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<Guid>("DepartmentID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
                     b.Property<Guid>("MasterId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("char(11)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -675,66 +657,20 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("BranchID");
+
+                    b.HasIndex("DepartmentID");
+
                     b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("Teknoroma.Domain.Entities.EmployeeDepartment", b =>
-                {
-                    b.Property<Guid>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DepartmentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedComputerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedIpAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DeletedComputerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedIpAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("MasterId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdatedComputerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedIpAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("EmployeeId", "DepartmentId");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.ToTable("EmployeeDepartments");
                 });
 
             modelBuilder.Entity("Teknoroma.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BranchId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedComputerName")
@@ -760,7 +696,7 @@ namespace Teknoroma.Persistence.Migrations
                     b.Property<string>("DeletedIpAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("EmployeId")
+                    b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
@@ -771,6 +707,9 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<short>("OrderStatu")
+                        .HasColumnType("smallint");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -786,9 +725,11 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("BranchId");
+
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("EmployeId");
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Orders");
                 });
@@ -796,6 +737,9 @@ namespace Teknoroma.Persistence.Migrations
             modelBuilder.Entity("Teknoroma.Domain.Entities.OrderDetail", b =>
                 {
                     b.Property<Guid>("ID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedComputerName")
@@ -818,16 +762,10 @@ namespace Teknoroma.Persistence.Migrations
                     b.Property<string>("DeletedIpAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float?>("Discount")
-                        .HasColumnType("real");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<Guid>("MasterId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
@@ -848,7 +786,7 @@ namespace Teknoroma.Persistence.Migrations
                     b.Property<string>("UpdatedIpAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("ID", "ProductId");
 
                     b.HasIndex("ProductId");
 
@@ -1216,36 +1154,39 @@ namespace Teknoroma.Persistence.Migrations
 
             modelBuilder.Entity("Teknoroma.Domain.Entities.Employee", b =>
                 {
-                    b.HasOne("Teknoroma.Domain.Entities.AppUser", "AppUser")
+                    b.HasOne("Teknoroma.Domain.Entities.Branch", "Branch")
                         .WithMany("Employees")
-                        .HasForeignKey("ID")
+                        .HasForeignKey("BranchID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Teknoroma.Domain.Entities.Department", "Department")
+                        .WithMany("Employees")
+                        .HasForeignKey("DepartmentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Teknoroma.Domain.Entities.AppUser", "AppUser")
+                        .WithOne("Employee")
+                        .HasForeignKey("Teknoroma.Domain.Entities.Employee", "ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AppUser");
-                });
 
-            modelBuilder.Entity("Teknoroma.Domain.Entities.EmployeeDepartment", b =>
-                {
-                    b.HasOne("Teknoroma.Domain.Entities.Department", "Department")
-                        .WithMany("EmployeeDepartments")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Teknoroma.Domain.Entities.Employee", "Employee")
-                        .WithMany("EmployeeDepartments")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Branch");
 
                     b.Navigation("Department");
-
-                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Teknoroma.Domain.Entities.Order", b =>
                 {
+                    b.HasOne("Teknoroma.Domain.Entities.Branch", "Branch")
+                        .WithMany("Orders")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Teknoroma.Domain.Entities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
@@ -1254,9 +1195,11 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.HasOne("Teknoroma.Domain.Entities.Employee", "Employee")
                         .WithMany("Orders")
-                        .HasForeignKey("EmployeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Branch");
 
                     b.Navigation("Customer");
 
@@ -1358,13 +1301,18 @@ namespace Teknoroma.Persistence.Migrations
                     b.Navigation("AppUserProfile")
                         .IsRequired();
 
-                    b.Navigation("Employees");
+                    b.Navigation("Employee")
+                        .IsRequired();
 
                     b.Navigation("StockInputs");
                 });
 
             modelBuilder.Entity("Teknoroma.Domain.Entities.Branch", b =>
                 {
+                    b.Navigation("Employees");
+
+                    b.Navigation("Orders");
+
                     b.Navigation("StockInputs");
 
                     b.Navigation("stocks");
@@ -1387,13 +1335,11 @@ namespace Teknoroma.Persistence.Migrations
 
             modelBuilder.Entity("Teknoroma.Domain.Entities.Department", b =>
                 {
-                    b.Navigation("EmployeeDepartments");
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("Teknoroma.Domain.Entities.Employee", b =>
                 {
-                    b.Navigation("EmployeeDepartments");
-
                     b.Navigation("Orders");
                 });
 

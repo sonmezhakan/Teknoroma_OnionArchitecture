@@ -41,6 +41,18 @@
 								<label asp-for="PhoneNumber"></label>
 								<input type="number" class="form-control" asp-for="PhoneNumber">
 							</div>
+							<div class="form-group">
+								<label asp-for="AppUserRoles"></label>
+								<select class="select" asp-for="AppUserRoles">
+									@if(ViewBag.AppUserRoleList != null)
+									{
+										@foreach (var role in ViewBag.AppUserRoleList)
+										{
+											<option value="@role.Name">@role.Name</option>
+										}
+									}
+								</select>
+							</div>
 						</div>
 						<div class="card-footer">
 							<button type="submit" class="btn btn-block bg-gradient-primary">Ekle</button>

@@ -3,19 +3,23 @@
 
 // Write your JavaScript code.
 
-function DeleteAlert() {
-    Swall.fire({
-        title: 'Kalıcı olarak silmek istediğinize emin misiniz? Eğer silerseniz bu veriye ait tüm işlemlerde silinecektir!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Sil',
-        calcelButtonText: 'İptal'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire('Kullanıcı Sil\'i seçti!', '', 'success');
-        }
-        else {
-            Swal.fire('Kullanıcı İptal\'i seçti!', '', 'info')
-        }
+
+
+
+$('#exampleModal').on('show.bs.modal', function (event) {
+	var button = $(event.relatedTarget) // Button that triggered the modal
+	var recipient = button.data('whatever') // Extract info from data-* attributes
+	// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+	// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+	var modal = $(this)
+	modal.find('.modal-body input').val(recipient)
+})
+
+
+$(document).ready(function () {
+    $("select").select2({
+        width: '100%',
+		height: '100px'
     });
-}
+});
+

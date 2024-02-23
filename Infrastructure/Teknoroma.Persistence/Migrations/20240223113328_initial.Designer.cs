@@ -12,8 +12,8 @@ using Teknoroma.Persistence.Context;
 namespace Teknoroma.Persistence.Migrations
 {
     [DbContext(typeof(TeknoromaContext))]
-    [Migration("20240221204724_EmployeeAdded")]
-    partial class EmployeeAdded
+    [Migration("20240223113328_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -670,6 +670,9 @@ namespace Teknoroma.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("BranchId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("CreatedComputerName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -693,7 +696,7 @@ namespace Teknoroma.Persistence.Migrations
                     b.Property<string>("DeletedIpAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("EmployeId")
+                    b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
@@ -704,6 +707,9 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<short>("OrderStatu")
+                        .HasColumnType("smallint");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -719,9 +725,11 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("BranchId");
+
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("EmployeId");
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Orders");
                 });
@@ -750,9 +758,6 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.Property<string>("DeletedIpAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<float?>("Discount")
-                        .HasColumnType("real");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -1176,6 +1181,12 @@ namespace Teknoroma.Persistence.Migrations
 
             modelBuilder.Entity("Teknoroma.Domain.Entities.Order", b =>
                 {
+                    b.HasOne("Teknoroma.Domain.Entities.Branch", "Branch")
+                        .WithMany("Orders")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Teknoroma.Domain.Entities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
@@ -1184,9 +1195,11 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.HasOne("Teknoroma.Domain.Entities.Employee", "Employee")
                         .WithMany("Orders")
-                        .HasForeignKey("EmployeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Branch");
 
                     b.Navigation("Customer");
 
@@ -1297,6 +1310,8 @@ namespace Teknoroma.Persistence.Migrations
             modelBuilder.Entity("Teknoroma.Domain.Entities.Branch", b =>
                 {
                     b.Navigation("Employees");
+
+                    b.Navigation("Orders");
 
                     b.Navigation("StockInputs");
 

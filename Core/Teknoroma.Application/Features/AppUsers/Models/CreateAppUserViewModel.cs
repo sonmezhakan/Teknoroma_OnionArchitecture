@@ -22,5 +22,8 @@ namespace Teknoroma.Application.Features.AppUsers.Models
 
 		[Display(Name = AppUserColumnNames.PhoneNumber)]
 		public string PhoneNumber { get; set; }
+
+		[Display(Name = AppUserColumnNames.Roles)]
+        public List<string>? AppUserRoles { get; set; }
     }
 }

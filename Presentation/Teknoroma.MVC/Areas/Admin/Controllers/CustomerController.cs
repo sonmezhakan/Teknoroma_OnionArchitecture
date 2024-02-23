@@ -28,17 +28,14 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
                 HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("customer/create", createCustomer);
 
-				if (!response.IsSuccessStatusCode)
-				{
-					await ErrorResponseViewModel.Instance.CopyForm(response);
+				if (response.IsSuccessStatusCode) return RedirectToAction("Create" , "Customer");
 
-					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
+				await ErrorResponseViewModel.Instance.CopyForm(response);
 
-					return View(model);
-				}
+				ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
 
-				return View();
-            }
+				return View(model);
+			}
             else
             {
                 ModelState.AddModelError(string.Empty, "Hatalı İşlem!");

@@ -75,6 +75,25 @@
                                 <label asp-for="Address"></label>
                                 <textarea class="form-control" rows="3" cols="4" asp-for="@Model.Address"></textarea>
                             </div>
+                            <div class="form-group">
+                                <label asp-for="AppUserRoles"></label>
+                                <select class="form-select" asp-for="AppUserRoles">
+                                    @if (ViewBag.AppUserRoleList != null)
+                                    {
+                                        @foreach (var role in ViewBag.AppUserRoleList)
+                                        {
+                                            @if(Model != null && Model.AppUserRoles.Contains(role.Name))
+                                            {
+                                                <option value="@role.Name" selected>@role.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@role.Name">@role.Name</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-block bg-gradient-warning">Güncelle</button>

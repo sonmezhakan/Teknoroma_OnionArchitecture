@@ -13,5 +13,6 @@ namespace Teknoroma.Application.Features.AppUsers.Contants
 		public const string PhoneNumber = "Telefon Numarası*";
 		public const string NationalityNumber = "Kimlik Numarası";
 		public const string Address = "Adres";
+		public const string Roles = "Yetkiler";
 	}
 }

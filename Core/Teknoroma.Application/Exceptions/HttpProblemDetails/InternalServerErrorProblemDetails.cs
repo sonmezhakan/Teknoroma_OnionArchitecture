@@ -8,7 +8,7 @@ namespace Teknoroma.Application.Exceptions.HttpProblemDetails
         public InternalServerErrorProblemDetails(string detail)
         {
             Title = "Internal Server Error";
-            Detail = "Internal Server Error";
+            Detail = detail;
             Status = StatusCodes.Status500InternalServerError;
             Type = "";
         }

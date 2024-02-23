@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Teknoroma.Application.Features.AppUserRoles.Models;
 using Teknoroma.Application.Features.Employees.Contants;
 
 namespace Teknoroma.Application.Features.Employees.Models
@@ -13,5 +14,5 @@ namespace Teknoroma.Application.Features.Employees.Models
 
 		[Display(Name = EmployeeColumnNames.DepartmentID)]
 		public Guid DepartmentID { get; set; }
-	}
+    }
 }

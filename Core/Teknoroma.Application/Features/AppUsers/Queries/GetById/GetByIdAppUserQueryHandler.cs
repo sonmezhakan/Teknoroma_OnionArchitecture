@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Teknoroma.Application.Features.AppUserProfiles.Quıeries.GetById;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.AppUsers.Queries.GetById
 {
-    public class GetByIdAppUserQueryHandler : IRequestHandler<GetByIdAppUserQueryRequest, GetByIdAppUserQueryResponse>
+	public class GetByIdAppUserQueryHandler : IRequestHandler<GetByIdAppUserQueryRequest, GetByIdAppUserQueryResponse>
     {
         private readonly IMapper _mapper;
         private readonly UserManager<AppUser> _userManager;
@@ -19,8 +18,10 @@ namespace Teknoroma.Application.Features.AppUsers.Queries.GetById
         public async Task<GetByIdAppUserQueryResponse> Handle(GetByIdAppUserQueryRequest request, CancellationToken cancellationToken)
         {
             AppUser appUser = await _userManager.FindByIdAsync(request.ID.ToString());
+            var appUserRole = await _userManager.GetRolesAsync(appUser);
 
             GetByIdAppUserQueryResponse getByIdAppUserQueryResponse = _mapper.Map<GetByIdAppUserQueryResponse>(appUser);
+            getByIdAppUserQueryResponse.AppUserRoles = appUserRole.ToList();
 
             return getByIdAppUserQueryResponse;
         }

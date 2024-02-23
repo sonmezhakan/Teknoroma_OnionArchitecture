@@ -11,7 +11,5 @@ namespace Teknoroma.Domain.Entities
         public virtual AppUser AppUser { get; set; }
         public virtual Branch Branch { get; set; }
         public virtual Department Department { get; set; }
-
-        //todo:Sorumlu olduğu şube entitysi oluşturulursa burada veya ayrı bir ara tablo üzerinde id tutulacak.
     }
 }

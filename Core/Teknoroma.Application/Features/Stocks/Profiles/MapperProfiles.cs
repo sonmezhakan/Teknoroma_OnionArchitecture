@@ -20,14 +20,17 @@ namespace Teknoroma.Application.Features.Stocks.Profiles
             CreateMap<Stock, GetByIdStockQueryResponse>().ReverseMap();
 
             CreateMap<Stock, GetAllStockQueryResponse>()
-                .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.BranchName))
-                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.ProductName))
-                .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.Product.UnitPrice))
-                .ForMember(dest => dest.CriticalStock, opt => opt.MapFrom(src => src.Product.CriticalStock))
-                .ReverseMap();
+				.ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.ProductName))
+				.ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.Product.UnitPrice))
+				.ForMember(dest => dest.CriticalStock, opt => opt.MapFrom(src => src.Product.CriticalStock))
+				.ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.Product.ImagePath))
+				.ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Product.Brand.BrandName))
+				.ReverseMap();
             CreateMap<StockListViewModel, GetAllStockQueryResponse>().ReverseMap();
 
             CreateMap<GetByIdStockQueryResponse, UpdateStockCommandRequest>().ReverseMap();
+
+            
         }
     }
 }

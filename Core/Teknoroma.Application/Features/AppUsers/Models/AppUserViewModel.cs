@@ -31,5 +31,8 @@ namespace Teknoroma.Application.Features.AppUsers.Models
 
 		[Display(Name = AppUserColumnNames.Address)]
 		public string? Address { get; set; }
-    }
+
+        [Display(Name = AppUserColumnNames.Roles)]
+        public List<string>? AppUserRoles { get; set; }
+	}
 }

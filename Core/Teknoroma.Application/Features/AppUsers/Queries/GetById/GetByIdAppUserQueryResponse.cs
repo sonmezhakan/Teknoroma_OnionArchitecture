@@ -1,4 +1,6 @@
-﻿namespace Teknoroma.Application.Features.AppUsers.Queries.GetById
+﻿using Teknoroma.Application.Features.AppUserRoles.Models;
+
+namespace Teknoroma.Application.Features.AppUsers.Queries.GetById
 {
     public class GetByIdAppUserQueryResponse
     {
@@ -10,5 +12,6 @@
         public string PhoneNumber { get; set; }
         public string? NationalityNumber { get; set; }
         public string? Address { get; set; }
+        public List<string>? AppUserRoles { get; set; }
     }
 }

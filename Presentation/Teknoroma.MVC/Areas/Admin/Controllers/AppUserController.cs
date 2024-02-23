@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Json;
+using Teknoroma.Application.Features.AppUserRoles.Queries.GetList;
 using Teknoroma.Application.Features.AppUsers.Command.Create;
 using Teknoroma.Application.Features.AppUsers.Command.Update;
 using Teknoroma.Application.Features.AppUsers.Models;
@@ -16,12 +18,15 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            return View();
+            await AppUserRoleViewBag();
+
+			return View();
         }
         [HttpPost]
         public async Task<IActionResult> Create(CreateAppUserViewModel model)
         {
-            if(ModelState.IsValid)
+			await AppUserRoleViewBag();
+			if (ModelState.IsValid)
             {
                 CreateAppUserCommandRequest createAppUserCommandRequest = Mapper.Map<CreateAppUserCommandRequest>(model);
 
@@ -46,8 +51,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Update(Guid? id)
         {
             await AppUserViewBag();
+			await AppUserRoleViewBag();
 
-            if (id == null) return View();
+			if (id == null) return View();
 
             var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdAppUserQueryResponse>($"user/getbyid/{id}");
 
@@ -61,14 +67,15 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Update(AppUserViewModel model)
         {
             await AppUserViewBag();
+			await AppUserRoleViewBag();
 
-            if (ModelState.IsValid)
+			if (ModelState.IsValid)
             {
                 UpdateAppUserCommandRequest updateAppUserCommandRequest = Mapper.Map<UpdateAppUserCommandRequest>(model);
 
                 HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("user/update", updateAppUserCommandRequest);
 
-                if (response.IsSuccessStatusCode) return View();
+                if (response.IsSuccessStatusCode) return RedirectToAction("Update", model.ID);
 
                 await ErrorResponseViewModel.Instance.CopyForm(response);
 
@@ -122,6 +129,12 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
                     UserName = x.UserName
                 });
             ViewBag.AppUserList = getAppUser;
+        }
+        private async Task AppUserRoleViewBag()
+        {
+            var getAppUserRole = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllAppUserRoleQueryResponse>>("role/getall");
+
+            ViewBag.AppUserRoleList = getAppUserRole;
         }
     }
 }

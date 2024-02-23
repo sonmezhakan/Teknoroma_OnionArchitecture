@@ -29,10 +29,13 @@ namespace Teknoroma.Application.Features.AppUsers.Command.Create
 
             AppUser appUser = _mapper.Map<AppUser>(request);
 
-            var createAppUserReslt = await _userManager.CreateAsync(appUser, request.Password);
+            var createAppUserResult = await _userManager.CreateAsync(appUser, request.Password);
+
+            //Role Added
+            await _userManager.AddToRolesAsync(appUser,request.AppUserRoles);
 
             //AppUserProfile Process
-            if(createAppUserReslt.Succeeded)
+            if(createAppUserResult.Succeeded)
             {
                 await _mediator.Send(new CreateAppUserProfileCommandRequest
 				{

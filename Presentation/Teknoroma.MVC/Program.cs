@@ -30,9 +30,14 @@ namespace Teknoroma.MVC
                 x.ExpireTimeSpan = TimeSpan.FromMinutes(60);
             });
 
-            builder.Services.AddSession();
+			//Session
+			builder.Services.AddSession(x =>
+			{
+				x.Cookie.Name = "product_cart";
+				x.IdleTimeout = TimeSpan.FromMinutes(60);
+			});
 
-            var app = builder.Build();
+			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -51,7 +56,7 @@ namespace Teknoroma.MVC
             app.UseAuthentication();
             app.UseAuthorization();
 
-			//if (app.Environment.IsProduction())
+			if (app.Environment.IsProduction())
 				//Exceptiom Middleware
 				app.ConfigureCustomExceptionMiddleWare();
 
@@ -158,6 +163,13 @@ namespace Teknoroma.MVC
 					endpoints.MapControllerRoute(
 					  name: "areas",
 					  pattern: "{area:exists}/{controller=Employee}/{action=Index}/{id?}"
+					);
+				});
+				app.UseEndpoints(endpoints =>
+				{
+					endpoints.MapControllerRoute(
+					  name: "areas",
+					  pattern: "{area:exists}/{controller=Order}/{action=Index}/{id?}"
 					);
 				});
 

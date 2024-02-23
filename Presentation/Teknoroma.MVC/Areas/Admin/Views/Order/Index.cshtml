@@ -1,0 +1,227 @@
+﻿@using Teknoroma.Application.Features.Stocks.Models
+
+@model List<StockListViewModel>
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	decimal totalPrice = 0;
+}
+
+<div class="row mx-4">
+	<div class="col-md-12 mx-auto">
+		<div class="card card-primary">
+			<div class="card-header">
+				<div class="form-group">
+					<div class="form-group">
+						<label>Şubeniz</label>
+						<h3>@ViewBag.Branch.Text</h3>
+						@* <select class="form-control" aria-label="Default select example" onchange="redirectToSelectedPage(this)">
+						@if (ViewBag.BranchList != null)
+						{
+						@foreach (var branch in ViewBag.BranchList)
+						{
+						<option value="@branch.ID">@branch.BranchName</option>
+						}
+						}
+						</select> *@
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="card-header">
+						<label>Ürün Ara</label>
+						<input type="text" class="form-control" id="productSearchInput" oninput="filterProducts()" />
+					</div>
+					<div class="card-body">
+						<table class="table table-bordered table-hover dataTable dtr-inline">
+							<thead>
+							<th rowspan="1" colspan="1">Resim</th>
+							<th rowspan="1" colspan="1">Ürün Adı</th>
+							<th rowspan="1" colspan="1">Marka Adı</th>
+							<th rowspan="1" colspan="1">Fiyat</th>
+							<th rowspan="1" colspan="1">Stok Miktarı</th>
+							<th rowspan="1" colspan="1">Kritik Stok Miktarı</th>
+							<th>
+
+							</th>
+							</tr>
+							</thead>
+							<tbody>
+								@if (Model != null)
+								{
+									@foreach (var product in Model)
+									{
+										<tr class="product-row">
+											<td>
+												<img src="~/images/product/@product.ImagePath" width="125" height="100" />
+											</td>
+											<td>
+												@product.ProductName
+											</td>
+											<td>
+												@product.BrandName
+											</td>
+											<td>
+												@product.UnitPrice
+											</td>
+											<td>
+												@product.UnitsInStock
+											</td>
+											<td>
+												@product.CriticalStock
+											</td>
+											<td>
+												<form id="CartAdded" method="post" asp-controller="Order" asp-action="AddToCart" asp-route-id="@product.ProductID">
+													<input class="form-control text-center me-4" name="quantity" type="num" value="1" style="max-width: 4rem">
+													<button class="btn bg-gradient-info" type="submit">Sepete Ekle</button>
+												</form>
+											</td>
+										</tr>
+									}
+								}
+							</tbody>
+						</table>
+					</div>
+					<div class="col-md-4">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card-header">
+						<h2>Sepet</h2>
+					</div>
+					<hr />
+					<div class="card-body">
+						<div class="row mx-1 d-flex">
+							@if (ViewBag.CartList != null)
+							{
+								@foreach (var item in ViewBag.CartList)
+								{
+									totalPrice += item.Value.Subtotal;
+									<div class="col-md-12 d-flex" style="border-bottom:solid;border-bottom-color:lightgray;">
+										<div class="col-md-2">
+											<img src="~/images/product/@item.Value.ImagePath" width="50px" height="50px" />
+										</div>
+										<div class="col-md-4">
+											<h5>@item.Value.ProductName</h5>
+										</div>
+										<div class="col-md-5">
+											<div><span>Adet: @item.Value.Quantity</span></div>
+											<div><span>Birim Fiyat: @item.Value.UnitPrice ₺</span></div>
+											<div><span>Toplam Fiyat: @item.Value.Subtotal ₺</span></div>
+										</div>
+										<div class="my-auto">
+											<form id="cartItemDeleted" method="post" asp-controller="Order" asp-action="CartItemDelete" asp-route-id="@item.Value.ID">
+												<button class="btn btn-danger" type="submit">X</button>
+											</form>
+										</div>
+									</div>
+								}
+							}
+						</div>
+					</div>
+					<div class="card-footer d-flex">
+						<div class="col-md-6">
+							<h3>Toplam Tutar:</h3>
+						</div>
+						<div class="col-md-6 text-right">
+							<h4>@totalPrice ₺</h4>
+						</div>
+					</div>
+					<div>
+						
+						@if (ViewBag.CartList != null)
+						{
+							<button type="button" class="btn btn-block bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Siparişi Tamamla</button>
+
+							<div class="modal fade bd-example-modal-lg" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Müşteri Seçiniz</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<form id="CompleteCart" method="post" asp-controller="Order" asp-action="CompleteCart" >
+												<div class="form-group">
+													<label>Müşteri Telefon Numarası</label>
+													<select class="form-control" aria-label="Default select example" name="customerId" data-dropdown-parent="#exampleModal">
+														@if (ViewBag.CustomerList != null)
+														{
+															@foreach (var customer in ViewBag.CustomerList)
+															{
+																<option value="@customer.ID">@customer.PhoneNumber</option>
+															}
+														}
+													</select>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+													<button type="submit" class="btn btn-primary">Siparişi Oluştur</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+			<div class="row mx-4">
+				<div class="col-sm-12 col-md-5">
+					<div>
+						@if (Model != null)
+						{
+							@Model.Count()
+						}
+						else
+						{
+							<a>0</a>
+						}
+						adet ürün bulunmaktadır.
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script>
+
+
+	function filterProducts() {
+		var input, filter, table, rows, productNameColumn, i, txtValue;
+		input = document.getElementById("productSearchInput");
+		filter = input.value.toUpperCase();
+		table = document.querySelector(".table");
+		rows = table.querySelectorAll(".product-row");
+
+		for (i = 0; i < rows.length; i++) {
+			productNameColumn = rows[i].getElementsByTagName("td")[1]; // Ürün adının ikinci sütunda olduğunu varsayıyoruz
+			if (productNameColumn) {
+				txtValue = productNameColumn.textContent || productNameColumn.innerText;
+				if (txtValue.toUpperCase().indexOf(filter) > -1) {
+					rows[i].style.display = "";
+				} else {
+					rows[i].style.display = "none";
+				}
+			}
+		}
+	}
+
+
+
+	function redirectToSelectedPage(selectElement) {
+		// Seçili değeri al
+		var selectedValue = selectElement.value;
+
+		// Yönlendirme yapmak istediğiniz URL'yi oluşturun
+		var redirectUrl = '/Admin/Order/Index/' + selectedValue;
+
+		// Yönlendirme işlemi
+		window.location.href = redirectUrl;
+	}
+</script>

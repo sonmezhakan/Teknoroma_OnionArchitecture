@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="wwwroot\images\profile\" />
     <Folder Include="wwwroot\images\product\" />
     <Folder Include="wwwroot\themes\Modern Business\" />
     <Folder Include="wwwroot\themes\CoreUI\" />
