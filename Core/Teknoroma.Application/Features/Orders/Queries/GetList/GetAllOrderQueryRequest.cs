@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace Teknoroma.Application.Features.Orders.Queries.GetList
 {
-	internal class GetAllOrderQueryRequest
+	public class GetAllOrderQueryRequest:IRequest<List<GetAllOrderQueryResponse>>
 	{
 	}
 }

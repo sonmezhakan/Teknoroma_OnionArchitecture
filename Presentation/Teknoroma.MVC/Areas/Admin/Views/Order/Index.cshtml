@@ -15,15 +15,6 @@
 					<div class="form-group">
 						<label>Şubeniz</label>
 						<h3>@ViewBag.Branch.Text</h3>
-						@* <select class="form-control" aria-label="Default select example" onchange="redirectToSelectedPage(this)">
-						@if (ViewBag.BranchList != null)
-						{
-						@foreach (var branch in ViewBag.BranchList)
-						{
-						<option value="@branch.ID">@branch.BranchName</option>
-						}
-						}
-						</select> *@
 					</div>
 				</div>
 			</div>
@@ -190,29 +181,7 @@
 
 
 <script>
-
-
-	function filterProducts() {
-		var input, filter, table, rows, productNameColumn, i, txtValue;
-		input = document.getElementById("productSearchInput");
-		filter = input.value.toUpperCase();
-		table = document.querySelector(".table");
-		rows = table.querySelectorAll(".product-row");
-
-		for (i = 0; i < rows.length; i++) {
-			productNameColumn = rows[i].getElementsByTagName("td")[1]; // Ürün adının ikinci sütunda olduğunu varsayıyoruz
-			if (productNameColumn) {
-				txtValue = productNameColumn.textContent || productNameColumn.innerText;
-				if (txtValue.toUpperCase().indexOf(filter) > -1) {
-					rows[i].style.display = "";
-				} else {
-					rows[i].style.display = "none";
-				}
-			}
-		}
-	}
-
-
+	
 
 	function redirectToSelectedPage(selectElement) {
 		// Seçili değeri al

@@ -1,8 +1,8 @@
 ﻿using Teknoroma.Domain.Enums;
 
-namespace Teknoroma.Application.Features.Orders.Queries.GetList
+namespace Teknoroma.Application.Features.Orders.Models
 {
-	public class GetAllOrderQueryResponse
+	public class OrderListViewModel
 	{
 		public Guid ID { get; set; }
 		public string UserName { get; set; }

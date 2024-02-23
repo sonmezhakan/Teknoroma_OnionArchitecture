@@ -141,6 +141,24 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			return RedirectToAction("Index", "Order");
 		}
+
+
+		[HttpGet]
+		public async Task<IActionResult> OrderList()
+		{
+			await BranchViewBag();
+
+			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockQueryResponse>>($"order/GetByBranchIdOrderList/{ViewBag.Branch.Value}");
+
+			if (response == null) return View();
+
+			List<OrderListViewModel> orderListViewModels = Mapper.Map<List<OrderListViewModel>>(response);
+
+			return View(orderListViewModels);
+		}
+
+
+
 		private async Task BranchViewBag()
 		{
 			Guid getAppUserID = await CheckAppUser();
