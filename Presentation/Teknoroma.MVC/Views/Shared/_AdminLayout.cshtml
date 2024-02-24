@@ -519,15 +519,21 @@
 							<a href="#" class="nav-link">
 								<i class="nav-icon fas fa-edit"></i>
 								<p>
-									Orders
+									Siparişler
 									<i class="fas fa-angle-left right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="pages/forms/general.html" class="nav-link">
+									<a asp-controller="Order" asp-action="Index" class="nav-link">
+										<i class="fa fa-plus" aria-hidden="true"></i>
+										<p>Satış Yap</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a asp-controller="Order" asp-action="OrderList" class="nav-link">
 										<i class="fa fa-list-ul" aria-hidden="true"></i>
-										<p>Order List</p>
+										<p>Sipariş Listesi</p>
 									</a>
 								</li>
 							</ul>

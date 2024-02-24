@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using Teknoroma.Application.Repositories;
-using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Orders.Queries.GetByBranchIdList
 {
-    public class GetByBranchIdOrderListQueryHandler : IRequestHandler<GetByBranchIdOrderListQueryRequest, List<GetByBranchIdOrderListQueryResponse>>
+	public class GetByBranchIdOrderListQueryHandler : IRequestHandler<GetByBranchIdOrderListQueryRequest, List<GetByBranchIdOrderListQueryResponse>>
     {
         private readonly IMapper _mapper;
         private readonly IOrderRepository _orderRepository;
@@ -21,7 +20,7 @@ namespace Teknoroma.Application.Features.Orders.Queries.GetByBranchIdList
 
             List<GetByBranchIdOrderListQueryResponse> getByBranchIdOrderQueryResponse = _mapper.Map<List<GetByBranchIdOrderListQueryResponse>>(getOrders);
 
-            return getByBranchIdOrderQueryResponse;
+            return getByBranchIdOrderQueryResponse.OrderBy(x=>x.OrderStatu).ToList();
         }
     }
 }

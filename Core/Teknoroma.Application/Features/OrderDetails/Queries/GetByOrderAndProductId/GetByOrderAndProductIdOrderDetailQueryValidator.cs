@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Teknoroma.Application.Features.OrderDetails.Contants;
 
 namespace Teknoroma.Application.Features.OrderDetails.Queries.GetByOrderAndProductId
 {
@@ -6,9 +7,9 @@ namespace Teknoroma.Application.Features.OrderDetails.Queries.GetByOrderAndProdu
 	{
         public GetByOrderAndProductIdOrderDetailQueryValidator()
         {
-            RuleFor(x => x.ProductId).NotEmpty().WithMessage("");
+            RuleFor(x => x.ProductId).NotEmpty().WithMessage(OrderDetailsMessages.ProductIDNotNull);
 
-            RuleFor(x => x.OrderId).NotEmpty().WithMessage("");
+            RuleFor(x => x.OrderId).NotEmpty().WithMessage(OrderDetailsMessages.IDNotNull);
         }
     }
 }

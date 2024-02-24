@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Teknoroma.Application.Features.OrderDetails.Contants;
 
 namespace Teknoroma.Application.Features.OrderDetails.Command.Update
 {
@@ -6,15 +7,14 @@ namespace Teknoroma.Application.Features.OrderDetails.Command.Update
 	{
         public UpdateOrderDetailCommandValidator()
         {
-			RuleFor(x => x.OrderId).NotEmpty().WithMessage("");
+			RuleFor(x => x.OrderId).NotEmpty().WithMessage(OrderDetailsMessages.IDNotNull);
 
-			RuleFor(x => x.BranchId).NotEmpty().WithMessage("");
+			RuleFor(x => x.BranchId).NotEmpty().WithMessage(OrderDetailsMessages.BranchIDNotNull);
 
-			RuleFor(x => x.ProductId).NotEmpty().WithMessage("");
+			RuleFor(x => x.ProductId).NotEmpty().WithMessage(OrderDetailsMessages.ProductIDNotNull);
 
-			RuleFor(x => x.Quantity).NotEmpty().WithMessage("");
+			RuleFor(x => x.Quantity).NotEmpty().WithMessage(OrderDetailsMessages.IDNotNull);
 
-			RuleFor(x => x.UnitPrice).NotEmpty().WithMessage("");
 		}
     }
 }

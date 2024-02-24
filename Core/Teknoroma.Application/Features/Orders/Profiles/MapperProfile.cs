@@ -24,9 +24,9 @@ namespace Teknoroma.Application.Features.Orders.Profiles
                 .ForMember(dest => dest.OrderStatu, opt => opt.MapFrom(src => src.OrderStatu))
                 .ForMember(dest => dest.OrderDate, opt => opt.MapFrom(src => src.OrderDate))
                 .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.BranchName))
-                .AfterMap((src, dest) => dest.TotalProductQuantity = src.OrderDetails.Sum(od=>od.Quantity))
-                .AfterMap((src, dest) => dest.TotalPrice = src.OrderDetails.Sum(od => od.UnitPrice * od.Quantity))
-				.ForMember(dest => dest.OrderDetailViewModels, opt => opt.MapFrom(src => src.OrderDetails))
+                .AfterMap((src, dest) => dest.TotalProductQuantity = src.OrderDetails.Where(x=>x.IsActive == true).Sum(od=>od.Quantity))
+                .AfterMap((src, dest) => dest.TotalPrice = src.OrderDetails.Where(x => x.IsActive == true).Sum(od => od.UnitPrice * od.Quantity))
+				.ForMember(dest => dest.OrderDetailViewModels, opt => opt.MapFrom(src => src.OrderDetails.Where(x=>x.IsActive == true)))
 				.ReverseMap();
 
             CreateMap<Order,GetAllOrderQueryResponse>()
@@ -36,8 +36,8 @@ namespace Teknoroma.Application.Features.Orders.Profiles
 				.ForMember(dest => dest.OrderStatu, opt => opt.MapFrom(src => src.OrderStatu))
 				.ForMember(dest => dest.OrderDate, opt => opt.MapFrom(src => src.OrderDate))
 				.ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.BranchName))
-				.AfterMap((src, dest) => dest.TotalProductQuantity = src.OrderDetails.Sum(od => od.Quantity))
-				.AfterMap((src, dest) => dest.TotalPrice = src.OrderDetails.Sum(od => od.UnitPrice * od.Quantity))
+				.AfterMap((src, dest) => dest.TotalProductQuantity = src.OrderDetails.Where(x=>x.IsActive == true).Sum(od => od.Quantity))
+				.AfterMap((src, dest) => dest.TotalPrice = src.OrderDetails.Where(x=>x.IsActive == true).Sum(od => od.UnitPrice * od.Quantity))
 				.ReverseMap();
 
 			CreateMap<GetByIdOrderQueryResponse, UpdateOrderCommandRequest>().ReverseMap();

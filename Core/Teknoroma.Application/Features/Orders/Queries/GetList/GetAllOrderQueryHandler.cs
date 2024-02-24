@@ -21,7 +21,7 @@ namespace Teknoroma.Application.Features.Orders.Queries.GetList
 
 			List<GetAllOrderQueryResponse> getAllOrderQueryResponses = _mapper.Map<List<GetAllOrderQueryResponse>>(getOrders);
 
-			return getAllOrderQueryResponses;
+			return getAllOrderQueryResponses.OrderBy(x => x.OrderStatu).ToList();
 		}
 	}
 }

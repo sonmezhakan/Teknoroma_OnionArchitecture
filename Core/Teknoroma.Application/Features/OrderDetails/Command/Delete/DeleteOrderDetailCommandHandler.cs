@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Teknoroma.Application.Features.Orders.Command.Delete;
 using Teknoroma.Application.Features.Products.Command.Update;
 using Teknoroma.Application.Features.Stocks.Command.Update;
 using Teknoroma.Application.Repositories;
@@ -36,6 +37,11 @@ namespace Teknoroma.Application.Features.OrderDetails.Command.Delete
 
 			//OrderDetail process
 			await _orderDetailRepository.DeleteAsync(orderDetail);
+
+			if(_orderDetailRepository.GetAllAsync(x=>x.ID == request.OrderId).Result.Count() <=0)
+			{
+				await _mediator.Send(new DeleteOrderCommandRequest { ID = request.OrderId });
+			}
 
 			return Unit.Value;
 		}

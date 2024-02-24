@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Teknoroma.Application.Features.Orders.Contants
+﻿namespace Teknoroma.Application.Features.Orders.Contants
 {
-	internal class OrdersMessages
+	public class OrdersMessages
 	{
+		public const string IDNotNull = "ID Boş Olamaz!";
+
+		public const string BranchIDNotNull = "Şube Boş Olamaz!";
+
+		public const string ProductIDNotNull = "Ürün Boş Olamaz!";
+
+		public const string EmployeeIDNotNull = "Çalışan Bulunamadı!!";
+
+		public const string CustomerIDNotnull = "Müşteri Boş Olamaz!";
+
+		public const string CartItemsNotNull = "Ürün Bulunamadı!";
+
+		public const string QuantityNotNull = "Adet Boş Olamaz!";
 	}
 }

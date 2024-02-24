@@ -72,7 +72,7 @@ namespace Teknoroma.Persistence.Repositories
             entity.Status = Domain.Enums.DataStatus.Deleted;
             entity.IsActive = false;
 
-            _entities.Remove(entity);
+            _entities.Update(entity);
             await _context.SaveChangesAsync();
         }
 
@@ -88,7 +88,7 @@ namespace Teknoroma.Persistence.Repositories
                 entity.IsActive = false;
             });
 
-            _entities.RemoveRange(entities);
+            _entities.UpdateRange(entities);
            await _context.SaveChangesAsync();
         }
         #endregion

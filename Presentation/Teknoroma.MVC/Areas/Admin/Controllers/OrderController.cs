@@ -206,6 +206,15 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return RedirectToAction("OrderList", "Order");
 		}
 
+		[HttpGet]
+		public async Task<IActionResult> Delete(Guid id)
+		{
+			await ApiService.HttpClient.DeleteAsync($"order/delete/{id}");
+
+			return RedirectToAction("OrderList", "Order");
+		}
+
+
 		private async Task BranchViewBag()
 		{
 			Guid getAppUserID = await CheckAppUser();

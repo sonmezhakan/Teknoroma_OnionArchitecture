@@ -53,6 +53,9 @@
 							<th>
 
 							</th>
+							<th>
+
+							</th>
 							</thead>
 							<tbody>
 								@if (Model != null)
@@ -189,6 +192,9 @@
 													</div>
 												</div>
 
+											</td>
+											<td>
+												<a class="btn bg-gradient-danger" asp-controller="Order" asp-action="Delete" asp-route-id="@order.ID" >Siparişi Sil</a>
 											</td>
 										</tr>
 									}

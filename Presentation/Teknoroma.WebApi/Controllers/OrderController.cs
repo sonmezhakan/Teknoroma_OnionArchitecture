@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.OrderDetails.Queries.GetByOrderAndProductId;
 using Teknoroma.Application.Features.Orders.Command.Create;
+using Teknoroma.Application.Features.Orders.Command.Delete;
 using Teknoroma.Application.Features.Orders.Command.Update;
 using Teknoroma.Application.Features.Orders.Queries.GetByBranchIdList;
 using Teknoroma.Application.Features.Orders.Queries.GetById;
@@ -22,6 +23,13 @@ namespace Teknoroma.WebApi.Controllers
         public async Task<IActionResult> Update(UpdateOrderCommandRequest updateOrderCommandRequest)
         {
             var result = await Mediator.Send(updateOrderCommandRequest);
+
+            return Ok(result);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await Mediator.Send(new DeleteOrderCommandRequest { ID = id });
 
             return Ok(result);
         }

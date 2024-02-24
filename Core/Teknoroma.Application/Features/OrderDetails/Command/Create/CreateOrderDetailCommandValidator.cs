@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Teknoroma.Application.Features.OrderDetails.Contants;
 
 namespace Teknoroma.Application.Features.OrderDetails.Command.Create
 {
@@ -6,9 +7,9 @@ namespace Teknoroma.Application.Features.OrderDetails.Command.Create
 	{
         public CreateOrderDetailCommandValidator()
         {
-            RuleFor(x=>x.ID).NotEmpty().WithMessage("");
+            RuleFor(x=>x.ID).NotEmpty().WithMessage(OrderDetailsMessages.IDNotNull);
 
-            RuleFor(x => x.CartItems).NotEmpty().WithMessage("");
+            RuleFor(x => x.CartItems).NotEmpty().WithMessage(OrderDetailsMessages.CartItemsNotNull);
         }
     }
 }
