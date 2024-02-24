@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
 namespace Teknoroma.Application.Features.OrderDetails.Command.Delete
 {
-	internal class DeleteOrderDetailCommandValidator
+	public class DeleteOrderDetailCommandValidator:AbstractValidator<DeleteOrderDetailCommandRequest>
 	{
-	}
+        public DeleteOrderDetailCommandValidator()
+        {
+            RuleFor(x=>x.OrderId).NotEmpty().WithMessage("");
+
+            RuleFor(x => x.BranchId).NotEmpty().WithMessage("");
+
+            RuleFor(x => x.ProductId).NotEmpty().WithMessage("");
+        }
+    }
 }

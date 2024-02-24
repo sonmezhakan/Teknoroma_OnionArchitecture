@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
 namespace Teknoroma.Application.Features.Orders.Queries.GetByBranchIdList
 {
-    internal class GetByBranchIdOrderListQueryValidator
+	public class GetByBranchIdOrderListQueryValidator:AbstractValidator<GetByBranchIdOrderListQueryRequest>
     {
+        public GetByBranchIdOrderListQueryValidator()
+        {
+			RuleFor(x => x.BranchId).NotEmpty().WithMessage("");
+		}
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Teknoroma.Application.Features.Orders.Command.Delete
 {
-	internal class DeleteOrderCommanValidator
+	internal class DeleteOrderCommandHandler
 	{
 	}
 }

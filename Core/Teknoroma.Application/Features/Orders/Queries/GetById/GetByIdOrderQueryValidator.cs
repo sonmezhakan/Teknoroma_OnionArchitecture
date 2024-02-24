@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
 namespace Teknoroma.Application.Features.Orders.Queries.GetById
 {
-	internal class GetByIdOrderQueryValidator
+	public class GetByIdOrderQueryValidator:AbstractValidator<GetByIdOrderQueryRequest>
 	{
-	}
+        public GetByIdOrderQueryValidator()
+        {
+            RuleFor(x=>x.ID).NotEmpty().WithMessage("");
+        }
+    }
 }

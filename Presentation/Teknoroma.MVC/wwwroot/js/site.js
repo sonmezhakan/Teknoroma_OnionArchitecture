@@ -74,3 +74,26 @@ function filterProducts() {
 		}
 	}
 }
+
+function filterOrderTable() {
+	var orderId = $("#orderIdFilter").val().toLowerCase();
+	var branchName = $("#branchNameFilter").val().toLowerCase();
+	var customerName = $("#customerNameFilter").val().toLowerCase();
+	var customerPhoneNumber = $("#customerPhoneNumberFilter").val().toLowerCase();
+	
+	$("tr.order-row").each(function () {
+		var currentOrderId = $(this).find("td:eq(0)").text().toLowerCase();
+		var currentBranchName = $(this).find("td:eq(1)").text().toLowerCase();
+		var currentCustomerName = $(this).find("td:eq(2)").text().toLowerCase();
+		var currentCustomerPhoneNumber = $(this).find("td:eq(3)").text().toLowerCase();
+
+		if (currentOrderId.includes(orderId) &&
+			currentBranchName.includes(branchName) &&
+			currentCustomerName.includes(customerName) &&
+			currentCustomerPhoneNumber.includes(customerPhoneNumber)) {
+			$(this).show();
+		} else {
+			$(this).hide();
+		}
+	});
+}

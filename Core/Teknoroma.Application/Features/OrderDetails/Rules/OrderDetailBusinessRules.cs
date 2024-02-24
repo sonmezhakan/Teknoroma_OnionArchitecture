@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Teknoroma.Application.Features.OrderDetails.Rules
+﻿namespace Teknoroma.Application.Features.OrderDetails.Rules
 {
-	internal class OrderDetailBusinessRules
+	public class OrderDetailBusinessRules
 	{
 	}
 }

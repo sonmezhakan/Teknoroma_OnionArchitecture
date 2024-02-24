@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
 namespace Teknoroma.Application.Features.OrderDetails.Command.Update
 {
-	internal class UpdateOrderDetailCommandValidator
+	public class UpdateOrderDetailCommandValidator:AbstractValidator<UpdateOrderDetailCommandRequest>
 	{
-	}
+        public UpdateOrderDetailCommandValidator()
+        {
+			RuleFor(x => x.OrderId).NotEmpty().WithMessage("");
+
+			RuleFor(x => x.BranchId).NotEmpty().WithMessage("");
+
+			RuleFor(x => x.ProductId).NotEmpty().WithMessage("");
+
+			RuleFor(x => x.Quantity).NotEmpty().WithMessage("");
+
+			RuleFor(x => x.UnitPrice).NotEmpty().WithMessage("");
+		}
+    }
 }

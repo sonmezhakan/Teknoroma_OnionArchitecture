@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace Teknoroma.Application.Features.Orders.Queries.GetById
 {
-	internal class GetByIdOrderQueryRequest
+	public class GetByIdOrderQueryRequest:IRequest<GetByIdOrderQueryResponse>
 	{
-	}
+        public Guid ID { get; set; }
+    }
 }

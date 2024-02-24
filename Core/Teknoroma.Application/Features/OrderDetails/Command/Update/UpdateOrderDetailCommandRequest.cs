@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace Teknoroma.Application.Features.OrderDetails.Command.Update
 {
-	internal class UpdateOrderDetailCommandRequest
+	public class UpdateOrderDetailCommandRequest:IRequest<Unit>
 	{
-	}
+        public Guid BranchId { get; set; }
+        public Guid OrderId { get; set; }
+        public Guid ProductId { get; set; }
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+    }
 }

@@ -4,11 +4,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Teknoroma.Application.Features.AppUsers.Queries.GetByUserName;
 using Teknoroma.Application.Features.Customers.Queries.GetList;
 using Teknoroma.Application.Features.Employees.Queries.GetById;
+using Teknoroma.Application.Features.OrderDetails.Command.Update;
 using Teknoroma.Application.Features.Orders.Command.Create;
+using Teknoroma.Application.Features.Orders.Command.Update;
 using Teknoroma.Application.Features.Orders.Models;
+using Teknoroma.Application.Features.Orders.Queries.GetByBranchIdList;
+using Teknoroma.Application.Features.Orders.Queries.GetById;
 using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Application.Features.Stocks.Models;
 using Teknoroma.Application.Features.Stocks.Queries.GetList;
+using Teknoroma.Domain.Enums;
 using Teknoroma.Infrastructure.SessionHelpers;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
@@ -148,7 +153,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		{
 			await BranchViewBag();
 
-			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockQueryResponse>>($"order/GetByBranchIdOrderList/{ViewBag.Branch.Value}");
+			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetByBranchIdOrderListQueryResponse>>($"order/GetByBranchIdOrderList/{ViewBag.Branch.Value}");
 
 			if (response == null) return View();
 
@@ -157,7 +162,49 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(orderListViewModels);
 		}
 
+		[HttpPost]
+		public async Task<IActionResult> UpdateOrderDetail(Guid orderId,Guid productId,int quantity)
+		{
+			await BranchViewBag();
 
+			var getProduct = await ApiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"product/getbyid/{productId}");
+
+			UpdateOrderDetailCommandRequest updateOrderDetailCommandRequest = new UpdateOrderDetailCommandRequest
+			{
+				BranchId = Guid.Parse(ViewBag.Branch.Value),
+				OrderId = orderId,
+				ProductId = productId,
+				Quantity = quantity,
+				UnitPrice = getProduct.UnitPrice
+			};
+
+			await ApiService.HttpClient.PutAsJsonAsync("orderDetail/Update", updateOrderDetailCommandRequest);
+
+			return RedirectToAction("OrderList", "Order");
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> DeleteOrderDetail(Guid orderId,Guid productId)
+		{
+			await BranchViewBag();
+
+			await ApiService.HttpClient.DeleteAsync($"orderdetail/delete?orderId={orderId}&productId={productId}&branchId={Guid.Parse(ViewBag.Branch.Value)}");
+
+			return RedirectToAction("OrderList", "Order");
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> UpdateOrderStatu(Guid orderId,OrderStatu orderStatu)
+		{
+			var getOrder = await ApiService.HttpClient.GetFromJsonAsync<GetByIdOrderQueryResponse>($"order/getbyid/{orderId}");
+			getOrder.OrderStatu = orderStatu;
+
+			UpdateOrderCommandRequest updateOrderCommandRequest = Mapper.Map<UpdateOrderCommandRequest>(getOrder);
+
+			await ApiService.HttpClient.PutAsJsonAsync("order/update", updateOrderCommandRequest);
+
+			return RedirectToAction("OrderList", "Order");
+		}
 
 		private async Task BranchViewBag()
 		{

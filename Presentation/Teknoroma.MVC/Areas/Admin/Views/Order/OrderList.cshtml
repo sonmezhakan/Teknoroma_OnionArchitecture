@@ -1,8 +1,8 @@
 ﻿@using Teknoroma.Application.Features.Orders.Models
 @model List<OrderListViewModel>
 @{
-    ViewData["Title"] = "OrderList";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["Title"] = "OrderList";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="row mx-4">
 	<div class="col-md-12 mx-auto">
@@ -16,10 +16,24 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-8">
-					<div class="card-header">
-						<label>Ürün Ara</label>
-						<input type="text" class="form-control" id="productSearchInput" oninput="filterProducts()" />
+				<div class="col-md-12">
+					<div class="card-header d-flex">
+						<div class="col-md-3">
+							<label>Sipariş Numarası Ara</label>
+							<input type="text" class="form-control" id="orderIdFilter" oninput="filterOrderTable()" />
+						</div>
+						<div class="col-md-3">
+							<label>Şube Ara</label>
+							<input type="text" class="form-control" id="branchNameFilter" oninput="filterOrderTable()" />
+						</div>
+						<div class="col-md-3">
+							<label>Müşteri Ara</label>
+							<input type="text" class="form-control" id="customerNameFilter" oninput="filterOrderTable()" />
+						</div>
+						<div class="col-md-3">
+							<label>Müşteri Telefon Numarası Ara</label>
+							<input type="text" class="form-control" id="customerPhoneNumberFilter" oninput="filterOrderTable()" />
+						</div>
 					</div>
 					<div class="card-body">
 						<table class="table table-bordered table-hover dataTable dtr-inline">
@@ -36,14 +50,16 @@
 							<th>
 
 							</th>
-							</tr>
+							<th>
+
+							</th>
 							</thead>
 							<tbody>
 								@if (Model != null)
 								{
 									@foreach (var order in Model)
 									{
-										<tr class="product-row">
+										<tr class="order-row">
 											<td>
 												@order.ID
 											</td>
@@ -62,9 +78,25 @@
 											<td>
 												@order.TotalPrice
 											</td>
-											<td>
-												@order.OrderStatu
-											</td>
+
+											@if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Hazırlanıyor)
+											{
+												<td style="background-color:darkred; color:white">
+													@order.OrderStatu
+												</td>
+											}
+											else if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Hazırlandı)
+											{
+												<td style="background-color:dodgerblue; color:white">
+													@order.OrderStatu
+												</td>
+											}
+											else
+											{
+												<td>
+													@order.OrderStatu
+												</td>
+											}
 											<td>
 												@order.OrderDate
 											</td>
@@ -72,10 +104,91 @@
 												@order.UserName
 											</td>
 											<td>
-												<form method="post">
-													<a class="btn bg-gradient-primary" asp-controller="Order" asp-action="OrderReady" asp-route="@order.ID">Hazırlandı</a>
-													<a class="btn bg-gradient-success" asp-controller="Order" asp-action="OrderDelivered" asp-route="@order.ID">Teslim Edildi</a>
-												</form>
+												<a class="btn bg-gradient-primary" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.Hazırlandı">Hazırlandı</a>
+												<a class="btn bg-gradient-success" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.TeslimEdildi">Teslim Edildi</a>
+											</td>
+
+
+											<td>
+
+												<!-- Button trigger modal -->
+												<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal-@order.ID">
+													Sipariş Detayı
+												</button>
+												<!-- Modal -->
+												<div class="container">
+													<div class="modal fade" id="exampleModal-@order.ID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal-dialog modal-fullscreen">
+															<div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
+																<div class="modal-header">
+																	<h5 class="modal-title" id="exampleModalLabel">@order.ID Numaralı Sipariş Detayı</h5>
+																	<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+																</div>
+																<div class="modal-body">
+																	<div class="modal-body">
+																		<table id="xx" class="table table-bordered table-hover dataTable dtr-inline">
+																			<thead>
+																			<th rowspan="1" colspan="1">Resim</th>
+																			<th rowspan="1" colspan="1">Ürün</th>
+																			<th rowspan="1" colspan="1">Sipariş Adeti</th>
+																			<th rowspan="1" colspan="1">Fiyat</th>
+																			<th rowspan="1" colspan="1">Toplam fiyat</th>
+																			<th>
+
+																			</th>
+																			<th>
+
+																			</th>
+
+																			</thead>
+																			<tbody>
+
+																				@if (Model != null)
+																				{
+																					@foreach (var orderDetail in order.OrderDetailViewModels)
+																					{
+
+																						<tr>
+																							<form method="post" asp-controller="Order" asp-action="UpdateOrderDetail" asp-route-orderId="@order.ID" asp-route-productId="@orderDetail.ProductId">
+																							<td>
+																								<img src="~/images/product/@orderDetail.ImagePath" width="125" height="100" />
+																							</td>
+																							<td>
+																									@orderDetail.ProductName
+																							</td>
+																							<td>
+																								<input class="form-control text-center me-4" name="quantity" type="number" value="@orderDetail.Quantity" style="max-width: 4rem">
+																							</td>
+																							<td>
+																									@orderDetail.UnitPrice
+																							</td>
+																							<td>
+																									@orderDetail.TotalPrice
+																							</td>
+																							<td>
+																								<button class="btn btn-warning" type="submit">Güncelle</button>						
+																							</td>
+																							</form>
+																							<td>
+																								<a class="btn btn-danger" asp-controller="Order" asp-action="DeleteOrderDetail" asp-route-orderId="@order.ID" asp-route-productId="@orderDetail.ProductId">Sil</a>
+																							</td>
+																						</tr>
+																					}
+																				}
+
+																			</tbody>
+																		</table>
+
+																	</div>
+																</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
 											</td>
 										</tr>
 									}

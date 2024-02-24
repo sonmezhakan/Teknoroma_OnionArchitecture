@@ -1,12 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using MediatR;
+using Teknoroma.Application.Repositories;
+using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Orders.Queries.GetById
 {
-	internal class GetByIdOrderQueryHandler
+	public class GetByIdOrderQueryHandler : IRequestHandler<GetByIdOrderQueryRequest, GetByIdOrderQueryResponse>
 	{
+		private readonly IMapper _mapper;
+		private readonly IOrderRepository _orderRepository;
+
+		public GetByIdOrderQueryHandler(IMapper mapper, IOrderRepository orderRepository)
+        {
+			_mapper = mapper;
+			_orderRepository = orderRepository;
+		}
+        public async Task<GetByIdOrderQueryResponse> Handle(GetByIdOrderQueryRequest request, CancellationToken cancellationToken)
+		{
+			Order order = await _orderRepository.GetAsync(x => x.ID == request.ID);
+
+			GetByIdOrderQueryResponse getByIdOrderQueryResponse = _mapper.Map<GetByIdOrderQueryResponse>(order);
+
+			return getByIdOrderQueryResponse;
+		}
 	}
 }

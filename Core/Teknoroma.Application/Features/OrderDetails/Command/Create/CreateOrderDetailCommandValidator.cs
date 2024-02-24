@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
 namespace Teknoroma.Application.Features.OrderDetails.Command.Create
 {
-	internal class CreateOrderDetailCommandValidator
+	public class CreateOrderDetailCommandValidator:AbstractValidator<CreateOrderDetailCommandRequest>
 	{
-	}
+        public CreateOrderDetailCommandValidator()
+        {
+            RuleFor(x=>x.ID).NotEmpty().WithMessage("");
+
+            RuleFor(x => x.CartItems).NotEmpty().WithMessage("");
+        }
+    }
 }

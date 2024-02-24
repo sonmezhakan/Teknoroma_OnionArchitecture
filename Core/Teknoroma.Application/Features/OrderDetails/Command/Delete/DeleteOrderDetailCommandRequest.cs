@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace Teknoroma.Application.Features.OrderDetails.Command.Delete
 {
-	internal class DeleteOrderDetailCommandRequest
+	public class DeleteOrderDetailCommandRequest:IRequest<Unit>
 	{
-	}
+        public Guid OrderId { get; set; }
+        public Guid ProductId { get; set; }
+        public Guid BranchId { get; set; }
+    }
 }

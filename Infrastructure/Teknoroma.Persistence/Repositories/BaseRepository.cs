@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using Teknoroma.Application.Repositories;
 using Teknoroma.Domain.Interfaces;
 
@@ -12,7 +7,7 @@ using Teknoroma.Persistence.Context;
 
 namespace Teknoroma.Persistence.Repositories
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, IEntity
+	public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, IEntity
     {
         private readonly TeknoromaContext _context;
         private readonly DbSet<TEntity> _entities;
@@ -33,17 +28,9 @@ namespace Teknoroma.Persistence.Repositories
         
         public async Task AddRangeAsync(List<TEntity> entities)
         {
-            try
-            {
-				await _context.AddRangeAsync(entities);
-				await _context.SaveChangesAsync(); 
-			}
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
+			await _context.AddRangeAsync(entities);
+			await _context.SaveChangesAsync();
+		}
         #endregion
         #region Update
         public async Task UpdateAsync(TEntity entity)

@@ -9,6 +9,8 @@ using Teknoroma.Application.Features.Categories.Rules;
 using Teknoroma.Application.Features.Customers.Rules;
 using Teknoroma.Application.Features.Departments.Rules;
 using Teknoroma.Application.Features.Employees.Rules;
+using Teknoroma.Application.Features.OrderDetails.Rules;
+using Teknoroma.Application.Features.Orders.Rules;
 using Teknoroma.Application.Features.Products.Rules;
 using Teknoroma.Application.Features.Suppliers.Rules;
 using Teknoroma.Application.Pipelines.Transaction;
@@ -47,8 +49,10 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddTransient<AppUserBusinessRules>();
 			services.AddTransient<AppUserRoleBusinessRules>();
 			services.AddTransient<EmployeeBusinessRules>();
-			
-			
+			services.AddTransient<OrderBusinessRules>();
+			services.AddTransient<OrderDetailBusinessRules>();
+
+
 
 			return services;
 		}
