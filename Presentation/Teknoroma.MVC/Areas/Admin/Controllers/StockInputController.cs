@@ -8,11 +8,9 @@ using Teknoroma.Application.Features.Products.Queries.GetList;
 using Teknoroma.Application.Features.StockInputs.Command.Create;
 using Teknoroma.Application.Features.StockInputs.Command.Update;
 using Teknoroma.Application.Features.StockInputs.Models;
-using Teknoroma.Application.Features.StockInputs.Queries.GetByBranchIdList;
 using Teknoroma.Application.Features.StockInputs.Queries.GetById;
 using Teknoroma.Application.Features.StockInputs.Queries.GetList;
 using Teknoroma.Application.Features.Suppliers.Queries.GetList;
-using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
@@ -24,61 +22,42 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            await BranchViewBag();
-            await BranchIDViewBag();
-            await StockInputViewBag();
-            await ProductViewBag();
-            await SupplierViewBag();
-
+            await ViewBagList();
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Create(CreateStockInputViewModel model)
         {
-            await BranchViewBag();
-            await BranchIDViewBag();
-            await StockInputViewBag();
-            await ProductViewBag();
-            await SupplierViewBag();
-
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                CreateStockInputCommandRequest createStockInput = Mapper.Map<CreateStockInputCommandRequest>(model);
-                createStockInput.BranchID = Guid.Parse(ViewBag.Branch);
-                createStockInput.AppUserID = CheckAppUser().Result;
-
-                HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("stockInput/create", createStockInput);
-
-                if (response.IsSuccessStatusCode) return RedirectToAction("Create", "StockInput");
-
-                await ErrorResponseViewModel.Instance.CopyForm(response);
-
-                ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
-
+                await ViewBagList();
+                await ErrorResponse();
                 return View(model);
             }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Hatalı İşlem");
 
-                return View(model);
-            }
+            CreateStockInputCommandRequest createStockInput = Mapper.Map<CreateStockInputCommandRequest>(model);
+            createStockInput.BranchID = Guid.Parse(ViewBag.Branch);
+            createStockInput.AppUserID = CheckAppUser().Result;
+
+            HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("stockInput/create", createStockInput);
+
+            if (response.IsSuccessStatusCode) return RedirectToAction("Create", "StockInput");
+
+            await HandleErrorResponse(response);
+            await ViewBagList();
+            return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Update(Guid? id)
         {
-            await BranchViewBag();
-            await BranchIDViewBag();
-            await StockInputViewBag();
-            await ProductViewBag();
-            await SupplierViewBag();
+            await ViewBagList();
 
             if (id == null) return View();
 
-            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdStockInputQueryResponse>($"stockInput/getbyid/{id}");
+            var response = await GetByStockInputId((Guid)id);
 
-            if(response == null) return View();
+            if (response == null) return View();
 
             StockInputViewModel stockInputViewModel = Mapper.Map<StockInputViewModel>(response);
 
@@ -87,35 +66,23 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Update(StockInputViewModel model)
-        {
-            await BranchViewBag();
-            await BranchIDViewBag();
-            await StockInputViewBag();
-            await ProductViewBag();
-            await SupplierViewBag();
-
-            if (ModelState.IsValid)
+        {         
+            if (!ModelState.IsValid)
             {
-                UpdateStockInputCommandRequest updateStockInput = Mapper.Map<UpdateStockInputCommandRequest>(model);
-                updateStockInput.BranchID = Guid.Parse(ViewBag.Branch.Value);
-                
-
-                HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("stockInput/update", updateStockInput);
-
-                if (response.IsSuccessStatusCode) return RedirectToAction("Update", model.ID);
-
-                await ErrorResponseViewModel.Instance.CopyForm(response);
-
-                ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
-
+                await ViewBagList();
+                await ErrorResponse();
                 return View(model);
             }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Hatalı İşlem");
+            UpdateStockInputCommandRequest updateStockInput = Mapper.Map<UpdateStockInputCommandRequest>(model);
+            updateStockInput.BranchID = Guid.Parse(ViewBag.Branch.Value);
 
-                return View(model);
-            }
+            HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("stockInput/update", updateStockInput);
+
+            if (response.IsSuccessStatusCode) return RedirectToAction("Update", model.ID);
+
+            await HandleErrorResponse(response);
+            await ViewBagList();
+            return View(model);
         }
 
         [HttpGet]
@@ -129,15 +96,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(Guid? id)
         {
-            await BranchViewBag();
-            await BranchIDViewBag();
-            await StockInputViewBag();
-            await ProductViewBag();
-            await SupplierViewBag();
+            await ViewBagList();
 
             if (id == null) return View();
 
-            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdStockInputQueryResponse>($"stockInput/getbyid/{id}");
+            var response = await GetByStockInputId((Guid)id);
 
             if (response == null) return View();
 
@@ -161,6 +124,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(stockInputListViewModel);
         }
 
+
+        private async Task<GetByIdStockInputQueryResponse> GetByStockInputId(Guid id)
+        {
+           return await ApiService.HttpClient.GetFromJsonAsync<GetByIdStockInputQueryResponse>($"stockInput/getbyid/{id}");
+        }
         private async Task StockInputViewBag()
         {
             var stockInputs = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockInputQueryResponse>>($"stockInput/getall");
@@ -168,6 +136,14 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             ViewBag.StockInputList = stockInputs;
         }
 
+        private async Task ViewBagList()
+        {
+            await BranchViewBag();
+            await BranchIDViewBag();
+            await StockInputViewBag();
+            await ProductViewBag();
+            await SupplierViewBag();
+        }
         private async Task BranchViewBag()
         {
             var branches = ApiService.HttpClient.GetFromJsonAsync<List<GetAllBranchQueryResponse>>("branch/getall").Result

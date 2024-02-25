@@ -82,7 +82,6 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> CartItemDelete(Guid id)
 		{
-			
 			Cart cartSession;
 
 			if(SessionHelper.GetProductFromJson<Cart>(HttpContext.Session, "sepet") != null)

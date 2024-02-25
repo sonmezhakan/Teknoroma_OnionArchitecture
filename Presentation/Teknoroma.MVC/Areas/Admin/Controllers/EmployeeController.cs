@@ -20,85 +20,63 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Create()
 		{
-			await AppUserViewBag();
-			await BranchViewBag();
-			await DepartmentViewBag();
+			await ViewBagList();
 
-			return View();
+            return View();
 		}
 		[HttpPost]
 		public async Task<IActionResult> Create(CreateEmployeeViewModel model)
 		{
-			await AppUserViewBag();
-			await BranchViewBag();
-			await DepartmentViewBag();
+            if (!ModelState.IsValid)
+            {
+                await ViewBagList();
+                await ErrorResponse();
+                return View(model);
+            }
 
-			if(ModelState.IsValid)
-			{
-				CreateEmployeeCommandRequest createEmployeeCommandRequest = Mapper.Map<CreateEmployeeCommandRequest>(model);
+            CreateEmployeeCommandRequest createEmployeeCommandRequest = Mapper.Map<CreateEmployeeCommandRequest>(model);
 
-				HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("employee/create", createEmployeeCommandRequest);
+            HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("employee/create", createEmployeeCommandRequest);
 
-				if (response.IsSuccessStatusCode) return View();
+            if (response.IsSuccessStatusCode) return View();
 
-				await ErrorResponseViewModel.Instance.CopyForm(response);
-
-				ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
-
-				return View(model);
-
-			}
-			else
-			{
-				ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
-
-				return View(model);
-			}
-		}
+			await HandleErrorResponse(response);
+            await ViewBagList();
+            return View(model);
+        }
 		[HttpGet]
 		public async Task<IActionResult> Update(Guid? id)
 		{
-			await AppUserViewBag();
-			await BranchViewBag();
-			await DepartmentViewBag();
+            await ViewBagList();
 
-			if (id == null) return View();
+            if (id == null) return View();
 
-			var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{id}");
+			var response = await GetByEmployeeId((Guid)id);
 
-			UpdateEmployeeViewModel updateEmployeeViewModel = Mapper.Map<UpdateEmployeeViewModel>(response);
+            UpdateEmployeeViewModel updateEmployeeViewModel = Mapper.Map<UpdateEmployeeViewModel>(response);
 
 			return View(updateEmployeeViewModel);
 		}
 		[HttpPost]
 		public async Task<IActionResult> Update(UpdateEmployeeViewModel model)
 		{
-			await AppUserViewBag();
-			await BranchViewBag();
-			await DepartmentViewBag();
+            if (!ModelState.IsValid)
+            {
+                await ViewBagList();
+                await ErrorResponse();
+                return View(model);
+            }
+            UpdateEmployeeCommandRequest updateEmployeeCommandRequest = Mapper.Map<UpdateEmployeeCommandRequest>(model);
 
-			if(ModelState.IsValid)
-			{
-				UpdateEmployeeCommandRequest updateEmployeeCommandRequest = Mapper.Map<UpdateEmployeeCommandRequest>(model);
+            HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("employee/update", updateEmployeeCommandRequest);
 
-				HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("employee/update", updateEmployeeCommandRequest);
+            if (response.IsSuccessStatusCode) return RedirectToAction("Update", model.ID);
 
-				if (response.IsSuccessStatusCode) return RedirectToAction("Update",model.ID);
+			await HandleErrorResponse(response);
+            await ViewBagList();
+            return View(model);
 
-				await ErrorResponseViewModel.Instance.CopyForm(response);
-
-				ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
-
-				return View(model);
-			}
-			else
-			{
-				ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
-
-				return View(model);
-			}
-
-		}
+        }
 		[HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
 		{
@@ -109,15 +87,13 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Detail(Guid? id)
 		{
-			await AppUserViewBag();
-			await BranchViewBag();
-			await DepartmentViewBag();
+            await ViewBagList();
 
-			if (id == null) return View();
+            if (id == null) return View();
 
-			var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{id}");
+			var response = await GetByEmployeeId((Guid)id);
 
-			EmployeeViewModel employeeViewModel = Mapper.Map<EmployeeViewModel>(response);
+            EmployeeViewModel employeeViewModel = Mapper.Map<EmployeeViewModel>(response);
 
 			return View(employeeViewModel);
 		}
@@ -131,6 +107,16 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(employeeViewModel);
 		}
 
+		private async Task<GetByIdEmployeeQueryResponse> GetByEmployeeId(Guid id)
+		{
+          return await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{id}");
+        }
+		private async Task ViewBagList()
+		{
+            await AppUserViewBag();
+            await BranchViewBag();
+            await DepartmentViewBag();
+        }
 		private async Task AppUserViewBag()
 		{
 			var appUser = ApiService.HttpClient.GetFromJsonAsync<List<GetAllAppUserQueryResponse>>("user/getall").Result

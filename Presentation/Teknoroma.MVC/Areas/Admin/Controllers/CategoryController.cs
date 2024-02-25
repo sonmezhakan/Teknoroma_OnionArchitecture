@@ -23,29 +23,22 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateCategoryViewModel model)
         {
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
-                CreateCategoryCommandRequest createCategoryCommandRequest = Mapper.Map<CreateCategoryCommandRequest>(model);
-
-                HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("category/create", createCategoryCommandRequest);
-
-				if (!response.IsSuccessStatusCode)
-				{
-					await ErrorResponseViewModel.Instance.CopyForm(response);
-
-					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
-
-					return View(model);
-				}
-
-				return View();
+                await ErrorResponse();
+                return View(model);
             }
-            else
-            {
-				ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
+            CreateCategoryCommandRequest createCategoryCommandRequest = Mapper.Map<CreateCategoryCommandRequest>(model);
 
-				return View(model);
-			} 
+            HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("category/create", createCategoryCommandRequest);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                await HandleErrorResponse(response);
+                return View(model);
+            }
+
+            return View();
         }
 
         [HttpGet]
@@ -55,7 +48,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (id == null) return View();
 
-            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdCategoryQueryResponse>($"category/GetById/{id}");
+            var response = await GetByCategoryId((Guid)id);
 
             CategoryViewModel categoryViewModel = Mapper.Map<CategoryViewModel>(response);
 
@@ -65,34 +58,24 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(CategoryViewModel model)
         {
-            if(ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                UpdateCategoryCommandRequest updateCategoryCommandRequest = Mapper.Map<UpdateCategoryCommandRequest>(model);
-
-                HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("category/Update", updateCategoryCommandRequest);
-
-				if (!response.IsSuccessStatusCode)
-				{
-					await ErrorResponseViewModel.Instance.CopyForm(response);
-
-					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
-
-					await CategoryViewBag();
-
-					return View(model);
-				}
-
-				return RedirectToAction("Update", model.ID);
-			}
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
-
-				await CategoryViewBag();
-
-				return View(model);
+                await CategoryViewBag();
+                await ErrorResponse();
+                return View(model);
             }
-            
+            UpdateCategoryCommandRequest updateCategoryCommandRequest = Mapper.Map<UpdateCategoryCommandRequest>(model);
+
+            HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("category/Update", updateCategoryCommandRequest);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                await HandleErrorResponse(response);
+                await CategoryViewBag();
+                return View(model);
+            }
+
+            return RedirectToAction("Update", model.ID);
         }
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
@@ -109,7 +92,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (id == null) return View();
 
-            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdCategoryQueryResponse>($"category/GetById/{id}");
+            var response = await GetByCategoryId((Guid)id);
 
             CategoryViewModel categoryViewModel = Mapper.Map<CategoryViewModel>(response);
 
@@ -128,7 +111,12 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(categoryViewModels);
         }
 
-        public async Task CategoryViewBag()
+        private async Task<GetByIdCategoryQueryResponse> GetByCategoryId(Guid id)
+        {
+           return await ApiService.HttpClient.GetFromJsonAsync<GetByIdCategoryQueryResponse>($"category/GetById/{id}");
+        }
+
+        private async Task CategoryViewBag()
         {
             var getCategoryList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllCategoryQueryResponse>>("category/getall").Result.Select(x => new GetAllCategoryQueryResponse
             {

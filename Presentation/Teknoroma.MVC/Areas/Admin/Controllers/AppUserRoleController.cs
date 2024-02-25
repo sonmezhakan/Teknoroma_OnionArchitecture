@@ -21,26 +21,19 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateAppUserRoleViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                CreateAppUserRoleCommandRequest createAppUserRoleCommandRequest = Mapper.Map<CreateAppUserRoleCommandRequest>(model);
-
-                HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("role/create", createAppUserRoleCommandRequest);
-
-                if (response.IsSuccessStatusCode) return RedirectToAction("Create","AppUserRole");
-
-                await ErrorResponseViewModel.Instance.CopyForm(response);
-
-                ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
-
+                await ErrorResponse();
                 return View(model);
             }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
+            CreateAppUserRoleCommandRequest createAppUserRoleCommandRequest = Mapper.Map<CreateAppUserRoleCommandRequest>(model);
 
-                return View(model);
-            }
+            HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("role/create", createAppUserRoleCommandRequest);
+
+            if (response.IsSuccessStatusCode) return RedirectToAction("Create", "AppUserRole");
+
+            await HandleErrorResponse(response);
+            return View(model);
         }
         [HttpGet]
         public async Task<IActionResult> Update(Guid? id)
@@ -49,9 +42,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (id == null) return View();
 
-            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdAppUserRoleQueryResponse>($"role/getbyid/{id}");
+            var response = await GetByRoleId((Guid)id);
 
-            if(response == null) return View();
+            if (response == null) return View();
 
             AppUserRoleViewModel appUserRoleViewModel = Mapper.Map<AppUserRoleViewModel>(response);
 
@@ -61,27 +54,21 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Update(AppUserRoleViewModel model)
         {
             await AppUserRoleViewbag();
-
-            if(ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                UpdateAppUserRoleCommandRequest updateAppUserRoleCommandRequest = Mapper.Map<UpdateAppUserRoleCommandRequest>(model);
-
-                HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("role/update", updateAppUserRoleCommandRequest);
-
-                if (response.IsSuccessStatusCode) return View(model.ID);
-
-                await ErrorResponseViewModel.Instance.CopyForm(response);
-
-                ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
-
+                await AppUserRoleViewbag();
+                await ErrorResponse();
                 return View(model);
             }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
+            UpdateAppUserRoleCommandRequest updateAppUserRoleCommandRequest = Mapper.Map<UpdateAppUserRoleCommandRequest>(model);
 
-                return View(model);
-            }
+            HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("role/update", updateAppUserRoleCommandRequest);
+
+            if (response.IsSuccessStatusCode) return View(model.ID);
+
+            await HandleErrorResponse(response);
+            await AppUserRoleViewbag();
+            return View(model);
         }
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
@@ -97,7 +84,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (id == null) return View();
 
-            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdAppUserRoleQueryResponse>($"role/getbyid/{id}");
+            var response = await GetByRoleId((Guid)id);
 
             if (response == null) return View();
 
@@ -117,6 +104,10 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(appUserRoleViewModels);
         }
 
+        private async Task<GetByIdAppUserRoleQueryResponse> GetByRoleId(Guid id)
+        {
+           return await ApiService.HttpClient.GetFromJsonAsync<GetByIdAppUserRoleQueryResponse>($"role/getbyid/{id}");
+        }
         private async Task AppUserRoleViewbag()
         {
             var appUserRoles = ApiService.HttpClient.GetFromJsonAsync<List<GetAllAppUserRoleQueryResponse>>("role/getall").Result.Select(x=> new GetAllAppUserRoleQueryResponse

@@ -26,30 +26,23 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Create(CreateSupplierViewModel model)
 		{
-			if(ModelState.IsValid)
-			{
-				CreateSupplierCommandRequest createSupplier = Mapper.Map<CreateSupplierCommandRequest>(model);
+            if (!ModelState.IsValid)
+            {
+                await ErrorResponse();
+                return View(model);
+            }
+            CreateSupplierCommandRequest createSupplier = Mapper.Map<CreateSupplierCommandRequest>(model);
 
-				HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("supplier/create", createSupplier);
+            HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("supplier/create", createSupplier);
 
-				if (!response.IsSuccessStatusCode)
-				{
-					await ErrorResponseViewModel.Instance.CopyForm(response);
+            if (!response.IsSuccessStatusCode)
+            {
+                await HandleErrorResponse(response);
+                return View(model);
+            }
 
-					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
-
-					return View(model);
-				}
-
-				return View();
-			}
-			else
-			{
-				ModelState.AddModelError(string.Empty, "Hatalı İşlem");
-
-				return View(model);
-			}
-		}
+            return View();
+        }
 
 		[HttpGet]
 		public async Task<IActionResult> Update(Guid? id)
@@ -57,43 +50,34 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			await SupplierViewBag();
 			if (id == null) return View();
 
-			var getSupplier = await ApiService.HttpClient.GetFromJsonAsync<GetByIdSupplierQueryResponse>($"supplier/getbyid/{id}");
+			var getSupplier = await GetBySupplierId((Guid)id);
 
-			SupplierViewModel supplierViewModel = Mapper.Map<SupplierViewModel>(getSupplier);
+            SupplierViewModel supplierViewModel = Mapper.Map<SupplierViewModel>(getSupplier);
 
 			return View(supplierViewModel);
 		}
 		[HttpPost]
 		public async Task<IActionResult> Update(SupplierViewModel model)
 		{
-			if(ModelState.IsValid)
-			{
-				UpdateSupplierCommandRequest updateSupplier = Mapper.Map<UpdateSupplierCommandRequest>(model);
+            if (!ModelState.IsValid)
+            {
+                await SupplierViewBag();
+                await ErrorResponse();
+                return View(model);
+            }
+            UpdateSupplierCommandRequest updateSupplier = Mapper.Map<UpdateSupplierCommandRequest>(model);
 
-				HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("supplier/update", updateSupplier);
+            HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("supplier/update", updateSupplier);
 
-				if (!response.IsSuccessStatusCode)
-				{
-					await ErrorResponseViewModel.Instance.CopyForm(response);
+            if (!response.IsSuccessStatusCode)
+            {
+                await HandleErrorResponse(response);
+                await SupplierViewBag();
+                return View(model);
+            }
 
-					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
-
-					await SupplierViewBag();
-
-					return View(model);
-				}
-
-				return RedirectToAction("Update", model.ID);
-			}
-			else
-			{
-				ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
-
-				await SupplierViewBag();
-
-				return View(model.ID);
-			}
-		}
+            return RedirectToAction("Update", model.ID);
+        }
 		[HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
 		{
@@ -108,9 +92,10 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			if (id == null) return View();
 
-			var getSupplier = await ApiService.HttpClient.GetFromJsonAsync<GetByIdSupplierQueryResponse>($"supplier/getbyid/{id}");
+			var getSupplier = await GetBySupplierId((Guid)id);
 
-			SupplierViewModel supplierViewModel = Mapper.Map<SupplierViewModel>(getSupplier);
+
+            SupplierViewModel supplierViewModel = Mapper.Map<SupplierViewModel>(getSupplier);
 
 			return View(supplierViewModel);
 		}
@@ -124,7 +109,12 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(supplierViewModel);
 		}
 
-		public async Task SupplierViewBag()
+
+		private async Task<GetByIdSupplierQueryResponse> GetBySupplierId(Guid id)
+		{
+			return await ApiService.HttpClient.GetFromJsonAsync<GetByIdSupplierQueryResponse>($"supplier/getbyid/{id}");
+        }
+        private async Task SupplierViewBag()
 		{
 			var getSupplierList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllSupplierQueryResponse>>("supplier/getall").Result.Select(x=> new GetAllSupplierQueryResponse
 			{

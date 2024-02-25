@@ -22,27 +22,19 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateCustomerViewModel model)
         {
-            if(ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                CreateCustomerCommandRequest createCustomer = Mapper.Map<CreateCustomerCommandRequest>(model);
-
-                HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("customer/create", createCustomer);
-
-				if (response.IsSuccessStatusCode) return RedirectToAction("Create" , "Customer");
-
-				await ErrorResponseViewModel.Instance.CopyForm(response);
-
-				ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
-
-				return View(model);
-			}
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
-
+                await ErrorResponse();
                 return View(model);
             }
-            
+            CreateCustomerCommandRequest createCustomer = Mapper.Map<CreateCustomerCommandRequest>(model);
+
+            HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("customer/create", createCustomer);
+
+            if (response.IsSuccessStatusCode) return RedirectToAction("Create", "Customer");
+
+            await HandleErrorResponse(response);
+            return View(model);
         }
 
         [HttpGet]
@@ -52,8 +44,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if (id == null) return View();
 
-            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdCustomerQueryResponse>($"customer/getbyid/{id}");
-    
+            var response = await GetByCustomerId((Guid)id);
+
             CustomerViewModel customerViewModel = Mapper.Map<CustomerViewModel>(response);
 
             return View(customerViewModel);
@@ -61,33 +53,24 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(CustomerViewModel model)
         {
-            if(ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                UpdateCustomerCommandRequest updateCustomer = Mapper.Map<UpdateCustomerCommandRequest>(model);
-
-                HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("customer/update", updateCustomer);
-
-				if (!response.IsSuccessStatusCode)
-				{
-					await ErrorResponseViewModel.Instance.CopyForm(response);
-
-					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
-
-					await CustomerViewBag();
-
-					return View(model);
-				}
-
-				return RedirectToAction("Update",model.ID);
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
-
                 await CustomerViewBag();
-
+                await ErrorResponse();
                 return View(model);
-            } 
+            }
+            UpdateCustomerCommandRequest updateCustomer = Mapper.Map<UpdateCustomerCommandRequest>(model);
+
+            HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("customer/update", updateCustomer);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                await HandleErrorResponse(response);
+                await CustomerViewBag();
+                return View(model);
+            }
+
+            return RedirectToAction("Update", model.ID);
         }
 
         [HttpGet]
@@ -105,9 +88,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             if(id == null) return View();
 
-            var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdCustomerQueryResponse>($"customer/getbyid/{id}");
+            var response = await GetByCustomerId((Guid)id);
 
-            if(response == null) return View();
+            if (response == null) return View();
 
             CustomerViewModel  customerViewModel = Mapper.Map<CustomerViewModel>(response);
 
@@ -124,6 +107,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             List<CustomerViewModel> customerViewModels = Mapper.Map<List<CustomerViewModel>>(response);
 
             return View(customerViewModels);
+        }
+
+        private async Task<GetByIdCustomerQueryResponse> GetByCustomerId(Guid id)
+        {
+          return await ApiService.HttpClient.GetFromJsonAsync<GetByIdCustomerQueryResponse>($"customer/getbyid/{id}");
         }
 
         private async Task CustomerViewBag()

@@ -24,30 +24,24 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Create(CreateBranchViewModel model)
 		{
-			if(ModelState.IsValid)
+			if(!ModelState.IsValid)
 			{
-				CreateBranchCommandRequest createBranch = Mapper.Map<CreateBranchCommandRequest>(model);
+				await ErrorResponse();
+                return View(model);
+            }
 
-				HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("branch/create", createBranch);
+            CreateBranchCommandRequest createBranch = Mapper.Map<CreateBranchCommandRequest>(model);
 
-				if (!response.IsSuccessStatusCode)
-				{
-					await ErrorResponseViewModel.Instance.CopyForm(response);
+            HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("branch/create", createBranch);
 
-					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
+            if (!response.IsSuccessStatusCode)
+            {
+				await HandleErrorResponse(response);
+                return View(model);
+            }
 
-					return View(model);
-				}
-
-				return RedirectToAction("Create", "Branch");		
-			}
-			else
-			{
-				ModelState.AddModelError(string.Empty,"Hatalı İşlem!");
-
-				return View();
-			}
-		}
+            return RedirectToAction("Create", "Branch");
+        }
 
 		[HttpGet]
 		public async Task<IActionResult> Update(Guid? id)
@@ -56,9 +50,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			if (id == null) return View();
 
-			var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdBranchQueryResponse>($"branch/getbyid/{id}");
+			var response = await GetByBranchId((Guid)id);
 
-			if(response == null) return View();
+            if (response == null) return View();
 
 			BranchViewModel branchViewModel = Mapper.Map<BranchViewModel>(response);
 
@@ -68,34 +62,26 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Update(BranchViewModel model)
 		{
-			if (ModelState.IsValid)
-			{
-				UpdateBranchCommandRequest updateBranch = Mapper.Map<UpdateBranchCommandRequest>(model);
+            if (!ModelState.IsValid)
+            {
+                await BranchViewBag();
+                await ErrorResponse();
+                return View(model);
+            }
 
-				HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("branch/update", updateBranch);
+            UpdateBranchCommandRequest updateBranch = Mapper.Map<UpdateBranchCommandRequest>(model);
 
-				if (!response.IsSuccessStatusCode)
-				{
-					await ErrorResponseViewModel.Instance.CopyForm(response);
+            HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("branch/update", updateBranch);
 
-					ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
+            if (!response.IsSuccessStatusCode)
+            {
+				await HandleErrorResponse(response);
+                await BranchViewBag();
+                return View(model);
+            }
 
-					await BranchViewBag();
-
-					return View(model);
-				}
-
-				return RedirectToAction("Update", model.ID);
-			}
-			else
-			{
-				ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
-
-				await BranchViewBag();
-
-				return View(model);
-			}
-		}
+            return RedirectToAction("Update", model.ID);
+        }
 
 		[HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
@@ -112,11 +98,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			if (id == null) return View();
 
-			var response = await ApiService.HttpClient.GetFromJsonAsync<GetByIdBranchQueryResponse>($"branch/getbyid/{id}");
+			var response = await GetByBranchId((Guid)id);
 
-			if (response == null) return View();
+            if (response == null) return View();
 
-			await stockViewBag(response.ID);
+			await StockViewBag(response.ID);
 
             BranchViewModel branchViewModel = Mapper.Map<BranchViewModel>(response);
 
@@ -135,6 +121,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(branchViewModels);
 		}
 
+		private async Task<GetByIdBranchQueryResponse> GetByBranchId(Guid id)
+		{
+			return await ApiService.HttpClient.GetFromJsonAsync<GetByIdBranchQueryResponse>($"branch/getbyid/{id}");
+        }
+
 		private async Task BranchViewBag()
 		{
 			var getBranchList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllBranchQueryResponse>>("branch/getall").Result.Select(x=> new GetAllBranchQueryResponse
@@ -146,7 +137,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			ViewBag.BranchList = getBranchList;
 
 		}
-		private async Task stockViewBag(Guid id)
+		private async Task StockViewBag(Guid id)
 		{
 			var getstockList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockQueryResponse>>($"stock/Getall/{id}").Result;
 
