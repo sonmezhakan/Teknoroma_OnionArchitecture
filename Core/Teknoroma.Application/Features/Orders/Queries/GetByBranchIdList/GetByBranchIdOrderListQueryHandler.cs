@@ -18,7 +18,7 @@ namespace Teknoroma.Application.Features.Orders.Queries.GetByBranchIdList
         {
             var getOrders = await _orderRepository.GetAllAsync(x => x.BranchId == request.BranchId);
 
-            List<GetByBranchIdOrderListQueryResponse> getByBranchIdOrderQueryResponse = _mapper.Map<List<GetByBranchIdOrderListQueryResponse>>(getOrders);
+            List<GetByBranchIdOrderListQueryResponse> getByBranchIdOrderQueryResponse = _mapper.Map<List<GetByBranchIdOrderListQueryResponse>>(getOrders.ToList());
 
             return getByBranchIdOrderQueryResponse.OrderBy(x=>x.OrderStatu).ToList();
         }

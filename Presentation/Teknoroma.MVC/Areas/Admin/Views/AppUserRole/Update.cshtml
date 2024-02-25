@@ -13,7 +13,7 @@
 				<div class="form-group">
 					<label>Yetki Seçiniz</label>
 					<select class="form-control" onchange="redirectToSelectedPage(this)">
-						@if (Model != null)
+						@if (ViewBag.AppUserRoleList != null)
 						{
 							@foreach (var item in ViewBag.AppUserRoleList)
 							{

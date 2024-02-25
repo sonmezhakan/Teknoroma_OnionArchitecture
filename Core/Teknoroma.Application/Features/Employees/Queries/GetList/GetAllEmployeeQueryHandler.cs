@@ -18,7 +18,7 @@ namespace Teknoroma.Application.Features.Employees.Queries.GetList
 		{
 			var employees = await _employeeRepository.GetAllAsync();
 
-			List<GetAllEmployeeQueryResponse> getAllEmployeeQueryResponses = _mapper.Map<List<GetAllEmployeeQueryResponse>>(employees);
+			List<GetAllEmployeeQueryResponse> getAllEmployeeQueryResponses = _mapper.Map<List<GetAllEmployeeQueryResponse>>(employees.ToList());
 
 			return getAllEmployeeQueryResponses;
 		}

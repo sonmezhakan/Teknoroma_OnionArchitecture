@@ -1,16 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Features.AppUserProfiles.Quıeries.GetById;
-using Teknoroma.Application.Features.AppUsers.Queries.GetById;
-using Teknoroma.Application.Features.Branches.Queries.GetById;
-using Teknoroma.Application.Features.Departments.Queries.GetById;
-using Teknoroma.Application.Features.Employees.Queries.GetList;
 using Teknoroma.Application.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Employees.Queries.GetById
 {
-    public class GetByIdEmployeeQueryHandler : IRequestHandler<GetByIdEmployeeQueryRequest, GetByIdEmployeeQueryResponse>
+	public class GetByIdEmployeeQueryHandler : IRequestHandler<GetByIdEmployeeQueryRequest, GetByIdEmployeeQueryResponse>
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;

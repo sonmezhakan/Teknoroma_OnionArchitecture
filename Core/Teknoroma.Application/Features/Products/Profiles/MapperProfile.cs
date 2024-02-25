@@ -15,7 +15,9 @@ namespace Teknoroma.Application.Features.Products.Profiles
         {
 			CreateMap<Product, CreateProductCommandRequest>().ReverseMap();
 			CreateMap<Product,UpdateProductCommandRequest>().ReverseMap();
-			CreateMap<Product, GetByIdProductQueryResponse>().ReverseMap();
+			CreateMap<Product, GetByIdProductQueryResponse>()
+				.AfterMap((src, dest) => dest.UnitsInStock = src.stocks.Where(x => x.IsActive == true).Sum(x => x.UnitsInStock))
+				.ReverseMap();
 
 			CreateMap<CreateProductViewModel,CreateProductCommandRequest>().ReverseMap();
 			CreateMap<ProductViewModel, UpdateProductCommandRequest>().ReverseMap();
@@ -26,6 +28,7 @@ namespace Teknoroma.Application.Features.Products.Profiles
 			CreateMap<Product, GetAllProductQueryResponse>()
 				.ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName))
 				.ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Brand.BrandName))
+				.AfterMap((src, dest) => dest.UnitsInStock = src.stocks.Where(x => x.IsActive == true).Sum(x => x.UnitsInStock))
 				.ReverseMap();
 
 			CreateMap<GetByIdProductQueryResponse, UpdateProductCommandRequest>().ReverseMap();

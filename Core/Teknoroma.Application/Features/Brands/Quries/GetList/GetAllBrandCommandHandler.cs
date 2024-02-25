@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Teknoroma.Application.Repositories;
 
 namespace Teknoroma.Application.Features.Brands.Quries.GetList
@@ -24,7 +19,7 @@ namespace Teknoroma.Application.Features.Brands.Quries.GetList
 		{
 			var brands = await _brandRepository.GetAllAsync();
 
-			List<GetAllBrandCommandResponse> responses = _mapper.Map<List<GetAllBrandCommandResponse>>(brands);
+			List<GetAllBrandCommandResponse> responses = _mapper.Map<List<GetAllBrandCommandResponse>>(brands.ToList());
 
 			return responses;
 		}

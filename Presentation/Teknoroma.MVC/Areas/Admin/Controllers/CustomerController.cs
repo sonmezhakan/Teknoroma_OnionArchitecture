@@ -128,7 +128,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         private async Task CustomerViewBag()
         {
-            var response = ApiService.HttpClient.GetFromJsonAsync<List<GetAllCustomerQueryResponse>>("customer/getall").Result.Select(x => new GetAllCustomerQueryResponse { ID = x.ID, FullName = x.FullName }).ToList();
+            var response = ApiService.HttpClient.GetFromJsonAsync<List<GetAllCustomerQueryResponse>>("customer/getall").Result.Select(x => new GetAllCustomerQueryResponse { ID = x.ID, FullName = x.FullName });
 
                 ViewBag.CustomerList = response;
         }

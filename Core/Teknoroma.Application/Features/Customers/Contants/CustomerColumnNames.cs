@@ -11,5 +11,6 @@ namespace Teknoroma.Application.Features.Customers.Contants
 		public const string PhoneNumber = "Telefon Numarası";
 		public const string Description = "Açıklama";
 		public const string Invoice = "Bireysel/Kurumsal";
+		public const string Email = "Email";
 	}
 }

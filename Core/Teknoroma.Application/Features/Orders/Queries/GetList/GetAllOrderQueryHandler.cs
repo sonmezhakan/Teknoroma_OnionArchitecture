@@ -19,7 +19,7 @@ namespace Teknoroma.Application.Features.Orders.Queries.GetList
 		{
 			var getOrders = await _orderRepository.GetAllAsync();
 
-			List<GetAllOrderQueryResponse> getAllOrderQueryResponses = _mapper.Map<List<GetAllOrderQueryResponse>>(getOrders);
+			List<GetAllOrderQueryResponse> getAllOrderQueryResponses = _mapper.Map<List<GetAllOrderQueryResponse>>(getOrders.ToList());
 
 			return getAllOrderQueryResponses.OrderBy(x => x.OrderStatu).ToList();
 		}

@@ -81,6 +81,10 @@
                                 <input type="text" class="form-control" asp-for="@Model.ContactTitle" id="ContactTitle">
                             </div>
                             <div class="form-group">
+                                <label asp-for="Email"></label>
+                                <input type="email" class="form-control" asp-for="@Model.Email" id="ContactTitle">
+                            </div>
+                            <div class="form-group">
                                 <label asp-for="PhoneNumber"></label>
                                 <input type="text" class="form-control" asp-for="@Model.PhoneNumber">
                             </div>
@@ -110,32 +114,35 @@
         window.location.href = redirectUrl;
     }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var invoiceRadios = document.querySelectorAll('input[name="Invoice"]');
-            var contactNameInput = document.getElementById('ContactName');
-            var contactTitleInput = document.getElementById('ContactTitle');
+    document.addEventListener('DOMContentLoaded', function () {
+        var invoiceRadios = document.querySelectorAll('input[name="Invoice"]');
+        var contactNameInput = document.getElementById('ContactName');
+        var contactTitleInput = document.getElementById('ContactTitle');
 
-            // Radiobutton değiştiğinde tetiklenecek fonksiyon
-            function handleInvoiceChange() {
-                if (this.value === 'Person') {
-                    // "Person" seçildiğinde
-                    contactNameInput.value = '';
-                    contactTitleInput.value = '';
-                    contactNameInput.disabled = true;
-                    contactTitleInput.disabled = true;
-                } else {
-                    // "Company" seçildiğinde
-                    contactNameInput.disabled = false;
-                    contactTitleInput.disabled = false;
-                }
+        // Radiobutton değiştiğinde tetiklenecek fonksiyon
+        function handleInvoiceChange() {
+            if (this.value === 'Person') {
+                // "Person" seçildiğinde
+                contactNameInput.value = '';
+                contactTitleInput.value = '';
+                contactNameInput.disabled = true;
+                contactTitleInput.disabled = true;
+            } else {
+                // "Company" seçildiğinde
+                contactNameInput.disabled = false;
+                contactTitleInput.disabled = false;
             }
+        }
 
-            // Her radio için değişiklik dinleyicisi ekleyin
-            invoiceRadios.forEach(function (radio) {
-                radio.addEventListener('change', handleInvoiceChange);
-            });
-
-            // Sayfa yüklendiğinde varsayılan durumu kontrol etmek için tetikleme
-            handleInvoiceChange.call(invoiceRadios[0]);
+        // Her radio için değişiklik dinleyicisi ekleyin
+        invoiceRadios.forEach(function (radio) {
+            radio.addEventListener('change', handleInvoiceChange);
         });
+
+        // Varsayılan durumu kontrol etmek için tetikleme
+        var defaultCheckedRadio = document.querySelector('input[name="Invoice"]:checked');
+        if (defaultCheckedRadio) {
+            handleInvoiceChange.call(defaultCheckedRadio);
+        }
+    });
 </script>

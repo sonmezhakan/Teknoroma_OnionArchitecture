@@ -23,7 +23,7 @@ namespace Teknoroma.Application.Features.AppUsers.Queries.GetList
         {
             var appUsers = await _userManager.Users.ToListAsync();
 
-            List<GetAllAppUserQueryResponse> getAllAppUserQueryResponses = _mapper.Map<List<GetAllAppUserQueryResponse>>(appUsers);
+            List<GetAllAppUserQueryResponse> getAllAppUserQueryResponses = _mapper.Map<List<GetAllAppUserQueryResponse>>(appUsers.ToList());
 
 			return getAllAppUserQueryResponses;
         }

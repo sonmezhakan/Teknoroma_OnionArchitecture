@@ -100,26 +100,31 @@ namespace Teknoroma.Persistence.Repositories
 
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter)
         {
-            return await _entities.Where(x=>x.IsActive == true).FirstOrDefaultAsync(filter);
+			IQueryable<TEntity> query = _entities;
+			return await query.Where(x=>x.IsActive == true).FirstOrDefaultAsync(filter);
         }
         #endregion
         #region GetAll
         
-        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null)
+        public async Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null)
         {
-            if (filter == null)
-            {
-                var getList = await _entities.Where(x => x.IsActive == true).ToListAsync();
-                return getList;
-            }
-            else
-            {
-                var getList = await _entities.Where(x => x.IsActive == true).Where(filter).ToListAsync();
-                return getList;
-            }
-        }
+			IQueryable<TEntity> query = _entities;
 
-        #endregion
-    }
+			if (filter == null)
+            {
+				query = query.Where(x => x.IsActive == true);
+                return query;
+            }
+
+			query = query.Where(x => x.IsActive == true).Where(filter);
+			return query;
+		}
+
+		#endregion
+
+
+
+
+	}
 }
 

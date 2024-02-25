@@ -20,7 +20,7 @@ namespace Teknoroma.Application.Features.AppUserRoles.Queries.GetList
         {
             var appUserRoles = await _roleManager.Roles.ToListAsync();
 
-            List<GetAllAppUserRoleQueryResponse> getAllAppUserRoleQueryResponses = _mapper.Map<List<GetAllAppUserRoleQueryResponse>>(appUserRoles);
+            List<GetAllAppUserRoleQueryResponse> getAllAppUserRoleQueryResponses = _mapper.Map<List<GetAllAppUserRoleQueryResponse>>(appUserRoles.ToList());
 
             return getAllAppUserRoleQueryResponses;
         }

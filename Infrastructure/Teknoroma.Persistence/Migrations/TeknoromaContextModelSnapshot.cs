@@ -510,6 +510,10 @@ namespace Teknoroma.Persistence.Migrations
                     b.Property<string>("DeletedIpAddress")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Email")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -848,9 +852,6 @@ namespace Teknoroma.Persistence.Migrations
 
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("money");
-
-                    b.Property<int>("UnitsInStock")
-                        .HasColumnType("int");
 
                     b.Property<string>("UpdatedComputerName")
                         .HasColumnType("nvarchar(max)");

@@ -71,10 +71,10 @@
                                 <label asp-for="Description"></label>
                                 <textarea class="form-control" cols="4" rows="3" asp-for="@Model.Description"></textarea>
                             </div>
-                            <div class="form-group">
+                             <div class="form-group">
                                 <label asp-for="StockEntryDate"></label>
-                                <input class="form-control" type="text" id="datetimepicker" value="@Model.StockEntryDate" asp-for="@Model.StockEntryDate" />
-                            </div>
+                                <input class="form-control" type="text" asp-for="@Model.StockEntryDate" />
+                            </div> 
                         </div>
                     </form>
                 </div>

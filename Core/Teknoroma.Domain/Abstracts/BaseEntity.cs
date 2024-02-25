@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Teknoroma.Domain.Enums;
+﻿using Teknoroma.Domain.Enums;
 using Teknoroma.Domain.Interfaces;
 
 namespace Teknoroma.Domain.Abstracts
 {
-    public abstract class BaseEntity : IEntity
+	public abstract class BaseEntity : IEntity
     {
         public BaseEntity()
         {

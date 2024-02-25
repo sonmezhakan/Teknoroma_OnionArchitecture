@@ -18,6 +18,9 @@ namespace Teknoroma.Application.Features.Customers.Models
 		[Display(Name = CustomerColumnNames.ContactTitle)]
 		public string? ContactTitle { get; set; }
 
+		[Display(Name = CustomerColumnNames.Email)]
+		public string Email { get; set; }
+
 		[Display(Name = CustomerColumnNames.PhoneNumber)]
 		public string PhoneNumber { get; set; }
 

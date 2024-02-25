@@ -18,7 +18,7 @@ namespace Teknoroma.Application.Features.StockInputs.Queries.GetList
         {
             var stockInputs = await _stockInputRepository.GetAllAsync();
 
-            List<GetAllStockInputQueryResponse> getAllStockInputQueryResponses = _mapper.Map<List<GetAllStockInputQueryResponse>>(stockInputs.OrderByDescending(x=>x.StockEntryDate));
+            List<GetAllStockInputQueryResponse> getAllStockInputQueryResponses = _mapper.Map<List<GetAllStockInputQueryResponse>>(stockInputs.OrderByDescending(x=>x.StockEntryDate).ToList());
 
             return getAllStockInputQueryResponses;
         }

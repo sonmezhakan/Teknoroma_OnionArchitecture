@@ -1,12 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Teknoroma.Application.Repositories;
-using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Products.Queries.GetList
 {
@@ -22,9 +16,9 @@ namespace Teknoroma.Application.Features.Products.Queries.GetList
 		}
         public async Task<List<GetAllProductQueryResponse>> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
 		{
-			List<Product> products = await _productRepository.GetAllAsync(); 
+			var products = await _productRepository.GetAllAsync(); 
 
-			List< GetAllProductQueryResponse> responses = _mapper.Map<List<GetAllProductQueryResponse>>(products);
+			List<GetAllProductQueryResponse> responses = _mapper.Map<List<GetAllProductQueryResponse>>(products.ToList());
 
 			return responses;
 		}

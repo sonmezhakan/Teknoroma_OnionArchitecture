@@ -2,6 +2,7 @@
 using Teknoroma.Application.Features.StockInputs.Command.Create;
 using Teknoroma.Application.Features.StockInputs.Command.Delete;
 using Teknoroma.Application.Features.StockInputs.Command.Update;
+using Teknoroma.Application.Features.StockInputs.Queries.GetByBranchIdList;
 using Teknoroma.Application.Features.StockInputs.Queries.GetById;
 using Teknoroma.Application.Features.StockInputs.Queries.GetList;
 
@@ -43,6 +44,13 @@ namespace Teknoroma.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var result = await Mediator.Send(new GetAllStockInputQueryRequest());
+
+            return Ok(result);
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByBranchIdList(Guid id)
+        {
+            var result = await Mediator.Send(new GetByBranchIdStockInputQueryRequest { BranchId = id });
 
             return Ok(result);
         }

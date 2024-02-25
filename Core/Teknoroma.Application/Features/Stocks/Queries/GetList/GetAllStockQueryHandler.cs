@@ -19,7 +19,7 @@ namespace Teknoroma.Application.Features.Stocks.Queries.GetList
             var stocks = request.ID == null ? await _stockRepository.GetAllAsync() :
                                               await _stockRepository.GetAllAsync(x => x.BranchId == request.ID);
 
-            List<GetAllStockQueryResponse> responses = _mapper.Map<List<GetAllStockQueryResponse>>(stocks);
+            List<GetAllStockQueryResponse> responses = _mapper.Map<List<GetAllStockQueryResponse>>(stocks.ToList());
 
             return responses;
         }

@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Teknoroma.Application.Repositories;
 
 namespace Teknoroma.Application.Features.Customers.Queries.GetList
@@ -24,7 +19,7 @@ namespace Teknoroma.Application.Features.Customers.Queries.GetList
 		{
 			var customers = await _customerRepository.GetAllAsync();
 
-			List<GetAllCustomerQueryResponse> responses = _mapper.Map<List<GetAllCustomerQueryResponse>>(customers);
+			List<GetAllCustomerQueryResponse> responses = _mapper.Map<List<GetAllCustomerQueryResponse>>(customers.ToList());
 
 			return responses;
 		}

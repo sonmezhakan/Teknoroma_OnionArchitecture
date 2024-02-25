@@ -22,5 +22,7 @@ namespace Teknoroma.Application.Features.Customers.Contants
 		public const string PhoneNumberMaxLenght = "Telefon Numarası En Fazla 11 Karakter Olabilir!";
 
 		public const string AddressMaxLenght = "Açıklama En Fazla 255 Karakter Olabilir!";
+
+		public const string EmailMaxLenght = "Email En Fazla 128 Karakter Olabilir!";
 	}
 }

@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Teknoroma.Application.Features.Branches.Queries.GetAll;
 using Teknoroma.Application.Repositories;
 
@@ -25,7 +20,7 @@ namespace Teknoroma.Application.Features.Branches.Queries.GetList
 		{
 			var branches = await _branchRepository.GetAllAsync();
 
-			List<GetAllBranchQueryResponse> responses = _mapper.Map<List<GetAllBranchQueryResponse>>(branches);
+			List<GetAllBranchQueryResponse> responses = _mapper.Map<List<GetAllBranchQueryResponse>>(branches.ToList());
 
 			return responses;
 		}

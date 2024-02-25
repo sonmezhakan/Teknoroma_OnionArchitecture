@@ -18,7 +18,7 @@ namespace Teknoroma.Application.Features.AppUserProfiles.Quıeries.GetList
         {
             var appUserProfileList = await _appUserProfileRepository.GetAllAsync();
 
-            List<GetAllAppUserProfileQueryResponse> getAllAppUserProfileQueryResponses = _mapper.Map<List<GetAllAppUserProfileQueryResponse>>(appUserProfileList);
+            List<GetAllAppUserProfileQueryResponse> getAllAppUserProfileQueryResponses = _mapper.Map<List<GetAllAppUserProfileQueryResponse>>(appUserProfileList.ToList());
 
             return getAllAppUserProfileQueryResponses;
         }

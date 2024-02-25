@@ -19,7 +19,7 @@ namespace Teknoroma.Application.Features.Suppliers.Queries.GetList
 		{
 			var suppliers = await _supplierRepository.GetAllAsync();
 
-			List<GetAllSupplierQueryResponse> responses = _mapper.Map<List<GetAllSupplierQueryResponse>>(suppliers);
+			List<GetAllSupplierQueryResponse> responses = _mapper.Map<List<GetAllSupplierQueryResponse>>(suppliers.ToList());
 
 			return responses;
 		}

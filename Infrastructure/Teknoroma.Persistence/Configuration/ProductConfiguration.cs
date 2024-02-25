@@ -11,7 +11,6 @@ namespace Teknoroma.Persistence.Configuration
             builder.Property(x => x.ProductName).HasMaxLength(255).IsRequired();
             builder.Property(x => x.Description).HasMaxLength(255);
             builder.Property(x => x.UnitPrice).HasColumnType("money").IsRequired();
-            builder.Property(x => x.UnitsInStock).IsRequired();
             builder.Property(x => x.CriticalStock).IsRequired();
             
             builder.HasOne(x => x.Brand).WithMany(x => x.Products).HasForeignKey(x => x.BrandId);

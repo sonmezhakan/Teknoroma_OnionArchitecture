@@ -79,7 +79,7 @@ namespace Teknoroma.WebApi
             app.UseAuthorization();
 
 			//Exceptiom Middleware
-			if (app.Environment.IsProduction())
+			//if (app.Environment.IsProduction())
 				app.ConfigureCustomExceptionMiddleWare();
 
 			app.MapControllers();

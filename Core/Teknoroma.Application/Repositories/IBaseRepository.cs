@@ -5,7 +5,7 @@ namespace Teknoroma.Application.Repositories
 {
     public interface IBaseRepository<TEntity> where TEntity : class, IEntity
     {
-        Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null);
+        Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null);
 
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter);
 
@@ -20,5 +20,6 @@ namespace Teknoroma.Application.Repositories
         Task DeleteAsync(TEntity entity);
         Task DeleteRangeAsync(List<TEntity> entities);
 
-    }
+
+	}
 }
