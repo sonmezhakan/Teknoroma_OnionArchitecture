@@ -15,13 +15,15 @@ namespace Teknoroma.Application.Features.AppUsers.Command.Update
             RuleFor(x => x.Email).NotEmpty().WithMessage(AppUsersMessages.EmailNotNull)
                 .MaximumLength(128).WithMessage(AppUsersMessages.EmailMaxLenght);
 
-            RuleFor(x => x.PhoneNumber).Must(BeNumeric).WithMessage(AppUsersMessages.PhoneNumberError)
-                .NotNull().WithMessage(AppUsersMessages.PhoneNumberNotNull)
+            RuleFor(x => x.PhoneNumber).NotNull().WithMessage(AppUsersMessages.PhoneNumberNotNull)
                 .MaximumLength(11).WithMessage(AppUsersMessages.PhoneNumberMaxLenght);
         }
 
         protected bool BeNumeric(string phoneNumber)
         {
+            if (string.IsNullOrEmpty(phoneNumber))
+                return true;
+
             return int.TryParse(phoneNumber, out _);
         }
     }

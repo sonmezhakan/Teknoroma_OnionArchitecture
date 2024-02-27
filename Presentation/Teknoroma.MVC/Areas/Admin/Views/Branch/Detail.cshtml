@@ -5,12 +5,12 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="row mx-4">
+<div class="row">
     <div class="col-md-12 mx-auto">
-        <div class="card card-primary">
-            <div class="card-header">
+        <div class="card">
+            <div class="card-header bg-info">
                 <div class="form-group">
-                    <label>Şube Seçiniz</label>
+                    <h2 class="text-white">Şube Seçiniz</h2>
                     <select class="form-control"  onchange="redirectToSelectedPage(this)">
                         @foreach (var branch in ViewBag.BranchList)
                         {
@@ -65,7 +65,7 @@
                         <div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <table class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
+                                    <table id="basic-datatable" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
                                         <thead>
                                         <th rowspan="1" colspan="1">Ürün Adı</th>
                                         <th rowspan="1" colspan="1">Fiyat</th>
@@ -112,20 +112,6 @@
                                             }
                                         </tbody>
                                     </table>
-                                </div>
-                            </div><div class="row">
-                                <div class="col-sm-12 col-md-5">
-                                    <div>
-                                        @if (Model != null)
-                                        {
-                                            @ViewBag.stockList.Count
-                                        }
-                                        else
-                                        {
-                                            <a>0</a>
-                                        }
-                                        adet ürün bulunmaktadır.
-                                    </div>
                                 </div>
                             </div>
                         </div>

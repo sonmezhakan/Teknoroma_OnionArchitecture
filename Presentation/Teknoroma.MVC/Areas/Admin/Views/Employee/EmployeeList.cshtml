@@ -7,15 +7,15 @@
 
 
 <div class="row">
-	<div class="col-12">
-		<div class="card card-primary">
-			<div class="card-header">
-				<h1>Müşteri Listesi</h1>
+	<div class="col-md-12 mx-auto">
+		<div class="card">
+			<div class="card-header bg-info">
+				<h2 class="text-white">Çalışan Listesi</h2>
 			</div>
 			<div class="card-body">
 				<div class="row">
 					<div class="col-sm-12">
-						<table class="table table-bordered table-hover dataTable dtr-inline">
+						<table id="basic-datatable" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
 							<thead>
 							<th rowspan="1" colspan="1">Şube</th>
 							<th rowspan="1" colspan="1">Departman</th>
@@ -65,29 +65,21 @@
 												@item.Address
 											</td>
 											<td>
-												<a class="btn bg-gradient-info" asp-controller="Employee" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
-												<a class="btn bg-gradient-warning" asp-controller="Employee" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
-												<a class="btn bg-gradient-danger" asp-controller="Employee" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
-											</td>
+												<div>
+													<a class="btn btn-info btn-block waves-effect waves-light" asp-controller="Employee" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
+												</div>
+												<div>
+													<a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="Employee" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
+												</div>
+												<div>
+													<a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="Employee" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
+												</div>
+												</td>
 										</tr>
 									}
 								}
 							</tbody>
 						</table>
-					</div>
-				</div><div class="row">
-					<div class="col-sm-12 col-md-5">
-						<div>
-							@if (Model != null)
-							{
-								@Model.Count()
-							}
-							else
-							{
-								<a>0</a>
-							}
-							adet çalışan bulunmaktadır.
-						</div>
 					</div>
 				</div>
 			</div>

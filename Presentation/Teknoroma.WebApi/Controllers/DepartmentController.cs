@@ -27,7 +27,7 @@ namespace Teknoroma.WebApi.Controllers
 
 			return Ok(result);
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
 			var result = await Mediator.Send(new DeleteDepartmentCommandRequest { ID = id });

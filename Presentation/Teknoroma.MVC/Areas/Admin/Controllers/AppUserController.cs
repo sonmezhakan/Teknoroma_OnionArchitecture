@@ -59,10 +59,10 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(AppUserViewModel model)
         {
+            await AppUserViewBag();
+            await AppUserRoleViewBag();
             if (!ModelState.IsValid)
             {
-                await AppUserViewBag();
-                await AppUserRoleViewBag();
                 await ErrorResponse();
                 return View(model);
             }
@@ -74,8 +74,6 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (response.IsSuccessStatusCode) return RedirectToAction("Update", model.ID);
 
             await HandleErrorResponse(response);
-            await AppUserViewBag();
-            await AppUserRoleViewBag();
             return View(model);
         }
         [HttpGet]
@@ -87,6 +85,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Detail(Guid? id)
         {
             await AppUserViewBag();
+            await AppUserRoleViewBag();
 
             if (id == null) return View();
 

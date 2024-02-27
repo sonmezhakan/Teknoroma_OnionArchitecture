@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.Stocks.Queries.GetList;
+using Teknoroma.Application.Features.Stocks.Queries.GetStockTrackingReportList;
 
 namespace Teknoroma.WebApi.Controllers
 {
@@ -22,6 +23,14 @@ namespace Teknoroma.WebApi.Controllers
 
                 return Ok(result);
             }            
+		}
+
+		[HttpGet("{id}")]
+		public async Task<IActionResult> StockTrackingReport(Guid id)
+		{ 
+			var result = await Mediator.Send(new GetStockTrackingReportListQueryRequest { BranchId = id });
+
+			return Ok(result);
 		}
 	}
 }

@@ -21,6 +21,9 @@ namespace Teknoroma.Application.Features.AppUsers.Command.Create
 
         protected bool BeNumeric(string phoneNumber)
         {
+            if (string.IsNullOrEmpty(phoneNumber))
+                return true;
+
             return int.TryParse(phoneNumber, out _);
         }
     }

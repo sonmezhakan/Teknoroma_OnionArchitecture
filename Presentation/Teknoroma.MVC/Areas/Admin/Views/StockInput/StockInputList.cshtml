@@ -5,13 +5,11 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="row mx-4">
+<div class="row">
     <div class="col-md-12 mx-auto">
-        <div class="card card-primary">
-            <div class="card-header">
-                <div class="form-group">
-                    <label>Stok Girişleri</label>
-                </div>
+        <div class="card">
+            <div class="card-header bg-info">
+                <h2 class="text-white">Stok Giriş Listesi</h2>
             </div>
             <div class="row">
                 <div class="col-md-12 mx-auto">
@@ -19,7 +17,7 @@
                         <div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <table class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
+                                    <table id="basic-datatable" class="table table-striped dt-responsive nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
                                         <thead>
                                         <th rowspan="1" colspan="1">Şube Adı</th>
                                         <th rowspan="1" colspan="1">Ürün Adı</th>
@@ -66,29 +64,21 @@
                                                             @stockInput.StockEntryDate
                                                         </td>
                                                         <td>
-                                                            <a class="btn bg-gradient-info" asp-controller="StockInput" asp-action="Detail" asp-route-id="@stockInput.ID">Detaylar</a>
-                                                            <a class="btn bg-gradient-warning" asp-controller="StockInput" asp-action="Update" asp-route-id="@stockInput.ID">Güncelle</a>
-                                                            <a class="btn bg-gradient-danger" asp-controller="StockInput" asp-action="Delete" asp-route-id="@stockInput.ID">Sil</a>
+                                                            <div>
+                                                                <a class="btn btn-sm btn-info waves-effect waves-light" asp-controller="StockInput" asp-action="Detail" asp-route-id="@stockInput.ID">Detaylar</a>
+                                                            </div>
+                                                            <div>
+                                                                <a class="btn  btn-sm btn-warning waves-effect waves-light" asp-controller="StockInput" asp-action="Update" asp-route-id="@stockInput.ID">Güncelle</a>
+                                                            </div>
+                                                            <div>
+                                                                <a class="btn  btn-sm btn-danger waves-effect waves-light" asp-controller="StockInput" asp-action="Delete" asp-route-id="@stockInput.ID">Sil</a>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 }
                                             }
                                         </tbody>
                                     </table>
-                                </div>
-                            </div><div class="row">
-                                <div class="col-sm-12 col-md-5">
-                                    <div>
-                                        @if (Model != null)
-                                        {
-                                            @Model.Count
-                                        }
-                                        else
-                                        {
-                                            <a>0</a>
-                                        }
-                                        adet stok girişi yapılmıştır.
-                                    </div>
                                 </div>
                             </div>
                         </div>

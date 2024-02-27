@@ -4,12 +4,12 @@
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="row mx-4">
-	<div class="col-md-12">
-		<div class="card card-primary">
-			<div class="card-header">
+<div class="row">
+	<div class="col-md-12 mx-auto">
+		<div class="card">
+			<div class="card-header bg-info">
 				<div class="form-group">
-					<label>Kategori Seçiniz</label>
+					<h2 class="text-white">Kategori Seçiniz</h2>
 					<select class="form-control" onchange="redirectToSelectedPage(this)">
 						@foreach (var item in ViewBag.CategoryList)
 						{
@@ -47,7 +47,7 @@
 					</div>
 				</div>
 				<div class="card-footer">
-					<button class="btn btn-block bg-gradient-warning" type="submit">Güncelle</button>
+					<button class="btn btn-warning btn-block waves-effect waves-light" type="submit">Güncelle</button>
 				</div>
 			</form>
 		</div>

@@ -17,7 +17,7 @@ namespace Teknoroma.Application.Features.AppUserProfiles.Command.Update
 
             RuleFor(x => x.NationalityNumber).MaximumLength(32).WithMessage(AppUserProfilesMessages.NationalityNumberMaxLenght);
 
-            RuleFor(x => x.Address).NotEmpty().MaximumLength(255).WithMessage(AppUserProfilesMessages.AddressMaxLenght);
+            RuleFor(x => x.Address).MaximumLength(255).WithMessage(AppUserProfilesMessages.AddressMaxLenght);
         }
     }
 }

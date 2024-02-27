@@ -1,4 +1,4 @@
-﻿@using Teknoroma.Application.Features.Stocks.Models
+﻿﻿@using Teknoroma.Application.Features.Stocks.Models
 
 @model List<StockListViewModel>
 @{
@@ -6,37 +6,29 @@
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 	decimal totalPrice = 0;
 }
-
-<div class="row mx-4">
+<div class="row">
 	<div class="col-md-12 mx-auto">
-		<div class="card card-primary">
-			<div class="card-header">
+		<div class="card">
+			<div class="card-header bg-info">
 				<div class="form-group">
-					<div class="form-group">
-						<label>Şubeniz</label>
-						<h3>@ViewBag.Branch.Text</h3>
-					</div>
+					<h5 class="text-white">Stok Takip Raporu</h5>
+					<h3 style="color:green">@ViewBag.Branch.Text</h3>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-8">
-					<div class="card-header">
-						<label>Ürün Ara</label>
-						<input type="text" class="form-control" id="productSearchInput" oninput="filterProducts()" />
-					</div>
 					<div class="card-body">
-						<table class="table table-bordered table-hover dataTable dtr-inline">
+						<table id="basic-datatable" style="width:100%" class="table table-striped dt-responsive nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
 							<thead>
 							<th rowspan="1" colspan="1">Resim</th>
 							<th rowspan="1" colspan="1">Ürün Adı</th>
 							<th rowspan="1" colspan="1">Marka Adı</th>
 							<th rowspan="1" colspan="1">Fiyat</th>
 							<th rowspan="1" colspan="1">Stok Miktarı</th>
-							<th rowspan="1" colspan="1">Kritik Stok Miktarı</th>
-							<th>
-
+							<th rowspan="1" colspan="1">
+								Sepete Ekle
 							</th>
-							</tr>
+							
 							</thead>
 							<tbody>
 								@if (Model != null)
@@ -60,12 +52,14 @@
 												@product.UnitsInStock
 											</td>
 											<td>
-												@product.CriticalStock
-											</td>
-											<td>
-												<form id="CartAdded" method="post" asp-controller="Order" asp-action="AddToCart" asp-route-id="@product.ProductID">
-													<input class="form-control text-center me-4" name="quantity" type="num" value="1" style="max-width: 4rem">
-													<button class="btn bg-gradient-info" type="submit">Sepete Ekle</button>
+												<form id="CartAdded"  method="post" asp-controller="Order" asp-action="AddToCart" asp-route-id="@product.ProductID">
+													<input class="form-control text-center me-4" name="quantity" id="quantity$@product.ProductID" type="num" value="1" style="max-width: 4rem">
+													<button class="btn btn-info btn-sm waves-effect waves-light" type="button"
+															data-units-in-stock="@product.UnitsInStock"
+															data-input-id="quantity$@product.ProductID"
+															onclick="showSweetAlertCartAdded(this)">
+														Sepete Ekle
+													</button>
 												</form>
 											</td>
 										</tr>
@@ -78,8 +72,8 @@
 					</div>
 				</div>
 				<div class="col-md-4">
-					<div class="card-header">
-						<h2>Sepet</h2>
+					<div class="card-header bg-info">
+						<h3 class="text-white">Sepet</h3>
 					</div>
 					<hr />
 					<div class="card-body">
@@ -103,7 +97,7 @@
 										</div>
 										<div class="my-auto">
 											<form id="cartItemDeleted" method="post" asp-controller="Order" asp-action="CartItemDelete" asp-route-id="@item.Value.ID">
-												<button class="btn btn-danger" type="submit">X</button>
+												<button class="btn btn-danger btn-sm waves-effect waves-light" type="submit">X</button>
 											</form>
 										</div>
 									</div>
@@ -120,10 +114,10 @@
 						</div>
 					</div>
 					<div>
-						
+
 						@if (ViewBag.CartList != null)
 						{
-							<button type="button" class="btn btn-block bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Siparişi Tamamla</button>
+							<button type="button" class="btn btn-success btn-block waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#exampleModal">Siparişi Tamamla</button>
 
 							<div class="modal fade bd-example-modal-lg" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 								<div class="modal-dialog">
@@ -133,7 +127,7 @@
 											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
-											<form id="CompleteCart" method="post" asp-controller="Order" asp-action="CompleteCart" >
+											<form id="CompleteCart" method="post" asp-controller="Order" asp-action="CompleteCart">
 												<div class="form-group">
 													<label>Müşteri Telefon Numarası</label>
 													<select class="form-control" aria-label="Default select example" name="customerId" data-dropdown-parent="#exampleModal">
@@ -147,8 +141,8 @@
 													</select>
 												</div>
 												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
-													<button type="submit" class="btn btn-primary">Siparişi Oluştur</button>
+													<button type="button" class="btn btn-secondary btn-sm waves-effect waves-light" data-bs-dismiss="modal">İptal</button>
+													<button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Siparişi Oluştur</button>
 												</div>
 											</form>
 										</div>
@@ -159,21 +153,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="row mx-4">
-				<div class="col-sm-12 col-md-5">
-					<div>
-						@if (Model != null)
-						{
-							@Model.Count()
-						}
-						else
-						{
-							<a>0</a>
-						}
-						adet ürün bulunmaktadır.
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </div>
@@ -181,7 +160,7 @@
 
 
 <script>
-	
+
 
 	function redirectToSelectedPage(selectElement) {
 		// Seçili değeri al

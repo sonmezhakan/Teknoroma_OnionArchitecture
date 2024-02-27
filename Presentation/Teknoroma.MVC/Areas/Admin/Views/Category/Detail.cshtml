@@ -3,12 +3,12 @@
 	ViewData["Title"] = "Detail";
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<div class="row mx-4">
-	<div class="col-md-12">
-		<div class="card card-primary">
-			<div class="card-header">
+<div class="row">
+	<div class="col-md-12 mx-auto">
+		<div class="card">
+			<div class="card-header bg-info">
 				<div class="form-group">
-					<label>Kategori Seçiniz</label>
+					<h2 class="text-white">Kategori Seçiniz</h2>
 					<select class="form-control" aria-label="Default select example" onchange="redirectToSelectedPage(this)">
 						@if (ViewBag.CategoryList != null)
 						{

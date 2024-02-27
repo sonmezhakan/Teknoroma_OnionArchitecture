@@ -6,6 +6,7 @@ using Teknoroma.Application.Features.Orders.Command.Update;
 using Teknoroma.Application.Features.Orders.Queries.GetByBranchIdList;
 using Teknoroma.Application.Features.Orders.Queries.GetById;
 using Teknoroma.Application.Features.Orders.Queries.GetList;
+using Teknoroma.Application.Features.Reports.SalesReport.Queries.GetSalesReport;
 
 namespace Teknoroma.WebApi.Controllers
 {
@@ -52,5 +53,13 @@ namespace Teknoroma.WebApi.Controllers
 			var result = await Mediator.Send(new GetAllOrderQueryRequest());
 			return Ok(result);
 		}
+
+        [HttpGet]
+        public async Task<IActionResult> Deneme()
+        {
+            var resut = await Mediator.Send(new GetSalesReportQueryRequest());
+
+            return Ok(resut);
+        }
     }
 }

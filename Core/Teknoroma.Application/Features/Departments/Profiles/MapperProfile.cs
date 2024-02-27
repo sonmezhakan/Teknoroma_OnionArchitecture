@@ -1,9 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Teknoroma.Application.Features.Departments.Command.Create;
 using Teknoroma.Application.Features.Departments.Command.Update;
 using Teknoroma.Application.Features.Departments.Models;
@@ -13,7 +8,7 @@ using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Departments.Profiles
 {
-    public class MapperProfile:Profile
+	public class MapperProfile:Profile
 	{
         public MapperProfile()
         {

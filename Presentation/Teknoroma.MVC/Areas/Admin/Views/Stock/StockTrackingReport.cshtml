@@ -1,0 +1,74 @@
+﻿@using Teknoroma.Application.Features.Stocks.Models
+@model List<StockTrackingReportViewModel>
+@{
+	ViewData["Title"] = "StockTrackingReport";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+	<div class="col-md-12 mx-auto">
+		<div class="card">
+			<div class="card-header bg-info">
+				<h5 class="text-white">Stok Takip Raporu</h5>
+				<h3 style="color:green">@ViewBag.Branch.Text</h3>
+			</div>
+			<div class="card-body">
+				<div class="col-sm-12">
+					<div class="card-body">
+						<table id="basic-datatable" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+							<thead>
+							<th rowspan="1" colspan="1">Resim</th>
+							<th rowspan="1" colspan="1">Ürün Adı</th>
+							<th rowspan="1" colspan="1">Marka Adı</th>
+							<th rowspan="1" colspan="1">Kategori Adı</th>
+							<th rowspan="1" colspan="1">Fiyat</th>
+							<th rowspan="1" colspan="1">Stok Miktarı</th>
+							<th rowspan="1" colspan="1">Kritik Stok Miktarı</th>
+							</thead>
+							<tbody>
+								@foreach (var item in Model)
+								{
+									<tr>
+										<td>
+											<img src="~/images/product/@item.ImagePath" width="125" height="100" />
+										</td>
+										<td>
+											@item.ProductName
+										</td>
+										<td>
+											@item.BrandName
+										</td>
+										<td>
+											@item.CategoryName
+										</td>
+										<td>
+											@item.UnitPrice
+										</td>
+										<td>
+											@item.UnitsInStock
+										</td>
+										@if (item.CriticalStock > item.UnitsInStock)
+										{
+											<td style="background-color:indianred">
+												@item.CriticalStock
+											</td>
+										}
+										else
+										{
+											<td>
+												@item.CriticalStock
+											</td>
+										}
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+

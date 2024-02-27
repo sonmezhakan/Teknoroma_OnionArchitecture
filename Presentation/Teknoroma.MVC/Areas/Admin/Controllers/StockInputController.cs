@@ -10,6 +10,7 @@ using Teknoroma.Application.Features.StockInputs.Command.Update;
 using Teknoroma.Application.Features.StockInputs.Models;
 using Teknoroma.Application.Features.StockInputs.Queries.GetById;
 using Teknoroma.Application.Features.StockInputs.Queries.GetList;
+using Teknoroma.Application.Features.Stocks.Queries.GetByBranchId;
 using Teknoroma.Application.Features.Suppliers.Queries.GetList;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
@@ -28,15 +29,15 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateStockInputViewModel model)
         {
+            await ViewBagList();
             if (!ModelState.IsValid)
             {
-                await ViewBagList();
                 await ErrorResponse();
                 return View(model);
             }
 
             CreateStockInputCommandRequest createStockInput = Mapper.Map<CreateStockInputCommandRequest>(model);
-            createStockInput.BranchID = Guid.Parse(ViewBag.Branch);
+            createStockInput.BranchID = Guid.Parse(ViewBag.Branch.Value);
             createStockInput.AppUserID = CheckAppUser().Result;
 
             HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("stockInput/create", createStockInput);
@@ -44,7 +45,6 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (response.IsSuccessStatusCode) return RedirectToAction("Create", "StockInput");
 
             await HandleErrorResponse(response);
-            await ViewBagList();
             return View(model);
         }
 
@@ -66,10 +66,10 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Update(StockInputViewModel model)
-        {         
-            if (!ModelState.IsValid)
+        {
+			await ViewBagList();
+			if (!ModelState.IsValid)
             {
-                await ViewBagList();
                 await ErrorResponse();
                 return View(model);
             }
@@ -81,7 +81,6 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (response.IsSuccessStatusCode) return RedirectToAction("Update", model.ID);
 
             await HandleErrorResponse(response);
-            await ViewBagList();
             return View(model);
         }
 
@@ -124,6 +123,18 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(stockInputListViewModel);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> StockTrackingReport()
+        {
+			await BranchIDViewBag();
+
+			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetByBranchIdStockQueryResponse>>($"stock/getbybranchid/{ViewBag.Branch.Value}");
+            if(response == null) return View();
+
+            
+
+            return View();
+        }
 
         private async Task<GetByIdStockInputQueryResponse> GetByStockInputId(Guid id)
         {
@@ -131,7 +142,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
         private async Task StockInputViewBag()
         {
-            var stockInputs = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockInputQueryResponse>>($"stockInput/getall");
+            
+			var stockInputs = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockInputQueryResponse>>($"stockInput/getall");
 
             ViewBag.StockInputList = stockInputs;
         }

@@ -113,7 +113,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         private async Task<GetByIdDepartmentQueryResponse> GetByDepartmentId(Guid id)
         {
-          return await ApiService.HttpClient.GetFromJsonAsync<GetByIdDepartmentQueryResponse>($"department/GetById/{id}");
+          var result= await ApiService.HttpClient.GetFromJsonAsync<GetByIdDepartmentQueryResponse>($"department/GetById/{id}");
+          return result;
         }
 
         private async Task DepartmentViewBag()

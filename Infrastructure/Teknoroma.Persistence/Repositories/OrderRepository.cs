@@ -12,8 +12,12 @@ namespace Teknoroma.Persistence.Repositories
 {
     public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
-        public OrderRepository(TeknoromaContext context) : base(context)
+	
+
+		public OrderRepository(TeknoromaContext context) : base(context)
         {
-        }
+			
+		}
+
     }
 }

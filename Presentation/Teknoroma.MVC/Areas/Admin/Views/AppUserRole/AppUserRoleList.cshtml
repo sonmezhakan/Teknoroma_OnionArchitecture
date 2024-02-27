@@ -1,21 +1,21 @@
 ﻿@using Teknoroma.Application.Features.AppUserRoles.Models
 @model List<AppUserRoleViewModel>
 @{
-    ViewData["Title"] = "AppUserRoleList";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["Title"] = "AppUserRoleList";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 
 <div class="row">
-	<div class="col-12">
+	<div class="col-md-12 mx-auto">
 		<div class="card">
-			<div class="card-header">
-				<h1>Yetki Listesi</h1>
+			<div class="card-header bg-info">
+				<h2 class="text-white">Yetki Listesi</h2>
 			</div>
 			<div class="card-body">
 				<div class="row">
 					<div class="col-sm-12">
-						<table class="table table-bordered table-hover dataTable dtr-inline">
+						<table id="basic-datatable" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
 							<thead>
 							<th rowspan="1" colspan="1">Yetki Adı</th>
 							<th>
@@ -24,7 +24,7 @@
 							</tr>
 							</thead>
 							<tbody>
-								@if(Model != null)
+								@if (Model != null)
 								{
 									@foreach (var item in Model)
 									{
@@ -33,9 +33,15 @@
 												@item.Name
 											</td>
 											<td>
-												<a class="btn bg-gradient-info" asp-controller="AppUserRole" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
-												<a class="btn bg-gradient-warning" asp-controller="AppUserRole" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
-												<a class="btn bg-gradient-danger" asp-controller="AppUserRole" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
+												<div>
+													<a class="btn btn-info btn-block waves-effect waves-light" asp-controller="AppUserRole" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
+												</div>
+												<div>
+													<a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="AppUserRole" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
+												</div>
+												<div>
+													<a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="AppUserRole" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
+												</div>
 											</td>
 										</tr>
 									}
