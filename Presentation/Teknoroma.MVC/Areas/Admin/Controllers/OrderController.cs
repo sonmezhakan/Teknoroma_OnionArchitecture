@@ -10,9 +10,8 @@ using Teknoroma.Application.Features.Orders.Command.Update;
 using Teknoroma.Application.Features.Orders.Models;
 using Teknoroma.Application.Features.Orders.Queries.GetByBranchIdList;
 using Teknoroma.Application.Features.Orders.Queries.GetById;
+using Teknoroma.Application.Features.Orders.Queries.GetSalesReport;
 using Teknoroma.Application.Features.Products.Queries.GetById;
-using Teknoroma.Application.Features.Reports.SalesReport.Models;
-using Teknoroma.Application.Features.Reports.SalesReport.Queries.GetSalesReport;
 using Teknoroma.Application.Features.Stocks.Models;
 using Teknoroma.Application.Features.Stocks.Queries.GetList;
 using Teknoroma.Domain.Enums;
@@ -20,7 +19,7 @@ using Teknoroma.Infrastructure.SessionHelpers;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
-	[Area("Admin")]
+    [Area("Admin")]
 	[Authorize]
 	public class OrderController : BaseController
 	{

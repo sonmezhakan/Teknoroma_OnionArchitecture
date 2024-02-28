@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Teknoroma.Application.Features.Categories.Commands.Create;
 using Teknoroma.Application.Features.Categories.Commands.Update;
 using Teknoroma.Application.Features.Categories.Models;
 using Teknoroma.Application.Features.Categories.Queries.GetById;
+using Teknoroma.Application.Features.Categories.Queries.GetCategoryEarningReport;
+using Teknoroma.Application.Features.Categories.Queries.GetCategorySellingReport;
+using Teknoroma.Application.Features.Categories.Queries.GetCategorySupplyReport;
 using Teknoroma.Application.Features.Categories.Queries.GetList;
 using Teknoroma.Domain.Entities;
 
@@ -27,6 +25,10 @@ namespace Teknoroma.Application.Features.Categories.Profiles
             CreateMap<CategoryViewModel, UpdateCategoryCommandRequest>().ReverseMap();
             CreateMap<CategoryViewModel, GetByIdCategoryQueryResponse>().ReverseMap();
             CreateMap<CategoryViewModel,GetAllCategoryQueryResponse>().ReverseMap();
+
+            CreateMap<CategorySellingReportViewModel, GetCategorySellingReportQueryResponse>().ReverseMap();
+            CreateMap<CategoryEarningReportViewModel, GetCategoryEarningReportQueryResponse>().ReverseMap();
+            CreateMap<CategorySupplyReportViewModel, GetCategorySupplyReportQueryResponse>().ReverseMap();
         }
     }
 }

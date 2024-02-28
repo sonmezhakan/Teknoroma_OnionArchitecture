@@ -8,6 +8,8 @@ using Teknoroma.Application.Features.Employees.Command.Create;
 using Teknoroma.Application.Features.Employees.Command.Update;
 using Teknoroma.Application.Features.Employees.Models;
 using Teknoroma.Application.Features.Employees.Queries.GetById;
+using Teknoroma.Application.Features.Employees.Queries.GetEmployeeEarningReport;
+using Teknoroma.Application.Features.Employees.Queries.GetEmployeeSellingReport;
 using Teknoroma.Application.Features.Employees.Queries.GetList;
 using Teknoroma.MVC.Models;
 
@@ -105,6 +107,31 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			List<EmployeeViewModel> employeeViewModel = Mapper.Map<List<EmployeeViewModel>>(response);
 
 			return View(employeeViewModel);
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> EmployeeReport(DateTime? startDate,DateTime? endDate)
+		{
+            if (startDate == null || endDate == null)
+            {
+                startDate = DateTime.MinValue;
+                endDate = DateTime.MaxValue;
+            }
+			var employeeSellingReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetEmployeeSellingReportQueryResponse>>($"employee/EmployeeSellingReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+			List<EmployeeSellingReportViewModel> employeeSellingReportViewModels = Mapper.Map<List<EmployeeSellingReportViewModel>>(employeeSellingReports);
+
+			var employeeEarningReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetEmployeeEarningReportQueryResponse>>($"employee/EmployeeEarningReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+			List<EmployeeEarningReportViewModel> employeeEarningReportViewModels = Mapper.Map<List<EmployeeEarningReportViewModel>>(employeeEarningReports);
+
+
+			EmployeeReportViewModel employeeReportViewModel = new EmployeeReportViewModel
+			{
+				EmployeeSellingReportViewModels = employeeSellingReportViewModels,
+				EmployeeEarningReportViewModels = employeeEarningReportViewModels
+			};
+			return View(employeeReportViewModel);
 		}
 
 		private async Task<GetByIdEmployeeQueryResponse> GetByEmployeeId(Guid id)

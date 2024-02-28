@@ -3,6 +3,8 @@ using Teknoroma.Application.Features.Employees.Command.Create;
 using Teknoroma.Application.Features.Employees.Command.Delete;
 using Teknoroma.Application.Features.Employees.Command.Update;
 using Teknoroma.Application.Features.Employees.Queries.GetById;
+using Teknoroma.Application.Features.Employees.Queries.GetEmployeeEarningReport;
+using Teknoroma.Application.Features.Employees.Queries.GetEmployeeSellingReport;
 using Teknoroma.Application.Features.Employees.Queries.GetList;
 
 namespace Teknoroma.WebApi.Controllers
@@ -47,5 +49,19 @@ namespace Teknoroma.WebApi.Controllers
 
 			return Ok(result);
 		}
-	}
+		[HttpGet("{startDate}/{endDate}")]
+		public async Task<IActionResult> EmployeeSellingReport(string startDate,string endDate)
+		{
+			var result = await Mediator.Send(new GetEmployeeSellingReportQueryRequest { StarDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+
+			return Ok(result);
+		}
+        [HttpGet("{startDate}/{endDate}")]
+        public async Task<IActionResult> EmployeeEarningReport(string startDate, string endDate)
+        {
+            var result = await Mediator.Send(new GetEmployeeEarningReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+
+            return Ok(result);
+        }
+    }
 }

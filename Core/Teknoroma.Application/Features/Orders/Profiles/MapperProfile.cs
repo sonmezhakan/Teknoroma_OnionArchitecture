@@ -5,6 +5,7 @@ using Teknoroma.Application.Features.Orders.Models;
 using Teknoroma.Application.Features.Orders.Queries.GetByBranchIdList;
 using Teknoroma.Application.Features.Orders.Queries.GetById;
 using Teknoroma.Application.Features.Orders.Queries.GetList;
+using Teknoroma.Application.Features.Orders.Queries.GetSalesReport;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Orders.Profiles
@@ -45,7 +46,9 @@ namespace Teknoroma.Application.Features.Orders.Profiles
 			CreateMap<OrderListViewModel, GetByBranchIdOrderListQueryResponse>().ReverseMap();
             CreateMap<OrderListViewModel, GetAllOrderQueryResponse>().ReverseMap();
 
-            
+			CreateMap<SalesReportViewModel, GetSalesReportQueryResponse>().ReverseMap();
+
+
 		}
     }
 }

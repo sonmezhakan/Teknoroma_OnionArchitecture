@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Teknoroma.Application.Features.Reports.SalesReport.Queries.GetSalesReport
+namespace Teknoroma.Application.Features.Orders.Queries.GetSalesReport
 {
     public class GetSalesReportQueryRequest : IRequest<GetSalesReportQueryResponse>
     {

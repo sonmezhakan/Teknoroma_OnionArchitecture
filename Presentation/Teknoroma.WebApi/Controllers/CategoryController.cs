@@ -3,6 +3,9 @@ using Teknoroma.Application.Features.Categories.Commands.Create;
 using Teknoroma.Application.Features.Categories.Commands.Delete;
 using Teknoroma.Application.Features.Categories.Commands.Update;
 using Teknoroma.Application.Features.Categories.Queries.GetById;
+using Teknoroma.Application.Features.Categories.Queries.GetCategoryEarningReport;
+using Teknoroma.Application.Features.Categories.Queries.GetCategorySellingReport;
+using Teknoroma.Application.Features.Categories.Queries.GetCategorySupplyReport;
 using Teknoroma.Application.Features.Categories.Queries.GetList;
 
 
@@ -53,6 +56,29 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{startDate}/{endDate}")]
+        public async Task<IActionResult> CategorySellingReport(string startDate,string endDate)
+        {
+            var result = await Mediator.Send(new GetCategorySellingReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+
+            return Ok(result);
+        }
+
+        [HttpGet("{startDate}/{endDate}")]
+        public async Task<IActionResult> CategoryEarningReport(string startDate, string endDate)
+        {
+            var result = await Mediator.Send(new GetCategoryEarningReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+
+            return Ok(result);
+        }
+
+        [HttpGet("{startDate}/{endDate}")]
+        public async Task<IActionResult> CategorySupplyReport(string startDate, string endDate)
+        {
+            var result = await Mediator.Send(new GetCategorySupplyReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+
+            return Ok(result);
+        }
     }
     
 }

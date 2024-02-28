@@ -4,6 +4,9 @@ using Teknoroma.Application.Features.Categories.Commands.Create;
 using Teknoroma.Application.Features.Categories.Commands.Update;
 using Teknoroma.Application.Features.Categories.Models;
 using Teknoroma.Application.Features.Categories.Queries.GetById;
+using Teknoroma.Application.Features.Categories.Queries.GetCategoryEarningReport;
+using Teknoroma.Application.Features.Categories.Queries.GetCategorySellingReport;
+using Teknoroma.Application.Features.Categories.Queries.GetCategorySupplyReport;
 using Teknoroma.Application.Features.Categories.Queries.GetList;
 using Teknoroma.MVC.Models;
 
@@ -109,6 +112,36 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             List<CategoryViewModel> categoryViewModels = Mapper.Map<List<CategoryViewModel>>(response);
 
             return View(categoryViewModels);
+        }
+        [HttpGet]
+        public async Task<IActionResult> CategoryReport(DateTime? startDate, DateTime? endDate)
+        {
+            if (startDate == null || endDate == null)
+            {
+                startDate = DateTime.MinValue;
+                endDate = DateTime.MaxValue;
+            }
+
+            var categorySellingReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetCategorySellingReportQueryResponse>>($"category/CategorySellingReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+            List<CategorySellingReportViewModel> categorySellingReportViewModels = Mapper.Map<List<CategorySellingReportViewModel>>(categorySellingReports);
+
+            var categoryEarningReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetCategoryEarningReportQueryResponse>>($"category/CategoryEarningReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+            List<CategoryEarningReportViewModel> categoryEarningReportsViewModels = Mapper.Map<List<CategoryEarningReportViewModel>>(categoryEarningReports);
+
+            var categorySupplyReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetCategorySupplyReportQueryResponse>>($"category/CategorySupplyReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+            List<CategorySupplyReportViewModel> categorySupplyReportViewModels = Mapper.Map<List<CategorySupplyReportViewModel>>(categorySupplyReports);
+
+            CategoryReportViewModel categoryReportViewModel = new CategoryReportViewModel
+            {
+                CategorySellingReportViewModels = categorySellingReportViewModels,
+                CategoryEarningReportViewModels = categoryEarningReportsViewModels,
+                CategorySupplyReportViewModels = categorySupplyReportViewModels
+            };
+
+            return View(categoryReportViewModel);
         }
 
         private async Task<GetByIdCategoryQueryResponse> GetByCategoryId(Guid id)

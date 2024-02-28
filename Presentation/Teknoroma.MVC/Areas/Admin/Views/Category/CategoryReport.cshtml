@@ -1,0 +1,141 @@
+﻿@model CategoryReportViewModel
+@{
+    ViewData["Title"] = "CategoryReport";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="card">
+        <div class="card-header bg-info">
+            <div class="d-flex">
+                <div class="col-md-10 my-auto">
+                    <h2 style="color:white;">En Çok Satılan Kategoriler</h2>
+                </div>
+                <div class="col-md-2">
+                    <form  method="get" asp-controller="Category" asp-action="CategoryReport">
+                       <div class="d-flex">
+                            <div>
+                                <input type="text" class="form-control date" name="startDate" id="birthdatepicker" data-toggle="daterangepicker" data-single-date-picker="true">
+                            </div>
+                            <div>
+                                <input type="text" class="form-control date" name="endDate" id="birthdatepicker" data-toggle="daterangepicker" data-single-date-picker="true">
+                            </div>
+                       </div>
+                        <button type="submit" class="btn btn-danger btn-block waves-effect waves-light">Filtrele</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <table id="basic-datatable-categorySellingReport" name="categorySellingTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                        <thead>
+                            <tr>
+                                <th class="dt-orderable-asc dt-orderable-desc">Category</th>
+                                <th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Satış Yapılan Adet</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           @foreach (var categorySelling in Model.CategorySellingReportViewModels)
+                            {
+                                <tr>
+                                    <td>
+                                        @categorySelling.CategoryName
+                                    </td>
+                                    <td>
+                                        @categorySelling.TotalSales
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <canvas id="pieChartCategorySellingReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-info">
+            <div class="d-flex">
+                <div class="col-md-10 my-auto">
+                    <h2 style="color:white;">En Çok Kazanç Elde Edilen Kategoriler</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <canvas id="pieChartCategoryEarningReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
+                </div>
+                <div class="col-md-6">
+                    <table id="basic-datatable-categoryEarningReport" name="categoryEarningTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                        <thead>
+                            <tr>
+                                <th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
+                                <th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Kazanç ₺</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var categoryEarning in Model.CategoryEarningReportViewModels)
+                            {
+                                <tr>
+                                    <td>
+                                        @categoryEarning.CategoryName
+                                    </td>
+                                    <td>
+                                        @categoryEarning.TotalPrice ₺
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-info">
+            <div class="d-flex">
+                <div class="col-md-10 my-auto">
+                    <h2 style="color:white;">En Çok Tedarik Edilen Kategori</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <table id="basic-datatable-categorySupplyReport" name="categorySupplyTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                        <thead>
+                            <tr>
+                                <th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
+                                <th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Tedarik Edilen Adet</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var categorySupply in Model.CategorySupplyReportViewModels)
+                            {
+                                <tr>
+                                    <td>
+                                        @categorySupply.CategoryName
+                                    </td>
+                                    <td>
+                                        @categorySupply.TotalSupply
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <canvas id="pieChartCategorySupplyReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

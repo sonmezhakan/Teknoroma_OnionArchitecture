@@ -5,6 +5,9 @@ using Teknoroma.Application.Features.Products.Command.Update;
 using Teknoroma.Application.Features.Products.Models;
 using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Application.Features.Products.Queries.GetList;
+using Teknoroma.Application.Features.Products.Queries.GetProductEarningReport;
+using Teknoroma.Application.Features.Products.Queries.GetProductSellingReport;
+using Teknoroma.Application.Features.Products.Queries.GetProductSupplyReport;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Products.Profiles
@@ -34,6 +37,11 @@ namespace Teknoroma.Application.Features.Products.Profiles
 			CreateMap<GetByIdProductQueryResponse, UpdateProductCommandRequest>().ReverseMap();
 
 			CreateMap<GetByIdProductQueryResponse, CartItem>().ReverseMap();
+
+			CreateMap<ProductEarningReportViewModel, GetProductEarningReportQueryResponse>().ReverseMap();
+			CreateMap<ProductSellingReportViewModel, GetProductSellingReportQueryResponse>().ReverseMap();
+			CreateMap<ProductSupplyReportViewModel, GetProductSupplyReportQueryResponse>().ReverseMap();
+
 		}
     }
 }

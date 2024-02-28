@@ -19,6 +19,145 @@ $(document).ready(function() {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
         }
     });
+    //Products
+    $('#basic-datatable-productSellingReport').DataTable({
+        "order": [[1, 'desc']],
+        "language": {
+            "paginate": {
+                "previous": "<i class='mdi mdi-chevron-left'>",
+                "next": "<i class='mdi mdi-chevron-right'>"
+            }
+        },
+        "drawCallback": function () {
+            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        }
+    });
+    $('#basic-datatable-productSupplyReport').DataTable({
+        "order": [[1, 'desc']],
+        "language": {
+            "paginate": {
+                "previous": "<i class='mdi mdi-chevron-left'>",
+                "next": "<i class='mdi mdi-chevron-right'>"
+            }
+        },
+        "drawCallback": function () {
+            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        }
+    });
+    $('#basic-datatable-productEarningReport').DataTable({
+        "order": [[1, 'desc']],
+        "language": {
+            "paginate": {
+                "previous": "<i class='mdi mdi-chevron-left'>",
+                "next": "<i class='mdi mdi-chevron-right'>"
+            }
+        },
+        "drawCallback": function () {
+            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        }
+    });
+
+    //Categories
+    $('#basic-datatable-categorySellingReport').DataTable({
+        "order": [[1, 'desc']],
+        "language": {
+            "paginate": {
+                "previous": "<i class='mdi mdi-chevron-left'>",
+                "next": "<i class='mdi mdi-chevron-right'>"
+            }
+        },
+        "drawCallback": function () {
+            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        }
+    });
+    $('#basic-datatable-categorySupplyReport').DataTable({
+        "order": [[1, 'desc']],
+        "language": {
+            "paginate": {
+                "previous": "<i class='mdi mdi-chevron-left'>",
+                "next": "<i class='mdi mdi-chevron-right'>"
+            }
+        },
+        "drawCallback": function () {
+            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        }
+    });
+    $('#basic-datatable-categoryEarningReport').DataTable({
+        "order": [[1, 'desc']],
+        "language": {
+            "paginate": {
+                "previous": "<i class='mdi mdi-chevron-left'>",
+                "next": "<i class='mdi mdi-chevron-right'>"
+            }
+        },
+        "drawCallback": function () {
+            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        }
+    });
+
+    //Products
+    $('#basic-datatable-productSellingReport').DataTable({
+        "order": [[1, 'desc']],
+        "language": {
+            "paginate": {
+                "previous": "<i class='mdi mdi-chevron-left'>",
+                "next": "<i class='mdi mdi-chevron-right'>"
+            }
+        },
+        "drawCallback": function () {
+            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        }
+    });
+    $('#basic-datatable-productSupplyReport').DataTable({
+        "order": [[1, 'desc']],
+        "language": {
+            "paginate": {
+                "previous": "<i class='mdi mdi-chevron-left'>",
+                "next": "<i class='mdi mdi-chevron-right'>"
+            }
+        },
+        "drawCallback": function () {
+            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        }
+    });
+    $('#basic-datatable-productEarningReport').DataTable({
+        "order": [[1, 'desc']],
+        "language": {
+            "paginate": {
+                "previous": "<i class='mdi mdi-chevron-left'>",
+                "next": "<i class='mdi mdi-chevron-right'>"
+            }
+        },
+        "drawCallback": function () {
+            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        }
+    });
+
+    //Employees
+    $('#basic-datatable-employeeSellingReport').DataTable({
+        "order": [[1, 'desc']],
+        "language": {
+            "paginate": {
+                "previous": "<i class='mdi mdi-chevron-left'>",
+                "next": "<i class='mdi mdi-chevron-right'>"
+            }
+        },
+        "drawCallback": function () {
+            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        }
+    });
+    $('#basic-datatable-employeeEarningReport').DataTable({
+        "order": [[1, 'desc']],
+        "language": {
+            "paginate": {
+                "previous": "<i class='mdi mdi-chevron-left'>",
+                "next": "<i class='mdi mdi-chevron-right'>"
+            }
+        },
+        "drawCallback": function () {
+            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        }
+    });
 
     //Buttons examples
     var table = $('#datatable-buttons').DataTable({

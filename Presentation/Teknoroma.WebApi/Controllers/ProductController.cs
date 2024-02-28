@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Teknoroma.Application.Features.Brands.Command.Delete;
 using Teknoroma.Application.Features.Products.Command.Create;
 using Teknoroma.Application.Features.Products.Command.Delete;
 using Teknoroma.Application.Features.Products.Command.Update;
 using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Application.Features.Products.Queries.GetList;
+using Teknoroma.Application.Features.Products.Queries.GetProductEarningReport;
+using Teknoroma.Application.Features.Products.Queries.GetProductSellingReport;
+using Teknoroma.Application.Features.Products.Queries.GetProductSupplyReport;
 
 namespace Teknoroma.WebApi.Controllers
 {
@@ -51,5 +53,27 @@ namespace Teknoroma.WebApi.Controllers
 
 			return Ok(result);
 		}
+
+		[HttpGet("{startDate}/{endDate}")]
+		public async Task<IActionResult> ProductSellingReport(string startDate, string endDate)
+		{
+			var resut = await Mediator.Send(new GetProductSellingReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+
+			return Ok(resut);
+		}
+		[HttpGet("{startDate}/{endDate}")]
+		public async Task<IActionResult> ProductEarningReport(string startDate, string endDate)
+		{
+			var resut = await Mediator.Send(new GetProductEarningReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+
+			return Ok(resut);
+		}
+        [HttpGet("{startDate}/{endDate}")]
+        public async Task<IActionResult> ProductSupplyReport(string startDate, string endDate)
+        {
+            var resut = await Mediator.Send(new GetProductSupplyReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+
+            return Ok(resut);
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Teknoroma.Application.Features.Reports.SalesReport.Queries.GetSalesReport
+﻿namespace Teknoroma.Application.Features.Orders.Queries.GetSalesReport
 {
     public class GetSalesReportQueryResponse
     {
@@ -18,6 +18,9 @@
         public string BestSellingEmployeeName { get; set; }
         public int BestSellingEmployeeQuantity { get; set; }
 
+        public string BestSellingBrandName { get; set; }
+        public int BestSellingBrandQuantity { get; set; }
+
 
         //Earning
         public string BestEarningProductName { get; set; }
@@ -34,5 +37,8 @@
 
         public string BestEarningEmployeeName { get; set; }
         public decimal BestEarningEmployeePrice { get; set; }
+
+        public string BestEarningBrandName { get; set; }
+        public decimal BestEarningBrandPrice { get; set; }
     }
 }

@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Teknoroma.Application.Features.OrderDetails.Queries.GetByOrderAndProductId;
 using Teknoroma.Application.Features.Orders.Command.Create;
 using Teknoroma.Application.Features.Orders.Command.Delete;
 using Teknoroma.Application.Features.Orders.Command.Update;
 using Teknoroma.Application.Features.Orders.Queries.GetByBranchIdList;
 using Teknoroma.Application.Features.Orders.Queries.GetById;
 using Teknoroma.Application.Features.Orders.Queries.GetList;
-using Teknoroma.Application.Features.Reports.SalesReport.Queries.GetSalesReport;
+using Teknoroma.Application.Features.Orders.Queries.GetSalesReport;
 
 namespace Teknoroma.WebApi.Controllers
 {
-	[Route("api/[controller]/[action]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class OrderController : BaseController
     {
@@ -53,13 +52,12 @@ namespace Teknoroma.WebApi.Controllers
 			var result = await Mediator.Send(new GetAllOrderQueryRequest());
 			return Ok(result);
 		}
-
         [HttpGet]
-        public async Task<IActionResult> Deneme()
+        public async Task<IActionResult> SalesReport()
         {
-            var resut = await Mediator.Send(new GetSalesReportQueryRequest());
+            var result = await Mediator.Send(new GetSalesReportQueryRequest());
 
-            return Ok(resut);
+            return Ok(result);
         }
-    }
+	}
 }

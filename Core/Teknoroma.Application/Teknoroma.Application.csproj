@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Features\AppUserProfiles\Models\" />
+    <Folder Include="Features\Customers\Queries\NewFolder1\" />
     <Folder Include="Features\Stocks\Contants\" />
   </ItemGroup>
 

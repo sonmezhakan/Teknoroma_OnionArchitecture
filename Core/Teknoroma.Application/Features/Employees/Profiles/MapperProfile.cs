@@ -3,12 +3,14 @@ using Teknoroma.Application.Features.Employees.Command.Create;
 using Teknoroma.Application.Features.Employees.Command.Update;
 using Teknoroma.Application.Features.Employees.Models;
 using Teknoroma.Application.Features.Employees.Queries.GetById;
+using Teknoroma.Application.Features.Employees.Queries.GetEmployeeEarningReport;
+using Teknoroma.Application.Features.Employees.Queries.GetEmployeeSellingReport;
 using Teknoroma.Application.Features.Employees.Queries.GetList;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Employees.Profiles
 {
-	public class MapperProfile:Profile
+    public class MapperProfile:Profile
 	{
         public MapperProfile()
         {
@@ -45,6 +47,9 @@ namespace Teknoroma.Application.Features.Employees.Profiles
 				.ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.AppUser.AppUserProfile.Address))
 				.ForMember(dest => dest.NationalityNumber, opt => opt.MapFrom(src => src.AppUser.AppUserProfile.NationalityNumber))
 				.ReverseMap();
+
+            CreateMap<EmployeeSellingReportViewModel, GetEmployeeSellingReportQueryResponse>().ReverseMap();
+            CreateMap<EmployeeEarningReportViewModel, GetEmployeeEarningReportQueryResponse>().ReverseMap();
 		}
     }
 }

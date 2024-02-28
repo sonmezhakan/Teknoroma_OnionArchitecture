@@ -17,6 +17,14 @@
     <link href="~/themes/Xacton/plugins/datatables/responsive.bootstrap4.css" rel="stylesheet" type="text/css" />
     <link href="~/themes/Xacton/plugins/datatables/buttons.bootstrap4.css" rel="stylesheet" type="text/css" />
     <link href="~/themes/Xacton/plugins/datatables/select.bootstrap4.css" rel="stylesheet" type="text/css" />
+    <link href="~/themes/Xacton/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css" />
+    <link href="~/themes/Xacton/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="~/themes/Xacton/plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/themes/Xacton/plugins/switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/themes/Xacton/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/themes/Xacton/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/themes/Xacton/assets/css/theme.min.css" rel="stylesheet" type="text/css" />
 
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
@@ -29,6 +37,8 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
 
      <link href="~/themes/Xacton/plugins/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
+    
 </head>
 
 <body>
@@ -306,6 +316,7 @@
                                 <li><a asp-controller="Product" asp-action="Update">Güncelle</a></li>
                                 <li><a asp-controller="Product" asp-action="Detail">Detaylar</a></li>
                                 <li><a asp-controller="Product" asp-action="ProductList">Ürün Listesi</a></li>
+                                <li><a asp-controller="Product" asp-action="ProductReport">Ürün Raporları</a></li>
 
                             </ul>
                         </li>
@@ -320,6 +331,7 @@
                                 <li><a asp-controller="Category" asp-action="Update">Güncelle</a></li>
                                 <li><a asp-controller="Category" asp-action="Detail">Detaylar</a></li>
                                 <li><a asp-controller="Category" asp-action="CategoryList">Kategori Listesi</a></li>
+                                <li><a asp-controller="Category" asp-action="CategoryReport">Kategori Raporları</a></li>
 
                             </ul>
                         </li>
@@ -362,6 +374,7 @@
                                 <li><a asp-controller="Branch" asp-action="Update">Güncelle</a></li>
                                 <li><a asp-controller="Branch" asp-action="Detail">Detaylar</a></li>
                                 <li><a asp-controller="Branch" asp-action="BranchList">Şube Listesi</a></li>
+                                <li><a asp-controller="Branch" asp-action="BranchReport">Şube Raporları</a></li>
                             </ul>
                         </li>
 
@@ -374,7 +387,7 @@
                                 <li><a asp-controller="Department" asp-action="Create">Ekle</a></li>
                                 <li><a asp-controller="Department" asp-action="Update">Güncelle</a></li>
                                 <li><a asp-controller="Department" asp-action="Detail">Detaylar</a></li>
-                                <li><a asp-controller="Department" asp-action="DepartmentList">Şube Listesi</a></li>
+                                <li><a asp-controller="Department" asp-action="DepartmentList">Departman Listesi</a></li>
                             </ul>
                         </li>
 
@@ -388,6 +401,7 @@
                                 <li><a asp-controller="Employee" asp-action="Update">Güncelle</a></li>
                                 <li><a asp-controller="Employee" asp-action="Detail">Detaylar</a></li>
                                 <li><a asp-controller="Employee" asp-action="EmployeeList">Çalışan Listesi</a></li>
+                                <li><a asp-controller="Employee" asp-action="EmployeeReport">Çalışan Raporları</a></li>
                             </ul>
                         </li>
 
@@ -424,6 +438,7 @@
                                 <li><a asp-controller="Customer" asp-action="Update">Güncelle</a></li>
                                 <li><a asp-controller="Customer" asp-action="Detail">Detaylar</a></li>
                                 <li><a asp-controller="Customer" asp-action="CustomerList">Müşteri Listesi</a></li>
+                                <li><a asp-controller="Customer" asp-action="CustomerReport">Müşteri Raporları</a></li>
                             </ul>
 
                             <!--Supplier-->
@@ -524,11 +539,33 @@
     <!-- Sweet Alerts Js-->
     <script src="~/themes/Xacton/assets/pages/sweet-alert-demo.js"></script>
 
+    <!-- Chart Js-->
+    <script src="~/themes/Xacton/plugins/chart-js/chart.min.js"></script>
+
+    <!-- Chart Custom Js-->
+    <script src="~/themes/Xacton/assets/pages/chartjs-demo.js"></script>
+
+    <!-- Plugins js -->
+    <script src="~/themes/Xacton/plugins/autonumeric/autoNumeric-min.js"></script>
+    <script src="~/themes/Xacton/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/themes/Xacton/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <script src="~/themes/Xacton/plugins/moment/moment.js"></script>
+    <script src="~/themes/Xacton/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="~/themes/Xacton/plugins/select2/select2.min.js"></script>
+    <script src="~/themes/Xacton/plugins/switchery/switchery.min.js"></script>
+    <script src="~/themes/Xacton/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js"></script>
+    <script src="~/themes/Xacton/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+
+    <!-- Custom Js -->
+    <script src="~/themes/Xacton/assets/pages/advanced-plugins-demo.js"></script>
+
     <script src="~/js/site.js"></script>
     <script src="~/js/table-filter.js"></script>
     <script src="~/js/alert.js"></script>
     <!-- Datatables init -->
     <script src="~/themes/Xacton/assets/pages/datatables-demo.js"></script>
+
+
     @RenderSection("scripts", required: false)
 </body>
 

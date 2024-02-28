@@ -8,6 +8,9 @@ using Teknoroma.Application.Features.Products.Command.Update;
 using Teknoroma.Application.Features.Products.Models;
 using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Application.Features.Products.Queries.GetList;
+using Teknoroma.Application.Features.Products.Queries.GetProductEarningReport;
+using Teknoroma.Application.Features.Products.Queries.GetProductSellingReport;
+using Teknoroma.Application.Features.Products.Queries.GetProductSupplyReport;
 using Teknoroma.Infrastructure.ImageHelpers;
 using Teknoroma.Infrastructure.WebApiService;
 using Teknoroma.MVC.Models;
@@ -164,6 +167,38 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             ProductViewModel productViewModel = Mapper.Map<ProductViewModel>(response);
 
             return View(productViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ProductReport(DateTime? startDate, DateTime? endDate)
+        {
+            if(startDate == null || endDate == null)
+            {
+                startDate = DateTime.MinValue;
+                endDate = DateTime.MaxValue;
+            }
+
+			var productSellingReport = await ApiService.HttpClient.GetFromJsonAsync<List<GetProductSellingReportQueryResponse>>($"product/ProductSellingReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+            List<ProductSellingReportViewModel> productSellingViewModels = Mapper.Map<List<ProductSellingReportViewModel>>(productSellingReport);
+            
+			var productEarningReport = await ApiService.HttpClient.GetFromJsonAsync<List<GetProductEarningReportQueryResponse>>($"product/ProductEarningReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+            List<ProductEarningReportViewModel> productEarningViewModels = Mapper.Map<List<ProductEarningReportViewModel>>(productEarningReport);
+
+            var productSupplyReport = await ApiService.HttpClient.GetFromJsonAsync<List<GetProductSupplyReportQueryResponse>>($"product/ProductSupplyReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+            List<ProductSupplyReportViewModel> productSupplyReportViewModels = Mapper.Map<List<ProductSupplyReportViewModel>>(productSupplyReport);
+
+            ProductReportViewModel productReportViewModel = new ProductReportViewModel
+            {
+                ProductEarningViewModels = productEarningViewModels,
+                ProductSellingViewModels = productSellingViewModels,
+                ProductSupplyViewModels = productSupplyReportViewModels
+            };
+
+
+            return View(productReportViewModel);
         }
 
         private async Task<GetByIdProductQueryResponse> GetByProductId(Guid id)
