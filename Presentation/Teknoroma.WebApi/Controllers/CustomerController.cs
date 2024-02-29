@@ -4,6 +4,8 @@ using Teknoroma.Application.Features.Customers.Command.Create;
 using Teknoroma.Application.Features.Customers.Command.Delete;
 using Teknoroma.Application.Features.Customers.Command.Update;
 using Teknoroma.Application.Features.Customers.Queries.GetById;
+using Teknoroma.Application.Features.Customers.Queries.GetCustomerEarningReport;
+using Teknoroma.Application.Features.Customers.Queries.GetCustomerSellingReport;
 using Teknoroma.Application.Features.Customers.Queries.GetList;
 
 
@@ -51,6 +53,26 @@ namespace Teknoroma.WebApi.Controllers
 
 			return Ok(result);
 		}
+        [HttpGet("{startDate}/{endDate}")]
+        public async Task<IActionResult> CustomerSellingReport(string startDate, string endDate)
+        {
+            var result = await Mediator.Send(new GetCustomerSellingReportQueryRequest
+            {
+                StartDate = DateTime.Parse(startDate),
+                EndDate = DateTime.Parse(endDate)
+            });
+            return Ok(result);
+        }
+        [HttpGet("{startDate}/{endDate}")]
+        public async Task<IActionResult> CustomerEarningReport(string startDate, string endDate)
+        {
+            var result = await Mediator.Send(new GetCustomerEarningReportQueryRequest
+            {
+                StartDate = DateTime.Parse(startDate),
+                EndDate = DateTime.Parse(endDate)
+            });
+            return Ok(result);
+        }
 
     }
 }

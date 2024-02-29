@@ -13,16 +13,28 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 	public class StockController : BaseController
 	{
 		[HttpGet]
-		public async Task<IActionResult> StockTrackingReport()
+		public async Task<IActionResult> StockTrackingReport(string? listStatus)
 		{
 			await BranchIDViewBag();
 
 			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetStockTrackingReportListQueryResponse>>($"stock/StockTrackingReport/{ViewBag.Branch.Value}");
 			if (response == null) return View();
 
-			List<StockTrackingReportViewModel> StockTrackingReport = Mapper.Map<List<StockTrackingReportViewModel>>(response);
+			//List<StockTrackingReportViewModel> stockTrackingReport = Mapper.Map<List<StockTrackingReportViewModel>>(response);
+			if(listStatus == "CriticalFilter")
+			{
+				var selectItems = response.Where(x => x.UnitsInStock < x.CriticalStock);
+				List<StockTrackingReportViewModel> stockTrackingReport = Mapper.Map<List<StockTrackingReportViewModel>>(selectItems);
 
-			return View(StockTrackingReport);
+				return View(stockTrackingReport);
+			}
+			else
+			{ 
+				List<StockTrackingReportViewModel> stockTrackingReport = Mapper.Map<List<StockTrackingReportViewModel>>(response);
+				return View(stockTrackingReport);
+			}
+
+			
 		}
 
 		private async Task BranchIDViewBag()

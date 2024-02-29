@@ -1,0 +1,102 @@
+﻿@using Teknoroma.Application.Features.Customers.Models
+@model CustomerReportViewModel
+@{
+    ViewData["Title"] = "CustomerReport";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="card">
+        <div class="card-header bg-info">
+            <div class="d-flex">
+                <div class="col-md-10 my-auto">
+                    <h2 style="color:white;">En Çok Sipariş Veren Müşteriler</h2>
+                </div>
+                <div class="col-md-2">
+                    <form method="get" asp-controller="Customer" asp-action="CustomerReport">
+                        <div class="d-flex">
+                            <div>
+                                <input type="text" class="form-control date" name="startDate" id="birthdatepicker" data-toggle="daterangepicker" data-single-date-picker="true">
+                            </div>
+                            <div>
+                                <input type="text" class="form-control date" name="endDate" id="birthdatepicker" data-toggle="daterangepicker" data-single-date-picker="true">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-danger btn-block waves-effect waves-light">Filtrele</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <table id="datatable-buttons-customerSellingReport" name="customerSellingTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                        <thead>
+                            <tr>
+                                <th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
+                                <th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Sipariş Sayısı</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var customerSelling in Model.CustomerSellingReportViewModels)
+                            {
+                                <tr>
+                                    <td>
+                                        @customerSelling.FullName
+                                    </td>
+                                    <td>
+                                        @customerSelling.TotalSales
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <canvas id="pieChartCustomerSellingReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-info">
+            <div class="d-flex">
+                <div class="col-md-10 my-auto">
+                    <h2 style="color:white;">En Çok Kazanç Elde Edilen Müşteriler</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <canvas id="pieChartCustomerEarningReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
+                </div>
+                <div class="col-md-6">
+                    <table id="datatable-buttons-customerEarningReport" name="customerEarningTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                        <thead>
+                            <tr>
+                                <th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
+                                <th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Kazanç ₺</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var customerEarning in Model.CustomerEarningReportViewModels)
+                            {
+                                <tr>
+                                    <td>
+                                        @customerEarning.FullName
+                                    </td>
+                                    <td>
+                                        @customerEarning.TotalPrice ₺
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

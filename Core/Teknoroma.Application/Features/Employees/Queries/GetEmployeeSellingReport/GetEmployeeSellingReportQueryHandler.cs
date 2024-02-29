@@ -21,7 +21,7 @@ namespace Teknoroma.Application.Features.Employees.Queries.GetEmployeeSellingRep
                     UserName = grouped.Key,
                     TotalSales = grouped.SelectMany(orders=>orders.Orders
                     .Where(x=>x.IsActive == true &&
-                    x.OrderDate >= request.StarDate && x.OrderDate <=request.EndDate))
+                    x.OrderDate >= request.StartDate && x.OrderDate <=request.EndDate))
                     .Count()
                 }).OrderByDescending(x=>x.TotalSales).ToList();
 

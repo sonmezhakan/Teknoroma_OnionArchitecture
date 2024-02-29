@@ -4,6 +4,8 @@ using Teknoroma.Application.Features.Customers.Command.Create;
 using Teknoroma.Application.Features.Customers.Command.Update;
 using Teknoroma.Application.Features.Customers.Models;
 using Teknoroma.Application.Features.Customers.Queries.GetById;
+using Teknoroma.Application.Features.Customers.Queries.GetCustomerEarningReport;
+using Teknoroma.Application.Features.Customers.Queries.GetCustomerSellingReport;
 using Teknoroma.Application.Features.Customers.Queries.GetList;
 using Teknoroma.MVC.Models;
 
@@ -108,7 +110,29 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             return View(customerViewModels);
         }
+        [HttpGet]
+        public async Task<IActionResult> CustomerReport(DateTime? startDate,DateTime? endDate)
+        {
+            if(startDate == null || endDate == null)
+            {
+                startDate = DateTime.MinValue;
+                endDate = DateTime.MaxValue;
+            }
+            var customerSellingReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetCustomerSellingReportQueryResponse>>($"customer/CustomerSellingReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
 
+            List <CustomerSellingReportViewModel> customerSellingReportViewModels = Mapper.Map<List<CustomerSellingReportViewModel>>(customerSellingReports);
+
+            var customerEarningReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetCustomerEarningReportQueryResponse>>($"customer/CustomerEarningReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+            List<CustomerEarningReportViewModel> customerEarningReportViewModels = Mapper.Map<List<CustomerEarningReportViewModel>>(customerEarningReports);
+
+            CustomerReportViewModel customerReportViewModel = new CustomerReportViewModel
+            {
+                CustomerEarningReportViewModels = customerEarningReportViewModels,
+                CustomerSellingReportViewModels = customerSellingReportViewModels
+            };
+            return View(customerReportViewModel);
+        }
         private async Task<GetByIdCustomerQueryResponse> GetByCustomerId(Guid id)
         {
           return await ApiService.HttpClient.GetFromJsonAsync<GetByIdCustomerQueryResponse>($"customer/getbyid/{id}");

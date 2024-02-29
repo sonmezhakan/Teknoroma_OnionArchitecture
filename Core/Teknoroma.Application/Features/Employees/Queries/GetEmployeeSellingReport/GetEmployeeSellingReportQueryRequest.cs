@@ -4,7 +4,7 @@ namespace Teknoroma.Application.Features.Employees.Queries.GetEmployeeSellingRep
 {
     public class GetEmployeeSellingReportQueryRequest:IRequest<List<GetEmployeeSellingReportQueryResponse>>
     {
-        public DateTime StarDate { get; set; }
+        public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }
 }

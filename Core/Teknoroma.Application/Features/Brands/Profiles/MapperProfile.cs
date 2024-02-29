@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Teknoroma.Application.Features.Brands.Command.Create;
 using Teknoroma.Application.Features.Brands.Command.Update;
 using Teknoroma.Application.Features.Brands.Models;
+using Teknoroma.Application.Features.Brands.Quries.GetBrandEarningReport;
+using Teknoroma.Application.Features.Brands.Quries.GetBrandSellingReport;
 using Teknoroma.Application.Features.Brands.Quries.GetById;
 using Teknoroma.Application.Features.Brands.Quries.GetList;
 using Teknoroma.Domain.Entities;
@@ -28,7 +30,8 @@ namespace Teknoroma.Application.Features.Brands.Profiles
 			CreateMap<BrandViewModel, GetByIdBrandQueryResponse>().ReverseMap();
 			CreateMap<BrandViewModel, GetAllBrandCommandResponse>().ReverseMap();
 
-			
+			CreateMap<BrandEarningReportViewModel, GetBrandEarningReportQueryResponse>().ReverseMap();
+			CreateMap<BrandSellingReportViewModel, GetBrandSellingReportQueryResponse>().ReverseMap();
 		}
 	}
 }

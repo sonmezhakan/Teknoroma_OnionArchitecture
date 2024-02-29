@@ -11,7 +11,7 @@
         <div class="card-header bg-info">
             <div class="d-flex">
                 <div class="col-md-10 my-auto">
-                    <h2 style="color:white;">En Çok Satış Yapan Çalışanlar</h2>
+                    <h2 style="color:white;">En Çok Satış(Sipariş) Yapan Çalışanlar</h2>
                 </div>
                 <div class="col-md-2">
                     <form method="get" asp-controller="Employee" asp-action="EmployeeReport">
@@ -31,11 +31,14 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    <table id="basic-datatable-employeeSellingReport" name="employeeSellingTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                    <table id="datatable-buttons-employeeSellingReport" name="employeeSellingTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
                         <thead>
                             <tr>
-                                <th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
-                                <th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Satış Yapılan Adet</th>
+                                <th class="dt-orderable-asc dt-orderable-desc">Çalışan Kullanıcı Adı</th>
+                                <th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Satış(Sipariş) Yapılan Adet</th>
+                                <th>
+
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,6 +50,66 @@
                                     </td>
                                     <td>
                                         @employeeSelling.TotalSales
+                                    </td>
+                                    <td>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-@employeeSelling.UserName">
+                                            Detaylı Rapor
+                                        </button>
+                                        <!-- Modal -->
+                                        <div class="container">
+                                            <div class="modal fade" id="exampleModal-@employeeSelling.UserName" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-fullscreen">
+                                                    <div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">@employeeSelling.UserName Kullanıcı Adına Sahip Çalışanın Detaylı Raporu</h5>
+                                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+
+                                                        <div class="modal-body">
+                                                            <table id="datatable-buttons-employeeDetailReport" name="employeeDetailReportTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                                                                <thead>
+                                                                <th rowspan="1" colspan="1">Şube Adı</th>
+                                                                <th rowspan="1" colspan="1">Satış Yapılan Ürün</th>
+                                                                <th rowspan="1" colspan="1">Toplam Satış Adeti</th>
+                                                                <th rowspan="1" colspan="1">Toplam Fiyat ₺</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @if(Model.EmployeeSellingReportViewModels != null && Model.EmployeeDetailReportViewModels != null)
+                                                                    {
+                                                                        @foreach (var employeeDetailReport in Model.EmployeeDetailReportViewModels)
+                                                                        {
+                                                                            @if (employeeSelling.UserName == employeeDetailReport.UserName)
+                                                                            {
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        @employeeDetailReport.BranchName
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        @employeeDetailReport.ProductName
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        @employeeDetailReport.TotalSales
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        @employeeDetailReport.TotalPrice ₺
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Kapat</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             }
@@ -74,11 +137,14 @@
                     <canvas id="pieChartEmployeeEarningReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
                 </div>
                 <div class="col-md-6">
-                    <table id="basic-datatable-employeeEarningReport" name="employeeEarningTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                    <table id="datatable-buttons-employeeEarningReport" name="employeeEarningTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
                         <thead>
                             <tr>
-                                <th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
+                                <th class="dt-orderable-asc dt-orderable-desc">Çalışan Kullanıcı Adı</th>
                                 <th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Kazanç ₺</th>
+                                <th>
+
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -90,6 +156,66 @@
                                     </td>
                                     <td>
                                         @employeeEarning.TotalPrice ₺
+                                    </td>
+                                    <td>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-@employeeEarning.UserName">
+                                            Detaylı Rapor
+                                        </button>
+                                        <!-- Modal -->
+                                        <div class="container">
+                                            <div class="modal fade" id="exampleModal-@employeeEarning.UserName" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-fullscreen">
+                                                    <div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">@employeeEarning.UserName Kullanıcı Adına Sahip Çalışanın Detaylı Raporu</h5>
+                                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+
+                                                        <div class="modal-body">
+                                                            <table id="datatable-buttons-employeeDetailReport" name="employeeDetailReportTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                                                                <thead>
+                                                                <th rowspan="1" colspan="1">Şube Adı</th>
+                                                                <th rowspan="1" colspan="1">Satış Yapılan Ürün</th>
+                                                                <th rowspan="1" colspan="1">Toplam Satış Adeti</th>
+                                                                <th rowspan="1" colspan="1">Toplam Fiyat ₺</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @if (Model.EmployeeSellingReportViewModels != null && Model.EmployeeDetailReportViewModels != null)
+                                                                    {
+                                                                        @foreach (var employeeDetailReport in Model.EmployeeDetailReportViewModels)
+                                                                        {
+                                                                            @if (employeeEarning.UserName == employeeDetailReport.UserName)
+                                                                            {
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        @employeeDetailReport.BranchName
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        @employeeDetailReport.ProductName
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        @employeeDetailReport.TotalSales
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        @employeeDetailReport.TotalPrice ₺
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Kapat</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             }

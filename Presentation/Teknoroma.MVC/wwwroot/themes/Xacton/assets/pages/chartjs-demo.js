@@ -8,6 +8,68 @@
 (function($) {
   'use strict';
   $(function() {
+
+    if ($("#pieChartProductSellingReport").length) {
+      var tables = document.getElementsByName("productSellingTable");
+      var pieChartCanvas = $("#pieChartProductSellingReport").get(0).getContext("2d");
+      var labels = [];
+      var data = [];
+      var table = tables[0]; // İlk tabloyu seçiyoruz
+    
+      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+
+        labels.push(cellValue);
+    
+        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+        data.push(dataValue);
+      }
+    
+      var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: data,
+            backgroundColor: [
+              '#ea5545', 
+              '#f46a9b', 
+              '#ef9b20', 
+              '#edbf33',
+              '#ede15b', 
+              '#bdcf32', 
+              '#87bc45', 
+              '#27aeef',
+              '#87bc45', 
+              '#00bfa0'
+            ],
+            borderColor: [
+              '#ea5545', 
+              '#f46a9b', 
+              '#ef9b20', 
+              '#edbf33',
+              '#ede15b', 
+              '#bdcf32', 
+              '#87bc45', 
+              '#27aeef',
+              '#87bc45', 
+              '#00bfa0'
+            ],
+          }],
+          labels: labels
+        },
+        options: {
+          responsive: true,
+           maintainAspectRatio: false, // boyutları özelleştirmek için
+          aspectRatio: 1, // oran: genişlik/yükseklik
+       animation: {
+      animateScale: true,
+      animateRotate: true
+    }
+
+        }
+      });
+    }
+
     //Products
     if ($("#pieChartProductSellingReport").length) {
       var tables = document.getElementsByName("productSellingTable");
@@ -498,7 +560,413 @@
         }
       });
     }
+    //Customers
+    if ($("#pieChartCustomerSellingReport").length) {
+      var tables = document.getElementsByName("customerSellingTable");
+      var pieChartCanvas = $("#pieChartCustomerSellingReport").get(0).getContext("2d");
+      var labels = [];
+      var data = [];
+      var table = tables[0]; // İlk tabloyu seçiyoruz
+    
+      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
+        labels.push(cellValue);
+    
+        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+        data.push(dataValue);
+      }
+    
+      var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: data,
+            backgroundColor: [
+              '#ea5545', 
+              '#f46a9b', 
+              '#ef9b20', 
+              '#edbf33',
+              '#ede15b', 
+              '#bdcf32', 
+              '#87bc45', 
+              '#27aeef',
+              '#87bc45', 
+              '#00bfa0'
+            ],
+            borderColor: [
+              '#ea5545', 
+              '#f46a9b', 
+              '#ef9b20', 
+              '#edbf33',
+              '#ede15b', 
+              '#bdcf32', 
+              '#87bc45', 
+              '#27aeef',
+              '#87bc45', 
+              '#00bfa0'
+            ],
+          }],
+          labels: labels
+        },
+        options: {
+          responsive: true,
+           maintainAspectRatio: false, // boyutları özelleştirmek için
+          aspectRatio: 1, // oran: genişlik/yükseklik
+       animation: {
+      animateScale: true,
+      animateRotate: true
+    }
+
+        }
+      });
+    }
+    
+    if ($("#pieChartCustomerEarningReport").length) {
+      var tables = document.getElementsByName("customerEarningTable");
+      var pieChartCanvas = $("#pieChartCustomerEarningReport").get(0).getContext("2d");
+      var labels = [];
+      var data = [];
+      var table = tables[0]; // İlk tabloyu seçiyoruz
+    
+      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+
+        labels.push(cellValue);
+    
+        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+        data.push(dataValue);
+      }
+    
+      var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: data,
+            backgroundColor: [
+              '#ea5545', 
+              '#f46a9b', 
+              '#ef9b20', 
+              '#edbf33',
+              '#ede15b', 
+              '#bdcf32', 
+              '#87bc45', 
+              '#27aeef',
+              '#87bc45', 
+              '#00bfa0'
+            ],
+            borderColor: [
+              '#ea5545', 
+              '#f46a9b', 
+              '#ef9b20', 
+              '#edbf33',
+              '#ede15b', 
+              '#bdcf32', 
+              '#87bc45', 
+              '#27aeef',
+              '#87bc45', 
+              '#00bfa0'
+            ],
+          }],
+          labels: labels
+        },
+        options: {
+          responsive: true,
+           maintainAspectRatio: false, // boyutları özelleştirmek için
+          aspectRatio: 1, // oran: genişlik/yükseklik
+       animation: {
+      animateScale: true,
+      animateRotate: true
+    }
+
+        }
+      });
+    }
+    //Brands
+    if ($("#pieChartBrandSellingReport").length) {
+      var tables = document.getElementsByName("brandSellingTable");
+      var pieChartCanvas = $("#pieChartBrandSellingReport").get(0).getContext("2d");
+      var labels = [];
+      var data = [];
+      var table = tables[0]; // İlk tabloyu seçiyoruz
+    
+      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+
+        labels.push(cellValue);
+    
+        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+        data.push(dataValue);
+      }
+    
+      var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: data,
+            backgroundColor: [
+              '#ea5545', 
+              '#f46a9b', 
+              '#ef9b20', 
+              '#edbf33',
+              '#ede15b', 
+              '#bdcf32', 
+              '#87bc45', 
+              '#27aeef',
+              '#87bc45', 
+              '#00bfa0'
+            ],
+            borderColor: [
+              '#ea5545', 
+              '#f46a9b', 
+              '#ef9b20', 
+              '#edbf33',
+              '#ede15b', 
+              '#bdcf32', 
+              '#87bc45', 
+              '#27aeef',
+              '#87bc45', 
+              '#00bfa0'
+            ],
+          }],
+          labels: labels
+        },
+        options: {
+          responsive: true,
+           maintainAspectRatio: false, // boyutları özelleştirmek için
+          aspectRatio: 1, // oran: genişlik/yükseklik
+       animation: {
+      animateScale: true,
+      animateRotate: true
+    }
+
+        }
+      });
+    }
+    
+    if ($("#pieChartBrandEarningReport").length) {
+      var tables = document.getElementsByName("brandEarningTable");
+      var pieChartCanvas = $("#pieChartBrandEarningReport").get(0).getContext("2d");
+      var labels = [];
+      var data = [];
+      var table = tables[0]; // İlk tabloyu seçiyoruz
+    
+      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+
+        labels.push(cellValue);
+    
+        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+        data.push(dataValue);
+      }
+    
+      var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: data,
+            backgroundColor: [
+              '#ea5545', 
+              '#f46a9b', 
+              '#ef9b20', 
+              '#edbf33',
+              '#ede15b', 
+              '#bdcf32', 
+              '#87bc45', 
+              '#27aeef',
+              '#87bc45', 
+              '#00bfa0'
+            ],
+            borderColor: [
+              '#ea5545', 
+              '#f46a9b', 
+              '#ef9b20', 
+              '#edbf33',
+              '#ede15b', 
+              '#bdcf32', 
+              '#87bc45', 
+              '#27aeef',
+              '#87bc45', 
+              '#00bfa0'
+            ],
+          }],
+          labels: labels
+        },
+        options: {
+          responsive: true,
+           maintainAspectRatio: false, // boyutları özelleştirmek için
+          aspectRatio: 1, // oran: genişlik/yükseklik
+       animation: {
+      animateScale: true,
+      animateRotate: true
+    }
+
+        }
+      });
+    }
+
+    //Branches
+    if ($("#pieChartBranchSellingReport").length) {
+      var tables = document.getElementsByName("branchSellingTable");
+      var pieChartCanvas = $("#pieChartBranchSellingReport").get(0).getContext("2d");
+      var labels = [];
+      var data = [];
+      var table = tables[0]; // İlk tabloyu seçiyoruz
+    
+      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+
+        labels.push(cellValue);
+    
+        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+        data.push(dataValue);
+      }
+    
+      var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: data,
+            backgroundColor: [
+              '#ea5545', 
+              '#f46a9b', 
+              '#ef9b20', 
+              '#edbf33',
+              '#ede15b', 
+              '#bdcf32', 
+              '#87bc45', 
+              '#27aeef',
+              '#87bc45', 
+              '#00bfa0'
+            ],
+            borderColor: [
+              '#ea5545', 
+              '#f46a9b', 
+              '#ef9b20', 
+              '#edbf33',
+              '#ede15b', 
+              '#bdcf32', 
+              '#87bc45', 
+              '#27aeef',
+              '#87bc45', 
+              '#00bfa0'
+            ],
+          }],
+          labels: labels
+        },
+        options: {
+          responsive: true,
+           maintainAspectRatio: false, // boyutları özelleştirmek için
+          aspectRatio: 1, // oran: genişlik/yükseklik
+       animation: {
+      animateScale: true,
+      animateRotate: true
+    }
+
+        }
+      });
+    }
+    
+    if ($("#pieChartBranchEarningReport").length) {
+      var tables = document.getElementsByName("branchEarningTable");
+      var pieChartCanvas = $("#pieChartBranchEarningReport").get(0).getContext("2d");
+      var labels = [];
+      var data = [];
+      var table = tables[0]; // İlk tabloyu seçiyoruz
+    
+      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+
+        labels.push(cellValue);
+    
+        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+        data.push(dataValue);
+      }
+    
+      var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: data,
+            backgroundColor: [
+              '#ea5545', 
+              '#f46a9b', 
+              '#ef9b20', 
+              '#edbf33',
+              '#ede15b', 
+              '#bdcf32', 
+              '#87bc45', 
+              '#27aeef',
+              '#87bc45', 
+              '#00bfa0'
+            ],
+            borderColor: [
+              '#ea5545', 
+              '#f46a9b', 
+              '#ef9b20', 
+              '#edbf33',
+              '#ede15b', 
+              '#bdcf32', 
+              '#87bc45', 
+              '#27aeef',
+              '#87bc45', 
+              '#00bfa0'
+            ],
+          }],
+          labels: labels
+        },
+        options: {
+          responsive: true,
+           maintainAspectRatio: false, // boyutları özelleştirmek için
+          aspectRatio: 1, // oran: genişlik/yükseklik
+       animation: {
+      animateScale: true,
+      animateRotate: true
+    }
+
+        }
+      });
+    }
+
+        
+    if ($("#pieChart").length) {
+      var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+      var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: [21, 16, 48, 31],
+            backgroundColor: [
+              '#3F51B5', 
+              '#f8ac5a', 
+              '#00c2b2', 
+              '#f15050'
+            ],
+            borderColor: [
+              '#3F51B5', 
+              '#f8ac5a', 
+              '#00c2b2', 
+              '#f15050'
+            ],
+          }],
+      
+          // These labels appear in the legend and in the tooltips when hovering different arcs
+          labels: [
+            'Samsung',
+            'Apple',
+            'Vivo',
+            'Motorola'
+          ]
+        },
+        options: {
+          responsive: true,
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          }
+        }
+      });
+    } 
     if ($('#lineChart').length) {
       var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
       var data = {

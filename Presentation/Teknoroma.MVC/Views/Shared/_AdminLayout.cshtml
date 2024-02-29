@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Teknoroma Admin Panel</title>
+    <title>@ViewData["Title"] - Teknoroma</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Teknoroma Admin Panel" name="description" />
     <meta content="MyraStudio" name="author" />
@@ -451,6 +451,20 @@
                                 <li><a asp-controller="Supplier" asp-action="Update">Güncelle</a></li>
                                 <li><a asp-controller="Supplier" asp-action="Detail">Detaylar</a></li>
                                 <li><a asp-controller="Supplier" asp-action="SupplierList">Tedarikçi Listesi</a></li>
+                            </ul>
+                        </li>
+
+                        <!--Brands-->
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="feather-copy"></i><span>Markalar</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a asp-controller="Brand" asp-action="Create">Ekle</a></li>
+                                <li><a asp-controller="Brand" asp-action="Update">Güncelle</a></li>
+                                <li><a asp-controller="Brand" asp-action="Detail">Detaylar</a></li>
+                                <li><a asp-controller="Brand" asp-action="BrandList">Marka Listesi</a></li>
+                                <li><a asp-controller="Brand" asp-action="BrandReport">Marka Raporları</a></li>
                             </ul>
                         </li>
                     </ul>

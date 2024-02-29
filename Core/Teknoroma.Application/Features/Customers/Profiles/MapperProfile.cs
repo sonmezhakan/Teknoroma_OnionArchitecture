@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
-using Teknoroma.Application.Features.Brands.Quries.GetById;
 using Teknoroma.Application.Features.Customers.Command.Create;
 using Teknoroma.Application.Features.Customers.Command.Update;
 using Teknoroma.Application.Features.Customers.Models;
 using Teknoroma.Application.Features.Customers.Queries.GetById;
+using Teknoroma.Application.Features.Customers.Queries.GetCustomerEarningReport;
+using Teknoroma.Application.Features.Customers.Queries.GetCustomerSellingReport;
 using Teknoroma.Application.Features.Customers.Queries.GetList;
 using Teknoroma.Domain.Entities;
 
@@ -24,6 +25,8 @@ namespace Teknoroma.Application.Features.Customers.Profiles
 			CreateMap<CustomerViewModel, GetByIdCustomerQueryResponse>().ReverseMap();
 			CreateMap<CustomerViewModel, GetAllCustomerQueryResponse>().ReverseMap();
 
+			CreateMap<CustomerEarningReportViewModel, GetCustomerEarningReportQueryResponse>().ReverseMap();
+			CreateMap<CustomerSellingReportViewModel, GetCustomerSellingReportQueryResponse>().ReverseMap();
 		}
     }
 }

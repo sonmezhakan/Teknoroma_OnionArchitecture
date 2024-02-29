@@ -4,6 +4,8 @@ using Teknoroma.Application.Features.Branches.Command.Create;
 using Teknoroma.Application.Features.Branches.Command.Delete;
 using Teknoroma.Application.Features.Branches.Command.Update;
 using Teknoroma.Application.Features.Branches.Queries.GetAll;
+using Teknoroma.Application.Features.Branches.Queries.GetBranchEarningReport;
+using Teknoroma.Application.Features.Branches.Queries.GetBranchSellingReport;
 using Teknoroma.Application.Features.Branches.Queries.GetById;
 
 
@@ -52,5 +54,19 @@ namespace Teknoroma.WebApi.Controllers
 
 			return Ok(result);
 		}
-	}
+		[HttpGet("{startDate}/{endDate}")]
+		public async Task<IActionResult> BranchSellingReport(string startDate,string endDate)
+		{
+			var result = await Mediator.Send(new GetBranchSellingReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+
+			return Ok(result);
+		}
+        [HttpGet("{startDate}/{endDate}")]
+        public async Task<IActionResult> BranchEarningReport(string startDate, string endDate)
+        {
+            var result = await Mediator.Send(new GetBranchEarningReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+
+            return Ok(result);
+        }
+    }
 }

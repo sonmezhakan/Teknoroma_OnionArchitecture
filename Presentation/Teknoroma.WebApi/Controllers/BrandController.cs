@@ -2,6 +2,8 @@
 using Teknoroma.Application.Features.Brands.Command.Create;
 using Teknoroma.Application.Features.Brands.Command.Delete;
 using Teknoroma.Application.Features.Brands.Command.Update;
+using Teknoroma.Application.Features.Brands.Quries.GetBrandEarningReport;
+using Teknoroma.Application.Features.Brands.Quries.GetBrandSellingReport;
 using Teknoroma.Application.Features.Brands.Quries.GetById;
 using Teknoroma.Application.Features.Brands.Quries.GetList;
 using Teknoroma.Application.Features.Departments.Command.Delete;
@@ -50,5 +52,19 @@ namespace Teknoroma.WebApi.Controllers
 
 			return Ok(result);
 		}
+        [HttpGet("{startDate}/{endDate}")]
+        public async Task<IActionResult> BrandSellingReport(string startDate,string endDate)
+        {
+            var result = await Mediator.Send(new GetBrandSellingReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+
+            return Ok(result);
+        }
+        [HttpGet("{startDate}/{endDate}")]
+        public async Task<IActionResult> BrandEarningReport(string startDate, string endDate)
+        {
+            var result = await Mediator.Send(new GetBrandEarningReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+
+            return Ok(result);
+        }
     }
 }

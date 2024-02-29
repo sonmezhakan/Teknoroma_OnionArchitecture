@@ -3,6 +3,7 @@ using Teknoroma.Application.Features.Employees.Command.Create;
 using Teknoroma.Application.Features.Employees.Command.Update;
 using Teknoroma.Application.Features.Employees.Models;
 using Teknoroma.Application.Features.Employees.Queries.GetById;
+using Teknoroma.Application.Features.Employees.Queries.GetEmployeeDetailReport;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeEarningReport;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeSellingReport;
 using Teknoroma.Application.Features.Employees.Queries.GetList;
@@ -50,6 +51,7 @@ namespace Teknoroma.Application.Features.Employees.Profiles
 
             CreateMap<EmployeeSellingReportViewModel, GetEmployeeSellingReportQueryResponse>().ReverseMap();
             CreateMap<EmployeeEarningReportViewModel, GetEmployeeEarningReportQueryResponse>().ReverseMap();
+            CreateMap<EmployeeDetailReportViewModel, GetEmployeeDetailReportQueryResponse>().ReverseMap();
 		}
     }
 }

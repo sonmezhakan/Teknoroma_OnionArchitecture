@@ -4,10 +4,11 @@ using Teknoroma.Application.Features.Branches.Command.Create;
 using Teknoroma.Application.Features.Branches.Command.Update;
 using Teknoroma.Application.Features.Branches.Models;
 using Teknoroma.Application.Features.Branches.Queries.GetAll;
+using Teknoroma.Application.Features.Branches.Queries.GetBranchEarningReport;
+using Teknoroma.Application.Features.Branches.Queries.GetBranchSellingReport;
 using Teknoroma.Application.Features.Branches.Queries.GetById;
 using Teknoroma.Application.Features.Stocks.Models;
 using Teknoroma.Application.Features.Stocks.Queries.GetList;
-using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
@@ -119,6 +120,30 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			List<BranchListViewModel> branchViewModels = Mapper.Map<List<BranchListViewModel>>(response);
 
 			return View(branchViewModels);
+		}
+		[HttpGet]
+		public async Task<IActionResult> BranchReport(DateTime? startDate,DateTime? endDate)
+		{
+            if (startDate == null || endDate == null)
+            {
+                startDate = DateTime.MinValue;
+                endDate = DateTime.MaxValue;
+            }
+            var branchSellingReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetBranchSellingReportQueryResponse>>($"branch/branchsellingreport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+			List<BranchSellingReportViewModel> branchSellingReportViewModels = Mapper.Map<List<BranchSellingReportViewModel>>(branchSellingReports);
+
+			var branchEarningReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetBranchEarningReportQueryResponse>>($"branch/branchEarningReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+			List<BranchEarningReportViewModel> branchEarningReportViewModels = Mapper.Map<List<BranchEarningReportViewModel>>(branchEarningReports);
+
+			BranchReportViewModel branchReportViewModel = new BranchReportViewModel
+			{
+				BranchEarningReportViewModels = branchEarningReportViewModels,
+				BranchSellingReportViewModels = branchSellingReportViewModels
+			};
+
+			return View(branchReportViewModel);
 		}
 
 		private async Task<GetByIdBranchQueryResponse> GetByBranchId(Guid id)

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.Brands.Command.Create;
 using Teknoroma.Application.Features.Brands.Command.Update;
 using Teknoroma.Application.Features.Brands.Models;
+using Teknoroma.Application.Features.Brands.Quries.GetBrandEarningReport;
+using Teknoroma.Application.Features.Brands.Quries.GetBrandSellingReport;
 using Teknoroma.Application.Features.Brands.Quries.GetById;
 using Teknoroma.Application.Features.Brands.Quries.GetList;
 
@@ -113,6 +115,31 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			return View(brandViewModels);
 		}
+		[HttpGet]
+		public async Task<IActionResult> BrandReport(DateTime? startDate,DateTime? endDate)
+		{
+            if (startDate == null || endDate == null)
+            {
+                startDate = DateTime.MinValue;
+                endDate = DateTime.MaxValue;
+            }
+            var brandSellingReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetBrandSellingReportQueryResponse>>($"brand/BrandSellingReport/{startDate?.ToString("yyyy.MM.dd")}/{endDate?.ToString("yyyy.MM.dd")}");
+
+			List<BrandSellingReportViewModel> brandSellingReportViewModels = Mapper.Map<List<BrandSellingReportViewModel>>(brandSellingReports);
+
+			var brandEarningReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetBrandEarningReportQueryResponse>>($"brand/BrandEarningReport/{startDate?.ToString("yyyy.MM.dd")}/{endDate?.ToString("yyyy.MM.dd")}");
+
+			List<BrandEarningReportViewModel> brandEarningReportViewModels = Mapper.Map<List<BrandEarningReportViewModel>>(brandEarningReports);
+
+			BrandReportViewModel brandReportViewModel = new BrandReportViewModel
+			{
+				BrandEarningReportViewModels = brandEarningReportViewModels,
+				BrandSellingReportViewModels = brandSellingReportViewModels
+			};
+
+			return View(brandReportViewModel);
+		}
+
 
 		private async Task<GetByIdBrandQueryResponse> GetByBrandId(Guid id)
 		{

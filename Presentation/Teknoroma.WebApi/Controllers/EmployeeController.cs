@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.Employees.Command.Create;
-using Teknoroma.Application.Features.Employees.Command.Delete;
 using Teknoroma.Application.Features.Employees.Command.Update;
 using Teknoroma.Application.Features.Employees.Queries.GetById;
+using Teknoroma.Application.Features.Employees.Queries.GetEmployeeDetailReport;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeEarningReport;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeSellingReport;
 using Teknoroma.Application.Features.Employees.Queries.GetList;
 
 namespace Teknoroma.WebApi.Controllers
 {
-	[Route("api/[controller]/[action]")]
+    [Route("api/[controller]/[action]")]
 	[ApiController]
 	public class EmployeeController : BaseController
 	{
@@ -52,7 +52,7 @@ namespace Teknoroma.WebApi.Controllers
 		[HttpGet("{startDate}/{endDate}")]
 		public async Task<IActionResult> EmployeeSellingReport(string startDate,string endDate)
 		{
-			var result = await Mediator.Send(new GetEmployeeSellingReportQueryRequest { StarDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+			var result = await Mediator.Send(new GetEmployeeSellingReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
 
 			return Ok(result);
 		}
@@ -63,5 +63,12 @@ namespace Teknoroma.WebApi.Controllers
 
             return Ok(result);
         }
+		[HttpGet("{startDate}/{endDate}")]
+		public async Task<IActionResult> EmployeeDetailReport(string startDate,string endDate)
+		{
+			var result = await Mediator.Send(new GetEmployeeDetailReportQueryRequest { startDate = DateTime.Parse(startDate), endDate = DateTime.Parse(endDate) });
+
+			return Ok(result);
+		}
     }
 }

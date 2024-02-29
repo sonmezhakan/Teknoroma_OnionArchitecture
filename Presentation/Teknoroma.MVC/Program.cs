@@ -130,7 +130,14 @@ namespace Teknoroma.MVC
                       pattern: "{area:exists}/{controller=StockInput}/{action=Index}/{id?}"
                     );
                 });
-                app.UseEndpoints(endpoints =>
+				app.UseEndpoints(endpoints =>
+				{
+					endpoints.MapControllerRoute(
+					  name: "areas",
+					  pattern: "{area:exists}/{controller=Stock}/{action=Index}/{id?}"
+					);
+				});
+				app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllerRoute(
                       name: "areas",

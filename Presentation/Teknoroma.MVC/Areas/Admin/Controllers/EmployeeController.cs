@@ -8,6 +8,7 @@ using Teknoroma.Application.Features.Employees.Command.Create;
 using Teknoroma.Application.Features.Employees.Command.Update;
 using Teknoroma.Application.Features.Employees.Models;
 using Teknoroma.Application.Features.Employees.Queries.GetById;
+using Teknoroma.Application.Features.Employees.Queries.GetEmployeeDetailReport;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeEarningReport;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeSellingReport;
 using Teknoroma.Application.Features.Employees.Queries.GetList;
@@ -125,14 +126,20 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			List<EmployeeEarningReportViewModel> employeeEarningReportViewModels = Mapper.Map<List<EmployeeEarningReportViewModel>>(employeeEarningReports);
 
+			var employeeDetailReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetEmployeeDetailReportQueryResponse>>($"employee/EmployeeDetailReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+			List<EmployeeDetailReportViewModel> employeeDetailReportViewModels = Mapper.Map<List<EmployeeDetailReportViewModel>>(employeeDetailReports);
 
 			EmployeeReportViewModel employeeReportViewModel = new EmployeeReportViewModel
 			{
 				EmployeeSellingReportViewModels = employeeSellingReportViewModels,
-				EmployeeEarningReportViewModels = employeeEarningReportViewModels
-			};
+				EmployeeEarningReportViewModels = employeeEarningReportViewModels,
+				EmployeeDetailReportViewModels = employeeDetailReportViewModels
+            };
 			return View(employeeReportViewModel);
 		}
+
+		
 
 		private async Task<GetByIdEmployeeQueryResponse> GetByEmployeeId(Guid id)
 		{
