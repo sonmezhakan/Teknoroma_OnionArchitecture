@@ -6,13 +6,15 @@ using Teknoroma.Application.Features.Products.Models;
 using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Application.Features.Products.Queries.GetList;
 using Teknoroma.Application.Features.Products.Queries.GetProductEarningReport;
+using Teknoroma.Application.Features.Products.Queries.GetProductSalesDetailReport;
 using Teknoroma.Application.Features.Products.Queries.GetProductSellingReport;
+using Teknoroma.Application.Features.Products.Queries.GetProductSupplyDetailReport;
 using Teknoroma.Application.Features.Products.Queries.GetProductSupplyReport;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Products.Profiles
 {
-	public class MapperProfile:Profile
+    public class MapperProfile:Profile
 	{
         public MapperProfile()
         {
@@ -41,7 +43,8 @@ namespace Teknoroma.Application.Features.Products.Profiles
 			CreateMap<ProductEarningReportViewModel, GetProductEarningReportQueryResponse>().ReverseMap();
 			CreateMap<ProductSellingReportViewModel, GetProductSellingReportQueryResponse>().ReverseMap();
 			CreateMap<ProductSupplyReportViewModel, GetProductSupplyReportQueryResponse>().ReverseMap();
-
+			CreateMap<ProductSalesDetailReportViewModel, GetProductSalesDetailReportQueryResponse>().ReverseMap();
+			CreateMap<ProductSupplyDetailReportViewModel, GetProductSupplyDetailReportQueryResponse>().ReverseMap();	
 		}
     }
 }

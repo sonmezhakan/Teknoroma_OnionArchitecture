@@ -3,9 +3,9 @@
  Author: Myra Studio
  File: Datatables
 */
-
-
 $(document).ready(function() {
+
+    
 
     // Default Datatable
     $('#basic-datatable').DataTable({
@@ -19,327 +19,607 @@ $(document).ready(function() {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
         }
     });
-       //Products
-       var productSellingReport = $('#datatable-buttons-productSellingReport').DataTable({
-        "order": [[1, 'desc']],
-        buttons: ['copy', 'print', 'pdf'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
+//        //Products
+//        var productSellingReport = $('#datatable-buttons-productSellingReport').DataTable({
+//         "order": [[1, 'desc']],
+//         buttons: [
+//             {
+//                 extend: 'copyHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'pdfHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'print',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             }
+//         ],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     }); 
 
-    productSellingReport.buttons().container()
-    .appendTo('#datatable-buttons-productSellingReport_wrapper .col-md-6:eq(0)'); 
+//     productSellingReport.buttons().container()
+//     .appendTo('#datatable-buttons-productSellingReport_wrapper .col-md-6:eq(0)'); 
 
-  var productSupplyReport = $('#datatable-buttons-productSupplyReport').DataTable({
-        "order": [[1, 'desc']],
-        buttons: ['copy', 'print', 'pdf'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
+//   var productSupplyReport = $('#datatable-buttons-productSupplyReport').DataTable({
+//         "order": [[1, 'desc']],
+//         buttons: [
+//             {
+//                 extend: 'copyHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'pdfHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'print',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             }
+//         ],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
 
-    productSupplyReport.buttons().container()
-    .appendTo('#datatable-buttons-productSupplyReport_wrapper .col-md-6:eq(0)'); 
+//     productSupplyReport.buttons().container()
+//     .appendTo('#datatable-buttons-productSupplyReport_wrapper .col-md-6:eq(0)'); 
 
-   var productEarningReport = $('#datatable-buttons-productEarningReport').DataTable({
-        "order": [[1, 'desc']],
-        buttons: ['copy', 'print', 'pdf'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
+//    var productEarningReport = $('#datatable-buttons-productEarningReport').DataTable({
+//         "order": [[1, 'desc']],
+//         buttons: [
+//             {
+//                 extend: 'copyHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'pdfHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'print',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             }
+//         ],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
 
-    productEarningReport.buttons().container()
-    .appendTo('#datatable-buttons-productEarningReport_wrapper .col-md-6:eq(0)'); 
+//     productEarningReport.buttons().container()
+//     .appendTo('#datatable-buttons-productEarningReport_wrapper .col-md-6:eq(0)'); 
 
-    //Categories
+//     var productSalesDetailReport = $('#datatable-buttons-productSalesDetailReport').DataTable({
+//         "order": [[9, 'desc']],
+//         buttons: ['copy', 'print', 'pdf'],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
 
-  var  categorySellingReport =$('#datatable-buttons-categorySellingReport').DataTable({
-        "order": [[1, 'desc']],
-        buttons: ['copy', 'print', 'pdf'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
+//     productSalesDetailReport.buttons().container()
+//     .appendTo('#datatable-buttons-productSalesDetailReport_wrapper .col-md-6:eq(0)'); 
 
-    categorySellingReport.buttons().container()
-    .appendTo('#datatable-buttons-categorySellingReport_wrapper .col-md-6:eq(0)'); 
+//     var productSupplyDetailReport = $('#datatable-buttons-productSupplyDetailReport').DataTable({
+//         "order": [[8, 'desc']],
+//         buttons: ['copy', 'print', 'pdf'],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
 
-  var  categorySupplyReport =$('#datatable-buttons-categorySupplyReport').DataTable({
-        "order": [[1, 'desc']],
-        buttons: ['copy', 'print', 'pdf'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
+//     productSupplyDetailReport.buttons().container()
+//     .appendTo('#datatable-buttons-productSupplyDetailReport_wrapper .col-md-6:eq(0)'); 
 
-    categorySupplyReport.buttons().container()
-    .appendTo('#datatable-buttons-categorySupplyReport_wrapper .col-md-6:eq(0)'); 
+//     //Categories
 
-   var categoryEarningReport = $('#datatable-buttons-categoryEarningReport').DataTable({
-        "order": [[1, 'desc']],
-        buttons: ['copy', 'print', 'pdf'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
+//   var  categorySellingReport =$('#datatable-buttons-categorySellingReport').DataTable({
+//         "order": [[1, 'desc']],
+//         buttons: [
+//             {
+//                 extend: 'copyHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'pdfHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'print',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             }
+//         ],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
 
-    categoryEarningReport.buttons().container()
-    .appendTo('#datatable-buttons-categoryEarningReport_wrapper .col-md-6:eq(0)'); 
+//     categorySellingReport.buttons().container()
+//     .appendTo('#datatable-buttons-categorySellingReport_wrapper .col-md-6:eq(0)'); 
+
+//   var  categorySupplyReport =$('#datatable-buttons-categorySupplyReport').DataTable({
+//         "order": [[1, 'desc']],
+//         buttons: [
+//             {
+//                 extend: 'copyHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'pdfHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'print',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             }
+//         ],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
+
+//     categorySupplyReport.buttons().container()
+//     .appendTo('#datatable-buttons-categorySupplyReport_wrapper .col-md-6:eq(0)'); 
+
+//    var categoryEarningReport = $('#datatable-buttons-categoryEarningReport').DataTable({
+//         "order": [[1, 'desc']],
+//         buttons: [
+//             {
+//                 extend: 'copyHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'pdfHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'print',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             }
+//         ],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
+
+//     categoryEarningReport.buttons().container()
+//     .appendTo('#datatable-buttons-categoryEarningReport_wrapper .col-md-6:eq(0)'); 
 
     
 
-    //Employees
-    var employeeSellingReport = $('#datatable-buttons-employeeSellingReport').DataTable({
-        "order": [[1, 'desc']],
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'copyHtml5',
-                exportOptions: {
-                    columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                exportOptions: {
-                    columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
-                }
-            },
-            {
-                extend: 'print',
-                exportOptions: {
-                    columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
-                }
-            }
-        ],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
+//     //Employees
+//     var employeeSellingReport = $('#datatable-buttons-employeeSellingReport').DataTable({
+//         "order": [[1, 'desc']],
+//         dom: 'Bfrtip',
+//         buttons: [
+//             {
+//                 extend: 'copyHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'pdfHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'print',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             }
+//         ],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
 
-    employeeSellingReport.buttons().container()
-    .appendTo('#datatable-buttons-employeeSellingReport_wrapper .col-md-6:eq(0)'); 
+//     employeeSellingReport.buttons().container()
+//     .appendTo('#datatable-buttons-employeeSellingReport_wrapper .col-md-6:eq(0)'); 
 
-    var employeeEarningReport = $('#datatable-buttons-employeeEarningReport').DataTable({
-        "order": [[1, 'desc']],
-        buttons: [
-            {
-                extend: 'copyHtml5',
-                exportOptions: {
-                    columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                exportOptions: {
-                    columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
-                }
-            },
-            {
-                extend: 'print',
-                exportOptions: {
-                    columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
-                }
-            }
-        ],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
+//     var employeeEarningReport = $('#datatable-buttons-employeeEarningReport').DataTable({
+//         "order": [[1, 'desc']],
+//         buttons: [
+//             {
+//                 extend: 'copyHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'pdfHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'print',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             }
+//         ],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
 
-    employeeEarningReport.buttons().container()
-    .appendTo('#datatable-buttons-employeeEarningReport_wrapper .col-md-6:eq(0)'); 
+//     employeeEarningReport.buttons().container()
+//     .appendTo('#datatable-buttons-employeeEarningReport_wrapper .col-md-6:eq(0)'); 
 
-    var employeeDetailReport = $('#datatable-buttons-employeeDetailReport').DataTable({
-        "order": [[0, 'asc']],
-        buttons: ['copy', 'print', 'pdf'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
+//     var employeeDetailReport = $('#datatable-buttons-employeeDetailReport').DataTable({
+//         "order": [[0, 'asc']],
+//         buttons: ['copy', 'print', 'pdf'],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
 
-    employeeDetailReport.buttons().container()
-    .appendTo('#datatable-buttons-employeeDetailReport_wrapper .col-md-6:eq(0)'); 
+//     employeeDetailReport.buttons().container()
+//     .appendTo('#datatable-buttons-employeeDetailReport_wrapper .col-md-6:eq(0)'); 
 
-    //Customer
-    var customerSellingReport= $('#datatable-buttons-customerSellingReport').DataTable({
-        "order": [[1, 'desc']],
-        buttons: ['copy', 'print', 'pdf'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
+//     //Customer
+//     var customerSellingReport= $('#datatable-buttons-customerSellingReport').DataTable({
+//         "order": [[1, 'desc']],
+//         buttons: [
+//             {
+//                 extend: 'copyHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'pdfHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'print',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             }
+//         ],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
 
-    customerSellingReport.buttons().container()
-    .appendTo('#datatable-buttons-customerSellingReport_wrapper .col-md-6:eq(0)'); 
+//     customerSellingReport.buttons().container()
+//     .appendTo('#datatable-buttons-customerSellingReport_wrapper .col-md-6:eq(0)'); 
 
-    var customerEarningReport =$('#datatable-buttons-customerEarningReport').DataTable({
-        "order": [[1, 'desc']],
-        buttons: ['copy', 'print', 'pdf'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
-    customerEarningReport.buttons().container()
-    .appendTo('#datatable-buttons-customerEarningReport_wrapper .col-md-6:eq(0)'); 
+//     var customerEarningReport =$('#datatable-buttons-customerEarningReport').DataTable({
+//         "order": [[1, 'desc']],
+//         buttons: [
+//             {
+//                 extend: 'copyHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'pdfHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'print',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             }
+//         ],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
+//     customerEarningReport.buttons().container()
+//     .appendTo('#datatable-buttons-customerEarningReport_wrapper .col-md-6:eq(0)'); 
     
-    //Brands
-    var brandSellingReport =  $('#datatable-buttons-brandSellingReport').DataTable({
-        "order": [[1, 'desc']],
-        buttons: ['copy', 'print', 'pdf'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
+//     //Brands
+//     var brandSellingReport =  $('#datatable-buttons-brandSellingReport').DataTable({
+//         "order": [[1, 'desc']],
+//         buttons: [
+//             {
+//                 extend: 'copyHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'pdfHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'print',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             }
+//         ],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
 
-    brandSellingReport.buttons().container()
-    .appendTo('#datatable-buttons-brandSellingReport_wrapper .col-md-6:eq(0)');  
+//     brandSellingReport.buttons().container()
+//     .appendTo('#datatable-buttons-brandSellingReport_wrapper .col-md-6:eq(0)');  
 
-    var brandEarningReport = $('#datatable-buttons-brandEarningReport').DataTable({
-        "order": [[1, 'desc']],
-        buttons: ['copy', 'print', 'pdf'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
-    brandEarningReport.buttons().container()
-    .appendTo('#datatable-buttons-brandEarningReport_wrapper .col-md-6:eq(0)');  
+//     var brandEarningReport = $('#datatable-buttons-brandEarningReport').DataTable({
+//         "order": [[1, 'desc']],
+//         buttons: [
+//             {
+//                 extend: 'copyHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'pdfHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'print',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             }
+//         ],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
+//     brandEarningReport.buttons().container()
+//     .appendTo('#datatable-buttons-brandEarningReport_wrapper .col-md-6:eq(0)');  
 
-    //Branches
-   var branchSellingReport =  $('#datatable-buttons-branchSellingReport').DataTable({
-        "order": [[1, 'desc']],
-        buttons: ['copy', 'print', 'pdf'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
-    branchSellingReport.buttons().container()
-    .appendTo('#datatable-buttons-branchSellingReport_wrapper .col-md-6:eq(0)');   
+//     //Branches
+//    var branchSellingReport =  $('#datatable-buttons-branchSellingReport').DataTable({
+//         "order": [[1, 'desc']],
+//         buttons: [
+//             {
+//                 extend: 'copyHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'pdfHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'print',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             }
+//         ],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
+//     branchSellingReport.buttons().container()
+//     .appendTo('#datatable-buttons-branchSellingReport_wrapper .col-md-6:eq(0)');   
 
-    var branchEarningReport = $('#datatable-buttons-branchEarningReport').DataTable({
-        "order": [[1, 'desc']],
-        buttons: ['copy', 'print', 'pdf'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
+//     var branchEarningReport = $('#datatable-buttons-branchEarningReport').DataTable({
+//         "order": [[1, 'desc']],
+//         buttons: [
+//             {
+//                 extend: 'copyHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Copy" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'pdfHtml5',
+//                 exportOptions: {
+//                     columns: [0, 1] // "PDF" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             },
+//             {
+//                 extend: 'print',
+//                 exportOptions: {
+//                     columns: [0, 1] // "Print" işlemi için dahil edilecek sütunları belirtir
+//                 }
+//             }
+//         ],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
 
-    branchEarningReport.buttons().container()
-    .appendTo('#datatable-buttons-branchEarningReport_wrapper .col-md-6:eq(0)');   
+//     branchEarningReport.buttons().container()
+//     .appendTo('#datatable-buttons-branchEarningReport_wrapper .col-md-6:eq(0)');   
 
-    //StockTrackingReports
-    var tableStockTrackingReport= $('#datatable-buttons-stockTrackingReport').DataTable({
-        "order":[[5, 'desc']],
-        lengthChange: false,
-        buttons: ['copy', 'print', 'pdf'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
-    tableStockTrackingReport.buttons().container()
-    .appendTo('#datatable-buttons-stockTrackingReport_wrapper .col-md-6:eq(0)');    
+//     //StockTrackingReports
+//     var tableStockTrackingReport = $('#datatable-buttons-stockTrackingReport').DataTable({
+//         "order": [[5, 'desc']],
+//         buttons: ['copy', 'print', 'pdf'],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
+
+//     tableStockTrackingReport.buttons().container()
+//     .appendTo('#datatable-buttons-stockTrackingReport_wrapper .col-md-6:eq(0)'); 
+
+//     //Order
+//     var tableOrderList = $('#datatable-buttons-orderList').DataTable({
+//         "order": [[6, 'asc']],
+//         buttons: ['copy', 'print', 'pdf'],
+//         "language": {
+//             "paginate": {
+//                 "previous": "<i class='mdi mdi-chevron-left'>",
+//                 "next": "<i class='mdi mdi-chevron-right'>"
+//             }
+//         },
+//         "drawCallback": function () {
+//             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//         }
+//     });
+
+//     tableOrderList.buttons().container()
+//     .appendTo('#datatable-buttons-orderList_wrapper .col-md-6:eq(0)');
 
     //Buttons examples
     var table = $('#datatable-buttons').DataTable({
-        lengthChange: false,
+        lengthChange: true,
         buttons: ['copy', 'print', 'pdf'],
         "language": {
             "paginate": {
@@ -350,7 +630,10 @@ $(document).ready(function() {
         "drawCallback": function () {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
         }
-    });
+    }); 
+
+    table.buttons().container()
+    .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)'); 
 
     // Multi Selection Datatable
     $('#selection-datatable').DataTable({
@@ -381,10 +664,6 @@ $(document).ready(function() {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
         }
     });
-
-    table.buttons().container()
-            .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
-
                 
     // Complex headers with column visibility Datatable
     $('#complex-header-datatable').DataTable({
@@ -416,5 +695,4 @@ $(document).ready(function() {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
         }
     });
-
 });

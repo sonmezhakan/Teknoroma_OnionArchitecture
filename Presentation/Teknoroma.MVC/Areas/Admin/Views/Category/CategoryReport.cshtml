@@ -28,8 +28,8 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
-                    <table id="datatable-buttons-categorySellingReport" name="categorySellingTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+                <div class="col-md-8">
+                        <table id="datatable-buttons-categorySellingReport" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
                         <thead>
                             <tr>
                                 <th class="dt-orderable-asc dt-orderable-desc">Kategori</th>
@@ -51,7 +51,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <canvas id="pieChartCategorySellingReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
                 </div>
             </div>
@@ -68,11 +68,11 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <canvas id="pieChartCategoryEarningReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
                 </div>
-                <div class="col-md-6">
-                    <table id="datatable-buttons-categoryEarningReport" name="categoryEarningTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+                <div class="col-md-8">
+                        <table id="datatable-buttons-categoryEarningReport" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
                         <thead>
                             <tr>
                                 <th class="dt-orderable-asc dt-orderable-desc">Kategori</th>
@@ -109,8 +109,8 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
-                    <table id="datatable-buttons-categorySupplyReport" name="categorySupplyTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+                <div class="col-md-8">
+                        <table id="datatable-buttons-categorySupplyReport" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
                         <thead>
                             <tr>
                                 <th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
@@ -132,7 +132,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <canvas id="pieChartCategorySupplyReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
                 </div>
             </div>
@@ -140,5 +140,16 @@
     </div>
 </div>
 <script>
-   
+
+    window.onload = function () {
+        initializeDataTable('datatable-buttons-categorySellingReport', 1, 'desc', [0, 1]);
+        generatePieChart('datatable-buttons-categorySellingReport', 'pieChartCategorySellingReport');
+
+        initializeDataTable('datatable-buttons-categoryEarningReport', 1, 'desc', [0, 1]);
+        generatePieChart('datatable-buttons-categoryEarningReport', 'pieChartCategoryEarningReport');
+
+        initializeDataTable('datatable-buttons-categorySupplyReport', 1, 'desc', [0, 1]);
+        generatePieChart('datatable-buttons-categorySupplyReport', 'pieChartCategorySupplyReport');
+    };
+
 </script>

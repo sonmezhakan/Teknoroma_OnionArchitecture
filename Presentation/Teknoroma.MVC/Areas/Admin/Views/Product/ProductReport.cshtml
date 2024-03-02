@@ -1,142 +1,922 @@
 ﻿@using Teknoroma.Application.Features.Products.Models
 @model ProductReportViewModel
 @{
-    ViewData["Title"] = "ProductReport";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["Title"] = "ProductReport";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	decimal totalPrice = 0;
+	int totalQuantity = 0;
+	int sayac = 0;
 }
 
 <div class="row">
-    <div class="card">
-        <div class="card-header bg-info">
-            <div class="d-flex">
-                <div class="col-md-10 my-auto">
-                    <h2 style="color:white;">En Çok Satılan Ürünler</h2>
-                </div>
-                <div class="col-md-2">
-                    <form  method="get" asp-controller="Product" asp-action="ProductReport">
-                       <div class="d-flex">
-                            <div>
-                                <input type="text" class="form-control date" name="startDate" id="birthdatepicker" data-toggle="daterangepicker" data-single-date-picker="true">
-                            </div>
-                            <div>
-                                <input type="text" class="form-control date" name="endDate" id="birthdatepicker" data-toggle="daterangepicker" data-single-date-picker="true">
-                            </div>
-                       </div>
-                        <button type="submit" class="btn btn-danger btn-block waves-effect waves-light">Filtrele</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <table id="datatable-buttons-productSellingReport" name="productSellingTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
-                        <thead>
-                            <tr>
-                                <th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
-                                <th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Satış Yapılan Adet</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                           @foreach (var productSelling in Model.ProductSellingViewModels)
-                            {
-                                <tr>
-                                    <td>
-                                        @productSelling.ProductName
-                                    </td>
-                                    <td>
-                                        @productSelling.TotalSales
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-6">
-                    <canvas id="pieChartProductSellingReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="card">
+		<div class="card-header bg-info">
+			<div class="d-flex">
+				<div class="col-md-10 my-auto">
+					<h2 style="color:white;">En Çok Satılan Ürünler</h2>
+				</div>
+				<div class="col-md-2">
+					<form method="get" asp-controller="Product" asp-action="ProductReport">
+						<div class="d-flex">
+							<div>
+								<input type="text" class="form-control date" name="startDate" id="birthdatepicker" data-toggle="daterangepicker" data-single-date-picker="true">
+							</div>
+							<div>
+								<input type="text" class="form-control date" name="endDate" id="birthdatepicker" data-toggle="daterangepicker" data-single-date-picker="true">
+							</div>
+						</div>
+						<button type="submit" class="btn btn-danger btn-block waves-effect waves-light">Filtrele</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-8">
+					<table id="datatable-buttons-productSellingReport" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+						<thead>
+							<tr>
+								<th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
+								<th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Satış Yapılan Adet</th>
+								<th>
 
-    <div class="card">
-        <div class="card-header bg-info">
-            <div class="d-flex">
-                <div class="col-md-10 my-auto">
-                    <h2 style="color:white;">En Çok Kazanç Elde Edilen Ürünler</h2>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <canvas id="pieChartProductEarningReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
-                </div>
-                <div class="col-md-6">
-                    <table id="datatable-buttons-productEarningReport" name="productEarningTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
-                        <thead>
-                            <tr>
-                                <th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
-                                <th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Kazanç ₺</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var categoryEarning in Model.ProductEarningViewModels)
-                            {
-                                <tr>
-                                    <td>
-                                        @categoryEarning.ProductName
-                                    </td>
-                                    <td>
-                                        @categoryEarning.TotalPrice ₺
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                
-            </div>
-        </div>
-    </div>
+								</th>
+								<th>
 
-    <div class="card">
-        <div class="card-header bg-info">
-            <div class="d-flex">
-                <div class="col-md-10 my-auto">
-                    <h2 style="color:white;">En Çok Tedarik Edilen Ürünler</h2>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <table id="datatable-buttons-productSupplyReport" name="productSupplyTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
-                        <thead>
-                            <tr>
-                                <th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
-                                <th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Tedarik Edilen Adet</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var productSupply in Model.ProductSupplyViewModels)
-                            {
-                                <tr>
-                                    <td>
-                                        @productSupply.ProductName
-                                    </td>
-                                    <td>
-                                        @productSupply.TotalSupply
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-6">
-                    <canvas id="pieChartProductSupplyReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var productSelling in Model.ProductSellingViewModels)
+							{
+								sayac++;
+								<tr>
+									<td>
+										@productSelling.ProductName
+									</td>
+									<td>
+										@productSelling.TotalSales
+									</td>
+									<td>
+
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-selling-productSalesDetailReport-@productSelling.ProductId" onclick="initializeDataTable('datatable-buttons-selling-productSalesDetailReport-@productSelling.ProductId', 9, 'desc',[0,1,2,3,4,5,6,7,8,9])">
+											Sipariş Detayları
+										</button>
+										<!-- Modal -->
+										<div class="container">
+											<div class="modal fade" id="exampleModal-selling-productSalesDetailReport-@productSelling.ProductId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog modal-fullscreen">
+													<div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLabel">@productSelling.ProductName Sipariş Detayları</h5>
+															<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+														</div>
+
+														<div class="modal-body">
+															<table id="datatable-buttons-selling-productSalesDetailReport-@productSelling.ProductId" width="100%" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+																<thead>
+																	<tr>
+																		<th rowspan="1" colspan="1">Sipariş Numarası</th>
+																		<th rowspan="1" colspan="1">Şube</th>
+																		<th rowspan="1" colspan="1">Ürün</th>
+																		<th rowspan="1" colspan="1">Marka</th>
+																		<th rowspan="1" colspan="1">Kategori</th>
+																		<th rowspan="1" colspan="1">Adet</th>
+																		<th rowspan="1" colspan="1">Fiyat ₺</th>
+																		<th rowspan="1" colspan="1">Toplam Fiyat ₺</th>
+																		<th rowspan="1" colspan="1">Çalışan</th>
+																		<th rowspan="1" colspan="1">Sipariş Tarihi</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	@if (Model.ProductSellingViewModels.Count() > 0 && Model.ProductSalesDetailReportViewModels.Count() > 0)
+																	{
+																		totalPrice = 0;
+																		totalQuantity = 0;
+																		@foreach (var productSalesDetail in Model.ProductSalesDetailReportViewModels)
+																		{
+																			@if (productSelling.ProductId == productSalesDetail.ProductId)
+																			{
+
+																				<tr>
+																					<td>
+																						@productSalesDetail.OrderId
+																					</td>
+																					<td>
+																						@productSalesDetail.BranchName
+																					</td>
+																					<td>
+																						@productSalesDetail.ProductName
+																					</td>
+																					<td>
+																						@productSalesDetail.BrandName
+																					</td>
+																					<td>
+																						@productSalesDetail.CategoryName
+																					</td>
+																					<td>
+																						@productSalesDetail.Quantity
+																					</td>
+																					<td>
+																						@productSalesDetail.UnitPrice
+																					</td>
+																					<td>
+																						@productSalesDetail.TotalPrice ₺
+																					</td>
+																					<td>
+																						@productSalesDetail.UserName
+																					</td>
+																					<td>
+																						@productSalesDetail.OrderDate
+																					</td>
+																				</tr>
+																				totalPrice += productSalesDetail.TotalPrice;
+																				totalQuantity += productSalesDetail.Quantity;
+																			}
+																		}
+
+																	}
+																</tbody>
+																<tfoot>
+																	<tr role="row">
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+																			<span>@totalQuantity Adet</span>
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+																			<span>@totalPrice ₺</span>
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																	</tr>
+																</tfoot>
+															</table>
+
+														</div>
+
+														<div class="modal-footer">
+															<button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Kapat</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</td>
+
+									<td>
+
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-danger btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-selling-productSupplyDetailReport-@productSelling.ProductId" onclick="initializeDataTable('datatable-buttons-selling-productSupplyDetailReport-@productSelling.ProductId', 8, 'desc',[0,1,2,3,4,5,6,7,8])">
+											Tedarik Detayları
+										</button>
+										<!-- Modal -->
+										<div class="container">
+											<div class="modal fade" id="exampleModal-selling-productSupplyDetailReport-@productSelling.ProductId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog modal-fullscreen">
+													<div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLabel">@productSelling.ProductName Sipariş Detayları</h5>
+															<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+														</div>
+
+														<div class="modal-body">
+															<table id="datatable-buttons-selling-productSupplyDetailReport-@productSelling.ProductId" width="100%" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+																<thead>
+																	<tr>
+																		<th rowspan="1" colspan="1">Şube</th>
+																		<th rowspan="1" colspan="1">Tedarikçi</th>
+																		<th rowspan="1" colspan="1">Fatura No</th>
+																		<th rowspan="1" colspan="1">Ürün</th>
+																		<th rowspan="1" colspan="1">Marka</th>
+																		<th rowspan="1" colspan="1">Kategori</th>
+																		<th rowspan="1" colspan="1">Adet</th>
+																		<th rowspan="1" colspan="1">Çalışan</th>
+																		<th rowspan="1" colspan="1">Tedarik Tarihi</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	@if (Model.ProductSellingViewModels.Count() > 0 && Model.ProductSupplyDetailReportViewModels.Count() > 0)
+																	{
+																		totalPrice = 0;
+																		totalQuantity = 0;
+																		@foreach (var productSupplyDetail in Model.ProductSupplyDetailReportViewModels)
+																		{
+																			@if (productSelling.ProductId == productSupplyDetail.ProductId)
+																			{
+																				<tr>
+																					<td>
+																						@productSupplyDetail.BranchName
+																					</td>
+																					<td>
+																						@productSupplyDetail.CompanyName
+																					</td>
+																					<td>
+																						@productSupplyDetail.InvoiceNumber
+																					</td>
+																					<td>
+																						@productSupplyDetail.ProductName
+																					</td>
+																					<td>
+																						@productSupplyDetail.BrandName
+																					</td>
+																					<td>
+																						@productSupplyDetail.CategoryName
+																					</td>
+																					<td>
+																						@productSupplyDetail.Quantity
+																					</td>
+																					<td>
+																						@productSupplyDetail.UserName
+																					</td>
+																					<td>
+																						@productSupplyDetail.StockEntryDate
+																					</td>
+																				</tr>
+																				totalQuantity += productSupplyDetail.Quantity;
+																			}
+																		}
+
+																	}
+																</tbody>
+																<tfoot>
+																	<tr role="row">
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+																			<span>@totalQuantity Adet</span>
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																	</tr>
+																</tfoot>
+															</table>
+
+														</div>
+
+														<div class="modal-footer">
+															<button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Kapat</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+				<div class="col-md-4">
+					<canvas id="pieChartProductSellingReport" style="width: 100px; height: 130px;" width="100" height="100"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="card-header bg-info">
+			<div class="d-flex">
+				<div class="col-md-10 my-auto">
+					<h2 style="color:white;">En Çok Kazanç Elde Edilen Ürünler</h2>
+				</div>
+			</div>
+		</div>
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-4">
+					<canvas id="pieChartProductEarningReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
+				</div>
+				<div class="col-md-8">
+					<table id="datatable-buttons-productEarningReport" name="productEarningTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+						<thead>
+							<tr>
+								<th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
+								<th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Kazanç ₺</th>
+								<th>
+
+								</th>
+								<th>
+
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var productEarning in Model.ProductEarningViewModels)
+							{
+								sayac++;
+								<tr>
+									<td>
+										@productEarning.ProductName
+									</td>
+									<td>
+										@productEarning.TotalPrice ₺
+									</td>
+									<td>
+
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-earning-productSalesDetailReport-@productEarning.ProductId" onclick="initializeDataTable('datatable-buttons-earning-productSalesDetailReport-@productEarning.ProductId', 9, 'desc',[0,1,2,3,4,5,6,7,8,9])">
+											Sipariş Detayları
+										</button>
+										<!-- Modal -->
+										<div class="container">
+											<div class="modal fade" id="exampleModal-earning-productSalesDetailReport-@productEarning.ProductId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog modal-fullscreen">
+													<div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLabel">@productEarning.ProductName Sipariş Detayları</h5>
+															<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+														</div>
+
+														<div class="modal-body">
+															<table id="datatable-buttons-earning-productSalesDetailReport-@productEarning.ProductId" width="100%" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+																<thead>
+																	<tr>
+																		<th rowspan="1" colspan="1">Sipariş Numarası</th>
+																		<th rowspan="1" colspan="1">Şube</th>
+																		<th rowspan="1" colspan="1">Ürün</th>
+																		<th rowspan="1" colspan="1">Marka</th>
+																		<th rowspan="1" colspan="1">Kategori</th>
+																		<th rowspan="1" colspan="1">Adet</th>
+																		<th rowspan="1" colspan="1">Fiyat ₺</th>
+																		<th rowspan="1" colspan="1">Toplam Fiyat ₺</th>
+																		<th rowspan="1" colspan="1">Çalışan</th>
+																		<th rowspan="1" colspan="1">Sipariş Tarihi</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	@if (Model.ProductEarningViewModels.Count() > 0 && Model.ProductSalesDetailReportViewModels.Count() > 0)
+																	{
+																		totalPrice = 0;
+																		totalQuantity = 0;
+																		@foreach (var productSalesDetail in Model.ProductSalesDetailReportViewModels)
+																		{
+																			@if (productEarning.ProductId == productSalesDetail.ProductId)
+																			{
+
+																				<tr>
+																					<td>
+																						@productSalesDetail.OrderId
+																					</td>
+																					<td>
+																						@productSalesDetail.BranchName
+																					</td>
+																					<td>
+																						@productSalesDetail.ProductName
+																					</td>
+																					<td>
+																						@productSalesDetail.BrandName
+																					</td>
+																					<td>
+																						@productSalesDetail.CategoryName
+																					</td>
+																					<td>
+																						@productSalesDetail.Quantity
+																					</td>
+																					<td>
+																						@productSalesDetail.UnitPrice
+																					</td>
+																					<td>
+																						@productSalesDetail.TotalPrice ₺
+																					</td>
+																					<td>
+																						@productSalesDetail.UserName
+																					</td>
+																					<td>
+																						@productSalesDetail.OrderDate
+																					</td>
+																				</tr>
+																				totalPrice += productSalesDetail.TotalPrice;
+																				totalQuantity += productSalesDetail.Quantity;
+																			}
+																		}
+
+																	}
+																</tbody>
+																<tfoot>
+																	<tr role="row">
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+																			<span>@totalQuantity Adet</span>
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+																			<span>@totalPrice ₺</span>
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																	</tr>
+																</tfoot>
+															</table>
+
+														</div>
+
+														<div class="modal-footer">
+															<button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Kapat</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</td>
+
+									<td>
+
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-danger btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-earning-productSupplyDetailReport-@productEarning.ProductId" onclick="initializeDataTable('datatable-buttons-earning-productSupplyDetailReport-@productEarning.ProductId', 8, 'desc',[0,1,2,3,4,5,6,7,8])">
+											Tedarik Detayları
+										</button>
+										<!-- Modal -->
+										<div class="container">
+											<div class="modal fade" id="exampleModal-earning-productSupplyDetailReport-@productEarning.ProductId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog modal-fullscreen">
+													<div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLabel">@productEarning.ProductName Tedarik Detayları</h5>
+															<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+														</div>
+
+														<div class="modal-body">
+															<table id="datatable-buttons-earning-productSupplyDetailReport-@productEarning.ProductId" width="100%" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+																<thead>
+																	<tr>
+																		<th rowspan="1" colspan="1">Şube</th>
+																		<th rowspan="1" colspan="1">Tedarikçi</th>
+																		<th rowspan="1" colspan="1">Fatura No</th>
+																		<th rowspan="1" colspan="1">Ürün</th>
+																		<th rowspan="1" colspan="1">Marka</th>
+																		<th rowspan="1" colspan="1">Kategori</th>
+																		<th rowspan="1" colspan="1">Adet</th>
+																		<th rowspan="1" colspan="1">Çalışan</th>
+																		<th rowspan="1" colspan="1">Tedarik Tarihi</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	@if (Model.ProductEarningViewModels.Count() > 0 && Model.ProductSupplyDetailReportViewModels.Count() > 0)
+																	{
+																		totalPrice = 0;
+																		totalQuantity = 0;
+																		@foreach (var productSupplyDetail in Model.ProductSupplyDetailReportViewModels)
+																		{
+																			@if (productEarning.ProductId == productSupplyDetail.ProductId)
+																			{
+																				<tr>
+																					<td>
+																						@productSupplyDetail.BranchName
+																					</td>
+																					<td>
+																						@productSupplyDetail.CompanyName
+																					</td>
+																					<td>
+																						@productSupplyDetail.InvoiceNumber
+																					</td>
+																					<td>
+																						@productSupplyDetail.ProductName
+																					</td>
+																					<td>
+																						@productSupplyDetail.BrandName
+																					</td>
+																					<td>
+																						@productSupplyDetail.CategoryName
+																					</td>
+																					<td>
+																						@productSupplyDetail.Quantity
+																					</td>
+																					<td>
+																						@productSupplyDetail.UserName
+																					</td>
+																					<td>
+																						@productSupplyDetail.StockEntryDate
+																					</td>
+																				</tr>
+																				totalQuantity += productSupplyDetail.Quantity;
+																			}
+																		}
+
+																	}
+																</tbody>
+																<tfoot>
+																	<tr role="row">
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+																			<span>@totalQuantity Adet</span>
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																	</tr>
+																</tfoot>
+															</table>
+
+														</div>
+
+														<div class="modal-footer">
+															<button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Kapat</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div class="card">
+		<div class="card-header bg-info">
+			<div class="d-flex">
+				<div class="col-md-10 my-auto">
+					<h2 style="color:white;">En Çok Tedarik Edilen Ürünler</h2>
+				</div>
+			</div>
+		</div>
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-8">
+					<table id="datatable-buttons-productSupplyReport" name="productSupplyTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+						<thead>
+							<tr>
+								<th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
+								<th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Tedarik Edilen Adet</th>
+								<th>
+
+								</th>
+								<th>
+
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var productSupply in Model.ProductSupplyViewModels)
+							{
+								sayac++;
+								<tr>
+									<td>
+										@productSupply.ProductName
+									</td>
+									<td>
+										@productSupply.TotalSupply
+									</td>
+									<td>
+
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-supply-productSalesDetailReport-@productSupply.ProductId" onclick="initializeDataTable('datatable-buttons-supply-productSalesDetailReport-@productSupply.ProductId', 9, 'desc',[0,1,2,3,4,5,6,7,8,9])">
+											Sipariş Detayları
+										</button>
+										<!-- Modal -->
+										<div class="container">
+											<div class="modal fade" id="exampleModal-supply-productSalesDetailReport-@productSupply.ProductId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog modal-fullscreen">
+													<div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLabel">@productSupply.ProductName Sipariş Detayları</h5>
+															<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+														</div>
+
+														<div class="modal-body">
+															<table id="datatable-buttons-supply-productSalesDetailReport-@productSupply.ProductId" width="100%" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+																<thead>
+																	<tr>
+																		<th rowspan="1" colspan="1">Sipariş Numarası</th>
+																		<th rowspan="1" colspan="1">Şube</th>
+																		<th rowspan="1" colspan="1">Ürün</th>
+																		<th rowspan="1" colspan="1">Marka</th>
+																		<th rowspan="1" colspan="1">Kategori</th>
+																		<th rowspan="1" colspan="1">Adet</th>
+																		<th rowspan="1" colspan="1">Fiyat ₺</th>
+																		<th rowspan="1" colspan="1">Toplam Fiyat ₺</th>
+																		<th rowspan="1" colspan="1">Çalışan</th>
+																		<th rowspan="1" colspan="1">Sipariş Tarihi</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	@if (Model.ProductSupplyViewModels.Count() > 0 && Model.ProductSalesDetailReportViewModels.Count() > 0)
+																	{
+																		totalPrice = 0;
+																		totalQuantity = 0;
+																		@foreach (var productSalesDetail in Model.ProductSalesDetailReportViewModels)
+																		{
+																			@if (productSupply.ProductId == productSalesDetail.ProductId)
+																			{
+																				
+																				<tr>
+																					<td>
+																						@productSalesDetail.OrderId
+																					</td>
+																					<td>
+																						@productSalesDetail.BranchName
+																					</td>
+																					<td>
+																						@productSalesDetail.ProductName
+																					</td>
+																					<td>
+																						@productSalesDetail.BrandName
+																					</td>
+																					<td>
+																						@productSalesDetail.CategoryName
+																					</td>
+																					<td>
+																						@productSalesDetail.Quantity
+																					</td>
+																					<td>
+																						@productSalesDetail.UnitPrice
+																					</td>
+																					<td>
+																						@productSalesDetail.TotalPrice ₺
+																					</td>
+																					<td>
+																						@productSalesDetail.UserName
+																					</td>
+																					<td>
+																						@productSalesDetail.OrderDate
+																					</td>
+																				</tr>
+																				totalPrice += productSalesDetail.TotalPrice;
+																				totalQuantity += productSalesDetail.Quantity;
+																			}
+																		}
+
+																	}
+																</tbody>
+																<tfoot>
+																	<tr role="row">
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+																			<span>@totalQuantity Adet</span>
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+																			<span>@totalPrice ₺</span>
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																	</tr>
+																</tfoot>
+															</table>
+
+														</div>
+
+														<div class="modal-footer">
+															<button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Kapat</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</td>
+
+									<td>
+
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-danger btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-supply-productSupplyDetailReport-@productSupply.ProductId" onclick="initializeDataTable('datatable-buttons-supply-productSupplyDetailReport-@productSupply.ProductId', 8, 'desc',[0,1,2,3,4,5,6,7,8])">
+											Tedarik Detayları
+										</button>
+										<!-- Modal -->
+										<div class="container">
+											<div class="modal fade" id="exampleModal-supply-productSupplyDetailReport-@productSupply.ProductId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog modal-fullscreen">
+													<div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLabel">@productSupply.ProductName Sipariş Detayları</h5>
+															<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+														</div>
+
+														<div class="modal-body">
+															<table id="datatable-buttons-supply-productSupplyDetailReport-@productSupply.ProductId" width="100%" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+																<thead>
+																	<tr>
+																		<th rowspan="1" colspan="1">Şube</th>
+																		<th rowspan="1" colspan="1">Tedarikçi</th>
+																		<th rowspan="1" colspan="1">Fatura No</th>
+																		<th rowspan="1" colspan="1">Ürün</th>
+																		<th rowspan="1" colspan="1">Marka</th>
+																		<th rowspan="1" colspan="1">Kategori</th>
+																		<th rowspan="1" colspan="1">Adet</th>
+																		<th rowspan="1" colspan="1">Çalışan</th>
+																		<th rowspan="1" colspan="1">Tedarik Tarihi</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	@if (Model.ProductSupplyViewModels.Count() > 0 && Model.ProductSupplyDetailReportViewModels.Count() > 0)
+																	{
+																		totalPrice = 0;
+																		totalQuantity = 0;
+																		@foreach (var productSupplyDetail in Model.ProductSupplyDetailReportViewModels)
+																		{
+																			@if (productSupply.ProductId == productSupplyDetail.ProductId)
+																			{
+																				<tr>
+																					<td>
+																						@productSupplyDetail.BranchName
+																					</td>
+																					<td>
+																						@productSupplyDetail.CompanyName
+																					</td>
+																					<td>
+																						@productSupplyDetail.InvoiceNumber
+																					</td>
+																					<td>
+																						@productSupplyDetail.ProductName
+																					</td>
+																					<td>
+																						@productSupplyDetail.BrandName
+																					</td>
+																					<td>
+																						@productSupplyDetail.CategoryName
+																					</td>
+																					<td>
+																						@productSupplyDetail.Quantity
+																					</td>
+																					<td>
+																						@productSupplyDetail.UserName
+																					</td>
+																					<td>
+																						@productSupplyDetail.StockEntryDate
+																					</td>
+																				</tr>
+																				totalQuantity += productSupplyDetail.Quantity;
+																			}
+																		}
+
+																	}
+																</tbody>
+																<tfoot>
+																	<tr role="row">
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+																			<span>@totalQuantity Adet</span>
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																	</tr>
+																</tfoot>
+															</table>
+
+														</div>
+
+														<div class="modal-footer">
+															<button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Kapat</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+				<div class="col-md-4">
+					<canvas id="pieChartProductSupplyReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
+<script>
+
+	window.onload = function () {
+		initializeDataTable('datatable-buttons-productSellingReport', 1, 'desc', [0, 1]);
+		generatePieChart('datatable-buttons-productSellingReport', 'pieChartProductSellingReport');
+
+		initializeDataTable('datatable-buttons-productEarningReport', 1, 'desc', [0, 1]);
+		generatePieChart('datatable-buttons-productEarningReport', 'pieChartProductEarningReport');
+
+		initializeDataTable('datatable-buttons-productSupplyReport', 1, 'desc', [0, 1]);
+		generatePieChart('datatable-buttons-productSupplyReport','pieChartProductSupplyReport');
+	};
+	
+</script>

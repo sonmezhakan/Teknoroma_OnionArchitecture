@@ -29,8 +29,8 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
-                    <table id="datatable-buttons-customerSellingReport" name="customerSellingTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                <div class="col-md-8">
+                        <table id="datatable-buttons-customerSellingReport" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
                         <thead>
                             <tr>
                                 <th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
@@ -52,7 +52,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <canvas id="pieChartCustomerSellingReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
                 </div>
             </div>
@@ -69,11 +69,11 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <canvas id="pieChartCustomerEarningReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
                 </div>
-                <div class="col-md-6">
-                    <table id="datatable-buttons-customerEarningReport" name="customerEarningTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                <div class="col-md-8">
+                        <table id="datatable-buttons-customerEarningReport" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
                         <thead>
                             <tr>
                                 <th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
@@ -100,3 +100,14 @@
         </div>
     </div>
 </div>
+<script>
+
+    window.onload = function () {
+        initializeDataTable('datatable-buttons-customerSellingReport', 1, 'desc', [0, 1]);
+        generatePieChart('datatable-buttons-customerSellingReport', 'pieChartCustomerSellingReport');
+
+        initializeDataTable('datatable-buttons-customerEarningReport', 1, 'desc', [0, 1]);
+        generatePieChart('datatable-buttons-customerEarningReport', 'pieChartCustomerEarningReport');
+    };
+
+</script>

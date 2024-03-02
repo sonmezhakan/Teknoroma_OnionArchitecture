@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "EmployeeReport";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    decimal totalPrice = 0;
+    int totalSales = 0;
 }
 
 
@@ -30,8 +32,8 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
-                    <table id="datatable-buttons-employeeSellingReport" name="employeeSellingTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                <div class="col-md-8">
+                    <table id="datatable-buttons-employeeSellingReport" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
                         <thead>
                             <tr>
                                 <th class="dt-orderable-asc dt-orderable-desc">Çalışan Kullanıcı Adı</th>
@@ -44,6 +46,8 @@
                         <tbody>
                             @foreach (var employeeSelling in Model.EmployeeSellingReportViewModels)
                             {
+                                totalPrice = 0;
+                                totalSales = 0;
                                 <tr>
                                     <td>
                                         @employeeSelling.UserName
@@ -53,21 +57,21 @@
                                     </td>
                                     <td>
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-@employeeSelling.UserName">
+                                        <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-employeeDetail-@employeeSelling.UserName" onclick="initializeDataTable('datatable-buttons-employeeSellingDetailReport-@employeeSelling.UserName', 1, 'asc',[0,1,2,3])">
                                             Detaylı Rapor
                                         </button>
                                         <!-- Modal -->
                                         <div class="container">
-                                            <div class="modal fade" id="exampleModal-@employeeSelling.UserName" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="exampleModal-employeeDetail-@employeeSelling.UserName" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-fullscreen">
                                                     <div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">@employeeSelling.UserName Kullanıcı Adına Sahip Çalışanın Detaylı Raporu</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">@employeeSelling.UserName Kullanıcı Adına Sahip Çalışanın Detaylı Satış Raporu</h5>
                                                             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                                         </div>
 
                                                         <div class="modal-body">
-                                                            <table id="datatable-buttons-employeeDetailReport" name="employeeDetailReportTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                                                            <table id="datatable-buttons-employeeSellingDetailReport-@employeeSelling.UserName" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
                                                                 <thead>
                                                                 <th rowspan="1" colspan="1">Şube Adı</th>
                                                                 <th rowspan="1" colspan="1">Satış Yapılan Ürün</th>
@@ -95,12 +99,30 @@
                                                                                         @employeeDetailReport.TotalPrice ₺
                                                                                     </td>
                                                                                 </tr>
+                                                                                totalPrice += employeeDetailReport.TotalPrice;
+                                                                                totalSales += employeeDetailReport.TotalSales;
                                                                             }
                                                                         }
                                                                     }
                                                                 </tbody>
+                                                                <tfoot>
+                                                                    <tr role="row">
+                                                                        <th>
+                                                                            
+                                                                        </th>
+                                                                        <th>
+                                                                            
+                                                                        </th>
+                                                                        <th>
+                                                                            <span>Toplam: @totalSales Adet</span>
+                                                                        </th>
+                                                                        <th>
+                                                                            <span>Toplam: @totalPrice ₺</span>
+                                                                        </th>
+                                                                    </tr>
+                                                                </tfoot>
                                                             </table>
-
+                                                            
                                                         </div>
 
                                                         <div class="modal-footer">
@@ -112,11 +134,13 @@
                                         </div>
                                     </td>
                                 </tr>
+                                
                             }
                         </tbody>
+                        
                     </table>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <canvas id="pieChartEmployeeSellingReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
                 </div>
             </div>
@@ -133,11 +157,11 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <canvas id="pieChartEmployeeEarningReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
                 </div>
-                <div class="col-md-6">
-                    <table id="datatable-buttons-employeeEarningReport" name="employeeEarningTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                <div class="col-md-8">
+                        <table id="datatable-buttons-employeeEarningReport" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
                         <thead>
                             <tr>
                                 <th class="dt-orderable-asc dt-orderable-desc">Çalışan Kullanıcı Adı</th>
@@ -150,6 +174,8 @@
                         <tbody>
                             @foreach (var employeeEarning in Model.EmployeeEarningReportViewModels)
                             {
+                                totalPrice = 0;
+                                totalSales = 0;
                                 <tr>
                                     <td>
                                         @employeeEarning.UserName
@@ -159,7 +185,7 @@
                                     </td>
                                     <td>
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-@employeeEarning.UserName">
+                                        <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-employeeDetail-@employeeEarning.UserName" onclick="initializeDataTable('datatable-buttons-employeeEarningDetailReport-@employeeEarning.UserName', 1, 'asc',[0,1,2,3])">
                                             Detaylı Rapor
                                         </button>
                                         <!-- Modal -->
@@ -173,7 +199,7 @@
                                                         </div>
 
                                                         <div class="modal-body">
-                                                            <table id="datatable-buttons-employeeDetailReport" name="employeeDetailReportTable" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                                                            <table id="datatable-buttons-employeeEarningDetailReport-@employeeEarning.UserName" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
                                                                 <thead>
                                                                 <th rowspan="1" colspan="1">Şube Adı</th>
                                                                 <th rowspan="1" colspan="1">Satış Yapılan Ürün</th>
@@ -181,7 +207,7 @@
                                                                 <th rowspan="1" colspan="1">Toplam Fiyat ₺</th>
                                                                 </thead>
                                                                 <tbody>
-                                                                    @if (Model.EmployeeSellingReportViewModels != null && Model.EmployeeDetailReportViewModels != null)
+                                                                    @if (Model.EmployeeEarningReportViewModels != null && Model.EmployeeDetailReportViewModels != null)
                                                                     {
                                                                         @foreach (var employeeDetailReport in Model.EmployeeDetailReportViewModels)
                                                                         {
@@ -201,14 +227,32 @@
                                                                                         @employeeDetailReport.TotalPrice ₺
                                                                                     </td>
                                                                                 </tr>
+                                                                                totalPrice += employeeDetailReport.TotalPrice;
+                                                                                totalSales += employeeDetailReport.TotalSales;
                                                                             }
                                                                         }
                                                                     }
                                                                 </tbody>
+                                                                <tfoot>
+                                                                    <tr role="row">
+                                                                        <th>
+
+                                                                        </th>
+                                                                        <th>
+
+                                                                        </th>
+                                                                        <th>
+                                                                            <span>Toplam: @totalSales Adet</span>
+                                                                        </th>
+                                                                        <th>
+                                                                            <span>Toplam: @totalPrice ₺</span>
+                                                                        </th>
+                                                                    </tr>
+                                                                </tfoot>
+                                                                
                                                             </table>
-
+                                                            
                                                         </div>
-
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Kapat</button>
                                                         </div>
@@ -229,3 +273,15 @@
 
 </div>
 
+
+<script>
+
+    window.onload = function () {
+        initializeDataTable('datatable-buttons-employeeSellingReport', 1, 'desc', [0, 1]);
+        generatePieChart('datatable-buttons-employeeSellingReport', 'pieChartEmployeeSellingReport');
+
+        initializeDataTable('datatable-buttons-employeeEarningReport', 1, 'desc', [0, 1]);
+        generatePieChart('datatable-buttons-employeeEarningReport', 'pieChartEmployeeEarningReport');
+    };
+
+</script>

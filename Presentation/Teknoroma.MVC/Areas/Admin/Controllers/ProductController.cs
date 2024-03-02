@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.Brands.Quries.GetList;
 using Teknoroma.Application.Features.Categories.Queries.GetList;
@@ -9,16 +8,16 @@ using Teknoroma.Application.Features.Products.Models;
 using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Application.Features.Products.Queries.GetList;
 using Teknoroma.Application.Features.Products.Queries.GetProductEarningReport;
+using Teknoroma.Application.Features.Products.Queries.GetProductSalesDetailReport;
 using Teknoroma.Application.Features.Products.Queries.GetProductSellingReport;
+using Teknoroma.Application.Features.Products.Queries.GetProductSupplyDetailReport;
 using Teknoroma.Application.Features.Products.Queries.GetProductSupplyReport;
 using Teknoroma.Infrastructure.ImageHelpers;
-using Teknoroma.Infrastructure.WebApiService;
-using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
 
-    [Area("Admin")]
+	[Area("Admin")]
     [Authorize]
     public class ProductController : BaseController
     {
@@ -172,11 +171,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ProductReport(DateTime? startDate, DateTime? endDate)
         {
-            if(startDate == null || endDate == null)
-            {
-                startDate = DateTime.MinValue;
-                endDate = DateTime.MaxValue;
-            }
+			if (startDate == null || endDate == null)
+			{
+				startDate = DateTime.MinValue;
+				endDate = DateTime.MaxValue;
+			}
 
 			var productSellingReport = await ApiService.HttpClient.GetFromJsonAsync<List<GetProductSellingReportQueryResponse>>($"product/ProductSellingReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
 
@@ -190,18 +189,29 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             List<ProductSupplyReportViewModel> productSupplyReportViewModels = Mapper.Map<List<ProductSupplyReportViewModel>>(productSupplyReport);
 
-            ProductReportViewModel productReportViewModel = new ProductReportViewModel
+			var productDetailSalesReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetProductSalesDetailReportQueryResponse>>($"product/ProductSalesDetailReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+
+			List<ProductSalesDetailReportViewModel> productDetailSalesReportViewModels = Mapper.Map<List<ProductSalesDetailReportViewModel>>(productDetailSalesReports);
+
+			var productSupplyDetailReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetProductSupplyDetailReportQueryResponse>>($"product/ProductSupplyDetailReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+			List<ProductSupplyDetailReportViewModel> productSupplyDetailReportViewModels = Mapper.Map<List<ProductSupplyDetailReportViewModel>>(productSupplyDetailReports);
+
+			ProductReportViewModel productReportViewModel = new ProductReportViewModel
             {
                 ProductEarningViewModels = productEarningViewModels,
                 ProductSellingViewModels = productSellingViewModels,
-                ProductSupplyViewModels = productSupplyReportViewModels
-            };
-
+                ProductSupplyViewModels = productSupplyReportViewModels,
+                ProductSalesDetailReportViewModels = productDetailSalesReportViewModels,
+                ProductSupplyDetailReportViewModels = productSupplyDetailReportViewModels
+			};
 
             return View(productReportViewModel);
         }
 
-        private async Task<GetByIdProductQueryResponse> GetByProductId(Guid id)
+
+		private async Task<GetByIdProductQueryResponse> GetByProductId(Guid id)
         {
             return await ApiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"product/getbyid/{id}");
         }

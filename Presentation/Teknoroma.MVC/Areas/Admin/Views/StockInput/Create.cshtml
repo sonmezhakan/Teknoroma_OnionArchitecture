@@ -1,153 +1,148 @@
 ﻿@using Teknoroma.Application.Features.StockInputs.Models
 @model CreateStockInputViewModel
 @{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["Title"] = "Create";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="row">
-    <div class="col-md-12 mx-auto">
-        <div class="card">
-            <div class="card-header bg-info">
-                <h2 class="text-white">Stok Girişi</h2>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <form method="post" enctype="multipart/form-data">
-                        <div class="card-body">
-                            <div asp-validation-summary="All">
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="BranchID"></label>
-                                <select class="form-control" aria-label="Default select example" asp-for="BranchID">
-                                    @if(ViewBag.BranchList != null)
-                                    {
-                                        @foreach (var branch in ViewBag.BranchList)
-                                        {
-                                            <option value="@branch.ID">@branch.BranchName</option>
-                                        }
-                                    }
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="ProductID"></label>
-                                <select class="form-control" aria-label="Default select example" asp-for="ProductID">
-                                    @if(ViewBag.ProductList != null)
-                                    {
-                                        @foreach (var product in ViewBag.ProductList)
-                                        {
-                                            <option value="@product.ID">@product.ProductName</option>
-                                        }
-                                    }
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="SupplierID"></label>
-                                <select class="form-control" aria-label="Default select example" asp-for="SupplierID">
-                                    @if(ViewBag.SupplierList !=null)
-                                    {
-                                        @foreach (var supplier in ViewBag.SupplierList)
-                                        {
-                                            <option value="@supplier.ID">@supplier.CompanyName</option>
-                                        }
-                                    }
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="InoviceNumber"></label>
-                                <input type="text" class="form-control" asp-for="InoviceNumber">
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Quantity"></label>
-                                <input type="number" class="form-control" asp-for="Quantity">
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Description"></label>
-                                <textarea class="form-control" cols="4" rows="3" asp-for="Description"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="StockEntryDate"></label>
-                                <input class="form-control" type="datetime-local" id="datetimepicker" asp-for="StockEntryDate" />
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-success btn-block waves-effect waves-light">Ekle</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-9 mx-auto">
-                    <div class="card-body">
-                        <div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table id="basic-datatable" class="table table-striped  nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
-                                        <thead>
-                                        <th>Şube Adı</th>
-                                        <th>Ürün Adı</th>
-                                        <th>Tedarikçi Firma</th>
-                                        <th>Fatura No</th>
-                                        <th>Adet</th>
-                                        <th>Description</th>
-                                        <th>İşlem Yapan</th>
-                                        <th>Giriş Tarihi</th>
-                                        <th>
-                                            
-                                        </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (ViewBag.StockInputList != null)
-                                            {
-                                                @foreach (var stockInput in ViewBag.StockInputList)
-                                                {
-                                                    <tr>
-                                                        <td>
-                                                            @stockInput.BranchName
-                                                        </td>
-                                                        <td>
-                                                            @stockInput.ProductName
-                                                        </td>
-                                                        <td>
-                                                            @stockInput.CompanyName
-                                                        </td>
-                                                        <td>
-                                                            @stockInput.InoviceNumber
-                                                        </td>
-                                                        <td>
-                                                            @stockInput.Quantity
-                                                        </td>
-                                                        <td>
-                                                            @stockInput.Description
-                                                        </td>
-                                                        <td>
-                                                            @stockInput.AppUserName
-                                                        </td>
-                                                        <td>
-                                                            @stockInput.StockEntryDate
-                                                        </td>
-                                                        <td>
-                                                           <div>
-                                                                <a class="btn btn-sm btn-info waves-effect waves-light" asp-controller="StockInput" asp-action="Detail" asp-route-id="@stockInput.ID">Detaylar</a>
-                                                           </div>
-                                                            <div>
-                                                                <a class="btn  btn-sm btn-warning waves-effect waves-light" asp-controller="StockInput" asp-action="Update" asp-route-id="@stockInput.ID">Güncelle</a>
-                                                            </div>
-                                                            <div>
-                                                                <a class="btn  btn-sm btn-danger waves-effect waves-light" asp-controller="StockInput" asp-action="Delete" asp-route-id="@stockInput.ID">Sil</a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="col-md-12 mx-auto">
+		<div class="card">
+			<div class="card-header bg-info">
+				<h2 class="text-white">Stok Girişi</h2>
+				<h4 style="color:green">@ViewBag.Branch.Text</h4>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					<form method="post" enctype="multipart/form-data">
+						<div class="card-body">
+							<div asp-validation-summary="All">
+							</div>
+							<div class="form-group">
+								<label asp-for="ProductID"></label>
+								<select class="form-control" aria-label="Default select example" asp-for="ProductID">
+									@if (ViewBag.ProductList != null)
+									{
+										@foreach (var product in ViewBag.ProductList)
+										{
+											<option value="@product.ID">@product.ProductName</option>
+										}
+									}
+								</select>
+							</div>
+							<div class="form-group">
+								<label asp-for="SupplierID"></label>
+								<select class="form-control" aria-label="Default select example" asp-for="SupplierID">
+									@if (ViewBag.SupplierList != null)
+									{
+										@foreach (var supplier in ViewBag.SupplierList)
+										{
+											<option value="@supplier.ID">@supplier.CompanyName</option>
+										}
+									}
+								</select>
+							</div>
+							<div class="form-group">
+								<label asp-for="InoviceNumber"></label>
+								<input type="text" class="form-control" asp-for="InoviceNumber">
+							</div>
+							<div class="form-group">
+								<label asp-for="Quantity"></label>
+								<input type="number" class="form-control" asp-for="Quantity">
+							</div>
+							<div class="form-group">
+								<label asp-for="Description"></label>
+								<textarea class="form-control" cols="4" rows="3" asp-for="Description"></textarea>
+							</div>
+							<div class="form-group">
+								<label asp-for="StockEntryDate"></label>
+								<input class="form-control" type="datetime-local" id="datetimepicker" asp-for="StockEntryDate" />
+							</div>
+						</div>
+						<div class="card-footer">
+							<button type="submit" class="btn btn-success btn-block waves-effect waves-light">Ekle</button>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-9 mx-auto">
+					<div class="card-body">
+						<div>
+							<div class="row">
+								<div class="col-md-12">
+									<table id="datatable-buttons" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+										<thead>
+											<tr>
+												<th>Şube Adı</th>
+												<th>Ürün Adı</th>
+												<th>Tedarikçi Firma</th>
+												<th>Fatura No</th>
+												<th>Adet</th>
+												<th>Description</th>
+												<th>İşlem Yapan</th>
+												<th>Giriş Tarihi</th>
+												<th>
 
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											@if (ViewBag.StockInputList != null)
+											{
+												@foreach (var stockInput in ViewBag.StockInputList)
+												{
+													<tr role="row">
+														<td>
+															@stockInput.BranchName
+														</td>
+														<td>
+															@stockInput.ProductName
+														</td>
+														<td>
+															@stockInput.CompanyName
+														</td>
+														<td>
+															@stockInput.InoviceNumber
+														</td>
+														<td>
+															@stockInput.Quantity
+														</td>
+														<td>
+															@stockInput.Description
+														</td>
+														<td>
+															@stockInput.AppUserName
+														</td>
+														<td>
+															@stockInput.StockEntryDate
+														</td>
+														<td>
+															<div>
+																<a class="btn btn-sm btn-info waves-effect waves-light" asp-controller="StockInput" asp-action="Detail" asp-route-id="@stockInput.ID">Detaylar</a>
+															</div>
+															<div>
+																<a class="btn  btn-sm btn-warning waves-effect waves-light" asp-controller="StockInput" asp-action="Update" asp-route-id="@stockInput.ID">Güncelle</a>
+															</div>
+															<div>
+																<a class="btn  btn-sm btn-danger waves-effect waves-light" asp-controller="StockInput" asp-action="Delete" asp-route-id="@stockInput.ID">Sil</a>
+															</div>
+														</td>
+													</tr>
+												}
+											}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+
+	window.onload = function () {
+		initializeDataTable('datatable-buttons', 7, 'desc', [1, 2, 3, 4, 5, 6, 7]);
+	};
+</script>

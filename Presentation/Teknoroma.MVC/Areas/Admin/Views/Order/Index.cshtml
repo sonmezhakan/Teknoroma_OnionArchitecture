@@ -18,16 +18,18 @@
 			<div class="row">
 				<div class="col-md-8">
 					<div class="card-body">
-						<table id="basic-datatable" style="width:100%" class="table table-striped dt-responsive nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+						<table id="datatable-buttons-orderProductList" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
 							<thead>
-							<th rowspan="1" colspan="1">Resim</th>
-							<th rowspan="1" colspan="1">Ürün Adı</th>
-							<th rowspan="1" colspan="1">Marka Adı</th>
-							<th rowspan="1" colspan="1">Fiyat</th>
-							<th rowspan="1" colspan="1">Stok Miktarı</th>
-							<th rowspan="1" colspan="1">
-								Sepete Ekle
-							</th>
+							<tr>
+									<th rowspan="1" colspan="1">Resim</th>
+									<th rowspan="1" colspan="1">Ürün Adı</th>
+									<th rowspan="1" colspan="1">Marka Adı</th>
+									<th rowspan="1" colspan="1">Fiyat</th>
+									<th rowspan="1" colspan="1">Stok Miktarı</th>
+									<th rowspan="1" colspan="1">
+										Sepete Ekle
+									</th>
+							</tr>
 							
 							</thead>
 							<tbody>
@@ -172,4 +174,12 @@
 		// Yönlendirme işlemi
 		window.location.href = redirectUrl;
 	}
+</script>
+
+<script>
+
+	window.onload = function () {
+		initializeDataTable('datatable-buttons-orderProductList', 1 , 'asc', [1, 2, 3, 4]);
+	};
+
 </script>

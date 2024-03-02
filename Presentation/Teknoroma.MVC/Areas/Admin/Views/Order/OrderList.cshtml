@@ -15,7 +15,7 @@
 			</div>
 			<div class="card-body">
 				<div class="col-sm-12">
-					<table id="basic-datatable" width="100%" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+					<table id="datatable-buttons-orderList" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
 						<thead>
 						<th rowspan="1" colspan="1">Sipariş Numarası</th>
 						<th rowspan="1" colspan="1">Şube</th>
@@ -59,22 +59,22 @@
 											@order.TotalPrice
 										</td>
 
-										@if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Hazırlanıyor)
+										@if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.GettingReady)
 										{
 											<td style="background-color:darkred; color:white">
-												@order.OrderStatu
+												1- Hazırlanıyor
 											</td>
 										}
-										else if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Hazırlandı)
+										else if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Ready)
 										{
 											<td style="background-color:dodgerblue; color:white">
-												@order.OrderStatu
+												2- Hazırlandı
 											</td>
 										}
-										else
+										else if(order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Delivered)
 										{
 											<td>
-												@order.OrderStatu
+												3 - Teslim Edildi
 											</td>
 										}
 										<td>
@@ -85,17 +85,20 @@
 										</td>
 										<td>
 											<div>
-												<a class="btn btn-info btn-sm waves-effect waves-light" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.Hazırlandı">Hazırlandı</a>
+												<a class="btn btn-danger btn-sm waves-effect waves-light" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.GettingReady">Hazırlanıyor</a>
 											</div>
 											<div>
-												<a class="btn btn-success btn-sm waves-effect waves-light" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.TeslimEdildi">Teslim Edildi</a>
+												<a class="btn btn-info btn-sm waves-effect waves-light" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.Ready">Hazırlandı</a>
+											</div>
+											<div>
+												<a class="btn btn-success btn-sm waves-effect waves-light" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.Delivered">Teslim Edildi</a>
 											</div>
 										</td>
 
 										<td>
 
 											<!-- Button trigger modal -->
-											<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-@order.ID">
+											<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-@order.ID" onclick="initializeDataTable('datatable-buttons-orderDetail-@order.ID', 1, 'asc',[1,2,3,4])">
 												Sipariş Detayı
 											</button>
 											<!-- Modal -->
@@ -109,7 +112,7 @@
 															</div>
 
 															<div class="modal-body">
-																<table id="datatable-buttons" width="100%" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+																<table id="datatable-buttons-orderDetail-@order.ID" width="100%" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
 																	<thead>
 																	<th rowspan="1" colspan="1">Resim</th>
 																	<th rowspan="1" colspan="1">Ürün</th>
@@ -138,8 +141,13 @@
 																					<td>
 																							@orderDetail.ProductName
 																					</td>
-																					<td>
-																						<input class="form-control text-center me-4" name="quantity" type="number" value="@orderDetail.Quantity" style="max-width: 4rem">
+																					<td> 
+																						<div class="mx-4">
+																								@orderDetail.Quantity
+																						</div> 
+																						<div>
+																							<input class="form-control text-center me-4" name="quantity" type="number" value="@orderDetail.Quantity" style="max-width: 4rem">
+																						</div>
 																					</td>
 																					<td>
 																							@orderDetail.UnitPrice
@@ -184,3 +192,10 @@
 		</div>
 	</div>
 </div>
+<script>
+
+	window.onload = function () {
+		initializeDataTable('datatable-buttons-orderList', 6, 'asc', [0, 1,2,3,4,5,6,7,8]);
+	};
+
+</script>

@@ -15,10 +15,11 @@ namespace Teknoroma.Application.Features.Products.Queries.GetProductSellingRepor
 		{
 			var products = await _productRepository.GetAllAsync();
 
-			var bestSellingProduct = products.GroupBy(product => product.ProductName)
+			var bestSellingProduct = products.GroupBy(product => product.ID)
 				.Select(grouped => new
 				{
-					ProductName = grouped.Key,
+					ProductId = grouped.Key,
+					ProductName = grouped.Select(product=>product.ProductName).First(),
 					TotalSales = grouped.Select(orderDetails => orderDetails.OrderDetails
 					.Where(x => x.IsActive == true &&
 					x.Order.OrderDate >= request.StartDate && x.Order.OrderDate <= request.EndDate))
@@ -27,6 +28,7 @@ namespace Teknoroma.Application.Features.Products.Queries.GetProductSellingRepor
 
 			return new List<GetProductSellingReportQueryResponse>(bestSellingProduct.Select(x => new GetProductSellingReportQueryResponse
 			{
+				ProductId = x.ProductId,
 				ProductName = x.ProductName,
 				TotalSales = x.TotalSales
 			}).ToList());

@@ -22,15 +22,17 @@
 			<div class="card-body">
 				<div class="col-sm-12">
 					<div class="card-body">
-						<table id="datatable-buttons-stockTrackingReport" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+							<table id="datatable-buttons-stockTrackingReport" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
 							<thead>
-							<th rowspan="1" colspan="1">Resim</th>
-							<th rowspan="1" colspan="1">Ürün Adı</th>
-							<th rowspan="1" colspan="1">Marka Adı</th>
-							<th rowspan="1" colspan="1">Kategori Adı</th>
-							<th rowspan="1" colspan="1">Fiyat</th>
-							<th rowspan="1" colspan="1">Stok Miktarı</th>
-							<th rowspan="1" colspan="1">Kritik Stok Miktarı</th>
+							<tr>
+									<th rowspan="1" colspan="1">Resim</th>
+									<th rowspan="1" colspan="1">Ürün Adı</th>
+									<th rowspan="1" colspan="1">Marka Adı</th>
+									<th rowspan="1" colspan="1">Kategori Adı</th>
+									<th rowspan="1" colspan="1">Fiyat</th>
+									<th rowspan="1" colspan="1">Stok Miktarı</th>
+									<th rowspan="1" colspan="1">Kritik Stok Miktarı</th>
+							</tr>
 							</thead>
 							<tbody>
 								@foreach (var item in Model)
@@ -77,3 +79,9 @@
 		</div>
 	</div>
 </div>
+<script>
+
+	window.onload = function () {
+		initializeDataTable('datatable-buttons-stockTrackingReport', 5, 'desc', [1,2,3,4,5,6]);
+	};
+</script>

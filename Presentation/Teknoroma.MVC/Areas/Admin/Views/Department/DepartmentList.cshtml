@@ -14,10 +14,10 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-sm-12">
-						<table id="basic-datatable" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+							<table id="datatable-buttons" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
 							<thead>
 							<th rowspan="1" colspan="1">Departman Adı</th>
-							<th rowspan="1" colspan="1">Person Sayısı</th>
+							<th rowspan="1" colspan="1">Departmandaki Çalışan Sayısı</th>
 							<th rowspan="1" colspan="1">Açıklama</th>
 							<th>
 
@@ -63,3 +63,10 @@
 	</div>
 </div>
 
+<script>
+
+	window.onload = function () {
+		initializeDataTable('datatable-buttons', 0, 'asc', [0, 1, 2]);
+	};
+
+</script>

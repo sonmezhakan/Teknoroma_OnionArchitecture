@@ -1,137 +1,136 @@
 ﻿@using Teknoroma.Application.Features.Branches.Models
 @model BranchViewModel
 @{
-    ViewData["Title"] = "Detail";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["Title"] = "Detail";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="row">
-    <div class="col-md-12 mx-auto">
-        <div class="card">
-            <div class="card-header bg-info">
-                <div class="form-group">
-                    <h2 class="text-white">Şube Seçiniz</h2>
-                    <select class="form-control"  onchange="redirectToSelectedPage(this)">
-                        @foreach (var branch in ViewBag.BranchList)
-                        {
-                            @if (Model == null)
-                            {
-                                <option value="@branch.ID" href="@branch.ID">@branch.BranchName</option>
-                            }
-                            else if (branch.ID == Model.ID)
-                            {
-                                <option value="@branch.ID" selected>@branch.BranchName</option>
-                            }
-                            else
-                            {
-                                <option value="@branch.ID" href="@branch.ID">@branch.BranchName</option>
-                            }
-                        }
+	<div class="col-md-12 mx-auto">
+		<div class="card">
+			<div class="card-header bg-info">
+				<div class="form-group">
+					<h2 class="text-white">Şube Seçiniz</h2>
+					<select class="form-control" onchange="redirectToSelectedPage(this)">
+						@foreach (var branch in ViewBag.BranchList)
+						{
+							@if (Model == null)
+							{
+								<option value="@branch.ID" href="@branch.ID">@branch.BranchName</option>
+							}
+							else if (branch.ID == Model.ID)
+							{
+								<option value="@branch.ID" selected>@branch.BranchName</option>
+							}
+							else
+							{
+								<option value="@branch.ID" href="@branch.ID">@branch.BranchName</option>
+							}
+						}
 
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 mx-auto">
-                    <form>
-                        <div class="card-body">
-                            <div asp-validation-summary="All">
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="ID"></label>
-                                <input type="text" class="form-control" asp-for="@Model.ID" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="BranchName"></label>
-                                <input type="text" class="form-control" asp-for="BranchName">
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="PhoneNumber"></label>
-                                <input type="text" class="form-control" asp-for="PhoneNumber">
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Address"></label>
-                                <textarea class="form-control" cols="4" rows="3" asp-for="Address"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Description"></label>
-                                <textarea class="form-control" cols="4" rows="3" asp-for="Description"></textarea>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-8 mx-auto">
-                    <div class="card-body">
-                        <div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table id="basic-datatable" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
-                                        <thead>
-                                        <th rowspan="1" colspan="1">Ürün Adı</th>
-                                        <th rowspan="1" colspan="1">Fiyat</th>
-                                        <th rowspan="1" colspan="1">Stok Miktarı</th>
-                                        <th  rowspan="1" colspan="1">Kritik Miktar</th>
-                                        <th  rowspan="1" colspan="1">Şubedeki Toplam Satış</th>
-                                        <th>
-
-                                        </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                             @if(Model != null)
-                                            {
-                                                @foreach (var product in ViewBag.stockList)
-                                                {
-                                                    <tr>
-                                                        <td>
-                                                            @product.ProductName
-                                                        </td>
-                                                        <td>
-                                                            @product.UnitPrice
-                                                        </td>
-                                                        <td>
-                                                            @product.UnitsInStock
-                                                        </td>
-                                                        @if (product.CriticalStock > product.UnitsInStock)
-                                                        {
-                                                            <td style="background-color:indianred">
-                                                                @product.CriticalStock
-                                                            </td>
-                                                        }
-                                                        else
-                                                        {
-                                                            <td>
-                                                                @product.CriticalStock
-                                                            </td>
-                                                        }
-                                                        <td>
-                                                            0
-                                                        </td>  
-                                                    </tr>
-                                                }
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 mx-auto">
+					<form>
+						<div class="card-body">
+							<div asp-validation-summary="All">
+							</div>
+							<div class="form-group">
+								<label asp-for="ID"></label>
+								<input type="text" class="form-control" asp-for="@Model.ID" disabled>
+							</div>
+							<div class="form-group">
+								<label asp-for="BranchName"></label>
+								<input type="text" class="form-control" asp-for="BranchName">
+							</div>
+							<div class="form-group">
+								<label asp-for="PhoneNumber"></label>
+								<input type="text" class="form-control" asp-for="PhoneNumber">
+							</div>
+							<div class="form-group">
+								<label asp-for="Address"></label>
+								<textarea class="form-control" cols="4" rows="3" asp-for="Address"></textarea>
+							</div>
+							<div class="form-group">
+								<label asp-for="Description"></label>
+								<textarea class="form-control" cols="4" rows="3" asp-for="Description"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-8 mx-auto">
+					<div class="card-body">
+						<div>
+							<div class="row">
+								<div class="col-sm-12">
+									<table id="datatable-buttons" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+										<thead>
+											<tr>
+												<th rowspan="1" colspan="1">Ürün Adı</th>
+												<th rowspan="1" colspan="1">Fiyat</th>
+												<th rowspan="1" colspan="1">Stok Miktarı</th>
+												<th rowspan="1" colspan="1">Kritik Miktar</th>
+											</tr>
+										</thead>
+										<tbody>
+											@if (Model != null)
+											{
+												@foreach (var product in ViewBag.stockList)
+												{
+													<tr>
+														<td>
+															@product.ProductName
+														</td>
+														<td>
+															@product.UnitPrice
+														</td>
+														<td>
+															@product.UnitsInStock
+														</td>
+														@if (product.CriticalStock > product.UnitsInStock)
+														{
+															<td style="background-color:indianred">
+																@product.CriticalStock
+															</td>
+														}
+														else
+														{
+															<td>
+																@product.CriticalStock
+															</td>
+														}
+													</tr>
+												}
+											}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <script>
-    function redirectToSelectedPage(selectElement) {
-        // Seçili değeri al
-        var selectedValue = selectElement.value;
+	window.onload = function () {
+		initializeDataTable('datatable-buttons', 0, 'asc', [0, 1, 2, 3, 4]);
+	};
 
-        // Yönlendirme yapmak istediğiniz URL'yi oluşturun
-        var redirectUrl = '/Admin/Branch/Detail/' + selectedValue;
+	function redirectToSelectedPage(selectElement) {
+		// Seçili değeri al
+		var selectedValue = selectElement.value;
 
-        // Yönlendirme işlemi
-        window.location.href = redirectUrl;
-    }
+		// Yönlendirme yapmak istediğiniz URL'yi oluşturun
+		var redirectUrl = '/Admin/Branch/Detail/' + selectedValue;
+
+		// Yönlendirme işlemi
+		window.location.href = redirectUrl;
+	}
+	
 </script>
 
 

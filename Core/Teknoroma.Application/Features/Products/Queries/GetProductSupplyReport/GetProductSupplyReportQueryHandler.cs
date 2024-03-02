@@ -16,10 +16,11 @@ namespace Teknoroma.Application.Features.Products.Queries.GetProductSupplyReport
         {
             var products = await _productRepository.GetAllAsync();
 
-            var bestSupplyProduct = products.GroupBy(product => product.ProductName)
+            var bestSupplyProduct = products.GroupBy(product => product.ID)
                 .Select(grouped => new
                 {
-                    ProductName = grouped.Key,
+                    ProductId = grouped.Key,
+                    ProductName = grouped.Select(product=>product.ProductName).First(),
                     TotalSupply = grouped.Select(stockInputs => stockInputs.StockInputs
                     .Where(x => x.IsActive == true &&
                     x.StockEntryDate >= request.StartDate && x.StockEntryDate <= request.EndDate))
@@ -29,6 +30,7 @@ namespace Teknoroma.Application.Features.Products.Queries.GetProductSupplyReport
 
             return new List<GetProductSupplyReportQueryResponse>(bestSupplyProduct.Select(x => new GetProductSupplyReportQueryResponse
             {
+                ProductId = x.ProductId,
                 ProductName = x.ProductName,
                 TotalSupply = x.TotalSupply
             }).ToList());

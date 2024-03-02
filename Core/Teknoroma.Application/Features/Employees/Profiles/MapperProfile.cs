@@ -52,6 +52,7 @@ namespace Teknoroma.Application.Features.Employees.Profiles
             CreateMap<EmployeeSellingReportViewModel, GetEmployeeSellingReportQueryResponse>().ReverseMap();
             CreateMap<EmployeeEarningReportViewModel, GetEmployeeEarningReportQueryResponse>().ReverseMap();
             CreateMap<EmployeeDetailReportViewModel, GetEmployeeDetailReportQueryResponse>().ReverseMap();
+            
 		}
     }
 }

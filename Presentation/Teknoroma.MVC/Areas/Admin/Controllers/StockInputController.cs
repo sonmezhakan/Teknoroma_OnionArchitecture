@@ -114,7 +114,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             await BranchViewBag();
             await BranchIDViewBag();
 
-            var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockInputQueryResponse>>($"stockInput/Getall");
+            var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockInputQueryResponse>>($"stockInput/GetByBranchIdList/{ViewBag.Branch.Value}");
 
             if (response == null) return View();
 
@@ -143,7 +143,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         private async Task StockInputViewBag()
         {
             
-			var stockInputs = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockInputQueryResponse>>($"stockInput/getall");
+			var stockInputs = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockInputQueryResponse>>($"stockInput/GetByBranchIdList/{ViewBag.Branch.Value}");
 
             ViewBag.StockInputList = stockInputs;
         }

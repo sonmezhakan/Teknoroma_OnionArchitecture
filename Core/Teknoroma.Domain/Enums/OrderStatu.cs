@@ -2,8 +2,8 @@
 {
 	public enum OrderStatu
 	{
-		Hazırlanıyor = 0,
-		Hazırlandı = 1,
-		TeslimEdildi = 2
+		GettingReady = 0,
+		Ready = 1,
+		Delivered = 2
 	}
 }

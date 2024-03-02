@@ -81,8 +81,9 @@
                         <div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <table id="basic-datatable" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+                                    <table id="datatable-buttons" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
                                         <thead>
+                                            <tr>
                                         <th rowspan="1" colspan="1">Şube Adı</th>
                                         <th rowspan="1" colspan="1">Ürün Adı</th>
                                         <th rowspan="1" colspan="1">Tedarikçi Firma</th>
@@ -95,7 +96,7 @@
                                         <th>
 
                                         </th>
-                                        
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             @if (ViewBag.StockInputList != null)
@@ -154,3 +155,9 @@
 </div>
 
 
+<script>
+
+    window.onload = function () {
+        initializeDataTable('datatable-buttons', 7, 'desc', [1, 2, 3, 4, 5, 6, 7]);
+    };
+</script>

@@ -130,7 +130,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 					EmployeeId = CheckAppUser().Result,
 					CustomerId = customerId,
 					OrderDate = DateTime.Now,
-					OrderStatu = Domain.Enums.OrderStatu.Hazırlanıyor,
+					OrderStatu = Domain.Enums.OrderStatu.GettingReady,
 					CartItems = cartItems
 				};
 

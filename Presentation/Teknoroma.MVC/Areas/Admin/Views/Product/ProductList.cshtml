@@ -14,7 +14,7 @@
 			</div>
 			<div class="card-body">
 				<div class="col-sm-12">
-					<table id="basic-datatable" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+					<table id="datatable-buttons" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
 						<thead>
 						<th rowspan="1" colspan="1">Resim</th>
 						<th rowspan="1" colspan="1">Ürün Adı</th>
@@ -88,3 +88,8 @@
 </div>
 
 
+<script>
+	window.onload = function () {
+		initializeDataTable('datatable-buttons', 1, 'asc', [1,2,3,4,5,6,7]);
+	};
+</script>

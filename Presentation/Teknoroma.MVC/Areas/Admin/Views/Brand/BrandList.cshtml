@@ -7,14 +7,14 @@
 
 <div class="row">
 	<div class="col-12">
-		<div class="card card-primary">
-			<div class="card-header">
-				<h1>Marka Listesi</h1>
+		<div class="card">
+			<div class="card-header bg-info">
+				<h2 style="color:white;">Marka Listesi</h2>
 			</div>
 			<div class="card-body">
 				<div class="row">
 					<div class="col-sm-12">
-						<table class="table table-bordered table-hover dataTable dtr-inline">
+							<table id="datatable-buttons" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
 							<thead>
 							<th rowspan="1" colspan="1">Marka Adı</th>
 							<th rowspan="1" colspan="1">Telefon Numarası</th>
@@ -38,31 +38,24 @@
 											@item.Description
 										</td>
 										<td>
-											<a class="btn bg-gradient-info" asp-controller="Brand" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
-											<a class="btn bg-gradient-warning" asp-controller="Brand" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
-											<a class="btn bg-gradient-danger" asp-controller="Brand" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
+											<a class="btn btn-info waves-effect waves-light" asp-controller="Brand" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
+											<a class="btn btn-warning waves-effect waves-light" asp-controller="Brand" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
+											<a class="btn btn-danger waves-effect waves-light" asp-controller="Brand" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
 										</td>
 									</tr>
 								}
 							</tbody>
 						</table>
 					</div>
-				</div><div class="row">
-					<div class="col-sm-12 col-md-5">
-						<div>
-							@if (Model != null)
-							{
-								@Model.Count()
-							}
-							else
-							{
-								<a>0</a>
-							}
-							adet marka bulunmaktadır.
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script>
+
+	window.onload = function () {
+		initializeDataTable('datatable-buttons', 0, 'asc', [0, 1,2]);
+	};
+
+</script>

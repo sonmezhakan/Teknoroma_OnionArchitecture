@@ -9,924 +9,924 @@
   'use strict';
   $(function() {
 
-    if ($("#pieChartProductSellingReport").length) {
-      var tables = document.getElementsByName("productSellingTable");
-      var pieChartCanvas = $("#pieChartProductSellingReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    // if ($("#pieChartProductSellingReport").length) {
+    //   var tables = document.getElementsByName("productSellingTable");
+    //   var pieChartCanvas = $("#pieChartProductSellingReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true
+    // }
 
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
 
-    //Products
-    if ($("#pieChartProductSellingReport").length) {
-      var tables = document.getElementsByName("productSellingTable");
-      var pieChartCanvas = $("#pieChartProductSellingReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    // //Products
+    // if ($("#pieChartProductSellingReport").length) {
+    //   var tables = document.getElementsByName("productSellingTable");
+    //   var pieChartCanvas = $("#pieChartProductSellingReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true,
+    // }
 
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
     
-    if ($("#pieChartProductEarningReport").length) {
-      var tables = document.getElementsByName("productEarningTable");
-      var pieChartCanvas = $("#pieChartProductEarningReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    // if ($("#pieChartProductEarningReport").length) {
+    //   var tables = document.getElementsByName("productEarningTable");
+    //   var pieChartCanvas = $("#pieChartProductEarningReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true
+    // }
 
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
 
-    if ($("#pieChartProductSupplyReport").length) {
-      var tables = document.getElementsByName("productSupplyTable");
-      var pieChartCanvas = $("#pieChartProductSupplyReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    // if ($("#pieChartProductSupplyReport").length) {
+    //   var tables = document.getElementsByName("productSupplyTable");
+    //   var pieChartCanvas = $("#pieChartProductSupplyReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true
+    // }
 
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
 
-    //Categories
-    if ($("#pieChartCategorySellingReport").length) {
-      var tables = document.getElementsByName("categorySellingTable");
-      var pieChartCanvas = $("#pieChartCategorySellingReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    // //Categories
+    // if ($("#pieChartCategorySellingReport").length) {
+    //   var tables = document.getElementsByName("categorySellingTable");
+    //   var pieChartCanvas = $("#pieChartCategorySellingReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true
+    // }
 
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
     
-    if ($("#pieChartCategoryEarningReport").length) {
-      var tables = document.getElementsByName("categoryEarningTable");
-      var pieChartCanvas = $("#pieChartCategoryEarningReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    // if ($("#pieChartCategoryEarningReport").length) {
+    //   var tables = document.getElementsByName("categoryEarningTable");
+    //   var pieChartCanvas = $("#pieChartCategoryEarningReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true
+    // }
 
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
 
-    if ($("#pieChartCategorySupplyReport").length) {
-      var tables = document.getElementsByName("categorySupplyTable");
-      var pieChartCanvas = $("#pieChartCategorySupplyReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    // if ($("#pieChartCategorySupplyReport").length) {
+    //   var tables = document.getElementsByName("categorySupplyTable");
+    //   var pieChartCanvas = $("#pieChartCategorySupplyReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true
+    // }
 
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
 
-    //Employees
-    if ($("#pieChartEmployeeSellingReport").length) {
-      var tables = document.getElementsByName("employeeSellingTable");
-      var pieChartCanvas = $("#pieChartEmployeeSellingReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    // //Employees
+    // if ($("#pieChartEmployeeSellingReport").length) {
+    //   var tables = document.getElementsByName("employeeSellingTable");
+    //   var pieChartCanvas = $("#pieChartEmployeeSellingReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true
+    // }
 
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
     
-    if ($("#pieChartEmployeeEarningReport").length) {
-      var tables = document.getElementsByName("employeeEarningTable");
-      var pieChartCanvas = $("#pieChartEmployeeEarningReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    // if ($("#pieChartEmployeeEarningReport").length) {
+    //   var tables = document.getElementsByName("employeeEarningTable");
+    //   var pieChartCanvas = $("#pieChartEmployeeEarningReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true
+    // }
 
-        }
-      });
-    }
-    //Customers
-    if ($("#pieChartCustomerSellingReport").length) {
-      var tables = document.getElementsByName("customerSellingTable");
-      var pieChartCanvas = $("#pieChartCustomerSellingReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    //     }
+    //   });
+    // }
+    // //Customers
+    // if ($("#pieChartCustomerSellingReport").length) {
+    //   var tables = document.getElementsByName("customerSellingTable");
+    //   var pieChartCanvas = $("#pieChartCustomerSellingReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true
+    // }
 
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
     
-    if ($("#pieChartCustomerEarningReport").length) {
-      var tables = document.getElementsByName("customerEarningTable");
-      var pieChartCanvas = $("#pieChartCustomerEarningReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    // if ($("#pieChartCustomerEarningReport").length) {
+    //   var tables = document.getElementsByName("customerEarningTable");
+    //   var pieChartCanvas = $("#pieChartCustomerEarningReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true
+    // }
 
-        }
-      });
-    }
-    //Brands
-    if ($("#pieChartBrandSellingReport").length) {
-      var tables = document.getElementsByName("brandSellingTable");
-      var pieChartCanvas = $("#pieChartBrandSellingReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    //     }
+    //   });
+    // }
+    // //Brands
+    // if ($("#pieChartBrandSellingReport").length) {
+    //   var tables = document.getElementsByName("brandSellingTable");
+    //   var pieChartCanvas = $("#pieChartBrandSellingReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true
+    // }
 
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
     
-    if ($("#pieChartBrandEarningReport").length) {
-      var tables = document.getElementsByName("brandEarningTable");
-      var pieChartCanvas = $("#pieChartBrandEarningReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    // if ($("#pieChartBrandEarningReport").length) {
+    //   var tables = document.getElementsByName("brandEarningTable");
+    //   var pieChartCanvas = $("#pieChartBrandEarningReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true
+    // }
 
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
 
-    //Branches
-    if ($("#pieChartBranchSellingReport").length) {
-      var tables = document.getElementsByName("branchSellingTable");
-      var pieChartCanvas = $("#pieChartBranchSellingReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    // //Branches
+    // if ($("#pieChartBranchSellingReport").length) {
+    //   var tables = document.getElementsByName("branchSellingTable");
+    //   var pieChartCanvas = $("#pieChartBranchSellingReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true
+    // }
 
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
     
-    if ($("#pieChartBranchEarningReport").length) {
-      var tables = document.getElementsByName("branchEarningTable");
-      var pieChartCanvas = $("#pieChartBranchEarningReport").get(0).getContext("2d");
-      var labels = [];
-      var data = [];
-      var table = tables[0]; // İlk tabloyu seçiyoruz
+    // if ($("#pieChartBranchEarningReport").length) {
+    //   var tables = document.getElementsByName("branchEarningTable");
+    //   var pieChartCanvas = $("#pieChartBranchEarningReport").get(0).getContext("2d");
+    //   var labels = [];
+    //   var data = [];
+    //   var table = tables[0]; // İlk tabloyu seçiyoruz
     
-      for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
-        var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
+    //   for (var i = 1; i < Math.min(table.rows.length, 10); i++) {
+    //     var cellValue = table.rows[i].cells[0].innerText; // Veya table.rows[i].cells[0].textContent kullanabilirsiniz
 
-        labels.push(cellValue);
+    //     labels.push(cellValue);
     
-        var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
-        data.push(dataValue);
-      }
+    //     var dataValue = parseInt(table.rows[i].cells[1].innerText); // Örnek olarak 2. hücrenin içeriğini alıyoruz
+    //     data.push(dataValue);
+    //   }
     
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: data,
-            backgroundColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-            borderColor: [
-              '#ea5545', 
-              '#f46a9b', 
-              '#ef9b20', 
-              '#edbf33',
-              '#ede15b', 
-              '#bdcf32', 
-              '#87bc45', 
-              '#27aeef',
-              '#87bc45', 
-              '#00bfa0'
-            ],
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-           maintainAspectRatio: false, // boyutları özelleştirmek için
-          aspectRatio: 1, // oran: genişlik/yükseklik
-       animation: {
-      animateScale: true,
-      animateRotate: true
-    }
+    //   var pieChart = new Chart(pieChartCanvas, {
+    //     type: 'pie',
+    //     data: {
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //         borderColor: [
+    //           '#ea5545', 
+    //           '#f46a9b', 
+    //           '#ef9b20', 
+    //           '#edbf33',
+    //           '#ede15b', 
+    //           '#bdcf32', 
+    //           '#87bc45', 
+    //           '#27aeef',
+    //           '#87bc45', 
+    //           '#00bfa0'
+    //         ],
+    //       }],
+    //       labels: labels
+    //     },
+    //     options: {
+    //       responsive: true,
+    //        maintainAspectRatio: false, // boyutları özelleştirmek için
+    //       aspectRatio: 1, // oran: genişlik/yükseklik
+    //    animation: {
+    //   animateScale: true,
+    //   animateRotate: true
+    // }
 
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
 
         
     if ($("#pieChart").length) {

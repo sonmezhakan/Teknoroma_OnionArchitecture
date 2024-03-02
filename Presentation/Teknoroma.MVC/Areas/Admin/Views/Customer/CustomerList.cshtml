@@ -15,19 +15,20 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-sm-12">
-						<table id="basic-datatable" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+						<table id="datatable-buttons" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
 							<thead>
-							<th rowspan="1" colspan="1">İsim</th>
-							<th rowspan="1" colspan="1">İletşim Kurulacak Kişi</th>
-							<th rowspan="1" colspan="1">İletşim Kurulacak Kişinin Departmanı</th>
-							<th rowspan="1" colspan="1">Email</th>
-							<th rowspan="1" colspan="1">Telefon Numarası</th>
-							<th rowspan="1" colspan="1">Adres</th>
-							<th rowspan="1" colspan="1">Bireysel/Kurumsal</th>
-							<th>
+								<tr>
+									<th rowspan="1" colspan="1">İsim</th>
+									<th rowspan="1" colspan="1">İletşim Kurulacak Kişi</th>
+									<th rowspan="1" colspan="1">İletşim Kurulacak Kişinin Departmanı</th>
+									<th rowspan="1" colspan="1">Email</th>
+									<th rowspan="1" colspan="1">Telefon Numarası</th>
+									<th rowspan="1" colspan="1">Adres</th>
+									<th rowspan="1" colspan="1">Bireysel/Kurumsal</th>
+									<th>
 
-							</th>
-							</tr>
+									</th>
+								</tr>
 							</thead>
 							<tbody>
 								@foreach (var item in Model)
@@ -51,9 +52,21 @@
 										<td>
 											@item.Address
 										</td>
-										<td>
-											@item.Invoice
-										</td>
+
+										@if (@item.Invoice == Teknoroma.Domain.Enums.InvoiceEnum.Person)
+										{
+											<td>
+												Bireysel
+											</td>
+
+										}
+										else if (@item.Invoice == Teknoroma.Domain.Enums.InvoiceEnum.Company)
+										{
+											<td>
+												Kurumsal
+											</td>
+										}
+
 										<td>
 											<div>
 												<a class="btn btn-info btn-block waves-effect waves-light" asp-controller="Customer" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
@@ -76,3 +89,10 @@
 	</div>
 </div>
 
+<script>
+
+	window.onload = function () {
+		initializeDataTable('datatable-buttons', 0, 'desc', [0, 1, 2, 3, 4, 5, 6]);
+	};
+
+</script>

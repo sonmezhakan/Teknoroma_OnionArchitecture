@@ -7,7 +7,7 @@ namespace Teknoroma.Domain.Entities
     {
         public Order()
         {
-			OrderStatu = OrderStatu.Hazırlanıyor;
+			OrderStatu = OrderStatu.GettingReady;
 		}
         public Guid BranchId { get; set; }
 		public Guid EmployeeId { get; set; }
