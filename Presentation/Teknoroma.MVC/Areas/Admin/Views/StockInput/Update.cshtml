@@ -24,7 +24,7 @@
 									<input type="hidden" asp-for="@Model.ID" />
 								</div>
 								<label asp-for="BranchID"></label>
-								<select class="form-control" aria-label="Default select example" disabled>
+								<select class="form-control" data-toggle="select2" aria-label="Default select example" disabled>
 									@if (ViewBag.BranchList != null)
 									{
 										@foreach (var branch in ViewBag.BranchList)
@@ -37,7 +37,7 @@
 							</div>
 							<div class="form-group">
 								<label asp-for="ProductID"></label>
-								<select class="form-control" aria-label="Default select example" disabled>
+								<select class="form-control" data-toggle="select2" aria-label="Default select example" disabled>
 									@if (ViewBag.ProductList != null)
 									{
 										@foreach (var product in ViewBag.ProductList)
@@ -50,7 +50,7 @@
 							</div>
 							<div class="form-group">
 								<label asp-for="SupplierID"></label>
-								<select class="form-control" aria-label="Default select example">
+								<select class="form-control" data-toggle="select2" aria-label="Default select example">
 									@if (ViewBag.SupplierList != null)
 									{
 										@foreach (var supplier in ViewBag.SupplierList)

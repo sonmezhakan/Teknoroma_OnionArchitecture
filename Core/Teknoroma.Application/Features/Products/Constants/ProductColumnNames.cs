@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Teknoroma.Application.Features.Products.Constants
+﻿namespace Teknoroma.Application.Features.Products.Constants
 {
 	public class ProductColumnNames
 	{
 		public const string ID = "ID*";
 		public const string ProductName = "Ürün Adı*";
+		public const string BarcodeCode = "Barkod No";
 		public const string UnitPrice = "Ürün Fiyatı*";
 		public const string UnitsInStock = "Stok Miktarı";
 		public const string CriticalStock = "Kritik Stok Miktarı";

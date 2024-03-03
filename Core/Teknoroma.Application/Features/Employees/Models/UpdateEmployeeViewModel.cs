@@ -13,5 +13,8 @@ namespace Teknoroma.Application.Features.Employees.Models
 
 		[Display(Name = EmployeeColumnNames.DepartmentID)]
 		public Guid DepartmentID { get; set; }
+
+		[Display(Name = EmployeeColumnNames.Salary)]
+		public decimal? Salary { get; set; }
 	}
 }

@@ -11,7 +11,7 @@
 			<div class="card-header bg-info">
 				<div class="form-group">
 					<h2 class="text-white">Çalışan Seçiniz</h2>
-					<select class="form-control" onchange="redirectToSelectedPage(this)">
+					<select class="form-control" data-toggle="select2" onchange="redirectToSelectedPage(this)">
 						@if (ViewBag.AppUserList != null)
 						{
 							@foreach (var appUser in ViewBag.AppUserList)
@@ -80,6 +80,10 @@
 							<div class="form-group">
 								<label asp-for="Address"></label>
 								<textarea class="form-control" rows="3" cols="4" asp-for="@Model.Address"></textarea>
+							</div>
+							<div class="form-group">
+								<label asp-for="Salary"></label>
+								<input type="text" class="form-control" asp-for="@Model.Salary" />
 							</div>
 					</form>
 				</div>

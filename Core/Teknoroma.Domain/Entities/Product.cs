@@ -5,6 +5,7 @@ namespace Teknoroma.Domain.Entities
     public class Product : BaseEntity
     {
         public string ProductName { get; set; }
+        public string? BarcodeCode { get; set; }
         public decimal UnitPrice { get; set; }
         public int CriticalStock { get; set; }
         public string? Description { get; set; }

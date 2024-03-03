@@ -14,6 +14,7 @@
 		public const string NationalityNumber = "Kimlik Numarası";
 		public const string PhoneNumber = "Telefon Numarası";
 		public const string Address = "Adres";
+		public const string Salary = "Maaş";
 
 	}
 }

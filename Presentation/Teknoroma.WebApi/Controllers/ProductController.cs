@@ -2,6 +2,7 @@
 using Teknoroma.Application.Features.Products.Command.Create;
 using Teknoroma.Application.Features.Products.Command.Delete;
 using Teknoroma.Application.Features.Products.Command.Update;
+using Teknoroma.Application.Features.Products.Queries.GetByBarcodeCode;
 using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Application.Features.Products.Queries.GetList;
 using Teknoroma.Application.Features.Products.Queries.GetProductEarningReport;
@@ -90,6 +91,13 @@ namespace Teknoroma.WebApi.Controllers
 			var resut = await Mediator.Send(new GetProductSupplyDetailReportQueryRequest {StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
 
 			return Ok(resut);
+		}
+		[HttpGet("{barcodeCode}")]
+		public async Task<IActionResult> GetByBarcodeCode(string barcodeCode)
+		{
+			var result = await Mediator.Send(new GetByBarcodeCodeQueryRequest { BarcodeCode = barcodeCode });
+
+			return Ok(result);
 		}
 	}
 }

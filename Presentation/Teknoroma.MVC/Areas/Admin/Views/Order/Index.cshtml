@@ -132,7 +132,7 @@
 											<form id="CompleteCart" method="post" asp-controller="Order" asp-action="CompleteCart">
 												<div class="form-group">
 													<label>Müşteri Telefon Numarası</label>
-													<select class="form-control" aria-label="Default select example" name="customerId" data-dropdown-parent="#exampleModal">
+													<select class="form-control" data-toggle="select2" aria-label="Default select example" name="customerId" data-dropdown-parent="#exampleModal" style="width:100%">
 														@if (ViewBag.CustomerList != null)
 														{
 															@foreach (var customer in ViewBag.CustomerList)

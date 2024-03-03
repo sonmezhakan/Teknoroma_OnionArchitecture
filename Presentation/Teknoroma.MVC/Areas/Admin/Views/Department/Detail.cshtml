@@ -11,7 +11,7 @@
 			<div class="card-header bg-info">
 				<div class="form-group">
 					<h2 class="text-white">Departman Seçiniz</h2>
-					<select class="form-control" aria-label="Default select example" onchange="redirectToSelectedPage(this)">
+					<select class="form-control" data-toggle="select2" aria-label="Default select example" onchange="redirectToSelectedPage(this)">
 						@foreach (var department in ViewBag.DepartmentList)
 						{
 							@if (Model == null)

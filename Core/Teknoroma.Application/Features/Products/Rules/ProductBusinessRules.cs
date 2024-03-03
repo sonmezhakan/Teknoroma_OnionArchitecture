@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Teknoroma.Application.Repositories;
+﻿using Teknoroma.Application.Repositories;
 
 namespace Teknoroma.Application.Features.Products.Rules
 {

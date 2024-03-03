@@ -40,5 +40,8 @@ namespace Teknoroma.Application.Features.Employees.Models
 
 		[Display(Name = EmployeeColumnNames.Address)]
 		public string Address { get; set; }
+
+		[Display(Name = EmployeeColumnNames.Salary)]
+		public decimal? Salary { get; set; }
 	}
 }

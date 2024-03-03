@@ -21,6 +21,8 @@ namespace Teknoroma.Application.Features.Brands.Quries.GetBrandSellingReport
                     BrandName = grouped.Key,
                     TotalSales = grouped.SelectMany(products => products.Products
                     .SelectMany(orderDetails => orderDetails.OrderDetails
+                    .Where(x=>x.IsActive == true &&
+                    x.Order.OrderDate >= request.StartDate && x.Order.OrderDate <= request.EndDate)
                     .Select(orderDetail => orderDetail.Quantity)))
                     .Sum()
                 }).OrderByDescending(x => x.TotalSales).ToList();

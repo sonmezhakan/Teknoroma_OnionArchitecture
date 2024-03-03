@@ -6,6 +6,7 @@ namespace Teknoroma.Domain.Entities
     {
         public Guid BranchID { get; set; }
         public Guid DepartmentID { get; set; }
+        public decimal? Salary { get; set; }
 
         public virtual List<Order> Orders { get; set; }
         public virtual AppUser AppUser { get; set; }

@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Teknoroma.Application.Features.Products.Constants;
 
 namespace Teknoroma.Application.Features.Products.Models
 {
-    public class CreateProductViewModel
+	public class CreateProductViewModel
     {
         public CreateProductViewModel()
         {
@@ -16,6 +14,9 @@ namespace Teknoroma.Application.Features.Products.Models
 
 		[Display(Name = ProductColumnNames.ProductName)]
 		public string ProductName { get; set; }
+
+		[Display(Name = ProductColumnNames.BarcodeCode)]
+		public string BarcodeCode { get; set; }
 
 		[Display(Name = ProductColumnNames.UnitPrice)]
 		public decimal UnitPrice { get; set; }

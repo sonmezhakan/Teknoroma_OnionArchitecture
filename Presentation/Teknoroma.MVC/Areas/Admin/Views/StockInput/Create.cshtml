@@ -20,7 +20,7 @@
 							</div>
 							<div class="form-group">
 								<label asp-for="ProductID"></label>
-								<select class="form-control" aria-label="Default select example" asp-for="ProductID">
+								<select class="form-control" data-toggle="select2" aria-label="Default select example" asp-for="ProductID">
 									@if (ViewBag.ProductList != null)
 									{
 										@foreach (var product in ViewBag.ProductList)
@@ -32,7 +32,7 @@
 							</div>
 							<div class="form-group">
 								<label asp-for="SupplierID"></label>
-								<select class="form-control" aria-label="Default select example" asp-for="SupplierID">
+								<select class="form-control" data-toggle="select2" aria-label="Default select example" asp-for="SupplierID">
 									@if (ViewBag.SupplierList != null)
 									{
 										@foreach (var supplier in ViewBag.SupplierList)

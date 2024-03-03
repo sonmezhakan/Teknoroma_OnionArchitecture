@@ -9,6 +9,6 @@ namespace Teknoroma.Application.Features.Employees.Command.Create
 		public Guid ID { get; set; }
 		public Guid BranchID { get; set; }
 		public Guid DepartmentID { get; set; }
-        
+        public decimal? Salary { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace Teknoroma.Persistence.Configuration
         public override void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.Property(x => x.ProductName).HasMaxLength(255).IsRequired();
+            builder.Property(x => x.BarcodeCode).HasMaxLength(32);
             builder.Property(x => x.Description).HasMaxLength(255);
             builder.Property(x => x.UnitPrice).HasColumnType("money").IsRequired();
             builder.Property(x => x.CriticalStock).IsRequired();

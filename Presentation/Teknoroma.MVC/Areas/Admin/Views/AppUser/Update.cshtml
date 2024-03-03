@@ -12,7 +12,7 @@
             <div class="card-header bg-info">
                 <div class="form-group">
                     <h2 class="text-white">Kulllanıcı Seçiniz</h2>
-                    <select class="form-control" onchange="redirectToSelectedPage(this)">
+                    <select class="form-control" data-toggle="select2" onchange="redirectToSelectedPage(this)">
                         @foreach (var appUser in ViewBag.AppUserList)
                         {
                             @if (Model == null)

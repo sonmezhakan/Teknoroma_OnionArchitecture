@@ -19,7 +19,7 @@
 							</div>
 							<div class="form-group">
 								<label asp-for="ID"></label>
-								<select class="form-control" aria-label="Default select example" asp-for="ID">
+								<select class="form-control" data-toggle="select2" aria-label="Default select example" asp-for="ID">
 									@if(ViewBag.AppUserList != null)
 									{
 									@foreach (var appUser in ViewBag.AppUserList)
@@ -31,7 +31,7 @@
 							</div>
 							<div class="form-group">
 								<label asp-for="BranchID"></label>
-								<select class="form-control" aria-label="Default select example" asp-for="BranchID">
+								<select class="form-control" data-toggle="select2" aria-label="Default select example" asp-for="BranchID">
 									@if(ViewBag.BranchList != null)
 									{
 									@foreach (var branch in ViewBag.BranchList)
@@ -43,7 +43,7 @@
 							</div>
 							<div class="form-group">
 								<label asp-for="DepartmentID"></label>
-								<select class="form-control" aria-label="Default select example" asp-for="DepartmentID">
+								<select class="form-control" data-toggle="select2" aria-label="Default select example" asp-for="DepartmentID">
 									@if(ViewBag.DepartmentList != null)
 									{
 									@foreach (var department in ViewBag.DepartmentList)
@@ -52,6 +52,10 @@
 									}
 									}
 								</select>
+							</div>
+							<div class="form-group">
+								<label asp-for="Salary"></label>
+								<input type="text" class="form-control" asp-for="Salary" />
 							</div>
 						</div>
 						<div class="card-footer">

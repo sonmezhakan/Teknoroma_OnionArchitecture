@@ -644,6 +644,9 @@ namespace Teknoroma.Persistence.Migrations
                     b.Property<Guid>("MasterId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal?>("Salary")
+                        .HasColumnType("money");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -799,6 +802,10 @@ namespace Teknoroma.Persistence.Migrations
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BarcodeCode")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
 
                     b.Property<Guid?>("BrandId")
                         .HasColumnType("uniqueidentifier");

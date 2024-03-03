@@ -22,6 +22,7 @@ namespace Teknoroma.Application.Features.Stocks.Profiles
 
             CreateMap<Stock, GetAllStockQueryResponse>()
 				.ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.ProductName))
+                .ForMember(dest=>dest.BarcodeCode, opt=>opt.MapFrom(src=>src.Product.BarcodeCode))
 				.ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.Product.UnitPrice))
 				.ForMember(dest => dest.CriticalStock, opt => opt.MapFrom(src => src.Product.CriticalStock))
 				.ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.Product.ImagePath))

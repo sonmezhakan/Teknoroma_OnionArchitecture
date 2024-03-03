@@ -5,6 +5,8 @@ using Teknoroma.Application.Features.Suppliers.Command.Update;
 using Teknoroma.Application.Features.Suppliers.Models;
 using Teknoroma.Application.Features.Suppliers.Queries.GetById;
 using Teknoroma.Application.Features.Suppliers.Queries.GetList;
+using Teknoroma.Application.Features.Suppliers.Queries.GetSupplierSupplyDetailReport;
+using Teknoroma.Application.Features.Suppliers.Queries.GetSupplyReport;
 using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
@@ -107,6 +109,31 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			List< SupplierViewModel> supplierViewModel = Mapper.Map<List<SupplierViewModel>>(response);
 
 			return View(supplierViewModel);
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> SupplierReport(DateTime? startDate, DateTime? endDate)
+		{
+			if (startDate == null || endDate == null)
+			{
+				startDate = DateTime.MinValue;
+				endDate = DateTime.MaxValue;
+			}
+			var supplierSupplyReports =await ApiService.HttpClient.GetFromJsonAsync<List<GetSupplierSupplyReportQueryResponse>>($"supplier/SupplierSupplyReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+			List <SupplierSupplyReportViewModel> supplierSupplyReportViewModels = Mapper.Map<List<SupplierSupplyReportViewModel>>(supplierSupplyReports);
+
+
+			var supplierSupplyDetailReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetSupplierSupplyDetailReportQueryResponse>>($"supplier/SupplierSupplyDetailReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+
+			List<SupplierSupplyDetailReportViewModel> supplierSupplyDetailReportViewModels = Mapper.Map<List<SupplierSupplyDetailReportViewModel>>(supplierSupplyDetailReports);
+
+			SupplierReportViewModel supplierReportViewModel = new SupplierReportViewModel
+			{
+				SupplierSupplyDetailReportViewModels = supplierSupplyDetailReportViewModels,
+				SupplierSupplyReportViewModels = supplierSupplyReportViewModels
+			};
+			return View(supplierReportViewModel);
 		}
 
 

@@ -5,7 +5,6 @@
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 	decimal totalPrice = 0;
 	int totalQuantity = 0;
-	int sayac = 0;
 }
 
 <div class="row">
@@ -49,7 +48,6 @@
 						<tbody>
 							@foreach (var productSelling in Model.ProductSellingViewModels)
 							{
-								sayac++;
 								<tr>
 									<td>
 										@productSelling.ProductName
@@ -345,7 +343,6 @@
 						<tbody>
 							@foreach (var productEarning in Model.ProductEarningViewModels)
 							{
-								sayac++;
 								<tr>
 									<td>
 										@productEarning.ProductName
@@ -639,7 +636,6 @@
 						<tbody>
 							@foreach (var productSupply in Model.ProductSupplyViewModels)
 							{
-								sayac++;
 								<tr>
 									<td>
 										@productSupply.ProductName
@@ -688,7 +684,7 @@
 																		{
 																			@if (productSupply.ProductId == productSalesDetail.ProductId)
 																			{
-																				
+
 																				<tr>
 																					<td>
 																						@productSalesDetail.OrderId
@@ -916,7 +912,7 @@
 		generatePieChart('datatable-buttons-productEarningReport', 'pieChartProductEarningReport');
 
 		initializeDataTable('datatable-buttons-productSupplyReport', 1, 'desc', [0, 1]);
-		generatePieChart('datatable-buttons-productSupplyReport','pieChartProductSupplyReport');
+		generatePieChart('datatable-buttons-productSupplyReport', 'pieChartProductSupplyReport');
 	};
-	
+
 </script>

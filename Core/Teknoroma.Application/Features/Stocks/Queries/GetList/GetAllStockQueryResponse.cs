@@ -4,7 +4,8 @@
     {
 		public Guid ProductId { get; set; }
 		public string ProductName { get; set; }
-		public string BrandName { get; set; }
+        public string BarcodeCode { get; set; }
+        public string BrandName { get; set; }
 		public decimal UnitPrice { get; set; }
 		public int UnitsInStock { get; set; }
 		public int CriticalStock { get; set; }

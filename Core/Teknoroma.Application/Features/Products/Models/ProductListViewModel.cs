@@ -11,6 +11,9 @@ namespace Teknoroma.Application.Features.Products.Models
 		[Display(Name = ProductColumnNames.ProductName)]
 		public string ProductName { get; set; }
 
+		[Display(Name = ProductColumnNames.BarcodeCode)]
+		public string BarcodeCode { get; set; }
+
 		[Display(Name = ProductColumnNames.UnitPrice)]
 		public decimal UnitPrice { get; set; }
 

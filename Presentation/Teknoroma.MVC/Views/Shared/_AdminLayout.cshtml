@@ -57,7 +57,7 @@
                         <i class="fa fa-fw fa-bars"></i>
                     </button>
 
-                    <div class="dropdown d-none d-sm-inline-block">
+                    @* <div class="dropdown d-none d-sm-inline-block">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="mdi mdi-plus"></i> Create New
@@ -85,7 +85,7 @@
                                 CRM App
                             </a>
                         </div>
-                    </div>
+                    </div> *@
                 </div>
 
                 <div class="d-flex align-items-center">
@@ -118,36 +118,11 @@
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="" src="~/themes/Xacton/assets/images/flags/us.jpg" alt="Header Language" height="16">
-                            <span class="d-none d-sm-inline-block ml-1">English</span>
+                            <img class="" src="~/themes/Xacton/assets/images/flags/turkey.png" alt="Header Language" height="16">
+                            <span class="d-none d-sm-inline-block ml-1">Türkçe</span>
                             <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="~/themes/Xacton/assets/images/flags/spain.jpg" alt="user-image" class="mr-1" height="12">
-                                <span class="align-middle">Spanish</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="~/themes/Xacton/assets/images/flags/germany.jpg" alt="user-image" class="mr-1" height="12">
-                                <span class="align-middle">German</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="~/themes/Xacton/assets/images/flags/italy.jpg" alt="user-image" class="mr-1" height="12">
-                                <span class="align-middle">Italian</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="~/themes/Xacton/assets/images/flags/russia.jpg" alt="user-image" class="mr-1" height="12">
-                                <span class="align-middle">Russian</span>
-                            </a>
-                        </div>
+                       
                     </div>
 
                     <div class="dropdown d-inline-block">
@@ -287,7 +262,7 @@
                         <li class="menu-title">Menu</li>
 
                         <li>
-                            <a href="index.html" class="waves-effect">
+                            <a asp-controller="Home" asp-action="Index" class="waves-effect">
                                 <i class="feather-airplay"></i><span class="badge badge-pill badge-primary float-right">7</span><span>Dashboard</span>
                             </a>
                         </li>
@@ -453,6 +428,7 @@
                                 <li><a asp-controller="Supplier" asp-action="Update">Güncelle</a></li>
                                 <li><a asp-controller="Supplier" asp-action="Detail">Detaylar</a></li>
                                 <li><a asp-controller="Supplier" asp-action="SupplierList">Tedarikçi Listesi</a></li>
+                                <li><a asp-controller="Supplier" asp-action="SupplierReport">Tedarikçi Raporları</a></li>
                             </ul>
                         </li>
 
@@ -560,7 +536,9 @@
     <!-- Chart Js-->
     <script src="~/themes/Xacton/plugins/chart-js/chart.min.js"></script>
 
-    
+
+    <!-- Morris Custom Js-->
+    <script src="~/themes/Xacton/assets/pages/morris-chart-demo.js"></script>
 
     <!-- Plugins js -->
     <script src="~/themes/Xacton/plugins/autonumeric/autoNumeric-min.js"></script>

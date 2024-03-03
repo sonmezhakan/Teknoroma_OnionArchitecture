@@ -6,6 +6,8 @@ using Teknoroma.Application.Features.Suppliers.Command.Delete;
 using Teknoroma.Application.Features.Suppliers.Command.Update;
 using Teknoroma.Application.Features.Suppliers.Queries.GetById;
 using Teknoroma.Application.Features.Suppliers.Queries.GetList;
+using Teknoroma.Application.Features.Suppliers.Queries.GetSupplierSupplyDetailReport;
+using Teknoroma.Application.Features.Suppliers.Queries.GetSupplyReport;
 
 namespace Teknoroma.WebApi.Controllers
 {
@@ -45,6 +47,20 @@ namespace Teknoroma.WebApi.Controllers
 		public async Task<IActionResult> GetAll()
 		{
 			var result = await Mediator.Send(new GetAllSupplierQueryRequest());
+
+			return Ok(result);
+		}
+		[HttpGet("{startDate}/{endDate}")]
+		public async Task<IActionResult> SupplierSupplyReport(string startDate,string endDate)
+		{
+			var result = await Mediator.Send(new GetSupplierSupplyReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+
+			return Ok(result);
+		}
+		[HttpGet("{startDate}/{endDate}")]
+		public async Task<IActionResult> SupplierSupplyDetailReport(string startDate, string endDate)
+		{
+			var result = await Mediator.Send(new GetSupplierSupplyDetailReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
 
 			return Ok(result);
 		}

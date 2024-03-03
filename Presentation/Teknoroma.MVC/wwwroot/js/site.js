@@ -1,4 +1,6 @@
 ﻿
+
+
 function initializeDataTable(tableId, orderColNum, orderStatu, buttonColums) {
     var table = $('#' + tableId).DataTable({
         destroy: true,
@@ -41,6 +43,28 @@ function initializeDataTable(tableId, orderColNum, orderStatu, buttonColums) {
    
 }
 
+
+
+function generateDonutChart(id, data) {
+        if ($("#" + id).length && data.length > 0) {
+            Morris.Donut({
+                element: 'donutChartDailySales',
+                resize: true,
+                colors: ['#ea5545',
+                    '#f46a9b',
+                    '#ef9b20',
+                    '#edbf33',
+                    '#ede15b',
+                    '#bdcf32',
+                    '#87bc45',
+                    '#27aeef',
+                    '#87bc45',
+                    '#00bfa0'],
+                data: data
+            });
+        }
+    
+}
 
 function generatePieChart(tableId,canvasId) {
     if ($("#" + tableId).length) {

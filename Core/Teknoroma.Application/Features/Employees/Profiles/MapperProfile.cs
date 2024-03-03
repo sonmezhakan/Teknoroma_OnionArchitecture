@@ -35,6 +35,7 @@ namespace Teknoroma.Application.Features.Employees.Profiles
                 .ForMember(dest=>dest.LastName, opt=>opt.MapFrom(src=>src.AppUser.AppUserProfile.LastName))
                 .ForMember(dest=>dest.Address, opt=>opt.MapFrom(src=>src.AppUser.AppUserProfile.Address))
                 .ForMember(dest=>dest.NationalityNumber, opt=>opt.MapFrom(src=>src.AppUser.AppUserProfile.NationalityNumber))
+                .ForMember(dest=>dest.Salary, opt=>opt.MapFrom(src=>src.Salary))
                 .ReverseMap();
 
 			CreateMap<Employee, GetAllEmployeeQueryResponse>()
@@ -47,6 +48,7 @@ namespace Teknoroma.Application.Features.Employees.Profiles
 				.ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.AppUser.AppUserProfile.LastName))
 				.ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.AppUser.AppUserProfile.Address))
 				.ForMember(dest => dest.NationalityNumber, opt => opt.MapFrom(src => src.AppUser.AppUserProfile.NationalityNumber))
+				.ForMember(dest => dest.Salary, opt => opt.MapFrom(src => src.Salary))
 				.ReverseMap();
 
             CreateMap<EmployeeSellingReportViewModel, GetEmployeeSellingReportQueryResponse>().ReverseMap();

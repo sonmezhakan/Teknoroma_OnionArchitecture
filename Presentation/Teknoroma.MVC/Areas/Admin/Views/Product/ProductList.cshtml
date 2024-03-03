@@ -18,6 +18,7 @@
 						<thead>
 						<th rowspan="1" colspan="1">Resim</th>
 						<th rowspan="1" colspan="1">Ürün Adı</th>
+						<th rowspan="1" colspan="1">Barkod Numarası</th>
 						<th rowspan="1" colspan="1">Marka Adı</th>
 						<th rowspan="1" colspan="1">Kategori Adı</th>
 						<th rowspan="1" colspan="1">Fiyat</th>
@@ -37,6 +38,9 @@
 									</td>
 									<td>
 										@item.ProductName
+									</td>
+									<td>
+										@item.BarcodeCode
 									</td>
 									<td>
 										@item.BrandName
@@ -90,6 +94,6 @@
 
 <script>
 	window.onload = function () {
-		initializeDataTable('datatable-buttons', 1, 'asc', [1,2,3,4,5,6,7]);
+		initializeDataTable('datatable-buttons', 1, 'asc', [1,2,3,4,5,6,7,8]);
 	};
 </script>

@@ -9,7 +9,7 @@
 			<div class="card-header bg-info">
 				<div class="form-group">
 					<h2 class="text-white">Kategori Seçiniz</h2>
-					<select class="form-control" aria-label="Default select example" onchange="redirectToSelectedPage(this)">
+					<select class="form-control" data-toggle="select2" data-toggle="select2" onchange="redirectToSelectedPage(this)">
 						@if (ViewBag.CategoryList != null)
 						{
 							@foreach (var item in ViewBag.CategoryList)

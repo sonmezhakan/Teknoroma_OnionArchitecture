@@ -1,0 +1,183 @@
+﻿@using Teknoroma.Application.Features.Suppliers.Models
+@model SupplierReportViewModel
+@{
+	ViewData["Title"] = "SupplierReport";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	int totalSupply = 0;
+}
+
+
+<div class="row">
+	<div class="card">
+		<div class="card-header bg-info">
+			<div class="d-flex">
+				<div class="col-md-10 my-auto">
+					<h2 style="color:white;">En Çok Tedarik Yapılan Firmalar</h2>
+				</div>
+				<div class="col-md-2">
+					<form method="get" asp-controller="Supplier" asp-action="SupplierReport">
+						<div class="d-flex">
+							<div>
+								<input type="text" class="form-control date" name="startDate" id="birthdatepicker" data-toggle="daterangepicker" data-single-date-picker="true">
+							</div>
+							<div>
+								<input type="text" class="form-control date" name="endDate" id="birthdatepicker" data-toggle="daterangepicker" data-single-date-picker="true">
+							</div>
+						</div>
+						<button type="submit" class="btn btn-danger btn-block waves-effect waves-light">Filtrele</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-8">
+					<table id="datatable-buttons-supplierSupplyReport" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+						<thead>
+							<tr>
+								<th class="dt-orderable-asc dt-orderable-desc">Firma</th>
+								<th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Tedarik Edilen Ürün Adeti</th>
+								<th>
+
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var supplierSupply in Model.SupplierSupplyReportViewModels)
+							{
+								<tr>
+									<td>
+										@supplierSupply.CompanyName
+									</td>
+									<td>
+										@supplierSupply.TotalSupply
+									</td>
+									<td>
+
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-supply-supplierSupplyDetailReport-@supplierSupply.SupplierId" onclick="initializeDataTable('datatable-buttons-supplierSupplyDetailReport-@supplierSupply.SupplierId', 6, 'desc',[0,1,2,3,4,5,6,7])">
+											Sipariş Detayları
+										</button>
+										<!-- Modal -->
+										<div class="container">
+											<div class="modal fade" id="exampleModal-supply-supplierSupplyDetailReport-@supplierSupply.SupplierId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog modal-fullscreen">
+													<div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLabel">@supplierSupply.CompanyName Tedarik Detayları</h5>
+															<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+														</div>
+
+														<div class="modal-body">
+															<table id="datatable-buttons-supplierSupplyDetailReport-@supplierSupply.SupplierId" width="100%" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+																<thead>
+																	<tr>
+																		<th rowspan="1" colspan="1">Firma</th>
+																		<th rowspan="1" colspan="1">Fatura No</th>
+																		<th rowspan="1" colspan="1">Şube</th>
+																		<th rowspan="1" colspan="1">Ürün</th>
+																		<th rowspan="1" colspan="1">Adet</th>
+																		<th rowspan="1" colspan="1">Açıklama</th>
+																		<th rowspan="1" colspan="1">Tedarik Tarihi</th>
+																		<th rowspan="1" colspan="1">İşlem Yapan Çalışan</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	@if (Model.SupplierSupplyReportViewModels.Count() > 0 && Model.SupplierSupplyDetailReportViewModels.Count() > 0)
+																	{
+																		totalSupply = 0;
+																		@foreach (var supplierSupplyDetail in Model.SupplierSupplyDetailReportViewModels)
+																		{
+																			@if (supplierSupplyDetail.SupplierId == supplierSupply.SupplierId)
+																			{
+
+																				<tr>
+																					<td>
+																						@supplierSupplyDetail.CompanyName
+																					</td>
+																					<td>
+																						@supplierSupplyDetail.InoviceNumber
+																					</td>
+																					<td>
+																						@supplierSupplyDetail.BranchName
+																					</td>
+																					<td>
+																						@supplierSupplyDetail.ProductName
+																					</td>
+																					<td>
+																						@supplierSupplyDetail.Quantity
+																					</td>
+																					<td>
+																						@supplierSupplyDetail.Description
+																					</td>
+																					<td>
+																						@supplierSupplyDetail.StockEntryDate
+																					</td>
+																					<td>
+																						@supplierSupplyDetail.AppUserName
+																					</td>
+																				</tr>
+																				totalSupply += supplierSupplyDetail.Quantity;
+																			}
+																		}
+
+																	}
+																</tbody>
+																<tfoot>
+																	<tr role="row">
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+																			<span>@totalSupply Adet</span>
+																		</th>
+																		<th>
+
+																		</th>
+																		<th>
+
+																		</th>
+																	</tr>
+																</tfoot>
+															</table>
+
+														</div>
+
+														<div class="modal-footer">
+															<button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Kapat</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+				<div class="col-md-4">
+					<canvas id="pieChartSupplierSupplyReport" style="width: 100px; height: 130px;" width="100" height="100"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+	window.onload = function () {
+		initializeDataTable('datatable-buttons-supplierSupplyReport', 1, 'desc', [0, 1]);
+		generatePieChart('datatable-buttons-supplierSupplyReport', 'pieChartSupplierSupplyReport');
+	};
+
+</script>

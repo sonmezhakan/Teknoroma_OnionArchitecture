@@ -4,6 +4,8 @@ using Teknoroma.Application.Features.Suppliers.Command.Update;
 using Teknoroma.Application.Features.Suppliers.Models;
 using Teknoroma.Application.Features.Suppliers.Queries.GetById;
 using Teknoroma.Application.Features.Suppliers.Queries.GetList;
+using Teknoroma.Application.Features.Suppliers.Queries.GetSupplierSupplyDetailReport;
+using Teknoroma.Application.Features.Suppliers.Queries.GetSupplyReport;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Suppliers.Profiles
@@ -21,6 +23,9 @@ namespace Teknoroma.Application.Features.Suppliers.Profiles
             CreateMap<SupplierViewModel, UpdateSupplierCommandRequest>().ReverseMap();
             CreateMap<SupplierViewModel, GetByIdSupplierQueryResponse>().ReverseMap();
             CreateMap<SupplierViewModel,GetAllSupplierQueryResponse>().ReverseMap();
+
+            CreateMap<GetSupplierSupplyReportQueryResponse, SupplierSupplyReportViewModel>().ReverseMap();
+            CreateMap<SupplierSupplyDetailReportViewModel, GetSupplierSupplyDetailReportQueryResponse>().ReverseMap();
         }
     }
 }
