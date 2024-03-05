@@ -20,7 +20,6 @@
 							<thead>
 								<tr>
 									<th rowspan="1" colspan="1">Şube Adı</th>
-									<th rowspan="1" colspan="1">Çalışan Saysı</th>
 									<th rowspan="1" colspan="1">Telefon Numarası</th>
 									<th rowspan="1" colspan="1">Adres</th>
 									<th rowspan="1" colspan="1">Açıklama</th>
@@ -35,9 +34,6 @@
 									<tr>
 										<td>
 											@item.BranchName
-										</td>
-										<td>
-											@item.EmployeeCount
 										</td>
 										<td>
 											@item.PhoneNumber
@@ -74,7 +70,7 @@
 <script>
 
 	window.onload = function () {
-		initializeDataTable('datatable-buttons', 0, 'asc', [0, 1,2,3,4]);
+		initializeDataTable('datatable-buttons', 0, 'asc', [0, 1,2,3], "Şube Listesi");
 	};
 
 </script>

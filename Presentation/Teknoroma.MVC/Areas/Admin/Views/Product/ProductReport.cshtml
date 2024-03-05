@@ -58,8 +58,8 @@
 									<td>
 
 										<!-- Button trigger modal -->
-										<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-selling-productSalesDetailReport-@productSelling.ProductId" onclick="initializeDataTable('datatable-buttons-selling-productSalesDetailReport-@productSelling.ProductId', 9, 'desc',[0,1,2,3,4,5,6,7,8,9])">
-											Sipariş Detayları
+										<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-selling-productSalesDetailReport-@productSelling.ProductId" onclick="initializeDataTable('datatable-buttons-selling-productSalesDetailReport-@productSelling.ProductId', 9, 'desc',[0,1,2,3,4,5,6,7,8,9],'@productSelling.ProductName Satış Detayları')">
+											Satış Detayları
 										</button>
 										<!-- Modal -->
 										<div class="container">
@@ -186,7 +186,7 @@
 									<td>
 
 										<!-- Button trigger modal -->
-										<button type="button" class="btn btn-danger btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-selling-productSupplyDetailReport-@productSelling.ProductId" onclick="initializeDataTable('datatable-buttons-selling-productSupplyDetailReport-@productSelling.ProductId', 8, 'desc',[0,1,2,3,4,5,6,7,8])">
+										<button type="button" class="btn btn-danger btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-selling-productSupplyDetailReport-@productSelling.ProductId" onclick="initializeDataTable('datatable-buttons-selling-productSupplyDetailReport-@productSelling.ProductId', 8, 'desc',[0,1,2,3,4,5,6,7,8],'@productSelling.ProductName Tedarik Detayları')">
 											Tedarik Detayları
 										</button>
 										<!-- Modal -->
@@ -353,8 +353,8 @@
 									<td>
 
 										<!-- Button trigger modal -->
-										<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-earning-productSalesDetailReport-@productEarning.ProductId" onclick="initializeDataTable('datatable-buttons-earning-productSalesDetailReport-@productEarning.ProductId', 9, 'desc',[0,1,2,3,4,5,6,7,8,9])">
-											Sipariş Detayları
+										<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-earning-productSalesDetailReport-@productEarning.ProductId" onclick="initializeDataTable('datatable-buttons-earning-productSalesDetailReport-@productEarning.ProductId', 9, 'desc',[0,1,2,3,4,5,6,7,8,9],'@productEarning.ProductName - Satış Detayları')">
+											Satış Detayları
 										</button>
 										<!-- Modal -->
 										<div class="container">
@@ -481,7 +481,7 @@
 									<td>
 
 										<!-- Button trigger modal -->
-										<button type="button" class="btn btn-danger btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-earning-productSupplyDetailReport-@productEarning.ProductId" onclick="initializeDataTable('datatable-buttons-earning-productSupplyDetailReport-@productEarning.ProductId', 8, 'desc',[0,1,2,3,4,5,6,7,8])">
+										<button type="button" class="btn btn-danger btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-earning-productSupplyDetailReport-@productEarning.ProductId" onclick="initializeDataTable('datatable-buttons-earning-productSupplyDetailReport-@productEarning.ProductId', 8, 'desc',[0,1,2,3,4,5,6,7,8], '@productEarning.ProductName - Tedarik Detayları')">
 											Tedarik Detayları
 										</button>
 										<!-- Modal -->
@@ -646,8 +646,8 @@
 									<td>
 
 										<!-- Button trigger modal -->
-										<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-supply-productSalesDetailReport-@productSupply.ProductId" onclick="initializeDataTable('datatable-buttons-supply-productSalesDetailReport-@productSupply.ProductId', 9, 'desc',[0,1,2,3,4,5,6,7,8,9])">
-											Sipariş Detayları
+										<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-supply-productSalesDetailReport-@productSupply.ProductId" onclick="initializeDataTable('datatable-buttons-supply-productSalesDetailReport-@productSupply.ProductId', 9, 'desc',[0,1,2,3,4,5,6,7,8,9],'@productSupply.ProductName - Satış Detayları')">
+											Satış Detayları
 										</button>
 										<!-- Modal -->
 										<div class="container">
@@ -774,7 +774,7 @@
 									<td>
 
 										<!-- Button trigger modal -->
-										<button type="button" class="btn btn-danger btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-supply-productSupplyDetailReport-@productSupply.ProductId" onclick="initializeDataTable('datatable-buttons-supply-productSupplyDetailReport-@productSupply.ProductId', 8, 'desc',[0,1,2,3,4,5,6,7,8])">
+										<button type="button" class="btn btn-danger btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-supply-productSupplyDetailReport-@productSupply.ProductId" onclick="initializeDataTable('datatable-buttons-supply-productSupplyDetailReport-@productSupply.ProductId', 8, 'desc',[0,1,2,3,4,5,6,7,8] , '@productSupply.ProductName - Tedarik Detayları')">
 											Tedarik Detayları
 										</button>
 										<!-- Modal -->
@@ -905,13 +905,13 @@
 <script>
 
 	window.onload = function () {
-		initializeDataTable('datatable-buttons-productSellingReport', 1, 'desc', [0, 1]);
+		initializeDataTable('datatable-buttons-productSellingReport', 1, 'desc', [0, 1], 'Ürün Satış Raporu');
 		generatePieChart('datatable-buttons-productSellingReport', 'pieChartProductSellingReport');
 
-		initializeDataTable('datatable-buttons-productEarningReport', 1, 'desc', [0, 1]);
+		initializeDataTable('datatable-buttons-productEarningReport', 1, 'desc', [0, 1], 'Ürün Kazanç Raporu');
 		generatePieChart('datatable-buttons-productEarningReport', 'pieChartProductEarningReport');
 
-		initializeDataTable('datatable-buttons-productSupplyReport', 1, 'desc', [0, 1]);
+		initializeDataTable('datatable-buttons-productSupplyReport', 1, 'desc', [0, 1], 'Ürün Tedarik Raporu');
 		generatePieChart('datatable-buttons-productSupplyReport', 'pieChartProductSupplyReport');
 	};
 

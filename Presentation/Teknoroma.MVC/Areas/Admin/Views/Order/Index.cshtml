@@ -5,6 +5,7 @@
 	ViewData["Title"] = "Index";
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
 	decimal totalPrice = 0;
+	string branchName = ViewBag.Branch.Text;
 }
 <div class="row">
 	<div class="col-md-12 mx-auto">
@@ -179,7 +180,7 @@
 <script>
 
 	window.onload = function () {
-		initializeDataTable('datatable-buttons-orderProductList', 1 , 'asc', [1, 2, 3, 4]);
+		initializeDataTable('datatable-buttons-orderProductList', 1 , 'asc', [1, 2, 3, 4], '@branchName - Stok Listesi');
 	};
 
 </script>

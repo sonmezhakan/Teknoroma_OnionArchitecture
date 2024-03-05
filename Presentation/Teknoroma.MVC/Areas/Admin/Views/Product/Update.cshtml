@@ -31,98 +31,94 @@
 					</select>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-4 item-center">
-					<div class="card mx-center my-5">
-						@if (Model != null)
-						{
+			@if(Model != null)
+			{
+				<div class="row">
+					<div class="col-md-4 item-center">
+						<div class="card mx-center my-5">
 							<img src="~/images/product/@Model.ImagePath" alt="" id="productImg" />
-						}
-						else
-						{
-							<img src="~/images/product/placeholder.jpg" alt="" id="productImg" />
-						}
+						</div>
+					</div>
+					<div class="col-md-8 mx-auto">
+						<form method="post" enctype="multipart/form-data" asp-route-ID="@Model.ID">
+							<div class="card-body">
+								<div asp-validation-summary="All">
+								</div>
+								<div class="form-group">
+									<label asp-for="ProductName"></label>
+									<input type="text" class="form-control" asp-for="@Model.ProductName">
+								</div>
+								<div class="form-group">
+									<label asp-for="BarcodeCode"></label>
+									<input type="text" class="form-control" asp-for="@Model.BarcodeCode">
+								</div>
+								<div class="form-group">
+									<label asp-for="CategoryId"></label>
+									<select class="form-control" data-toggle="select2" aria-label="Default select example" asp-for="CategoryId">
+										@foreach (var category in ViewBag.CategoryList)
+										{
+											@if (Model == null)
+											{
+												<option value="@category.ID">@category.CategoryName</option>
+											}
+											else if (category.ID == Model.ID)
+											{
+												<option value="@category.ID" selected>@category.CategoryName</option>
+											}
+											else
+											{
+												<option value="@category.ID">@category.CategoryName</option>
+											}
+										}
+									</select>
+								</div>
+								<div class="form-group">
+									<label asp-for="BrandId"></label>
+									<select class="form-control" data-toggle="select2" aria-label="Default select example" asp-for="BrandId">
+										@foreach (var brand in ViewBag.BrandList)
+										{
+											@if (Model == null)
+											{
+												<option value="@brand.ID">@brand.BrandName</option>
+											}
+											else if (brand.ID == Model.ID)
+											{
+												<option value="@brand.ID" selected>@brand.BrandName</option>
+											}
+											else
+											{
+												<option value="@brand.ID">@brand.BrandName</option>
+											}
+										}
+									</select>
+								</div>
+								<div class="form-group">
+									<label asp-for="UnitPrice"></label>
+									<input type="text" class="form-control" asp-for="@Model.UnitPrice">
+								</div>
+								<div class="form-group">
+									<label asp-for="CriticalStock"></label>
+									<input type="text" class="form-control" asp-for="@Model.CriticalStock">
+								</div>
+								<div class="form-group">
+									<label asp-for="Description"></label>
+									<textarea class="form-control" asp-for="@Model.Description" rows="3" cols="4"></textarea>
+								</div>
+								<div class="form-group">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input" name="productImage" onchange="ImageView(this)">
+										<label class="custom-file-label" for="customFile">Resim Seçiniz...</label>
+									</div>
+								</div>
+
+							</div>
+							<div class="card-footer">
+								<button type="submit" class="btn btn-success btn-block waves-effect waves-light">Güncelle</button>
+							</div>
+						</form>
 					</div>
 				</div>
-				<div class="col-md-8 mx-auto">
-					<form method="post" enctype="multipart/form-data">
-						<div class="card-body">
-							<div asp-validation-summary="All">
-							</div>
-							<div class="form-group">
-								<label asp-for="ProductName"></label>
-								<input type="text" class="form-control" asp-for="@Model.ProductName">
-							</div>
-							<div class="form-group">
-								<label asp-for="BarcodeCode"></label>
-								<input type="text" class="form-control" asp-for="@Model.BarcodeCode">
-							</div>
-							<div class="form-group">
-								<label asp-for="CategoryId"></label>
-								<select class="form-control" data-toggle="select2" aria-label="Default select example" asp-for="CategoryId">
-									@foreach (var category in ViewBag.CategoryList)
-									{
-										@if (Model == null)
-										{
-											<option value="@category.ID">@category.CategoryName</option>
-										}
-										else if (category.ID == Model.ID)
-										{
-											<option value="@category.ID" selected>@category.CategoryName</option>
-										}
-										else
-										{
-											<option value="@category.ID">@category.CategoryName</option>
-										}
-									}
-								</select>
-							</div>
-							<div class="form-group">
-								<label asp-for="BrandId"></label>
-								<select class="form-control" data-toggle="select2" aria-label="Default select example" asp-for="BrandId">
-									@foreach (var brand in ViewBag.BrandList)
-									{
-										@if (Model == null)
-										{
-											<option value="@brand.ID">@brand.BrandName</option>
-										}
-										else if (brand.ID == Model.ID)
-										{
-											<option value="@brand.ID" selected>@brand.BrandName</option>
-										}
-										else
-										{
-											<option value="@brand.ID">@brand.BrandName</option>
-										}
-									}
-								</select>
-							</div>
-							<div class="form-group">
-								<label asp-for="UnitPrice"></label>
-								<input type="text" class="form-control" asp-for="@Model.UnitPrice">
-							</div>
-							<div class="form-group">
-								<label asp-for="CriticalStock"></label>
-								<input type="text" class="form-control" asp-for="@Model.CriticalStock">
-							</div>
-							<div class="form-group">
-								<label asp-for="Description"></label>
-								<textarea class="form-control" asp-for="@Model.Description" rows="3" cols="4"></textarea>
-							</div>
-							<div class="form-group">
-								<div class="custom-file">
-									<input type="file" class="custom-file-input" name="productImage" onchange="ImageView(this)">
-									<label class="custom-file-label" for="customFile">Resim Seçiniz...</label>
-								</div>
-							</div>
-
-						</div>
-						<div class="card-footer">
-							<button type="submit" class="btn btn-success btn-block waves-effect waves-light">Güncelle</button>
-						</div>
-					</form>
-				</div>
-			</div>
+			}
 		</div>
 	</div>
 </div>

@@ -42,6 +42,7 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 			services.AddScoped<IStockInputRepository, StockInputRepository>();
 			services.AddScoped<IAppUserProfileRepository,  AppUserProfileRepository>();
+			services.AddScoped<ITechnicalProblemRepository, TechnicalProblemRepository>();
 
 			//Identity Service
 			services.AddIdentity<AppUser, AppUserRole>().AddEntityFrameworkStores<TeknoromaContext>().AddDefaultTokenProviders();

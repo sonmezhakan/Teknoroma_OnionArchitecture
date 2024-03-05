@@ -1,0 +1,96 @@
+﻿@using Teknoroma.Application.Features.TechnicalProblems.Models
+@model List<TechnicalProblemViewModel>
+@{
+    ViewData["Title"] = "TechnicalProblemList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-info">
+                <h2 class="text-white">Bildirilen Sorunlar Listesi</h2>
+            </div>
+            <div class="card-body">
+                <table id="datatable-buttons" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Şube</th>
+                            <th>Sorunu Bildiren</th>
+                            <th>Sorun</th>
+                            <th>Sorun Çözümü</th>
+                            <th>Sorun Bildirim Tarihi</th>
+                            <th>Sorun Durumu</th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(Model.Count > 0)
+                        {
+                            foreach (var technicalProblem in Model)
+                            {
+                                <tr>
+                                    <td>@technicalProblem.ID</td>
+                                    <td>@technicalProblem.BranchName</td>
+                                    <td>@technicalProblem.AppUserName</td>
+                                    <td>@technicalProblem.ReportedProblem</td>
+                                    <td>@technicalProblem.ProblemSolution</td>
+                                    <td>@technicalProblem.NotificationDate</td>
+                                    @if (technicalProblem.TechnicalProblemStatu == Teknoroma.Domain.Enums.TechnicalProblemStatu.TechnicalProblem)
+                                    {
+                                        <td style="background-color:darkred; color:white">
+                                            1- Sorun Bildirildi
+                                        </td>
+                                    }
+                                    else if (technicalProblem.TechnicalProblemStatu == Teknoroma.Domain.Enums.TechnicalProblemStatu.Processed)
+                                    {
+                                        <td style="background-color:dodgerblue; color:white">
+                                            2- İşleme Alındı
+                                        </td>
+                                    }
+                                    else if (technicalProblem.TechnicalProblemStatu == Teknoroma.Domain.Enums.TechnicalProblemStatu.ProblemSolved)
+                                    {
+                                        <td>
+                                            3 - Sorun Çözüldü
+                                        </td>
+                                    }
+                                    <td>
+                                        <div>
+                                            <a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="UpdateTechnicalStatu" asp-route-id="@technicalProblem.ID" asp-route-technicalProblemStatu="@Teknoroma.Domain.Enums.TechnicalProblemStatu.Processed">İşleme Alındı</a>
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="UpdateTechnicalStatu" asp-route-id="@technicalProblem.ID" asp-route-technicalProblemStatu="@Teknoroma.Domain.Enums.TechnicalProblemStatu.ProblemSolved">Sorun Çözüldü</a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <a class="btn btn-info btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="Detail" asp-route-id="@technicalProblem.ID">Detaylar</a>
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="Update" asp-route-id="@technicalProblem.ID">Güncelle</a>
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="TechnicalProblem" asp-route-id="@technicalProblem.ID">Sil</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = function () {
+        initializeDataTable('datatable-buttons', 6, 'asc', [0,1, 2, 3, 4, 5, 6],'Bildirilen Sorun Listesi');
+    };
+</script>

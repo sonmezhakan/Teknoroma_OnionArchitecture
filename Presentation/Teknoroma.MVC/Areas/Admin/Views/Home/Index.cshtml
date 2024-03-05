@@ -157,12 +157,12 @@
 							<h4 class="card-title d-inline-block">Günlük Kategoriye Göre Satış</h4>
 
 							<div id="donutChartDailySales" class="donutChartDailySales" style="height: 260px;"></div>
-@* 
+							@*
 							<div class="row text-center mt-4">
-								<div class="col-12 mx-auto">
-									<h4>@Model.CategorySellingReportViewModels.Sum(x => x.TotalSales)</h4>
-									<p class="text-muted mb-0">Toplam Satılan Adet</p>
-								</div>
+							<div class="col-12 mx-auto">
+							<h4>@Model.CategorySellingReportViewModels.Sum(x => x.TotalSales)</h4>
+							<p class="text-muted mb-0">Toplam Satılan Adet</p>
+							</div>
 							</div> *@
 						</div>
 					</div>
@@ -171,56 +171,56 @@
 		</div>
 	</div>
 	<div class="cold-md-12">
-		
-			<div class="table-responsive">
-				<table class="table table-centered table-hover table-xl mb-0" id="recent-orders">
-					<thead>
+
+		<div class="table-responsive">
+			<table class="table table-centered table-hover table-xl mb-0" id="recent-orders">
+				<thead>
+					<tr>
+						<th class="border-top-0">Şube</th>
+						<th class="border-top-0">Müşteri</th>
+						<th class="border-top-0">Ürün Adeti</th>
+						<th class="border-top-0">Fiyat</th>
+						<th class="border-top-0">Sipariş Tarihi</th>
+						<th class="border-top-0">Sipariş Durumu</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var order in Model.OrderListViewModels)
+					{
 						<tr>
-							<th class="border-top-0">Şube</th>
-							<th class="border-top-0">Müşteri</th>
-							<th class="border-top-0">Ürün Adeti</th>
-							<th class="border-top-0">Fiyat</th>
-							<th class="border-top-0">Sipariş Tarihi</th>
-							<th class="border-top-0">Sipariş Durumu</th>
+							<td class="text-truncate">@order.BranchName</td>
+
+							<td class="text-truncate">@order.CustomerName</td>
+
+							<td class="text-truncate">@order.TotalProductQuantity</td>
+
+							<td class="text-truncate">@order.TotalPrice ₺</td>
+
+							<td class="text-truncate">@order.OrderDate</td>
+							@if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.GettingReady)
+							{
+								<td class="text-truncate" style="background-color:darkred; color:white">
+									1- Hazırlanıyor
+								</td>
+							}
+							else if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Ready)
+							{
+								<td class="text-truncate" style="background-color:dodgerblue; color:white">
+									2- Hazırlandı
+								</td>
+							}
+							else if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Delivered)
+							{
+								<td class="text-truncate">
+									3 - Teslim Edildi
+								</td>
+							}
 						</tr>
-					</thead>
-					<tbody>
-						@foreach (var order in Model.OrderListViewModels)
-						{
-							<tr>
-								<td class="text-truncate">@order.BranchName</td>
+					}
+				</tbody>
+			</table>
+		</div>
 
-								<td class="text-truncate">@order.CustomerName</td>
-
-								<td class="text-truncate">@order.TotalProductQuantity</td>
-
-								<td class="text-truncate">@order.TotalPrice ₺</td>
-
-								<td class="text-truncate">@order.OrderDate</td>
-								@if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.GettingReady)
-								{
-									<td class="text-truncate" style="background-color:darkred; color:white">
-										1- Hazırlanıyor
-									</td>
-								}
-								else if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Ready)
-								{
-									<td class="text-truncate" style="background-color:dodgerblue; color:white">
-										2- Hazırlandı
-									</td>
-								}
-								else if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Delivered)
-								{
-									<td class="text-truncate">
-										3 - Teslim Edildi
-									</td>
-								}
-							</tr>
-						}
-					</tbody>
-				</table>
-			</div>
-		
 	</div>
 </div>
 

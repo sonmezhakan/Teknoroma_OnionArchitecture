@@ -142,13 +142,13 @@
 <script>
 
     window.onload = function () {
-        initializeDataTable('datatable-buttons-categorySellingReport', 1, 'desc', [0, 1]);
+        initializeDataTable('datatable-buttons-categorySellingReport', 1, 'desc', [0, 1], 'Kategori Satış Raporu');
         generatePieChart('datatable-buttons-categorySellingReport', 'pieChartCategorySellingReport');
 
-        initializeDataTable('datatable-buttons-categoryEarningReport', 1, 'desc', [0, 1]);
+        initializeDataTable('datatable-buttons-categoryEarningReport', 1, 'desc', [0, 1] ,'Kategori Kazanç Raporu');
         generatePieChart('datatable-buttons-categoryEarningReport', 'pieChartCategoryEarningReport');
 
-        initializeDataTable('datatable-buttons-categorySupplyReport', 1, 'desc', [0, 1]);
+        initializeDataTable('datatable-buttons-categorySupplyReport', 1, 'desc', [0, 1], 'Kategori Tedarik Raporu');
         generatePieChart('datatable-buttons-categorySupplyReport', 'pieChartCategorySupplyReport');
     };
 

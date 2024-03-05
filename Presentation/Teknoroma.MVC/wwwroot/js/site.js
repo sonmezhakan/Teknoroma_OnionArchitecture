@@ -1,7 +1,7 @@
 ﻿
 
 
-function initializeDataTable(tableId, orderColNum, orderStatu, buttonColums) {
+function initializeDataTable(tableId, orderColNum, orderStatu, buttonColums, title) {
     var table = $('#' + tableId).DataTable({
         destroy: true,
         "order": [[orderColNum, orderStatu]],
@@ -9,18 +9,21 @@ function initializeDataTable(tableId, orderColNum, orderStatu, buttonColums) {
         buttons: [
             {
                 extend: 'copyHtml5',
+                title: title,
                 exportOptions: {
                     columns: buttonColums // "Copy" işlemi için dahil edilecek sütunları belirtir
                 }
             },
             {
                 extend: 'pdfHtml5',
+                title: title,
                 exportOptions: {
                     columns: buttonColums // "PDF" işlemi için dahil edilecek sütunları belirtir
                 }
             },
             {
                 extend: 'print',
+                title: title,
                 exportOptions: {
                     columns: buttonColums // "Print" işlemi için dahil edilecek sütunları belirtir
                 }

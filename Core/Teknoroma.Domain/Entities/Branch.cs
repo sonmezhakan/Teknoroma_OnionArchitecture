@@ -13,5 +13,6 @@ namespace Teknoroma.Domain.Entities
         public virtual List<StockInput> StockInputs { get; set; }
         public virtual List<Employee> Employees { get; set; }
         public virtual List<Order> Orders { get; set; }
+        public virtual List<TechnicalProblem> TechnicalProblems  { get; set; }
     }
 }

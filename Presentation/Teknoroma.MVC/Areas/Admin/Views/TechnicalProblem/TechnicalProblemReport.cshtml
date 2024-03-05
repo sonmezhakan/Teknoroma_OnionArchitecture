@@ -1,0 +1,29 @@
+﻿@using Teknoroma.Application.Features.TechnicalProblems.Models
+@model CreateTechnicalProblemViewModel
+@{
+    ViewData["Title"] = "TechnicalProblemReport";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header bg-info">
+				<h2 class="text-white">Sorun Bildir</h2>
+			</div>
+			<form method="post">
+				<div class="card-body">
+					<div asp-validation-summary="All">
+					</div>
+					<div class="form-group">
+						<label asp-for="ReportedProblem"></label>
+						<textarea class="form-control" cols="4" rows="3" asp-for="ReportedProblem"></textarea>
+					</div>
+				</div>
+				<div class="card-footer">
+					<button type="submit" class="btn btn-success btn-block waves-effect waves-light">Ekle</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

@@ -3,6 +3,7 @@
 @{
 	ViewData["Title"] = "OrderList";
 	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	string branchName = ViewBag.Branch.Text;
 }
 <div class="row">
 	<div class="col-md-12 mx-auto">
@@ -98,7 +99,7 @@
 										<td>
 
 											<!-- Button trigger modal -->
-											<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-@order.ID" onclick="initializeDataTable('datatable-buttons-orderDetail-@order.ID', 1, 'asc',[1,2,3,4])">
+											<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-@order.ID" onclick="initializeDataTable('datatable-buttons-orderDetail-@order.ID', 1, 'asc',[1,2,3,4],'@order.ID - Sipariş Listesi')">
 												Sipariş Detayı
 											</button>
 											<!-- Modal -->
@@ -195,7 +196,7 @@
 <script>
 
 	window.onload = function () {
-		initializeDataTable('datatable-buttons-orderList', 6, 'asc', [0, 1,2,3,4,5,6,7,8]);
+		initializeDataTable('datatable-buttons-orderList', 6, 'asc', [0, 1,2,3,4,5,6,7,8], '@branchName Sipariş Listesi');
 	};
 
 </script>

@@ -1,0 +1,52 @@
+﻿@using Teknoroma.Application.Features.TechnicalProblems.Models
+@model TechnicalProblemViewModel
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header bg-info">
+				<h2 class="text-white">Sorun Bildir</h2>
+			</div>
+			@if(Model != null)
+			{
+				<form>
+					<div class="card-body">
+						<div class="form-group">
+							<label asp-for="ID"></label>
+							<input type="text" class="form-control" value="@Model.ID" />
+						</div>
+						<div class="form-group">
+							<label asp-for="BranchName"></label>
+							<input type="text" class="form-control" value="@Model.BranchName" />
+						</div>
+						<div class="form-group">
+							<label asp-for="AppUserName"></label>
+							<input type="text" class="form-control" value="@Model.AppUserName" />
+						</div>
+						<div class="form-group">
+							<label asp-for="ReportedProblem"></label>
+							<input type="text" class="form-control" value="@Model.ReportedProblem" />
+						</div>
+						<div class="form-group">
+							<label asp-for="ProblemSolution"></label>
+							<input type="text" class="form-control" value="ProblemSolution" />
+						</div>
+						<div class="form-group">
+							<label asp-for="NotificationDate"></label>
+							<input type="text" class="form-control" value="@Model.NotificationDate" />
+						</div>
+					</div>
+					<div class="card-footer">
+						<button type="submit" class="btn btn-warning btn-block waves-effect waves-light">Güncelle</button>
+					</div>
+				</form>
+			}
+		</div>
+	</div>
+</div>
+
+

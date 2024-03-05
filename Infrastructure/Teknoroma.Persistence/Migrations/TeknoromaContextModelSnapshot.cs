@@ -1095,6 +1095,80 @@ namespace Teknoroma.Persistence.Migrations
                     b.ToTable("Suppliers");
                 });
 
+            modelBuilder.Entity("Teknoroma.Domain.Entities.TechnicalProblem", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BranchId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedComputerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedIpAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("MasterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("NotificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProblemSolution")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ReportedProblem")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<short>("TechnicalProblemStatu")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("UpdatedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("TechnicalProblems");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Teknoroma.Domain.Entities.AppUserRole", null)
@@ -1301,6 +1375,25 @@ namespace Teknoroma.Persistence.Migrations
                     b.Navigation("Supplier");
                 });
 
+            modelBuilder.Entity("Teknoroma.Domain.Entities.TechnicalProblem", b =>
+                {
+                    b.HasOne("Teknoroma.Domain.Entities.Branch", "Branch")
+                        .WithMany("TechnicalProblems")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Teknoroma.Domain.Entities.Employee", "Employee")
+                        .WithMany("TechnicalProblems")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("Teknoroma.Domain.Entities.AppUser", b =>
                 {
                     b.Navigation("AppUserProfile")
@@ -1319,6 +1412,8 @@ namespace Teknoroma.Persistence.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("StockInputs");
+
+                    b.Navigation("TechnicalProblems");
 
                     b.Navigation("stocks");
                 });
@@ -1346,6 +1441,8 @@ namespace Teknoroma.Persistence.Migrations
             modelBuilder.Entity("Teknoroma.Domain.Entities.Employee", b =>
                 {
                     b.Navigation("Orders");
+
+                    b.Navigation("TechnicalProblems");
                 });
 
             modelBuilder.Entity("Teknoroma.Domain.Entities.Order", b =>

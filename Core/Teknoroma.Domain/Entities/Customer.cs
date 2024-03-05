@@ -18,5 +18,6 @@ namespace Teknoroma.Domain.Entities
         public InvoiceEnum Invoice { get; set; }
 
         public virtual List<Order> Orders { get; set; }
+        
     }
 }

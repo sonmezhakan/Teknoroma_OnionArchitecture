@@ -57,7 +57,7 @@
                                     </td>
                                     <td>
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-employeeDetail-@employeeSelling.UserName" onclick="initializeDataTable('datatable-buttons-employeeSellingDetailReport-@employeeSelling.UserName', 1, 'asc',[0,1,2,3])">
+                                        <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-employeeDetail-@employeeSelling.UserName" onclick="initializeDataTable('datatable-buttons-employeeSellingDetailReport-@employeeSelling.UserName', 1, 'asc',[0,1,2,3],'@employeeSelling.UserName - Satış Raporu')">
                                             Detaylı Rapor
                                         </button>
                                         <!-- Modal -->
@@ -185,7 +185,7 @@
                                     </td>
                                     <td>
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-employeeDetail-@employeeEarning.UserName" onclick="initializeDataTable('datatable-buttons-employeeEarningDetailReport-@employeeEarning.UserName', 1, 'asc',[0,1,2,3])">
+                                        <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-employeeDetail-@employeeEarning.UserName" onclick="initializeDataTable('datatable-buttons-employeeEarningDetailReport-@employeeEarning.UserName', 1, 'asc',[0,1,2,3], '@employeeEarning - Kazanç Raporu')">
                                             Detaylı Rapor
                                         </button>
                                         <!-- Modal -->
@@ -277,10 +277,10 @@
 <script>
 
     window.onload = function () {
-        initializeDataTable('datatable-buttons-employeeSellingReport', 1, 'desc', [0, 1]);
+        initializeDataTable('datatable-buttons-employeeSellingReport', 1, 'desc', [0, 1], 'Çalışan Satış Raporu');
         generatePieChart('datatable-buttons-employeeSellingReport', 'pieChartEmployeeSellingReport');
 
-        initializeDataTable('datatable-buttons-employeeEarningReport', 1, 'desc', [0, 1]);
+        initializeDataTable('datatable-buttons-employeeEarningReport', 1, 'desc', [0, 1], 'Çalışan Kazanç Raporu');
         generatePieChart('datatable-buttons-employeeEarningReport', 'pieChartEmployeeEarningReport');
     };
 

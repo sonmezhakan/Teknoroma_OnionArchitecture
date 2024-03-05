@@ -18,58 +18,60 @@
                             {
                                 <option value="@item.ID" href="@item.ID">@item.CompanyName</option>
                             }
-                            else if (item.ID != Model.ID)
-                            {
-                                <option value="@item.ID" href="@item.ID">@item.CompanyName</option>
-                            }
-                            else if (item.ID == Model.ID)
+                            
+                            @if (item.ID == Model.ID)
                             {
                                 <option value="@item.ID" selected>@item.CompanyName</option>
-
+                            }
+                            else
+                            {
+                                <option value="@item.ID" href="@item.ID">@item.CompanyName</option>
                             }
                         }
                     </select>
                 </div>
             </div>
-            <form>
-                <div class="card-body">
-                    <div asp-validation-summary="All">
+           @if(Model != null)
+            {
+                <form>
+                    <div class="card-body">
+                        <div asp-validation-summary="All">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ID"></label>
+                            <input type="text" class="form-control" asp-for="@Model.ID" disabled />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CompanyName"></label>
+                            <input type="text" class="form-control" asp-for="@Model.CompanyName">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ContactName"></label>
+                            <input type="text" class="form-control" asp-for="@Model.ContactName">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ContactTitle"></label>
+                            <input type="text" class="form-control" asp-for="@Model.ContactTitle">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email"></label>
+                            <input type="email" class="form-control" asp-for="@Model.Email">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PhoneNumber"></label>
+                            <input type="text" class="form-control" asp-for="@Model.PhoneNumber">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address"></label>
+                            <textarea class="form-control" asp-for="@Model.Address" rows="3" cols="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="WebSite"></label>
+                            <input type="url" class="form-control" asp-for="@Model.WebSite">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="ID"></label>
-                        <input type="text" class="form-control" asp-for="@Model.ID" disabled />
-                        <input type="hidden" asp-for="@Model.ID" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="CompanyName"></label>
-                        <input type="text" class="form-control" asp-for="@Model.CompanyName">
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ContactName"></label>
-                        <input type="text" class="form-control" asp-for="@Model.ContactName">
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ContactTitle"></label>
-                        <input type="text" class="form-control" asp-for="@Model.ContactTitle">
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Email"></label>
-                        <input type="email" class="form-control" asp-for="@Model.Email">
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="PhoneNumber"></label>
-                        <input type="text" class="form-control" asp-for="@Model.PhoneNumber">
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Address"></label>
-                        <textarea class="form-control" asp-for="@Model.Address" rows="3" cols="4"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="WebSite"></label>
-                        <input type="url" class="form-control" asp-for="@Model.WebSite">
-                    </div>
-                </div>
-            </form>
+                </form>
+            }
         </div>
     </div>
 </div>

@@ -103,11 +103,11 @@
 <script>
 
     window.onload = function () {
-        initializeDataTable('datatable-buttons-branchSellingReport', 1, 'desc', [0, 1]);
+        initializeDataTable('datatable-buttons-branchSellingReport', 1, 'desc', [0, 1], 'Şubeler Satış Raporu');
         generatePieChart('datatable-buttons-branchSellingReport', 'pieChartBranchSellingReport');
 
         initializeDataTable('datatable-buttons-branchEarningReport', 1, 'desc', [0, 1]);
-        generatePieChart('datatable-buttons-branchEarningReport', 'pieChartBranchEarningReport');
+        generatePieChart('datatable-buttons-branchEarningReport', 'pieChartBranchEarningReport','Şubeler Kazanç Raporu');
     };
 
 </script>

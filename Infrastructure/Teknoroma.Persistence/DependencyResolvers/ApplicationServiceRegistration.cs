@@ -52,8 +52,6 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddTransient<OrderBusinessRules>();
 			services.AddTransient<OrderDetailBusinessRules>();
 
-
-
 			return services;
 		}
 	}

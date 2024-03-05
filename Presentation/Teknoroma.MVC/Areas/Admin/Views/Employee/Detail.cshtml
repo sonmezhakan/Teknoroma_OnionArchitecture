@@ -35,57 +35,60 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12 mx-auto">
-					<form method="post" enctype="multipart/form-data">
-						<div class="card-body">
-							<div asp-validation-summary="All">
-							</div>
-							<div class="form-group">
-								<div class="form-group">
-									<label asp-for="ID"></label>
-									<input type="text" class="form-control" asp-for="@Model.ID">
+					@if(Model != null)
+					{
+						<form>
+							<div class="card-body">
+								<div asp-validation-summary="All">
 								</div>
-							</div>
-							<div class="form-group">
-								<label asp-for="BranchName"></label>
-								<input type="text" class="form-control" asp-for="@Model.BranchName">
-							</div>
-							<div class="form-group">
-								<label asp-for="DepartmentName"></label>
-								<input type="text" class="form-control" asp-for="@Model.DepartmentName">
-							</div>
-							<div class="form-group">
-								<label asp-for="UserName"></label>
-								<input type="text" class="form-control" asp-for="@Model.UserName">
-							</div>
-							<div class="form-group">
-								<label asp-for="Email"></label>
-								<input type="email" class="form-control" asp-for="@Model.Email">
-							</div>
-							<div class="form-group">
-								<label asp-for="FirstName"></label>
-								<input type="text" class="form-control" asp-for="@Model.FirstName">
-							</div>
-							<div class="form-group">
-								<label asp-for="LastName"></label>
-								<input type="text" class="form-control" asp-for="@Model.LastName">
-							</div>
-							<div class="form-group">
-								<label asp-for="NationalityNumber"></label>
-								<input type="text" class="form-control" asp-for="@Model.NationalityNumber">
-							</div>
-							<div class="form-group">
-								<label asp-for="PhoneNumber"></label>
-								<input type="number" class="form-control" asp-for="@Model.PhoneNumber">
-							</div>
-							<div class="form-group">
-								<label asp-for="Address"></label>
-								<textarea class="form-control" rows="3" cols="4" asp-for="@Model.Address"></textarea>
-							</div>
-							<div class="form-group">
-								<label asp-for="Salary"></label>
-								<input type="text" class="form-control" asp-for="@Model.Salary" />
-							</div>
-					</form>
+								<div class="form-group">
+									<div class="form-group">
+										<label asp-for="ID"></label>
+										<input type="text" class="form-control" asp-for="@Model.ID">
+									</div>
+								</div>
+								<div class="form-group">
+									<label asp-for="BranchName"></label>
+									<input type="text" class="form-control" asp-for="@Model.BranchName">
+								</div>
+								<div class="form-group">
+									<label asp-for="DepartmentName"></label>
+									<input type="text" class="form-control" asp-for="@Model.DepartmentName">
+								</div>
+								<div class="form-group">
+									<label asp-for="UserName"></label>
+									<input type="text" class="form-control" asp-for="@Model.UserName">
+								</div>
+								<div class="form-group">
+									<label asp-for="Email"></label>
+									<input type="email" class="form-control" asp-for="@Model.Email">
+								</div>
+								<div class="form-group">
+									<label asp-for="FirstName"></label>
+									<input type="text" class="form-control" asp-for="@Model.FirstName">
+								</div>
+								<div class="form-group">
+									<label asp-for="LastName"></label>
+									<input type="text" class="form-control" asp-for="@Model.LastName">
+								</div>
+								<div class="form-group">
+									<label asp-for="NationalityNumber"></label>
+									<input type="text" class="form-control" asp-for="@Model.NationalityNumber">
+								</div>
+								<div class="form-group">
+									<label asp-for="PhoneNumber"></label>
+									<input type="number" class="form-control" asp-for="@Model.PhoneNumber">
+								</div>
+								<div class="form-group">
+									<label asp-for="Address"></label>
+									<textarea class="form-control" rows="3" cols="4" asp-for="@Model.Address"></textarea>
+								</div>
+								<div class="form-group">
+									<label asp-for="Salary"></label>
+									<input type="text" class="form-control" asp-for="@Model.Salary" />
+								</div>
+						</form>
+					}
 				</div>
 			</div>
 		</div>

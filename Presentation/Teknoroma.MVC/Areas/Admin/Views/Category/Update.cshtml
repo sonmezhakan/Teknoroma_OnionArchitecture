@@ -29,27 +29,30 @@
 					</select>
 				</div>
 			</div>
-			<form method="post">
-				<div class="card-body">
-					<div asp-validation-summary="All">
+			@if(Model != null)
+			{
+				<form method="post" asp-route-ID="@Model.ID">
+					<div class="card-body">
+						<div asp-validation-summary="All">
+						</div>
+						<div class="form-group">
+							<label asp-for="ID"></label>
+							<input type="text" class="form-control" value="@Model.ID" disabled />
+						</div>
+						<div class="form-group">
+							<label asp-for="CategoryName"></label>
+							<input type="text" class="form-control" asp-for="@Model.CategoryName">
+						</div>
+						<div class="form-group">
+							<label asp-for="Description"></label>
+							<textarea class="form-control" asp-for="@Model.Description" rows="3" cols="4"></textarea>
+						</div>
 					</div>
-					<div class="form-group">
-						<label asp-for="ID"></label>
-						<input type="text" class="form-control" asp-for="@Model.ID" disabled />
+					<div class="card-footer">
+						<button class="btn btn-warning btn-block waves-effect waves-light" type="submit">Güncelle</button>
 					</div>
-					<div class="form-group">
-						<label asp-for="CategoryName"></label>
-						<input type="text" class="form-control" asp-for="@Model.CategoryName">
-					</div>
-					<div class="form-group">
-						<label asp-for="Description"></label>
-						<textarea class="form-control" asp-for="@Model.Description" rows="3" cols="4"></textarea>
-					</div>
-				</div>
-				<div class="card-footer">
-					<button class="btn btn-warning btn-block waves-effect waves-light" type="submit">Güncelle</button>
-				</div>
-			</form>
+				</form>
+			}
 		</div>
 	</div>
 </div>
