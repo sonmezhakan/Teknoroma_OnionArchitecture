@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.AppUserRoles.Command.Create;
 using Teknoroma.Application.Features.AppUserRoles.Command.Delete;
 using Teknoroma.Application.Features.AppUserRoles.Command.Update;
@@ -9,6 +10,7 @@ namespace Teknoroma.WebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class RoleController : BaseController
     {
         [HttpPost]

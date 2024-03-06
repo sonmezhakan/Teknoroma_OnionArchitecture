@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.Branches.Command.Create;
 using Teknoroma.Application.Features.Branches.Command.Delete;
@@ -13,7 +14,8 @@ namespace Teknoroma.WebApi.Controllers
 {
 	[Route("api/[controller]/[action]")]
 	[ApiController]
-	public class BranchController : BaseController
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    public class BranchController : BaseController
 	{
 		[HttpPost]
 		public async Task<IActionResult> Create(CreateBranchCommandRequest createBranchCommandRequest)

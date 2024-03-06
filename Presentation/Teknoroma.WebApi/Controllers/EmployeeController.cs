@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.Employees.Command.Create;
 using Teknoroma.Application.Features.Employees.Command.Update;
 using Teknoroma.Application.Features.Employees.Queries.GetById;
@@ -11,7 +12,8 @@ namespace Teknoroma.WebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
 	[ApiController]
-	public class EmployeeController : BaseController
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    public class EmployeeController : BaseController
 	{
 		[HttpPost]
 		public async Task<IActionResult> Create(CreateEmployeeCommandRequest createEmployeeCommandRequest)

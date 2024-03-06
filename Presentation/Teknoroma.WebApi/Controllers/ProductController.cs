@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.Products.Command.Create;
 using Teknoroma.Application.Features.Products.Command.Delete;
 using Teknoroma.Application.Features.Products.Command.Update;
@@ -15,6 +16,7 @@ namespace Teknoroma.WebApi.Controllers
 {
 	[Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class ProductController : BaseController
     {
         [HttpPost]

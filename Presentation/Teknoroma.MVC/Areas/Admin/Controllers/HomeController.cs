@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using Teknoroma.Application.Features.AppUsers.Queries.GetByUserName;
 using Teknoroma.Application.Features.Brands.Quries.GetBrandSellingReport;
 using Teknoroma.Application.Features.Categories.Models;
 using Teknoroma.Application.Features.Categories.Queries.GetCategorySellingReport;
 using Teknoroma.Application.Features.Employees.Queries.GetById;
 using Teknoroma.Application.Features.Orders.Models;
-using Teknoroma.Application.Features.Orders.Queries.GetByBranchIdList;
 using Teknoroma.Application.Features.Orders.Queries.GetList;
 using Teknoroma.Application.Features.Products.Queries.GetProductEarningReport;
 using Teknoroma.Application.Features.Products.Queries.GetProductSellingReport;
@@ -18,14 +16,15 @@ using Teknoroma.MVC.Areas.Admin.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
-	[Area("Admin")]
+    [Area("Admin")]
     [Authorize]
     public class HomeController : BaseController
     {
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-			await BranchViewBag();
+			await CheckJwtBearer();
+            await BranchViewBag();
 
 
 			DateTime startDate = DateTime.Now.Date;

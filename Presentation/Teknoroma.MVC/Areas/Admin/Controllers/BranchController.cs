@@ -16,8 +16,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 	[Authorize]
 	public class BranchController : BaseController
 	{
-
-		[HttpGet]
+        [HttpGet]
 		public async Task<IActionResult> Create()
 		{
 			return View();
@@ -25,7 +24,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Create(CreateBranchViewModel model)
 		{
-			if(!ModelState.IsValid)
+            await CheckJwtBearer();
+            if (!ModelState.IsValid)
 			{
 				await ErrorResponse();
                 return View(model);
@@ -47,7 +47,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Update(Guid? id)
 		{
-			await BranchViewBag();
+            await CheckJwtBearer();
+            await BranchViewBag();
 
 			if (id == null) return View();
 
@@ -63,6 +64,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Update(BranchViewModel model)
 		{
+            await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await BranchViewBag();
@@ -87,7 +89,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			await ApiService.HttpClient.DeleteAsync($"branch/delete/{id}");
+            await CheckJwtBearer();
+            await ApiService.HttpClient.DeleteAsync($"branch/delete/{id}");
 
 			return RedirectToAction("BranchList", "Branch");
 		}
@@ -95,7 +98,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Detail(Guid? id)
 		{
-			await BranchViewBag();
+            await CheckJwtBearer();
+            await BranchViewBag();
 
 			if (id == null) return View();
 
@@ -113,7 +117,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> BranchList()
 		{
-			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllBranchQueryResponse>>("branch/getall");
+            await CheckJwtBearer();
+            var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllBranchQueryResponse>>("branch/getall");
 
 			if (response == null) return View();
 
@@ -124,6 +129,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> BranchReport(DateTime? startDate,DateTime? endDate)
 		{
+            await CheckJwtBearer();
             if (startDate == null || endDate == null)
             {
                 startDate = DateTime.MinValue;

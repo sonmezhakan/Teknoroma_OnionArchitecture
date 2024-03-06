@@ -1,15 +1,16 @@
 ﻿using FluentValidation;
 using Teknoroma.Application.Features.AppUsers.Contants;
-using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.AppUsers.Command.Create
 {
-    public class CreateAppUserCommandValidator:AbstractValidator<AppUser>
+	public class CreateAppUserCommandValidator:AbstractValidator<CreateAppUserCommandRequest>
     {
         public CreateAppUserCommandValidator()
         {
             RuleFor(x => x.UserName).NotEmpty().WithMessage(AppUsersMessages.UserNameNotNull)
                 .MaximumLength(64).WithMessage(AppUsersMessages.UserNameMaxLenght);
+
+            RuleFor(x => x.Password).NotEmpty().WithMessage(AppUsersMessages.PasswordNotNull);
 
             RuleFor(x => x.Email).NotEmpty().WithMessage(AppUsersMessages.EmailNotNull)
                 .MaximumLength(128).WithMessage(AppUsersMessages.EmailMaxLenght);

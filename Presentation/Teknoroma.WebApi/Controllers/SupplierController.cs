@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.Suppliers.Command.Create;
@@ -13,7 +14,8 @@ namespace Teknoroma.WebApi.Controllers
 {
 	[Route("api/[controller]/[action]")]
 	[ApiController]
-	public class SupplierController : BaseController
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    public class SupplierController : BaseController
 	{
 		[HttpPost]
 		public async Task<IActionResult> Create(CreateSupplierCommandRequest createSupplierCommandRequest)

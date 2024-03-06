@@ -23,13 +23,15 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Create()
 		{
-			await ViewBagList();
+            await CheckJwtBearer();
+            await ViewBagList();
 
             return View();
 		}
 		[HttpPost]
 		public async Task<IActionResult> Create(CreateEmployeeViewModel model)
 		{
+            await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await ViewBagList();
@@ -50,6 +52,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Update(Guid? id)
 		{
+            await CheckJwtBearer();
             await ViewBagList();
 
             if (id == null) return View();
@@ -63,6 +66,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Update(UpdateEmployeeViewModel model)
 		{
+            await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await ViewBagList();
@@ -83,13 +87,15 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			await ApiService.HttpClient.DeleteAsync($"employee/delete/{id}");
+            await CheckJwtBearer();
+            await ApiService.HttpClient.DeleteAsync($"employee/delete/{id}");
 
 			return RedirectToAction("EmployeeList","Employee");
 		}
 		[HttpGet]
 		public async Task<IActionResult> Detail(Guid? id)
 		{
+            await CheckJwtBearer();
             await ViewBagList();
 
             if (id == null) return View();
@@ -103,7 +109,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> EmployeeList()
 		{
-			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllEmployeeQueryResponse>>("employee/getall");
+            await CheckJwtBearer();
+            var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllEmployeeQueryResponse>>("employee/getall");
 
 			List<EmployeeViewModel> employeeViewModel = Mapper.Map<List<EmployeeViewModel>>(response);
 
@@ -113,6 +120,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> EmployeeReport(DateTime? startDate,DateTime? endDate)
 		{
+            await CheckJwtBearer();
             if (startDate == null || endDate == null)
             {
                 startDate = DateTime.MinValue;

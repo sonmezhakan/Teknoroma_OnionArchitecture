@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.TechnicalProblems.Commands.Create;
 using Teknoroma.Application.Features.TechnicalProblems.Commands.Delete;
@@ -10,6 +11,7 @@ namespace Teknoroma.WebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class TechnicalProblemController : BaseController
     {
         [HttpPost]

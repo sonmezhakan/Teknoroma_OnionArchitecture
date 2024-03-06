@@ -21,6 +21,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateAppUserRoleViewModel model)
         {
+            await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await ErrorResponse();
@@ -38,6 +39,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid? id)
         {
+            await CheckJwtBearer();
             await AppUserRoleViewbag();
 
             if (id == null) return View();
@@ -53,6 +55,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(AppUserRoleViewModel model)
         {
+            await CheckJwtBearer();
             await AppUserRoleViewbag();
             if (!ModelState.IsValid)
             {
@@ -73,6 +76,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
+            await CheckJwtBearer();
             await ApiService.HttpClient.DeleteAsync($"role/delete/{id}");
 
             return RedirectToAction("AppUserRoleList", "AppUserRole");
@@ -80,6 +84,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(Guid? id)
         {
+            await CheckJwtBearer();
             await AppUserRoleViewbag();
 
             if (id == null) return View();
@@ -95,6 +100,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> AppUserRoleList()
         {
+            await CheckJwtBearer();
             var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllAppUserRoleQueryResponse>>("role/getall");
 
             if (response == null) return View();

@@ -39,14 +39,7 @@
                             @User.Identity.Name
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-
-                            @* @if (User.IsInRole("Admin"))
-                            {
-                                <li><a asp-area="Admin" asp-controller="Home" class="dropdown-item">Administrator</a></li>
-                            } *@
                             <li><a asp-area="Admin" asp-controller="Home" class="dropdown-item">Administrator</a></li>
-                            <li><a asp-controller="Account" asp-action="Index" class="dropdown-item">Profile</a></li>
-
                             <li><a asp-controller="Signout" asp-action="Index" class="dropdown-item">SignOut</a></li>
                         </ul>
                     </li>
@@ -55,7 +48,7 @@
             else
             {
                 <a class="btn btn-success mx-1" asp-controller="Login">Login</a>
-                <a class="btn btn-primary mx-1" asp-controller="Register">Register</a>
+                @* <a class="btn btn-primary mx-1" asp-controller="Register">Register</a> *@
             }
             
         </div>

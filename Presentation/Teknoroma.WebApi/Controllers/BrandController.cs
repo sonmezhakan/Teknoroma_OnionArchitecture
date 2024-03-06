@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.Brands.Command.Create;
 using Teknoroma.Application.Features.Brands.Command.Delete;
 using Teknoroma.Application.Features.Brands.Command.Update;
@@ -6,12 +7,12 @@ using Teknoroma.Application.Features.Brands.Quries.GetBrandEarningReport;
 using Teknoroma.Application.Features.Brands.Quries.GetBrandSellingReport;
 using Teknoroma.Application.Features.Brands.Quries.GetById;
 using Teknoroma.Application.Features.Brands.Quries.GetList;
-using Teknoroma.Application.Features.Departments.Command.Delete;
 
 namespace Teknoroma.WebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class BrandController : BaseController
     {
         [HttpPost]

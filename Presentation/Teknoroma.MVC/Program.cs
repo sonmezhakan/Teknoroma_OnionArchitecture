@@ -1,4 +1,6 @@
-using System.Reflection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Teknoroma.Application.Exceptions.Extensions;
 using Teknoroma.Persistence.DependencyResolvers;
 
@@ -8,7 +10,6 @@ namespace Teknoroma.MVC
     {
         public static void Main(string[] args)
         {
-            //todo:silme iþlemi sýrasýnda alert çýkartýlacak
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.

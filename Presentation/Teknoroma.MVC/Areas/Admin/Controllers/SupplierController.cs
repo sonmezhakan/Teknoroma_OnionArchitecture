@@ -28,6 +28,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Create(CreateSupplierViewModel model)
 		{
+            await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await ErrorResponse();
@@ -49,7 +50,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Update(Guid? id)
 		{
-			await SupplierViewBag();
+            await CheckJwtBearer();
+            await SupplierViewBag();
 			if (id == null) return View();
 
 			var getSupplier = await GetBySupplierId((Guid)id);
@@ -61,6 +63,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Update(SupplierViewModel model)
 		{
+            await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await SupplierViewBag();
@@ -83,7 +86,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			await ApiService.HttpClient.DeleteAsync($"supplier/delete/{id}");
+            await CheckJwtBearer();
+            await ApiService.HttpClient.DeleteAsync($"supplier/delete/{id}");
 
 			return RedirectToAction("SupplierList", "Supplier");
 		}
@@ -104,7 +108,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> SupplierList()
 		{
-			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSupplierQueryResponse>>("supplier/getall");
+            await CheckJwtBearer();
+            var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSupplierQueryResponse>>("supplier/getall");
 
 			List< SupplierViewModel> supplierViewModel = Mapper.Map<List<SupplierViewModel>>(response);
 
@@ -114,7 +119,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> SupplierReport(DateTime? startDate, DateTime? endDate)
 		{
-			if (startDate == null || endDate == null)
+            await CheckJwtBearer();
+            if (startDate == null || endDate == null)
 			{
 				startDate = DateTime.MinValue;
 				endDate = DateTime.MaxValue;

@@ -2,45 +2,57 @@
 
 @model CreateAppUserViewModel
 @{
-    ViewData["Title"] = "Register";
-    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+	ViewData["Title"] = "Register";
+	Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
-<h1 class="text-center">@ViewData["Title"]</h1>
-
-<div class="row mx-4">
-    <div class="col-md-6 mx-auto">
-        <div asp-validation-summary="All" style="background-color:gray; color:white;">
-        </div>
-        <form method="post">
-            <div class="form-group my-1">
-                <label asp-for="UserName"></label>
-                <input class="form-control" type="text" asp-for="UserName" />
-            </div>
-            <div class="form-group my-1">
-                <label asp-for="Password"></label>
-                <input class="form-control"  type="password" asp-for="Password"/>
-            </div>
-            <div class="form-group my-1">
-                <label asp-for="Email"></label>
-                <input class="form-control" type="email" asp-for="Email"/>
-            </div>
-            <div class="form-group my-1">
-                <label asp-for="FirstName"></label>
-                <input class="form-control" type="text" asp-for="FirstName" />
-            </div>
-            <div class="form-group my-1">
-                <label asp-for="LastName"></label>
-                <input class="form-control" type="text" asp-for="LastName" />
-            </div>
-            <div class="form-group my-1">
-                <label asp-for="PhoneNumber"></label>
-                <input class="form-control" type="number" asp-for="PhoneNumber" />
-            </div>
-            <div class="d-grid gap-2 my-1">
-                <button type="submit" class="btn btn-primary">Kayıt Ol</button>
-            </div>
-        </form>
-    </div>
-
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="w-50 d-block bg-white shadow-lg rounded my-5 mx-auto">
+				<form method="post" class="user">
+					<div class="card">
+						
+						<div class="card-header bg-white text-center">
+							<h2>Teknoroma - Kayıt Ol</h2>
+						</div>
+						<div class="card-body">
+							<div asp-validation-summary="All">
+							</div>
+							<div class="form-group my-3">
+								<input type="text" class="form-control form-control-user" asp-for="UserName" placeholder="Kullanıcı Adı">
+							</div>
+							<div class="form-group my-3">
+								<input type="password" class="form-control form-control-user" asp-for="Password" placeholder="Şifre">
+							</div>
+							<div class="form-group my-3">
+								<input type="email" class="form-control form-control-user" asp-for="Email" placeholder="Email">
+							</div>
+							<div class="form-group row  my-3">
+								<div class="col-sm-6 mb-3 mb-sm-0">
+									<input type="text" class="form-control form-control-user" asp-for="FirstName" placeholder="Ad">
+								</div>
+								<div class="col-sm-6">
+									<input type="text" class="form-control form-control-user" asp-for="LastName" placeholder="Soyad">
+								</div>
+							</div>
+							<div class="form-group  my-3">
+								<input type="number" class="form-control form-control-user" asp-for="PhoneNumber" placeholder="Telefon Numarası">
+							</div>
+							<div class="d-grid gap-2 my-1">
+								<button type="submit" class="btn btn-success btn-block waves-effect waves-light">Kayıt Ol</button>
+							</div>
+						</div>
+						<div class="card-footer bg-white">
+							<div class="row mt-4">
+								<div class="col-12 text-center">
+									<p class="text-muted mb-0">Zaten Hesabınız Var Mı?  <a asp-controller="Login" asp-action="Index" class="text-muted font-weight-medium ml-1"><b>Giriş Yap</b></a></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>

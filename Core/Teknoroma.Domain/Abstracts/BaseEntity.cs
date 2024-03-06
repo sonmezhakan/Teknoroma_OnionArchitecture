@@ -3,17 +3,12 @@ using Teknoroma.Domain.Interfaces;
 
 namespace Teknoroma.Domain.Abstracts
 {
-	public abstract class BaseEntity : IEntity
+    public abstract class BaseEntity : IEntity
     {
         public BaseEntity()
         {
             ID = Guid.NewGuid();
             MasterId = Guid.NewGuid();
-
-            //todo: ComputerName ve ip adres işlemleri daha sonra yapılacaktır.
-            CreatedDate = DateTime.Now;
-            CreatedComputerName = "";
-            CreatedIpAddress = "";
 
             IsActive = true;
         }

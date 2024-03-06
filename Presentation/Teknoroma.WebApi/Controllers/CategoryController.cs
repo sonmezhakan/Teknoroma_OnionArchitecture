@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.Categories.Commands.Create;
 using Teknoroma.Application.Features.Categories.Commands.Delete;
 using Teknoroma.Application.Features.Categories.Commands.Update;
@@ -8,13 +9,12 @@ using Teknoroma.Application.Features.Categories.Queries.GetCategorySellingReport
 using Teknoroma.Application.Features.Categories.Queries.GetCategorySupplyReport;
 using Teknoroma.Application.Features.Categories.Queries.GetList;
 
-
 namespace Teknoroma.WebApi.Controllers
 {
 
     [Route("api/[controller]/[action]")]
     [ApiController]
-    
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class CategoryController : BaseController
     {
 

@@ -23,12 +23,14 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            await CheckJwtBearer();
             await ViewBagList();
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Create(CreateStockInputViewModel model)
         {
+            await CheckJwtBearer();
             await ViewBagList();
             if (!ModelState.IsValid)
             {
@@ -51,6 +53,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid? id)
         {
+            await CheckJwtBearer();
             await ViewBagList();
 
             if (id == null) return View();
@@ -67,7 +70,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(StockInputViewModel model)
         {
-			await ViewBagList();
+            await CheckJwtBearer();
+            await ViewBagList();
 			if (!ModelState.IsValid)
             {
                 await ErrorResponse();
@@ -87,6 +91,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
+            await CheckJwtBearer();
             await ApiService.HttpClient.DeleteAsync($"stockInput/delete/{id}");
 
             return RedirectToAction("StockInputList", "StockInput");
@@ -95,6 +100,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(Guid? id)
         {
+            await CheckJwtBearer();
             await ViewBagList();
 
             if (id == null) return View();
@@ -111,6 +117,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> StockInputList()
         {
+            await CheckJwtBearer();
             await BranchViewBag();
             await BranchIDViewBag();
 
@@ -126,7 +133,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> StockTrackingReport()
         {
-			await BranchIDViewBag();
+            await CheckJwtBearer();
+            await BranchIDViewBag();
 
 			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetByBranchIdStockQueryResponse>>($"stock/getbybranchid/{ViewBag.Branch.Value}");
             if(response == null) return View();

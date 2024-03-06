@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.AppUserRoles.Queries.GetList;
 using Teknoroma.Application.Features.AppUsers.Command.Create;
@@ -6,7 +7,7 @@ using Teknoroma.Application.Features.AppUsers.Command.Update;
 using Teknoroma.Application.Features.AppUsers.Models;
 using Teknoroma.Application.Features.AppUsers.Queries.GetById;
 using Teknoroma.Application.Features.AppUsers.Queries.GetList;
-using Teknoroma.MVC.Models;
+using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
@@ -14,6 +15,12 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
     [Authorize]
     public class AppUserController : BaseController
     {
+        private readonly SignInManager<AppUser> _signInManager;
+
+        public AppUserController(SignInManager<AppUser> signInManager)
+        {
+            _signInManager = signInManager;
+        }
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -23,7 +30,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateAppUserViewModel model)
         {
-			
+            await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await AppUserRoleViewBag();
@@ -43,6 +50,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid? id)
         {
+            await CheckJwtBearer();
+            await CheckJwtBearer();
             await AppUserViewBag();
 			await AppUserRoleViewBag();
 
@@ -59,6 +68,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(AppUserViewModel model)
         {
+            await CheckJwtBearer();
             await AppUserViewBag();
             await AppUserRoleViewBag();
             if (!ModelState.IsValid)
@@ -79,11 +89,13 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
+            await CheckJwtBearer();
             return View();
         }
         [HttpGet]
         public async Task<IActionResult> Detail(Guid? id)
         {
+            await CheckJwtBearer();
             await AppUserViewBag();
             await AppUserRoleViewBag();
 
@@ -100,6 +112,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> AppUserList()
         {
+            await CheckJwtBearer();
             var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllAppUserQueryResponse>>("user/getall");
 
             List<AppUserViewModel> appUserViewModels = Mapper.Map<List<AppUserViewModel>>(response);

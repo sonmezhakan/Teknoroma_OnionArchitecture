@@ -1,14 +1,7 @@
-using FluentValidation;
-using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Reflection;
 using System.Text;
 using Teknoroma.Application.Exceptions.Extensions;
-using Teknoroma.Application.Features.Brands.Command.Create;
-using Teknoroma.Application.Features.Brands.Rules;
-using Teknoroma.Application.Pipelines.Validation;
 using Teknoroma.Persistence.DependencyResolvers;
 namespace Teknoroma.WebApi
 {
@@ -18,7 +11,29 @@ namespace Teknoroma.WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            //JWT
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+
+                    ValidIssuer = builder.Configuration["JWT:Issuer"],
+                    ValidAudience = builder.Configuration["JWT:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
+                };
+            });
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.WithOrigins("http://localhost:7126") // MVC projesinin URL'si
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod());
+            });
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -27,39 +42,6 @@ namespace Teknoroma.WebApi
 
 			builder.Services.AddAplicationServiceRegistration();
 			builder.Services.AddPersistenceServiceRegistration();
-
-			//JWT Configuration
-			builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-
-                    ValidateAudience = true,
-
-                    ValidateLifetime = true,
-
-                    ValidateIssuerSigningKey = true,
-
-                    ValidIssuer = builder.Configuration["JWT:Issuer"],
-
-                    ValidAudience = builder.Configuration["JWT:Audience"],
-
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
-                };
-            });
-
-            builder.Services.AddCors(cors =>
-            {
-                cors.AddPolicy("JwtCors", options =>
-                {
-                    options.AllowAnyHeader();
-                    options.AllowAnyMethod();
-                    options.AllowAnyOrigin();
-                });
-            });
-
-
             
             var app = builder.Build();
 
@@ -70,7 +52,7 @@ namespace Teknoroma.WebApi
                 app.UseSwaggerUI();
             }
 
-            
+            app.UseCors("AllowAnyOrigin");
 
             app.UseHttpsRedirection();
 

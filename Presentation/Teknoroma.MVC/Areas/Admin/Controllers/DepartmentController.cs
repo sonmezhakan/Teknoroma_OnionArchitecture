@@ -22,6 +22,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateDepartmentViewModel model)
         {
+            await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await ErrorResponse();
@@ -43,6 +44,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid? id)
         {
+            await CheckJwtBearer();
             await DepartmentViewBag();
 
             if (id == null) return View();
@@ -58,6 +60,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(DepartmentViewModel model)
         {
+            await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await DepartmentViewBag();
@@ -80,6 +83,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
+            await CheckJwtBearer();
             await ApiService.HttpClient.DeleteAsync($"department/delete/{id}");
 
             return RedirectToAction("DepartmentList", "Department");
@@ -88,6 +92,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> DepartmentList()
         {
+            await CheckJwtBearer();
             var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllDepartmentQueryResponse>>("department/getall");
 
             if (response.Count <= 0) return View();
@@ -100,6 +105,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(Guid? id)
         {
+            await CheckJwtBearer();
             await DepartmentViewBag();
 
             if (id == null) return View();

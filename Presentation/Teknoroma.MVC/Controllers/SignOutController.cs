@@ -1,11 +1,12 @@
-﻿using AutoMapper;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.MVC.Controllers
 {
-    public class SignOutController : Controller
+    [Authorize]
+	public class SignOutController : Controller
     {
         private readonly SignInManager<AppUser> _signInManager;
 
@@ -13,10 +14,12 @@ namespace Teknoroma.MVC.Controllers
         {
             _signInManager = signInManager;
         }
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index","Home");
+            Response.Cookies.Delete("LoginJWT");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

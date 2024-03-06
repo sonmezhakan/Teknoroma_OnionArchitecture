@@ -26,7 +26,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			await BranchViewBag();
+            await CheckJwtBearer();
+            await BranchViewBag();
 			await CartViewBag();
 			await CustomerViewBag();
 
@@ -41,7 +42,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> AddToCart(Guid id, int quantity)
 		{
-			await BranchViewBag();
+            await CheckJwtBearer();
+            await BranchViewBag();
 			await CartViewBag();
 
 			Cart cartSession;
@@ -83,7 +85,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> CartItemDelete(Guid id)
 		{
-			Cart cartSession;
+            await CheckJwtBearer();
+            Cart cartSession;
 
 			if(SessionHelper.GetProductFromJson<Cart>(HttpContext.Session, "sepet") != null)
 			{
@@ -102,7 +105,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> CompleteCart(Guid customerId)
 		{
-			await BranchViewBag();
+            await CheckJwtBearer();
+            await BranchViewBag();
 			Cart cartSession;
 
 			if(SessionHelper.GetProductFromJson<Cart>(HttpContext.Session, "sepet") != null)
@@ -151,7 +155,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> OrderList()
 		{
-			await BranchViewBag();
+            await CheckJwtBearer();
+            await BranchViewBag();
 
 			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetByBranchIdOrderListQueryResponse>>($"order/GetByBranchIdOrderList/{ViewBag.Branch.Value}");
 
@@ -165,7 +170,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> UpdateOrderDetail(Guid orderId,Guid productId,int quantity)
 		{
-			await BranchViewBag();
+            await CheckJwtBearer();
+            await BranchViewBag();
 
 			var getProduct = await ApiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"product/getbyid/{productId}");
 
@@ -186,7 +192,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> DeleteOrderDetail(Guid orderId,Guid productId)
 		{
-			await BranchViewBag();
+            await CheckJwtBearer();
+            await BranchViewBag();
 
 			await ApiService.HttpClient.DeleteAsync($"orderdetail/delete?orderId={orderId}&productId={productId}&branchId={Guid.Parse(ViewBag.Branch.Value)}");
 
@@ -196,7 +203,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> UpdateOrderStatu(Guid orderId,OrderStatu orderStatu)
 		{
-			var getOrder = await ApiService.HttpClient.GetFromJsonAsync<GetByIdOrderQueryResponse>($"order/getbyid/{orderId}");
+            await CheckJwtBearer();
+            var getOrder = await ApiService.HttpClient.GetFromJsonAsync<GetByIdOrderQueryResponse>($"order/getbyid/{orderId}");
 			getOrder.OrderStatu = orderStatu;
 
 			UpdateOrderCommandRequest updateOrderCommandRequest = Mapper.Map<UpdateOrderCommandRequest>(getOrder);
@@ -218,7 +226,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> SaleReport()
 		{
-			var response = await ApiService.HttpClient.GetFromJsonAsync<GetSalesReportQueryResponse>("order/salesreport");
+            await CheckJwtBearer();
+            var response = await ApiService.HttpClient.GetFromJsonAsync<GetSalesReportQueryResponse>("order/salesreport");
 
 			if (response == null) return View();
 

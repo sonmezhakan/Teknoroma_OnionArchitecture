@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Teknoroma.Application.Features.AppUsers.Command.Create;
 using Teknoroma.Application.Features.AppUsers.Command.Update;
+using Teknoroma.Application.Features.AppUsers.Commands.Login;
 using Teknoroma.Application.Features.AppUsers.Models;
 using Teknoroma.Application.Features.AppUsers.Queries.GetById;
 using Teknoroma.Application.Features.AppUsers.Queries.GetByUserName;
@@ -34,6 +35,8 @@ namespace Teknoroma.Application.Features.AppUsers.Profiles
             CreateMap<AppUserViewModel, UpdateAppUserCommandRequest>().ReverseMap();
             CreateMap<AppUserViewModel, GetByIdAppUserQueryResponse>().ReverseMap();
             CreateMap<AppUserViewModel, GetAllAppUserQueryResponse>().ReverseMap();
+
+            CreateMap<LoginViewModel, LoginAppUserCommandRequest>().ReverseMap();
         }
     }
 }

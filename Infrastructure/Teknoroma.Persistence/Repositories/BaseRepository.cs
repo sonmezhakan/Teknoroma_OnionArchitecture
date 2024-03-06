@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using Teknoroma.Application.Repositories;
 using Teknoroma.Domain.Interfaces;
-
+using Teknoroma.Infrastructure.IpAddressHelpers;
 using Teknoroma.Persistence.Context;
 
 namespace Teknoroma.Persistence.Repositories
@@ -22,12 +22,25 @@ namespace Teknoroma.Persistence.Repositories
        
         public async Task AddAsync(TEntity entity)
         {
+            entity.CreatedComputerName = Environment.MachineName;
+            entity.CreatedIpAddress = IpAddressFinder.GetHostName();
+            entity.CreatedDate = DateTime.Now;
+            entity.Status = Domain.Enums.DataStatus.Created;
+
 			await _entities.AddAsync(entity);
 			await _context.SaveChangesAsync();
 		}
         
         public async Task AddRangeAsync(List<TEntity> entities)
         {
+            entities.ForEach(entity =>
+            {
+                entity.CreatedComputerName = Environment.MachineName;
+                entity.CreatedIpAddress = IpAddressFinder.GetHostName();
+                entity.CreatedDate = DateTime.Now;
+                entity.Status = Domain.Enums.DataStatus.Created;
+            });
+
 			await _context.AddRangeAsync(entities);
 			await _context.SaveChangesAsync();
 		}
@@ -35,10 +48,9 @@ namespace Teknoroma.Persistence.Repositories
         #region Update
         public async Task UpdateAsync(TEntity entity)
         {
-            //todo: ip işlemleri
             entity.UpdatedDate = DateTime.Now;
             entity.UpdatedComputerName = Environment.MachineName;
-            entity.UpdatedIpAddress = "";
+            entity.UpdatedIpAddress = IpAddressFinder.GetHostName();
             entity.Status = Domain.Enums.DataStatus.Updated;
 
             _entities.Update(entity);
@@ -49,10 +61,9 @@ namespace Teknoroma.Persistence.Repositories
         {
             entities.ForEach(entity =>
             {
-                //todo: ip işlemleri
                 entity.UpdatedDate = DateTime.Now;
                 entity.UpdatedComputerName = Environment.MachineName;
-                entity.UpdatedIpAddress = "";
+                entity.UpdatedIpAddress = IpAddressFinder.GetHostName();
                 entity.Status = Domain.Enums.DataStatus.Updated;
             });
 
@@ -61,14 +72,13 @@ namespace Teknoroma.Persistence.Repositories
         }
         #endregion
      
-        #region Destroy
+        #region Delete
         
         public async Task DeleteAsync(TEntity entity)
         {
-            //todo: ip işlemleri
             entity.DeletedDate = DateTime.Now;
             entity.DeletedComputerName = Environment.MachineName;
-            entity.DeletedIpAddress = "";
+            entity.DeletedIpAddress = IpAddressFinder.GetHostName();
             entity.Status = Domain.Enums.DataStatus.Deleted;
             entity.IsActive = false;
 
@@ -80,10 +90,9 @@ namespace Teknoroma.Persistence.Repositories
         {
             entities.ForEach(entity =>
             {
-                //todo: ip işlemleri
                 entity.DeletedDate = DateTime.Now;
                 entity.DeletedComputerName = Environment.MachineName;
-                entity.DeletedIpAddress = "";
+                entity.DeletedIpAddress = IpAddressFinder.GetHostName();
                 entity.Status = Domain.Enums.DataStatus.Deleted;
                 entity.IsActive = false;
             });
@@ -119,7 +128,6 @@ namespace Teknoroma.Persistence.Repositories
 			query = query.Where(x => x.IsActive == true).Where(filter);
 			return query;
 		}
-
 		#endregion
 
 

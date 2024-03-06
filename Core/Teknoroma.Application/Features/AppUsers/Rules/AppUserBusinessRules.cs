@@ -60,5 +60,20 @@ namespace Teknoroma.Application.Features.AppUsers.Rules
                     throw new BusinessException(AppUsersMessages.PhoneNumberExists);
             }
         }
+
+        public async Task LoginCheckUserName(string userName)
+        {
+            var result = await _userManager.FindByNameAsync(userName);
+
+            if (result == null)
+                throw new BusinessException(AppUsersMessages.UserNameNotFound);
+        }
+        public async Task LoginCheckPassword(AppUser appUser,string password)
+        {
+            bool result = await _userManager.CheckPasswordAsync(appUser, password);
+
+            if (!result)
+                throw new BusinessException(AppUsersMessages.PasswordError);
+        }
     }
 }

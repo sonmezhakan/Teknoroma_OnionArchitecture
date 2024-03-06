@@ -24,6 +24,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateCustomerViewModel model)
         {
+            await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await ErrorResponse();
@@ -42,6 +43,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid? id)
         {
+            await CheckJwtBearer();
             await CustomerViewBag();
 
             if (id == null) return View();
@@ -55,6 +57,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(CustomerViewModel model)
         {
+            await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await CustomerViewBag();
@@ -78,7 +81,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-             await ApiService.HttpClient.DeleteAsync($"customer/delete/{id}");
+            await CheckJwtBearer();
+            await ApiService.HttpClient.DeleteAsync($"customer/delete/{id}");
 
             return RedirectToAction("CustomerList", "Customer");
         }
@@ -86,6 +90,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(Guid? id)
         {
+            await CheckJwtBearer();
             await CustomerViewBag();
 
             if(id == null) return View();
@@ -102,6 +107,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> CustomerList()
         {
+            await CheckJwtBearer();
             var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllCustomerQueryResponse>>("customer/getall");
 
             if(response == null) return View();
@@ -113,7 +119,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> CustomerReport(DateTime? startDate,DateTime? endDate)
         {
-            if(startDate == null || endDate == null)
+            await CheckJwtBearer();
+            if (startDate == null || endDate == null)
             {
                 startDate = DateTime.MinValue;
                 endDate = DateTime.MaxValue;

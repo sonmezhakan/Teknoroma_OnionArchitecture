@@ -29,14 +29,16 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            await CheckJwtBearer();
             await CategoryViewBag();
             await BrandViewBag();
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Create(CreateProductViewModel model,IFormFile? productImage)
-        {	
-			model.ImagePath = await ImageHelper.ImageFile(productImage);
+        {
+            await CheckJwtBearer();
+            model.ImagePath = await ImageHelper.ImageFile(productImage);
             if (!ModelState.IsValid)
             {
                 await CategoryViewBag();
@@ -64,6 +66,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid? id)
         {
+            await CheckJwtBearer();
             await ProductViewBag();
             await CategoryViewBag();
             await BrandViewBag();
@@ -79,7 +82,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(ProductViewModel model,IFormFile? productImage)
         {
-			await ProductViewBag();
+            await CheckJwtBearer();
+            await ProductViewBag();
 			await CategoryViewBag();
 			await BrandViewBag();
 
@@ -127,6 +131,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
+            await CheckJwtBearer();
             //ürünün eski resim yolunu alıyoruz
             string oldImagePath = GetByProductId(id).Result.ImagePath;
 
@@ -145,6 +150,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ProductList()
         {
+            await CheckJwtBearer();
             var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllProductQueryResponse>>("product/getall");
 
             List<ProductListViewModel> products = Mapper.Map<List<ProductListViewModel>>(response);
@@ -155,6 +161,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(Guid? id)
         {
+            await CheckJwtBearer();
             await ProductViewBag();
             await CategoryViewBag();
             await BrandViewBag();
@@ -171,7 +178,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ProductReport(DateTime? startDate, DateTime? endDate)
         {
-			if (startDate == null || endDate == null)
+            await CheckJwtBearer();
+            if (startDate == null || endDate == null)
 			{
 				startDate = DateTime.MinValue;
 				endDate = DateTime.MaxValue;

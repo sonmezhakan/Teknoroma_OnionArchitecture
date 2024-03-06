@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
 using Teknoroma.Infrastructure.WebApiService;
 using Teknoroma.MVC.Models;
 
@@ -22,6 +23,12 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         protected async  Task ErrorResponse()
         {
             ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
+        }
+
+        protected async Task CheckJwtBearer()
+        {
+                var token = Request.Cookies["LoginJWT"];
+                ApiService.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);   
         }
     }
 }

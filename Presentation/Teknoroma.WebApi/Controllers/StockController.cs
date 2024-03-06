@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.Stocks.Queries.GetList;
 using Teknoroma.Application.Features.Stocks.Queries.GetStockTrackingReportList;
@@ -7,7 +8,8 @@ namespace Teknoroma.WebApi.Controllers
 {
 	[Route("api/[controller]/[action]")]
 	[ApiController]
-	public class StockController : BaseController
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    public class StockController : BaseController
 	{
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetAll(Guid? id)

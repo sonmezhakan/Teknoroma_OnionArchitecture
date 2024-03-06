@@ -23,7 +23,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Create(CreateBrandViewModel model)
 		{
-			if(!ModelState.IsValid)
+            await CheckJwtBearer();
+            if (!ModelState.IsValid)
 			{
                 await ErrorResponse();
                 return View(model);
@@ -46,7 +47,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Update(Guid? id)
 		{
-			await BrandViewBag();
+            await CheckJwtBearer();
+            await BrandViewBag();
 
             if (id == null) return View();
 
@@ -60,7 +62,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Update(BrandViewModel model)
 		{
-			if(!ModelState.IsValid)
+            await CheckJwtBearer();
+            if (!ModelState.IsValid)
 			{
                 await BrandViewBag();
                 await ErrorResponse();
@@ -84,7 +87,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			await ApiService.HttpClient.DeleteAsync($"brand/delete/{id}");
+            await CheckJwtBearer();
+            await ApiService.HttpClient.DeleteAsync($"brand/delete/{id}");
 
 			return RedirectToAction("BrandList", "Brand");
         }
@@ -107,7 +111,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> BrandList()
 		{
-			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllBrandCommandResponse>>("brand/getall");
+            await CheckJwtBearer();
+            var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllBrandCommandResponse>>("brand/getall");
 
 			if (response == null) return View();
 
@@ -118,6 +123,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> BrandReport(DateTime? startDate,DateTime? endDate)
 		{
+            await CheckJwtBearer();
             if (startDate == null || endDate == null)
             {
                 startDate = DateTime.MinValue;

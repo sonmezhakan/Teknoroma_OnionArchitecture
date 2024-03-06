@@ -26,7 +26,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateCategoryViewModel model)
         {
-            if(!ModelState.IsValid)
+            await CheckJwtBearer();
+            if (!ModelState.IsValid)
             {
                 await ErrorResponse();
                 return View(model);
@@ -46,7 +47,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Update(Guid? id)
-        {   
+        {
+            await CheckJwtBearer();
             await CategoryViewBag();
 
             if (id == null) return View();
@@ -61,6 +63,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(CategoryViewModel model)
         {
+            await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await CategoryViewBag();
@@ -83,6 +86,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
+            await CheckJwtBearer();
             await ApiService.HttpClient.DeleteAsync($"category/Delete/{id}");
 
             return RedirectToAction("CategoryList","Category");
@@ -91,6 +95,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(Guid? id)
         {
+            await CheckJwtBearer();
             await CategoryViewBag();
 
             if (id == null) return View();
@@ -105,6 +110,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> CategoryList()
         {
+            await CheckJwtBearer();
             var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllCategoryQueryResponse>>("category/getall");
 
             if (response == null) return View();
@@ -116,6 +122,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> CategoryReport(DateTime? startDate, DateTime? endDate)
         {
+            await CheckJwtBearer();
             if (startDate == null || endDate == null)
             {
                 startDate = DateTime.MinValue;

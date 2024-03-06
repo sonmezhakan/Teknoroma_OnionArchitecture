@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.OrderDetails.Command.Delete;
 using Teknoroma.Application.Features.OrderDetails.Command.Update;
@@ -6,9 +6,10 @@ using Teknoroma.Application.Features.OrderDetails.Queries.GetByOrderAndProductId
 
 namespace Teknoroma.WebApi.Controllers
 {
-	[Route("api/[controller]/[action]")]
+    [Route("api/[controller]/[action]")]
 	[ApiController]
-	public class OrderDetailController : BaseController
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    public class OrderDetailController : BaseController
 	{
 		[HttpPut]
 		public async Task<IActionResult> Update(UpdateOrderDetailCommandRequest updateOrderDetailCommandRequest)

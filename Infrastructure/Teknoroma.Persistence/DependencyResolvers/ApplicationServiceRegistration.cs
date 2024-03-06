@@ -35,8 +35,6 @@ namespace Teknoroma.Persistence.DependencyResolvers
 				configuration.AddOpenBehavior(typeof(TransactionScopeBehavior<,>));
 			});
 
-			//services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
-
 			//BusinessRules Service
 			services.AddTransient<BrandBusinessRules>();
 			services.AddTransient<BranchBusinessRules>();

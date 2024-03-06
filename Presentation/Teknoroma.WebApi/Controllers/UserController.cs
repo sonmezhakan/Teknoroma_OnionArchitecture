@@ -1,19 +1,16 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Teknoroma.Application.DTOs.AccountDTOs;
 using Teknoroma.Application.Features.AppUsers.Command.Create;
+using Teknoroma.Application.Features.AppUsers.Command.Delete;
 using Teknoroma.Application.Features.AppUsers.Command.Update;
+using Teknoroma.Application.Features.AppUsers.Commands.Login;
 using Teknoroma.Application.Features.AppUsers.Queries.GetById;
 using Teknoroma.Application.Features.AppUsers.Queries.GetByUserName;
 using Teknoroma.Application.Features.AppUsers.Queries.GetList;
-using Teknoroma.Application.ViewModel;
-using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.WebApi.Controllers
 {
@@ -21,68 +18,25 @@ namespace Teknoroma.WebApi.Controllers
     [ApiController]
     public class UserController : BaseController
     {
-        private readonly IMapper _mapper;
-        private readonly UserManager<AppUser> _userManager;
         private readonly IConfiguration _configuration;
-        private readonly SignInManager<AppUser> _signInManager;
 
-        //todo:employee işlemleri yapılacak
-
-        public UserController(IMapper mapper, UserManager<AppUser> userManager,IConfiguration configuration,SignInManager<AppUser> signInManager)
+        public UserController(IConfiguration configuration)
         {
-            _mapper = mapper;
-            _userManager = userManager;
             _configuration = configuration;
-            _signInManager = signInManager;
         }
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterDTO registerDTO)
+        public async Task<IActionResult> Login(LoginAppUserCommandRequest loginAppUserCommandRequest)
         {
-            AppUser appUser = _mapper.Map<AppUser>(registerDTO);
-            //EmployeeDTO employeeDto = _mapper.Map<EmployeeDTO>(registerDTO);
-            
-            if (_userManager.FindByEmailAsync(appUser.Email).Result != null) return BadRequest("Bu Email bulunmaktadır!");
+            var result = await Mediator.Send(loginAppUserCommandRequest);
 
-            if (_userManager.FindByNameAsync(appUser.UserName).Result != null) return BadRequest("Bu user name bulunmaktadır!");
-
-            /*if (_employeeService.AnyPhoneNumber(appUser.PhoneNumber).Result == true) return BadRequest("Bu phone number bulunmaktadır!");*/
-
-            
-            var resultUser = await _userManager.CreateAsync(appUser, registerDTO.Password);
-
-            if (resultUser.Succeeded)
+            if(result.ID != null && result.UserName != null)
             {
-                try
-                {
-                    await _userManager.AddToRoleAsync(appUser, "Member");
-                }
-                catch (Exception)
-                {
+                var token = GetJwtToken(result.ID, result.UserName);
 
-                    throw;
-                }
-
-                /*employeeDto.ID = _userManager.FindByNameAsync(appUser.UserName).Result.Id;
-                await _employeeService.Add(employeeDto);*/
-
-                return Ok();
+                return Ok(token);
             }
 
-            return BadRequest("kayıt olamadı");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginDTO loginDTO)
-        {
-            
-            if (_userManager.FindByNameAsync(loginDTO.UserName).Result == null) return BadRequest("Bu user name bulunamadı!");  
-
-            AppUser appUser = _userManager.FindByNameAsync(loginDTO.UserName).Result;
-
-            if(_userManager.CheckPasswordAsync(appUser, loginDTO.Password).Result == false) return BadRequest("Şifre hatalı!");
-            
-            var token = GetJwtToken(appUser);
-            return Ok(token);
+           return Ok(result);
         }
 
         [HttpGet("{userName}")]
@@ -93,6 +47,7 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> Create(CreateAppUserCommandRequest createAppUserCommandRequest)
         {
             var result = await Mediator.Send(createAppUserCommandRequest);
@@ -101,6 +56,7 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> Update(UpdateAppUserCommandRequest updateAppUserCommandRequest)
         {
             var result = await Mediator.Send(updateAppUserCommandRequest);
@@ -108,13 +64,17 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
 
-        /*[HttpDelete]
-        public async Task<IActionResult> Delete()
+        [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            return Ok();
-        }*/
+            var result = await Mediator.Send(new DeleteAppUserCommandRequest { ID = id });
+
+            return Ok(result);
+        }
 
         [HttpGet("{id}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await Mediator.Send(new GetByIdAppUserQueryRequest { ID = id });
@@ -123,6 +83,7 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpGet]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetAll()
         {
             var result = await Mediator.Send(new GetAllAppUserQueryRequest());
@@ -130,19 +91,18 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
 
-
-        private string GetJwtToken(AppUser user)
+        private string GetJwtToken(Guid Id,string userName)
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub,user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub,userName),
+                new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
 
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var creds = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
 
             var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["JWT:ExpireDays"]));
 
@@ -151,7 +111,7 @@ namespace Teknoroma.WebApi.Controllers
                 audience: _configuration["JWT:Audience"],
                 claims: claims,
                 expires: expires,
-                signingCredentials: credentials
+                signingCredentials:creds
                 );
 
             var result = new JwtSecurityTokenHandler().WriteToken(token);

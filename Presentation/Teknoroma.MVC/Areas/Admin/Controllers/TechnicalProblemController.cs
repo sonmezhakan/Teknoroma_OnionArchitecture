@@ -25,7 +25,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> TechnicalProblemReport(CreateTechnicalProblemViewModel model)
         {
-            if(!ModelState.IsValid)
+            await CheckJwtBearer();
+            if (!ModelState.IsValid)
             {
                 await ErrorResponse();
                 return View(model);
@@ -52,7 +53,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
-			var getTechnicalProblemDetail = await GetById(id);
+            await CheckJwtBearer();
+            var getTechnicalProblemDetail = await GetById(id);
 
 			if (getTechnicalProblemDetail == null) return RedirectToAction("TechnicalProblemList", "TechnicalProblem");
 
@@ -64,6 +66,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(TechnicalProblemViewModel model)
         {
+            await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await ErrorResponse();
@@ -85,6 +88,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> TechnicalProblemList()
         {
+            await CheckJwtBearer();
             var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllTechnicalProblemQueryResponse>>("technicalproblem/getall");
 
             if (response == null) return View();
@@ -97,7 +101,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(Guid id)
         {
-			var getTechnicalProblemDetail = await GetById(id);
+            await CheckJwtBearer();
+            var getTechnicalProblemDetail = await GetById(id);
 
 			if (getTechnicalProblemDetail == null) return RedirectToAction("TechnicalProblemList", "TechnicalProblem");
 
@@ -109,6 +114,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateTechnicalStatu(Guid id, TechnicalProblemStatu technicalProblemStatu)
         {
+            await CheckJwtBearer();
             var getTechnicalProblem = await GetById(id);
 
             if(getTechnicalProblem == null) return RedirectToAction("TechnicalProblemList", "TechnicalProblem");
@@ -123,6 +129,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
+            await CheckJwtBearer();
             await ApiService.HttpClient.DeleteAsync($"technicalproblem/delete/{id}");
 
             return RedirectToAction("TechnicalProblemList", "TechnicalProblem");

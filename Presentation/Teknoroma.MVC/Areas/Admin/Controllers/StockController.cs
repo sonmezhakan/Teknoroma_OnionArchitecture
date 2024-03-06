@@ -15,12 +15,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[HttpGet]
 		public async Task<IActionResult> StockTrackingReport(string? listStatus)
 		{
-			await BranchIDViewBag();
+            await CheckJwtBearer();
+            await BranchIDViewBag();
 
 			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetStockTrackingReportListQueryResponse>>($"stock/StockTrackingReport/{ViewBag.Branch.Value}");
 			if (response == null) return View();
-
-			//List<StockTrackingReportViewModel> stockTrackingReport = Mapper.Map<List<StockTrackingReportViewModel>>(response);
 			if(listStatus == "CriticalFilter")
 			{
 				var selectItems = response.Where(x => x.UnitsInStock < x.CriticalStock);
