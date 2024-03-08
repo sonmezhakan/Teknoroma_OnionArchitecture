@@ -68,7 +68,7 @@ namespace Teknoroma.WebApi.Controllers
 		[HttpGet("{startDate}/{endDate}")]
 		public async Task<IActionResult> EmployeeDetailReport(string startDate,string endDate)
 		{
-			var result = await Mediator.Send(new GetEmployeeDetailReportQueryRequest { startDate = DateTime.Parse(startDate), endDate = DateTime.Parse(endDate) });
+			var result = await Mediator.Send(new GetEmployeeDetailReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
 
 			return Ok(result);
 		}

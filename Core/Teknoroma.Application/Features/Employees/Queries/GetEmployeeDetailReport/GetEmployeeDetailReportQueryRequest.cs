@@ -4,7 +4,7 @@ namespace Teknoroma.Application.Features.Employees.Queries.GetEmployeeDetailRepo
 {
     public class GetEmployeeDetailReportQueryRequest : IRequest<List<GetEmployeeDetailReportQueryResponse>>
     {
-        public DateTime startDate { get; set; }
-        public DateTime endDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 await AppUserRoleViewBag();
-                await ErrorResponse();
+                 
                 return View(model);
             }
             CreateAppUserCommandRequest createAppUserCommandRequest = Mapper.Map<CreateAppUserCommandRequest>(model);
@@ -73,7 +73,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             await AppUserRoleViewBag();
             if (!ModelState.IsValid)
             {
-                await ErrorResponse();
+                 
                 return View(model);
             }
 

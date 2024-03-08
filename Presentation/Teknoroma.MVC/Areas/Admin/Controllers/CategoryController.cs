@@ -29,7 +29,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
-                await ErrorResponse();
+                 
                 return View(model);
             }
             CreateCategoryCommandRequest createCategoryCommandRequest = Mapper.Map<CreateCategoryCommandRequest>(model);
@@ -67,7 +67,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 await CategoryViewBag();
-                await ErrorResponse();
+                 
                 return View(model);
             }
             UpdateCategoryCommandRequest updateCategoryCommandRequest = Mapper.Map<UpdateCategoryCommandRequest>(model);

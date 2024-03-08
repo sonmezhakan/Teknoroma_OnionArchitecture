@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using Teknoroma.Application.Features.AppUsers.Command.Create;
 using Teknoroma.Application.Features.AppUsers.Command.Delete;
 using Teknoroma.Application.Features.AppUsers.Command.Update;
@@ -18,23 +14,11 @@ namespace Teknoroma.WebApi.Controllers
     [ApiController]
     public class UserController : BaseController
     {
-        private readonly IConfiguration _configuration;
 
-        public UserController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
         [HttpPost]
         public async Task<IActionResult> Login(LoginAppUserCommandRequest loginAppUserCommandRequest)
         {
             var result = await Mediator.Send(loginAppUserCommandRequest);
-
-            if(result.ID != null && result.UserName != null)
-            {
-                var token = GetJwtToken(result.ID, result.UserName);
-
-                return Ok(token);
-            }
 
            return Ok(result);
         }
@@ -89,33 +73,6 @@ namespace Teknoroma.WebApi.Controllers
             var result = await Mediator.Send(new GetAllAppUserQueryRequest());
 
             return Ok(result);
-        }
-
-        private string GetJwtToken(Guid Id,string userName)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Sub,userName),
-                new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
-            };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
-
-            var creds = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
-
-            var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["JWT:ExpireDays"]));
-
-            var token = new JwtSecurityToken(
-                issuer: _configuration["JWT:Issuer"],
-                audience: _configuration["JWT:Audience"],
-                claims: claims,
-                expires: expires,
-                signingCredentials:creds
-                );
-
-            var result = new JwtSecurityTokenHandler().WriteToken(token);
-            return result;
         }
     }
 }

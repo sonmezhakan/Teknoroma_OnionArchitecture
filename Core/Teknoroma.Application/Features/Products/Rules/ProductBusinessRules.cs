@@ -1,8 +1,8 @@
-﻿using Teknoroma.Application.Repositories;
+﻿using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Products.Rules
 {
-	public class ProductBusinessRules
+    public class ProductBusinessRules
 	{
 		private readonly IProductRepository _productRepository;
 

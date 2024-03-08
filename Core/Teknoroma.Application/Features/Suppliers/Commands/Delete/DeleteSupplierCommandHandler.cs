@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Suppliers.Command.Delete
-{ 
+{
 
-	public class DeleteSupplierCommandHandler:IRequestHandler<DeleteSupplierCommandRequest, Unit>
+    public class DeleteSupplierCommandHandler:IRequestHandler<DeleteSupplierCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
 		private readonly ISupplierRepository _supplierRepository;

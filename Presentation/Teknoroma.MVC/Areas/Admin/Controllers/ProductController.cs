@@ -43,11 +43,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             {
                 await CategoryViewBag();
                 await BrandViewBag();
-                await ErrorResponse();
-
+                 
                 ImageHelper.ImageFileDelete(model.ImagePath);
-
-                await ErrorResponse();
+                 
                 return View(model);
             }
             CreateProductCommandRequest createProduct = Mapper.Map<CreateProductCommandRequest>(model);
@@ -94,7 +92,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             {
                 //Eğer hata olursa eski resmin yolunu modele tekrardan aktarıp geriye döndürsün
                 model.ImagePath = oldProduct.ImagePath;
-                await ErrorResponse();
+                 
                 return View(model);
             }
             

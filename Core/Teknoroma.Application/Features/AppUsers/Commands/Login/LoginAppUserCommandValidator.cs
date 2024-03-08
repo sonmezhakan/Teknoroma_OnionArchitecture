@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Teknoroma.Application.Features.AppUsers.Contants;
 
 namespace Teknoroma.Application.Features.AppUsers.Commands.Login
 {
@@ -6,7 +7,9 @@ namespace Teknoroma.Application.Features.AppUsers.Commands.Login
 	{
         public LoginAppUserCommandValidator()
         {
-            
+            RuleFor(x=>x.UserName).NotEmpty().WithMessage(AppUsersMessages.UserNameNotNull);
+
+            RuleFor(x => x.Password).NotEmpty().WithMessage(AppUsersMessages.PasswordNotNull);
         }
     }
 }

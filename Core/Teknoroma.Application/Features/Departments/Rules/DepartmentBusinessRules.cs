@@ -1,10 +1,10 @@
 ﻿using Teknoroma.Application.Exceptions.Types;
 using Teknoroma.Application.Features.Departments.Contants;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Departments.Rules
 {
-	public class DepartmentBusinessRules
+    public class DepartmentBusinessRules
 	{
 		private readonly IDepartmentRepository _departmentRepository;
 

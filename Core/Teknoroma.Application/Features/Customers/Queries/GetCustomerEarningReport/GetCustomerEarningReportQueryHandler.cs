@@ -1,20 +1,20 @@
 ﻿using MediatR;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Customers;
 
 namespace Teknoroma.Application.Features.Customers.Queries.GetCustomerEarningReport
 {
-    public class GetCustomerEarningReportQueryHandler : IRequestHandler<GetCustomerEarningReportQueryRequest, List<GetCustomerEarningReportQueryResponse>>
+	public class GetCustomerEarningReportQueryHandler : IRequestHandler<GetCustomerEarningReportQueryRequest, List<GetCustomerEarningReportQueryResponse>>
     {
-        private readonly ICustomerRepository _customerRepository;
+		private readonly ICustomerService _customerService;
 
-        public GetCustomerEarningReportQueryHandler(ICustomerRepository customerRepository)
+		public GetCustomerEarningReportQueryHandler(ICustomerService customerService)
         {
-            _customerRepository = customerRepository;
-        }
+			_customerService = customerService;
+		}
 
         public async Task<List<GetCustomerEarningReportQueryResponse>> Handle(GetCustomerEarningReportQueryRequest request, CancellationToken cancellationToken)
         {
-            var customers = await _customerRepository.GetAllAsync();
+            var customers = await _customerService.GetAllAsync();
 
             var bestEarningCustomers = customers.GroupBy(customer => customer.FullName)
             .Select(grouped => new

@@ -1,0 +1,14 @@
+﻿using FluentValidation;
+using Teknoroma.Application.Features.Customers.Contants;
+
+namespace Teknoroma.Application.Features.Customers.Queries.GetCustomerSellingReport
+{
+    public class GetCustomerSellingReportQueryValidator:AbstractValidator<GetCustomerSellingReportQueryRequest>
+    {
+        public GetCustomerSellingReportQueryValidator()
+        {
+            RuleFor(x => x.StartDate).NotEmpty().WithMessage(CustomersMessages.StartDateTimeNotNull);
+            RuleFor(x => x.EndDate).NotEmpty().WithMessage(CustomersMessages.EndDateTimeNotNull);
+        }
+    }
+}

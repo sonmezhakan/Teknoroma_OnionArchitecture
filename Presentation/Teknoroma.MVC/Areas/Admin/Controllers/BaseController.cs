@@ -20,11 +20,6 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             ModelState.AddModelError(ErrorResponseViewModel.Instance.Title, ErrorResponseViewModel.Instance.Detail);
         }
 
-        protected async  Task ErrorResponse()
-        {
-            ModelState.AddModelError(string.Empty, "Hatalı İşlem!");
-        }
-
         protected async Task CheckJwtBearer()
         {
                 var token = Request.Cookies["LoginJWT"];

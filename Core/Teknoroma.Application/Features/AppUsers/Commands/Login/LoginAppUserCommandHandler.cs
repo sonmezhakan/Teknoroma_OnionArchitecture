@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Teknoroma.Application.Features.AppUsers.Rules;
+using Teknoroma.Application.Security.JWTHelpers;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.AppUsers.Commands.Login
@@ -9,12 +10,14 @@ namespace Teknoroma.Application.Features.AppUsers.Commands.Login
 	{
 		private readonly UserManager<AppUser> _userManager;
 		private readonly AppUserBusinessRules _appUserBusinessRules;
+        private readonly IJwtService _jwtHelper;
 
-		public LoginAppUserCommandHandler(UserManager<AppUser> userManager, AppUserBusinessRules appUserBusinessRules)
+        public LoginAppUserCommandHandler(UserManager<AppUser> userManager, AppUserBusinessRules appUserBusinessRules, IJwtService jwtHelper)
 		{
 			_userManager = userManager;
 			_appUserBusinessRules = appUserBusinessRules;
-		}
+           _jwtHelper = jwtHelper;
+        }
 		public async Task<LoginAppUserCommandResponse> Handle(LoginAppUserCommandRequest request, CancellationToken cancellationToken)
 		{
 			//business rules
@@ -24,10 +27,11 @@ namespace Teknoroma.Application.Features.AppUsers.Commands.Login
 
 			await _appUserBusinessRules.LoginCheckPassword(appUser, request.Password);
 
+			string token = await _jwtHelper.GetJwtToken(appUser.Id, appUser.UserName);
+
 			return new LoginAppUserCommandResponse
 			{
-				ID= appUser.Id,
-				UserName = appUser.UserName
+				token = token
 			};
 		}
 

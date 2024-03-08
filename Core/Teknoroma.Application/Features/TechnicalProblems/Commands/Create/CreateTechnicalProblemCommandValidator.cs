@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
+using Teknoroma.Application.Features.TechnicalProblems.Contants;
 
 namespace Teknoroma.Application.Features.TechnicalProblems.Commands.Create
 {
-    internal class CreateTechnicalProblemCommandValidator
+    public class CreateTechnicalProblemCommandValidator:AbstractValidator<CreateTechnicalProblemCommandRequest>
     {
+        public CreateTechnicalProblemCommandValidator()
+        {
+            RuleFor(x => x.ReportedProblem).NotEmpty().WithMessage(TechnicalProblemsMessages.ReportedProblemNotNull)
+                .MaximumLength(500).WithMessage(TechnicalProblemsMessages.ReportedProblemMaxLenght);
+
+            RuleFor(x => x.BranchId).NotEmpty().WithMessage(TechnicalProblemsMessages.BranchIdNotNull);
+
+            RuleFor(x => x.EmployeeId).NotEmpty().WithMessage(TechnicalProblemsMessages.EmployeeIdNotNull);
+        }
     }
 }

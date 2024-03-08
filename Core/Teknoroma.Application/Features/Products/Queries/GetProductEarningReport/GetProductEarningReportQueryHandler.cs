@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Products.Queries.GetProductEarningReport
 {
-	public class GetProductEarningReportQueryHandler : IRequestHandler<GetProductEarningReportQueryRequest, List<GetProductEarningReportQueryResponse>>
+    public class GetProductEarningReportQueryHandler : IRequestHandler<GetProductEarningReportQueryRequest, List<GetProductEarningReportQueryResponse>>
 	{
 		private readonly IProductRepository _productRepository;
 

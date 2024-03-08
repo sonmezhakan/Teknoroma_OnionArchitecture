@@ -24,7 +24,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
-                await ErrorResponse();
+                 
                 return View(model);
             }
             CreateAppUserRoleCommandRequest createAppUserRoleCommandRequest = Mapper.Map<CreateAppUserRoleCommandRequest>(model);
@@ -60,7 +60,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 await AppUserRoleViewbag();
-                await ErrorResponse();
+                 
                 return View(model);
             }
             UpdateAppUserRoleCommandRequest updateAppUserRoleCommandRequest = Mapper.Map<UpdateAppUserRoleCommandRequest>(model);

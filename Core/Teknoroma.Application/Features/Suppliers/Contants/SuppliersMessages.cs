@@ -24,5 +24,8 @@ namespace Teknoroma.Application.Features.Suppliers.Contants
 
 		public const string AddressMaxLenght = "Adres En Fazla 255 Karakter Olabilir!";
 		public const string WebSiteMaxLenght = "Açıklama En Fazla 255 Karakter Olabilir!";
-	}
+
+        public const string StartDateTimeNotNull = "Başlangıç Tarihi Boş Olamaz!";
+        public const string EndDateTimeNotNull = "Bitiş Tarihi Boş Olamaz!";
+    }
 }

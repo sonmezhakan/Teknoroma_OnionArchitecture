@@ -1,6 +1,6 @@
 ﻿using Teknoroma.Application.Exceptions.Types;
 using Teknoroma.Application.Features.Brands.Contants;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Brands.Rules
 {

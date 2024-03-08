@@ -2,7 +2,7 @@
 using MediatR;
 using Teknoroma.Application.Features.Branches.Queries.GetAll;
 using Teknoroma.Application.Features.Stocks.Command.Create;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Products;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Products.Command.Create
@@ -10,20 +10,20 @@ namespace Teknoroma.Application.Features.Products.Command.Create
 	public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
-		private readonly IProductRepository _productRepository;
+		private readonly IProductService _productService;
 		private readonly IMediator _mediator;
 
-		public CreateProductCommandHandler(IMapper mapper,IProductRepository productRepository,IMediator mediator)
+		public CreateProductCommandHandler(IMapper mapper,IProductService productService,IMediator mediator)
         {
 			_mapper = mapper;
-			_productRepository = productRepository;
+			_productService = productService;
 			_mediator = mediator;
 		}
         public async Task<Unit> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
 		{
 			Product product = _mapper.Map<Product>(request);
 
-			await _productRepository.AddAsync(product);
+			await _productService.AddAsync(product);
 
 			//Tüm şubelere ürünün eklenmesi sağlanıyor
 			var branches = await _mediator.Send(new GetAllBranchQueryRequest());

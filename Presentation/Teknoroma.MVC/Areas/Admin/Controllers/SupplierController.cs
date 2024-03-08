@@ -31,7 +31,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
-                await ErrorResponse();
+                 
                 return View(model);
             }
             CreateSupplierCommandRequest createSupplier = Mapper.Map<CreateSupplierCommandRequest>(model);
@@ -67,7 +67,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 await SupplierViewBag();
-                await ErrorResponse();
+                 
                 return View(model);
             }
             UpdateSupplierCommandRequest updateSupplier = Mapper.Map<UpdateSupplierCommandRequest>(model);

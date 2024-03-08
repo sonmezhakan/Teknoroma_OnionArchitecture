@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Teknoroma.Application.Features.Branches.Constants
+﻿namespace Teknoroma.Application.Features.Branches.Constants
 {
-	public class BranchesMessages
+    public class BranchesMessages
 	{
 		public const string IDNotNull = "ID Boş Olamaz!";
 
@@ -21,5 +15,7 @@ namespace Teknoroma.Application.Features.Branches.Constants
 		public const string AddressMaxLenght = "Adres En Fazla 255 Karakter Olabilir!";
 		public const string DescriptionMaxLenght = "Açıklama En Fazla 255 Karakter Olabilir!";
 
-	}
+		public const string StartDateTimeNotNull = "Başlangıç Tarihi Boş Olamaz!";
+        public const string EndDateTimeNotNull = "Bitiş Tarihi Boş Olamaz!";
+    }
 }

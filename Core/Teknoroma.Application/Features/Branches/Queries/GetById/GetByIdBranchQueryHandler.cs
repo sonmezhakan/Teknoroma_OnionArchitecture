@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Branches;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Branches.Queries.GetById
@@ -8,17 +8,18 @@ namespace Teknoroma.Application.Features.Branches.Queries.GetById
 	public class GetByIdBranchQueryHandler:IRequestHandler<GetByIdBranchQueryRequest,GetByIdBranchQueryResponse>
 	{
 		private readonly IMapper _mapper;
-		private readonly IBranchRepository _branchRepository;
+		private readonly IBranchService _branchService;
+		
 
-		public GetByIdBranchQueryHandler(IMapper mapper,IBranchRepository branchRepository)
+		public GetByIdBranchQueryHandler(IMapper mapper,IBranchService branchService)
         {
 			_mapper = mapper;
-			_branchRepository = branchRepository;
+			_branchService = branchService;			
 		}
 
 		public async Task<GetByIdBranchQueryResponse> Handle(GetByIdBranchQueryRequest request, CancellationToken cancellationToken)
 		{
-			Branch branch = await _branchRepository.GetAsync(x=>x.ID == request.ID);
+			Branch branch = await _branchService.GetAsync(x=>x.ID == request.ID);
 
 			GetByIdBranchQueryResponse response = _mapper.Map<GetByIdBranchQueryResponse>(branch);
 

@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Features.Products.Command.Update;
 using Teknoroma.Application.Features.Stocks.Command.Update;
-using Teknoroma.Application.Features.Stocks.Queries.GetById;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.OrderDetails;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.OrderDetails.Command.Update
@@ -12,17 +11,17 @@ namespace Teknoroma.Application.Features.OrderDetails.Command.Update
 	{
 		private readonly IMediator _mediator;
 		private readonly IMapper _mapper;
-		private readonly IOrderDetailRepository _orderDetailRepository;
+		private readonly IOrderDetailService _orderDetailService;
 
-		public UpdateOrderDetailCommandHandler(IMediator  mediator,IMapper mapper, IOrderDetailRepository orderDetailRepository)
+		public UpdateOrderDetailCommandHandler(IMediator  mediator,IMapper mapper, IOrderDetailService orderDetailService)
         {
 			_mediator = mediator;
 			_mapper = mapper;
-			_orderDetailRepository = orderDetailRepository;
+			_orderDetailService = orderDetailService;
 		}
         public async Task<Unit> Handle(UpdateOrderDetailCommandRequest request, CancellationToken cancellationToken)
 		{
-			OrderDetail orderDetail = await _orderDetailRepository.GetAsync(x => x.ID == request.OrderId && x.ProductId == request.ProductId);
+			OrderDetail orderDetail = await _orderDetailService.GetAsync(x => x.ID == request.OrderId && x.ProductId == request.ProductId);
 
 			//stock Process
 			var stock = orderDetail.Order.Branch.stocks.FirstOrDefault(x=>x.BranchId == request.BranchId && x.ProductId == request.ProductId);
@@ -34,7 +33,7 @@ namespace Teknoroma.Application.Features.OrderDetails.Command.Update
 
 			//OrderDetail Process
 			orderDetail = _mapper.Map(request, orderDetail);
-			await _orderDetailRepository.UpdateAsync(orderDetail);
+			await _orderDetailService.UpdateAsync(orderDetail);
 
 			return Unit.Value;
 		}

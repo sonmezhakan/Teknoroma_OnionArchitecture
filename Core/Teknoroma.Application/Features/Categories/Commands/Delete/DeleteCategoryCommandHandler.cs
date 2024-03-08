@@ -1,26 +1,23 @@
-﻿using AutoMapper;
-using MediatR;
-using Teknoroma.Application.Repositories;
+﻿using MediatR;
+using Teknoroma.Application.Services.Categories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Categories.Commands.Delete
 {
 	public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommandRequest, Unit>
     {
-        private readonly IMapper _mapper;
-        private readonly ICategoryRepository _categoryRepository;
+		private readonly ICategoryService _categoryService;
 
-        public DeleteCategoryCommandHandler(IMapper mapper, ICategoryRepository categoryRepository)
+		public DeleteCategoryCommandHandler(ICategoryService categoryService)
         {
-            _mapper = mapper;
-            _categoryRepository = categoryRepository;
-        }
+			_categoryService = categoryService;
+		}
 
         public async Task<Unit> Handle(DeleteCategoryCommandRequest request, CancellationToken cancellationToken)
         {
-            Category category = await _categoryRepository.GetAsync(x => x.ID == request.ID);
+            Category category = await _categoryService.GetAsync(x => x.ID == request.ID);
 
-            await _categoryRepository.DeleteAsync(category);
+            await _categoryService.DeleteAsync(category);
 
 			return Unit.Value;
 		}

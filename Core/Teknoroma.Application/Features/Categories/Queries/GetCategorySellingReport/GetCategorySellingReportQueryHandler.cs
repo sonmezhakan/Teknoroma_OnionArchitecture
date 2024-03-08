@@ -1,19 +1,19 @@
 ﻿using MediatR;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Categories;
 
 namespace Teknoroma.Application.Features.Categories.Queries.GetCategorySellingReport
 {
-    public class GetCategorySellingReportQueryHandler : IRequestHandler<GetCategorySellingReportQueryRequest, List<GetCategorySellingReportQueryResponse>>
+	public class GetCategorySellingReportQueryHandler : IRequestHandler<GetCategorySellingReportQueryRequest, List<GetCategorySellingReportQueryResponse>>
     {
-        private readonly ICategoryRepository _categoryRepository;
+		private readonly ICategoryService _categoryService;
 
-        public GetCategorySellingReportQueryHandler(ICategoryRepository categoryRepository)
+		public GetCategorySellingReportQueryHandler(ICategoryService categoryService)
         {
-            _categoryRepository = categoryRepository;
-        }
+			_categoryService = categoryService;
+		}
         public async Task<List<GetCategorySellingReportQueryResponse>> Handle(GetCategorySellingReportQueryRequest request, CancellationToken cancellationToken)
         {
-            var categories = await _categoryRepository.GetAllAsync();
+            var categories = await _categoryService.GetAllAsync();
 
             var bestSellingCategories = categories.GroupBy(category => category.CategoryName)
                 .Select(grouped => new

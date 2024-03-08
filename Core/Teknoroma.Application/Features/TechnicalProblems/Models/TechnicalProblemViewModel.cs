@@ -7,10 +7,12 @@ namespace Teknoroma.Application.Features.TechnicalProblems.Models
     public class TechnicalProblemViewModel
     {
         [Display(Name = TechnicalProblemColumnNames.ID)]
+        [Required(ErrorMessage = TechnicalProblemsMessages.IDNotNull)]
         public Guid? ID { get; set; }
 
 		[Display(Name = TechnicalProblemColumnNames.ReportedProblem)]
-		public string ReportedProblem { get; set; }
+        [Required(ErrorMessage = TechnicalProblemsMessages.ReportedProblemNotNull)]
+        public string ReportedProblem { get; set; }
 
 		[Display(Name = TechnicalProblemColumnNames.ProblemSolution)]
 		public string? ProblemSolution { get; set; }
@@ -19,12 +21,14 @@ namespace Teknoroma.Application.Features.TechnicalProblems.Models
 		public DateTime NotificationDate { get; set; }
 
         [Display(Name = TechnicalProblemColumnNames.BranchId)]
+        [Required(ErrorMessage = TechnicalProblemsMessages.BranchIdNotNull)]
         public Guid BranchId { get; set; }
 
         [Display(Name = TechnicalProblemColumnNames.BranchName)]
 		public string? BranchName { get; set; }
 
         [Display(Name = TechnicalProblemColumnNames.EmployeeId)]
+        [Required(ErrorMessage = TechnicalProblemsMessages.EmployeeIdNotNull)]
         public Guid EmployeeId { get; set; }
 
         [Display(Name = TechnicalProblemColumnNames.AppUserName)]

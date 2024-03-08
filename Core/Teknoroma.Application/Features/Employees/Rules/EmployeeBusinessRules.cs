@@ -1,10 +1,10 @@
 ﻿using Teknoroma.Application.Exceptions.Types;
 using Teknoroma.Application.Features.Employees.Contants;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Employees.Rules
 {
-	public class EmployeeBusinessRules
+    public class EmployeeBusinessRules
 	{
 		private readonly IEmployeeRepository _employeeRepository;
 

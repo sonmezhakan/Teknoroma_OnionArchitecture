@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Suppliers.Queries.GetList
 {
-	public class GetAllSupplierQueryHandler : IRequestHandler<GetAllSupplierQueryRequest, List<GetAllSupplierQueryResponse>>
+    public class GetAllSupplierQueryHandler : IRequestHandler<GetAllSupplierQueryRequest, List<GetAllSupplierQueryResponse>>
 	{
 		private readonly IMapper _mapper;
 		private readonly ISupplierRepository _supplierRepository;

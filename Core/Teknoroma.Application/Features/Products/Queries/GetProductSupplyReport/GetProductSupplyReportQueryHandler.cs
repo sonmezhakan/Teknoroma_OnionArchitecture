@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Teknoroma.Application.Features.Products.Queries.GetProductEarningReport;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Products.Queries.GetProductSupplyReport
 {

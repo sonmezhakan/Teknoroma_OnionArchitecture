@@ -25,7 +25,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
-                await ErrorResponse();
+                 
                 return View(model);
             }
             CreateDepartmentCommandRequest createDepartmentDTO = Mapper.Map<CreateDepartmentCommandRequest>(model);
@@ -64,7 +64,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 await DepartmentViewBag();
-                await ErrorResponse();
+                 
                 return View(model);
             }
             UpdateDepartmentCommandRequest updateDepartment = Mapper.Map<UpdateDepartmentCommandRequest>(model);

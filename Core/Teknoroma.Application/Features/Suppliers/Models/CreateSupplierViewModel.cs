@@ -6,6 +6,7 @@ namespace Teknoroma.Application.Features.Suppliers.Models
 	public class CreateSupplierViewModel
 	{
 		[Display(Name = SupplierColumnNames.CompanyName)]
+		[Required(ErrorMessage = SuppliersMessages.CompanyNameNotNull)]
 		public string CompanyName { get; set; }
 
 		[Display(Name = SupplierColumnNames.ContactName)]

@@ -156,14 +156,10 @@
 						<div class="card-body">
 							<h4 class="card-title d-inline-block">Günlük Kategoriye Göre Satış</h4>
 
-							<div id="donutChartDailySales" class="donutChartDailySales" style="height: 260px;"></div>
-							@*
-							<div class="row text-center mt-4">
-							<div class="col-12 mx-auto">
-							<h4>@Model.CategorySellingReportViewModels.Sum(x => x.TotalSales)</h4>
-							<p class="text-muted mb-0">Toplam Satılan Adet</p>
-							</div>
-							</div> *@
+							@if(Model.CategorySellingReportViewModels != null)
+							{
+								<div id="donutChartDailySales" class="donutChartDailySales" style="height: 260px;"></div>								
+							}
 						</div>
 					</div>
 				</div>

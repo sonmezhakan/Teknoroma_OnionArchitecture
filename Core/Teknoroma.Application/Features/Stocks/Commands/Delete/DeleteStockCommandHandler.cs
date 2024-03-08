@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Stocks.Command.Delete
 {
-	public class DeleteStockCommandHandler : IRequestHandler<DeleteStockCommandRequest, Unit>
+    public class DeleteStockCommandHandler : IRequestHandler<DeleteStockCommandRequest, Unit>
 	{
 		private readonly IStockRepository _stockRepository;
 

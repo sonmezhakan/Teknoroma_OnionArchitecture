@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
+using Teknoroma.Application.Features.Stocks.Contants;
 
 namespace Teknoroma.Application.Features.Stocks.Command.Create
 {
-    internal class CreateStockCommandValidator
+    public class CreateStockCommandValidator:AbstractValidator<CreateStockCommandRequest>
     {
+        public CreateStockCommandValidator()
+        {
+            RuleFor(x => x.BranchId).NotEmpty().WithMessage(StockMessages.BranchIdNotNull);
+            RuleFor(x => x.ProductId).NotEmpty().WithMessage(StockMessages.ProductIdNotNull);
+            RuleFor(x => x.UnitsInStock).NotEmpty().WithMessage(StockMessages.UnitsInStockNotNull);
+        }
     }
 }

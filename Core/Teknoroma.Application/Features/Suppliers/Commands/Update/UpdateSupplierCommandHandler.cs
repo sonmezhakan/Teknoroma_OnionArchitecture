@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Teknoroma.Application.Features.Suppliers.Rules;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Suppliers.Command.Update
 {
-	public class UpdateSupplierCommandHandler:IRequestHandler<UpdateSupplierCommandRequest, Unit>
+    public class UpdateSupplierCommandHandler:IRequestHandler<UpdateSupplierCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
 		private readonly ISupplierRepository _supplierRepository;

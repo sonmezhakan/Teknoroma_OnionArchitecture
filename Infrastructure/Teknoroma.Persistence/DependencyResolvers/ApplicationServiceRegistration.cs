@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Teknoroma.Application.Features.AppUserProfiles.Rules;
 using Teknoroma.Application.Features.AppUserRoles.Rules;
@@ -15,17 +16,44 @@ using Teknoroma.Application.Features.Products.Rules;
 using Teknoroma.Application.Features.Suppliers.Rules;
 using Teknoroma.Application.Pipelines.Transaction;
 using Teknoroma.Application.Pipelines.Validation;
+using Teknoroma.Application.Security.JWTHelpers;
+using Teknoroma.Application.Services.AppUserProfiles;
+using Teknoroma.Application.Services.Branches;
+using Teknoroma.Application.Services.Brands;
+using Teknoroma.Application.Services.Categories;
+using Teknoroma.Application.Services.Customers;
+using Teknoroma.Application.Services.Departments;
+using Teknoroma.Application.Services.EmailService;
+using Teknoroma.Application.Services.Employees;
+using Teknoroma.Application.Services.OrderDetails;
+using Teknoroma.Application.Services.Orders;
+using Teknoroma.Application.Services.Products;
+using Teknoroma.Application.Services.StockInputs;
+using Teknoroma.Application.Services.Stocks;
+using Teknoroma.Application.Services.Suppliers;
+using Teknoroma.Application.Services.TechnicalProblems;
 
 namespace Teknoroma.Persistence.DependencyResolvers
 {
-	public static class ApplicationServiceRegistration
+    public static class ApplicationServiceRegistration
 	{
 		public static IServiceCollection AddAplicationServiceRegistration(this IServiceCollection services)
 		{
-			//AutoMapper Profile Service
-			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            ServiceProvider provider = services.BuildServiceProvider();
 
+            var configuration = provider.GetService<IConfiguration>();
+
+            //AutoMapper Profile Service
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+			//FluentValidation Service
 			services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+
+			//JWT Service
+			services.AddScoped<IJwtService, JwtService>();
+
+			//Mail Service
+			services.AddTransient<IMailService, MailService>();
 
 			//MediatR Service
 			services.AddMediatR(configuration =>
@@ -35,7 +63,7 @@ namespace Teknoroma.Persistence.DependencyResolvers
 				configuration.AddOpenBehavior(typeof(TransactionScopeBehavior<,>));
 			});
 
-			//BusinessRules Service
+			//BusinessRules
 			services.AddTransient<BrandBusinessRules>();
 			services.AddTransient<BranchBusinessRules>();
 			services.AddTransient<CategoryBusinessRules>();
@@ -50,7 +78,25 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddTransient<OrderBusinessRules>();
 			services.AddTransient<OrderDetailBusinessRules>();
 
-			return services;
+			//
+			services.AddScoped<IAppUserProfileService, AppUserProfileManager>();
+			services.AddScoped<IBranchService, BranchManager>();
+			services.AddScoped<IBrandService, BrandManager>();
+			services.AddScoped<ICategoryService, CategoryManager>();
+			services.AddScoped<ICustomerService , CustomerManager>();
+			services.AddScoped<IDepartmentService, DepartmentManager>();
+			services.AddScoped<IEmployeeService, EmployeeManager>();
+			services.AddScoped<IOrderDetailService , OrderDetailManager>();
+			services.AddScoped<IOrderService, OrderManager>();
+			services.AddScoped<IProductService, ProductManager>();
+			services.AddScoped<IStockInputService, StockInputManager>();
+			services.AddScoped<IStockService, StockManager>();
+			services.AddScoped<ISupplierService, SupplierManager>();
+			services.AddScoped<ITechnicalProblemService, TechnicalProblemManager>();
+
+           
+
+            return services;
 		}
 	}
 }

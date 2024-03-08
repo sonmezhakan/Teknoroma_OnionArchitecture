@@ -27,7 +27,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             await CheckJwtBearer();
             if (!ModelState.IsValid)
 			{
-				await ErrorResponse();
+				 
                 return View(model);
             }
 
@@ -68,7 +68,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 await BranchViewBag();
-                await ErrorResponse();
+                 
                 return View(model);
             }
 

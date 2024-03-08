@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
+using Teknoroma.Application.Features.TechnicalProblems.Contants;
 
 namespace Teknoroma.Application.Features.TechnicalProblems.Queries.GetById
 {
-    internal class GetByIdTechnicalProblemQueryValidator
+    public class GetByIdTechnicalProblemQueryValidator:AbstractValidator<GetByIdTechnicalProblemQueryRequest>
     {
+        public GetByIdTechnicalProblemQueryValidator()
+        {
+            RuleFor(x => x.ID).NotEmpty().WithMessage(TechnicalProblemsMessages.IDNotNull);
+        }
     }
 }

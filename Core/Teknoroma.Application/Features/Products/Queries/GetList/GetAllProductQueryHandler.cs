@@ -1,22 +1,22 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Products;
 
 namespace Teknoroma.Application.Features.Products.Queries.GetList
 {
 	public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryRequest, List<GetAllProductQueryResponse>>
 	{
 		private readonly IMapper _mapper;
-		private readonly IProductRepository _productRepository;
+		private readonly IProductService _productService;
 
-		public GetAllProductQueryHandler(IMapper mapper,IProductRepository productRepository)
+		public GetAllProductQueryHandler(IMapper mapper,IProductService productService)
         {
 			_mapper = mapper;
-			_productRepository = productRepository;
+			_productService = productService;
 		}
         public async Task<List<GetAllProductQueryResponse>> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
 		{
-			var products = await _productRepository.GetAllAsync(); 
+			var products = await _productService.GetAllAsync(); 
 
 			List<GetAllProductQueryResponse> responses = _mapper.Map<List<GetAllProductQueryResponse>>(products.ToList());
 

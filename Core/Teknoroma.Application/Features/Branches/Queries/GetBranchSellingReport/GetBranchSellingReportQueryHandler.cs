@@ -1,19 +1,19 @@
 ﻿using MediatR;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Branches;
 
 namespace Teknoroma.Application.Features.Branches.Queries.GetBranchSellingReport
 {
-    public class GetBranchSellingReportQueryHandler : IRequestHandler<GetBranchSellingReportQueryRequest, List<GetBranchSellingReportQueryResponse>>
+	public class GetBranchSellingReportQueryHandler : IRequestHandler<GetBranchSellingReportQueryRequest, List<GetBranchSellingReportQueryResponse>>
     {
-        private readonly IBranchRepository _branchRepository;
+		private readonly IBranchService _branchService;
 
-        public GetBranchSellingReportQueryHandler(IBranchRepository branchRepository)
+		public GetBranchSellingReportQueryHandler(IBranchService branchService)
         {
-            _branchRepository = branchRepository;
-        }
+			_branchService = branchService;
+		}
         public async Task<List<GetBranchSellingReportQueryResponse>> Handle(GetBranchSellingReportQueryRequest request, CancellationToken cancellationToken)
         {
-            var branches = await _branchRepository.GetAllAsync();
+            var branches = await _branchService.GetAllAsync();
 
             var bestSellingBranches = branches.GroupBy(branch => branch.BranchName)
                 .Select(grouped => new

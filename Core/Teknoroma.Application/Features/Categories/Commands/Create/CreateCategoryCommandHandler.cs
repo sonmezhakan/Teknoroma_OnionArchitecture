@@ -1,21 +1,21 @@
 ﻿using AutoMapper;
 using MediatR;
 using Teknoroma.Application.Features.Categories.Rules;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Categories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Categories.Commands.Create
 {
-    public class CreateCategoryCommandHandler:IRequestHandler<CreateCategoryCommandRequest, Unit>
+	public class CreateCategoryCommandHandler:IRequestHandler<CreateCategoryCommandRequest, Unit>
     {
-        private readonly ICategoryRepository _categoryRepository;
-        private readonly IMapper _mapper;
+		private readonly ICategoryService _categoryService;
+		private readonly IMapper _mapper;
 		private readonly CategoryBusinessRules _categoryBusinessRules;
 
-		public CreateCategoryCommandHandler(ICategoryRepository categoryRepository, IMapper mapper, CategoryBusinessRules categoryBusinessRules)
+		public CreateCategoryCommandHandler(ICategoryService categoryService, IMapper mapper, CategoryBusinessRules categoryBusinessRules)
         {
-            _categoryRepository = categoryRepository;
-            _mapper = mapper;
+			_categoryService = categoryService;
+			_mapper = mapper;
 			_categoryBusinessRules = categoryBusinessRules;
 		}
 
@@ -26,7 +26,7 @@ namespace Teknoroma.Application.Features.Categories.Commands.Create
 
             Category category = _mapper.Map<Category>(request);
 
-            await _categoryRepository.AddAsync(category);
+            await _categoryService.AddAsync(category);
 
 			return Unit.Value;
 		}

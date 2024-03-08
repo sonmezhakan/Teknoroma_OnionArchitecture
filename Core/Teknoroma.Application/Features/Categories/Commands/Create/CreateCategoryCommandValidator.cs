@@ -1,11 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Teknoroma.Application.Features.Brands.Command.Create;
-using Teknoroma.Application.Features.Brands.Contants;
 using Teknoroma.Application.Features.Categories.Constants;
 
 namespace Teknoroma.Application.Features.Categories.Commands.Create

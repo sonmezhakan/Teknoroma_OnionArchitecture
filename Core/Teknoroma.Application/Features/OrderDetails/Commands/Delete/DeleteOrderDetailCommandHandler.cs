@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Teknoroma.Application.Features.Orders.Command.Delete;
-using Teknoroma.Application.Features.Products.Command.Update;
 using Teknoroma.Application.Features.Stocks.Command.Update;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.OrderDetails;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.OrderDetails.Command.Delete
@@ -12,17 +11,17 @@ namespace Teknoroma.Application.Features.OrderDetails.Command.Delete
 	{
 		private readonly IMediator _mediator;
 		private readonly IMapper _mapper;
-		private readonly IOrderDetailRepository _orderDetailRepository;
+		private readonly IOrderDetailService _orderDetailService;
 
-		public DeleteOrderDetailCommandHandler(IMediator mediator,IMapper mapper,IOrderDetailRepository orderDetailRepository)
+		public DeleteOrderDetailCommandHandler(IMediator mediator,IMapper mapper,IOrderDetailService orderDetailService)
         {
 			_mediator = mediator;
 			_mapper = mapper;
-			_orderDetailRepository = orderDetailRepository;
+			_orderDetailService = orderDetailService;
 		}
         public async Task<Unit> Handle(DeleteOrderDetailCommandRequest request, CancellationToken cancellationToken)
 		{
-			OrderDetail orderDetail = await _orderDetailRepository.GetAsync(x => x.ID == request.OrderId && x.ProductId == request.ProductId);
+			OrderDetail orderDetail = await _orderDetailService.GetAsync(x => x.ID == request.OrderId && x.ProductId == request.ProductId);
 
 			//stock process
 			var stock = orderDetail.Order.Branch.stocks.FirstOrDefault(x => x.BranchId == request.BranchId && x.ProductId == request.ProductId);
@@ -32,9 +31,9 @@ namespace Teknoroma.Application.Features.OrderDetails.Command.Delete
 
 
 			//OrderDetail process
-			await _orderDetailRepository.DeleteAsync(orderDetail);
+			await _orderDetailService.DeleteAsync(orderDetail);
 
-			if(_orderDetailRepository.GetAllAsync(x=>x.ID == request.OrderId).Result.Count() <=0)
+			if(_orderDetailService.GetAllAsync(x=>x.ID == request.OrderId).Result.Count() <=0)
 			{
 				await _mediator.Send(new DeleteOrderCommandRequest { ID = request.OrderId });
 			}

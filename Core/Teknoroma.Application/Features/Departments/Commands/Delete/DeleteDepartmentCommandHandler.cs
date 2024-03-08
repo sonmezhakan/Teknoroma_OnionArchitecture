@@ -1,31 +1,23 @@
-﻿using AutoMapper;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Teknoroma.Application.Repositories;
+﻿using MediatR;
+using Teknoroma.Application.Services.Departments;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Departments.Command.Delete
 {
 	public class DeleteDepartmentCommandHandler:IRequestHandler<DeleteDepartmentCommandRequest, Unit>
 	{
-		private readonly IMapper _mapper;
-		private readonly IDepartmentRepository _departmentRepository;
+		private readonly IDepartmentService _departmentService;
 
-		public DeleteDepartmentCommandHandler(IMapper mapper, IDepartmentRepository departmentRepository)
-		{
-			_mapper = mapper;
-			_departmentRepository = departmentRepository;
+		public DeleteDepartmentCommandHandler(IDepartmentService departmentService)
+        {
+			_departmentService = departmentService;
 		}
 
-		public async Task<Unit> Handle(DeleteDepartmentCommandRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteDepartmentCommandRequest request, CancellationToken cancellationToken)
 		{
-			Department department = await _departmentRepository.GetAsync(x=>x.ID == request.ID);
+			Department department = await _departmentService.GetAsync(x=>x.ID == request.ID);
 
-			await _departmentRepository.DeleteAsync(department);
+			await _departmentService.DeleteAsync(department);
 
 			return Unit.Value;
 		}

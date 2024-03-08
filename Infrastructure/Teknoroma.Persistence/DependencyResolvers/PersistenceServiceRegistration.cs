@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 using Teknoroma.Infrastructure.WebApiService;
 using Teknoroma.Persistence.Context;
@@ -10,7 +10,7 @@ using Teknoroma.Persistence.Repositories;
 
 namespace Teknoroma.Persistence.DependencyResolvers
 {
-	public static class PersistenceServiceRegistration
+    public static class PersistenceServiceRegistration
 	{
 		public static IServiceCollection AddPersistenceServiceRegistration(this IServiceCollection services)
 		{
@@ -53,7 +53,7 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddHttpClient();
 			services.AddScoped<IApiService, ApiService>();
 
-			return services;
+            return services;
 		}
 	}
 }

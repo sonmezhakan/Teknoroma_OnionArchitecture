@@ -7,6 +7,9 @@
 		public const string DepartmentIDNotNull = "Departman Boş Olamaz!";
 
 		public const string AppUserIDNotNull = "Kullanıcı Boş Olamaz!";
-		public const string AppUserExists = "Kullanıcı Daha Önceden Atama Yapılmış!";
-	}
+		public const string AppUserExists = "Kullanıcıya Daha Önceden Atama Yapılmış!";
+
+        public const string StartDateTimeNotNull = "Başlangıç Tarihi Boş Olamaz!";
+        public const string EndDateTimeNotNull = "Bitiş Tarihi Boş Olamaz!";
+    }
 }

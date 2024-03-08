@@ -6,22 +6,26 @@ namespace Teknoroma.Application.Features.Products.Models
     public class ProductViewModel
     {
         [Display(Name = ProductColumnNames.ID)]
+		[Required(ErrorMessage = ProductsMessages.IDNotNull)]
         public Guid ID { get; set; }
 
 		[Display(Name = ProductColumnNames.ProductName)]
-		public string ProductName { get; set; }
+        [Required(ErrorMessage = ProductsMessages.ProductNameNotNull)]
+        public string ProductName { get; set; }
 
 		[Display(Name = ProductColumnNames.BarcodeCode)]
 		public string? BarcodeCode { get; set; }
 
 		[Display(Name = ProductColumnNames.UnitPrice)]
-		public decimal UnitPrice { get; set; }
+        [Required(ErrorMessage = ProductsMessages.UnitPriceNotNull)]
+        public decimal UnitPrice { get; set; }
 
 		[Display(Name = ProductColumnNames.UnitsInStock)]
 		public int? UnitsInStock { get; set; }
 
 		[Display(Name = ProductColumnNames.CriticalStock)]
-		public int CriticalStock { get; set; }
+        [Required(ErrorMessage = ProductsMessages.CriticalStockNotNull)]
+        public int CriticalStock { get; set; }
 
 		[Display(Name = ProductColumnNames.Description)]
 		public string? Description { get; set; }
@@ -33,6 +37,7 @@ namespace Teknoroma.Application.Features.Products.Models
 		public Guid? BrandId { get; set; }
 
 		[Display(Name = ProductColumnNames.CategoryId)]
-		public Guid CategoryId { get; set; }
+        [Required(ErrorMessage = ProductsMessages.CategoryNotNull)]
+        public Guid CategoryId { get; set; }
     }
 }

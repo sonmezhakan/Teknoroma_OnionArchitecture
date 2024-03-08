@@ -12,6 +12,8 @@ namespace Teknoroma.Application.Features.Departments.Command.Update
 	{
         public UpdateDepartmentCommandValidator()
         {
+			RuleFor(x => x.ID).NotEmpty().WithMessage(DepartmentsMessages.IDNotNull);
+
 			RuleFor(x => x.DepartmentName).NotEmpty().WithMessage(DepartmentsMessages.DepartmentNotNull)
 				.MaximumLength(64).WithMessage(DepartmentsMessages.DepartmentNameMaxLenght);
 

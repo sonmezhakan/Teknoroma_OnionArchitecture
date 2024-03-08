@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
+using Teknoroma.Application.Features.TechnicalProblems.Contants;
 
 namespace Teknoroma.Application.Features.TechnicalProblems.Commands.Delete
 {
-    internal class DeleteTechnicalProblemCommandValidator
+    public class DeleteTechnicalProblemCommandValidator:AbstractValidator<DeleteTechnicalProblemCommandRequest>
     {
+        public DeleteTechnicalProblemCommandValidator()
+        {
+            RuleFor(x => x.ID).NotEmpty().WithMessage(TechnicalProblemsMessages.IDNotNull);
+        }
     }
 }

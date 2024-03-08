@@ -15,5 +15,5 @@
 		public const string CartItemsNotNull = "Ürün Bulunamadı!";
 
 		public const string QuantityNotNull = "Adet Boş Olamaz!";
-	}
+    }
 }

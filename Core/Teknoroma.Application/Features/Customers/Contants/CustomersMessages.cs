@@ -24,5 +24,9 @@ namespace Teknoroma.Application.Features.Customers.Contants
 		public const string AddressMaxLenght = "Açıklama En Fazla 255 Karakter Olabilir!";
 
 		public const string EmailMaxLenght = "Email En Fazla 128 Karakter Olabilir!";
-	}
+		public const string EmailNotNoll = "Email Boş Olamaz!";
+
+        public const string StartDateTimeNotNull = "Başlangıç Tarihi Boş Olamaz!";
+        public const string EndDateTimeNotNull = "Bitiş Tarihi Boş Olamaz!";
+    }
 }

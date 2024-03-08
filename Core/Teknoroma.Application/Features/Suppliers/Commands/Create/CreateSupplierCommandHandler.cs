@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Teknoroma.Application.Features.Suppliers.Rules;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Suppliers.Command.Create
 {
-	public class CreateSupplierCommandHandler:IRequestHandler<CreateSupplierCommandRequest, Unit>
+    public class CreateSupplierCommandHandler:IRequestHandler<CreateSupplierCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
 		private readonly ISupplierRepository _supplierRepository;

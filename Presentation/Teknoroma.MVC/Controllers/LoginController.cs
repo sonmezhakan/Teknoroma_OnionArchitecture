@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using Teknoroma.Application.Features.AppUsers.Commands.Login;
 using Teknoroma.Application.Features.AppUsers.Models;
 using Teknoroma.Domain.Entities;
 using Teknoroma.Infrastructure.WebApiService;
 using Teknoroma.MVC.Areas.Admin.Controllers;
+using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Controllers
 {
@@ -51,9 +53,10 @@ namespace Teknoroma.MVC.Controllers
 
             await _signInManager.PasswordSignInAsync(appUser, model.Password,false,false);
 
-            var token = await response.Content.ReadAsStringAsync();
-
-            Response.Cookies.Append("LoginJWT", token, new CookieOptions
+            
+            string getToken = await response.Content.ReadAsStringAsync();
+            var token = JsonConvert.DeserializeObject<TokenViewModel>(getToken);
+            Response.Cookies.Append("LoginJWT", token.Token, new CookieOptions
             {
                 HttpOnly = true,
                 Secure = true,
@@ -61,7 +64,7 @@ namespace Teknoroma.MVC.Controllers
                 Expires = DateTime.UtcNow.AddHours(1)
             });
 
-            ApiService.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            ApiService.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
             return RedirectToAction("Index", "Home");     
         }
 

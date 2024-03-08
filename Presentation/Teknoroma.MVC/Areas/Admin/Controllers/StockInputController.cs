@@ -34,7 +34,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             await ViewBagList();
             if (!ModelState.IsValid)
             {
-                await ErrorResponse();
+                 
                 return View(model);
             }
 
@@ -74,7 +74,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             await ViewBagList();
 			if (!ModelState.IsValid)
             {
-                await ErrorResponse();
+                 
                 return View(model);
             }
             UpdateStockInputCommandRequest updateStockInput = Mapper.Map<UpdateStockInputCommandRequest>(model);

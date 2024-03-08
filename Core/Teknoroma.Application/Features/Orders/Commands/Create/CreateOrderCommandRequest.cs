@@ -1,11 +1,10 @@
 ﻿using MediatR;
 using Teknoroma.Application.Features.Orders.Models;
-using Teknoroma.Application.Pipelines.Transaction;
 using Teknoroma.Domain.Enums;
 
 namespace Teknoroma.Application.Features.Orders.Command.Create
 {
-	public class CreateOrderCommandRequest:IRequest<Unit>
+    public class CreateOrderCommandRequest:IRequest<Unit>
 	{
 		public List<CartItem> CartItems { get; set; }
 

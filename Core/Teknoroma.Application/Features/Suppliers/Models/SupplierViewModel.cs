@@ -6,10 +6,12 @@ namespace Teknoroma.Application.Features.Suppliers.Models
 	public class SupplierViewModel
 	{
 		[Display(Name = SupplierColumnNames.ID)]
-		public Guid ID { get; set; }
+        [Required(ErrorMessage = SuppliersMessages.IDNotNull)]
+        public Guid ID { get; set; }
 
 		[Display(Name = SupplierColumnNames.CompanyName)]
-		public string CompanyName { get; set; }
+        [Required(ErrorMessage = SuppliersMessages.CompanyNameNotNull)]
+        public string CompanyName { get; set; }
 
 		[Display(Name = SupplierColumnNames.ContactName)]
 		public string? ContactName { get; set; }

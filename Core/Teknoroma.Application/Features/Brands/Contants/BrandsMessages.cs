@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Teknoroma.Application.Features.Brands.Contants
+﻿namespace Teknoroma.Application.Features.Brands.Contants
 {
     public class BrandsMessages
     {
@@ -19,5 +13,8 @@ namespace Teknoroma.Application.Features.Brands.Contants
 		public const string PhoneNumberMaxLenght = "Telefon Numarası En Fazla 11 Karakter Olabilir!";
 
 		public const string DescriptionMaxLenght = "Açıklama En Fazla 255 Karakter Olabilir!";
-	}
+
+        public const string StartDateTimeNotNull = "Başlangıç Tarihi Boş Olamaz!";
+        public const string EndDateTimeNotNull = "Bitiş Tarihi Boş Olamaz!";
+    }
 }

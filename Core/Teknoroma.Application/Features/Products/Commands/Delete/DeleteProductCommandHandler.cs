@@ -1,13 +1,6 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 using Teknoroma.Application.Features.Stocks.Command.Delete;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Products;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Products.Command.Delete
@@ -15,19 +8,19 @@ namespace Teknoroma.Application.Features.Products.Command.Delete
 	public class DeleteProductCommandHandler:IRequestHandler<DeleteProductCommandRequest, Unit>
 	{
 		private readonly IMediator _mediator;
-		private readonly IProductRepository _productRepository;
+		private readonly IProductService _productService;
 
-        public DeleteProductCommandHandler(IMediator mediator,IProductRepository productRepository)
+        public DeleteProductCommandHandler(IMediator mediator,IProductService productService)
         {
 			_mediator = mediator;
-			_productRepository = productRepository;
-        }
+			_productService = productService;
+		}
 
 		public async Task<Unit> Handle(DeleteProductCommandRequest request, CancellationToken cancellationToken)
 		{
-			Product product = await _productRepository.GetAsync(x => x.ID == request.ID);
+			Product product = await _productService.GetAsync(x => x.ID == request.ID);
 
-			await _productRepository.DeleteAsync(product);
+			await _productService.DeleteAsync(product);
 
 			//Branchlerde bulunan productlar IsActive yapılıyor.
 			var stocks = product.stocks.Where(x => x.ProductId == product.ID);

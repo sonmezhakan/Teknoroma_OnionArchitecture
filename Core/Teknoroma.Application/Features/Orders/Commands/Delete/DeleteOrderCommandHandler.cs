@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Teknoroma.Application.Features.OrderDetails.Command.Delete;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Orders;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Orders.Command.Delete
@@ -10,18 +9,16 @@ namespace Teknoroma.Application.Features.Orders.Command.Delete
 	public class DeleteOrderCommandHandler : IRequestHandler<DeleteOrderCommandRequest, Unit>
 	{
 		private readonly IMediator _mediator;
-		private readonly IMapper _mapper;
-		private readonly IOrderRepository _orderRepository;
+		private readonly IOrderService _orderService;
 
-		public DeleteOrderCommandHandler(IMediator mediator,IMapper mapper, IOrderRepository orderRepository)
+		public DeleteOrderCommandHandler(IMediator mediator,IMapper mapper, IOrderService orderService)
         {
 			_mediator = mediator;
-			_mapper = mapper;
-			_orderRepository = orderRepository;
+			_orderService = orderService;
 		}
         public async Task<Unit> Handle(DeleteOrderCommandRequest request, CancellationToken cancellationToken)
 		{
-			Order order = await _orderRepository.GetAsync(x=>x.ID == request.ID);
+			Order order = await _orderService.GetAsync(x=>x.ID == request.ID);
 
 			//OrderDetail Process
 			if(order.OrderDetails.Where(x=>x.IsActive == true).Count() > 0)
@@ -38,7 +35,7 @@ namespace Teknoroma.Application.Features.Orders.Command.Delete
 				}	
 			}
 
-			await _orderRepository.DeleteAsync(order);
+			await _orderService.DeleteAsync(order);
 
 			return Unit.Value;
 		}

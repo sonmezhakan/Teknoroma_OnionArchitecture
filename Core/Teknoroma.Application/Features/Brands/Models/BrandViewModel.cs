@@ -6,10 +6,12 @@ namespace Teknoroma.Application.Features.Brands.Models
     public class BrandViewModel
     {
         [Display(Name = BrandColumnNames.ID)]
+        [Required(ErrorMessage = BrandsMessages.IDNotNull)]
         public Guid ID { get; set; }
 
 		[Display(Name = BrandColumnNames.BrandName)]
-		public string BrandName { get; set; }
+        [Required(ErrorMessage = BrandsMessages.BrandNameNotNull)]
+        public string BrandName { get; set; }
 
 		[Display(Name = BrandColumnNames.Description)]
 		public string? Description { get; set; }

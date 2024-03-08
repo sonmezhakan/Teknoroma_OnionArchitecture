@@ -1,19 +1,19 @@
 ﻿using MediatR;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Branches;
 
 namespace Teknoroma.Application.Features.Branches.Queries.GetBranchEarningReport
 {
-    public class GetBranchEarningReportQueryHandler : IRequestHandler<GetBranchEarningReportQueryRequest, List<GetBranchEarningReportQueryResponse>>
+	public class GetBranchEarningReportQueryHandler : IRequestHandler<GetBranchEarningReportQueryRequest, List<GetBranchEarningReportQueryResponse>>
     {
-        private readonly IBranchRepository _branchRepository;
+		private readonly IBranchService _branchService;
 
-        public GetBranchEarningReportQueryHandler(IBranchRepository branchRepository)
+		public GetBranchEarningReportQueryHandler(IBranchService branchService)
         {
-            _branchRepository = branchRepository;
-        }
+			_branchService = branchService;
+		}
         public async Task<List<GetBranchEarningReportQueryResponse>> Handle(GetBranchEarningReportQueryRequest request, CancellationToken cancellationToken)
         {
-            var branches = await _branchRepository.GetAllAsync();
+            var branches = await _branchService.GetAllAsync();
 
             var bestEarningBranches = branches.GroupBy(branch => branch.BranchName)
                 .Select(grouped => new

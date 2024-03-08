@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Stocks.Queries.GetStockTrackingReportList
 {
-	public class GetStockTrackingReportListQueryHandler : IRequestHandler<GetStockTrackingReportListQueryRequest, List<GetStockTrackingReportListQueryResponse>>
+    public class GetStockTrackingReportListQueryHandler : IRequestHandler<GetStockTrackingReportListQueryRequest, List<GetStockTrackingReportListQueryResponse>>
 	{
 		private readonly IMapper _mapper;
 		private readonly IStockRepository _stockRepository;

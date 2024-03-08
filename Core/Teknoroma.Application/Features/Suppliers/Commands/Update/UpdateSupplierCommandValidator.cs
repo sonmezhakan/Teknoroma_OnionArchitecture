@@ -12,6 +12,8 @@ namespace Teknoroma.Application.Features.Suppliers.Command.Update
 	{
 		public UpdateSupplierCommandValidator()
 		{
+			RuleFor(x => x.ID).NotEmpty().WithMessage(SuppliersMessages.IDNotNull);
+
 			RuleFor(x => x.CompanyName).NotEmpty().WithMessage(SuppliersMessages.CompanyNameNotNull)
 					.MaximumLength(255).WithMessage(SuppliersMessages.CompanyNameMaxLenght);
 

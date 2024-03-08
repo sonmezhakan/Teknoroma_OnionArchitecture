@@ -1,26 +1,24 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Employees;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Employees.Queries.GetById
 {
 	public class GetByIdEmployeeQueryHandler : IRequestHandler<GetByIdEmployeeQueryRequest, GetByIdEmployeeQueryResponse>
     {
-        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        private readonly IEmployeeRepository _employeeRepository;
+		private readonly IEmployeeService _employeeService;
 
-        public GetByIdEmployeeQueryHandler(IMediator mediator, IMapper mapper, IEmployeeRepository employeeRepository)
+		public GetByIdEmployeeQueryHandler(IMapper mapper, IEmployeeService employeeService)
         {
-            _mediator = mediator;
             _mapper = mapper;
-            _employeeRepository = employeeRepository;
-        }
+			_employeeService = employeeService;
+		}
 
         public async Task<GetByIdEmployeeQueryResponse> Handle(GetByIdEmployeeQueryRequest request, CancellationToken cancellationToken)
         {
-            Employee employee = await _employeeRepository.GetAsync(x => x.ID == request.ID);
+            Employee employee = await _employeeService.GetAsync(x => x.ID == request.ID);
             GetByIdEmployeeQueryResponse getByIdEmployeeQueryResponse = _mapper.Map<GetByIdEmployeeQueryResponse>(employee);
             
             return getByIdEmployeeQueryResponse;

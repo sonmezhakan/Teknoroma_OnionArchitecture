@@ -1,10 +1,10 @@
 ﻿using Teknoroma.Application.Exceptions.Types;
 using Teknoroma.Application.Features.Suppliers.Contants;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Suppliers.Rules
 {
-	public class SupplierBusinessRules
+    public class SupplierBusinessRules
 	{
 		private readonly ISupplierRepository _supplierRepository;
 

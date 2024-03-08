@@ -35,7 +35,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 await ViewBagList();
-                await ErrorResponse();
+                 
                 return View(model);
             }
 
@@ -70,7 +70,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 await ViewBagList();
-                await ErrorResponse();
+                 
                 return View(model);
             }
             UpdateEmployeeCommandRequest updateEmployeeCommandRequest = Mapper.Map<UpdateEmployeeCommandRequest>(model);

@@ -4,7 +4,7 @@ using Teknoroma.Application.Features.Products.Command.Update;
 using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Application.Features.Stocks.Command.Update;
 using Teknoroma.Application.Features.Stocks.Queries.GetById;
-using Teknoroma.Application.Repositories;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.StockInputs.Command.Create

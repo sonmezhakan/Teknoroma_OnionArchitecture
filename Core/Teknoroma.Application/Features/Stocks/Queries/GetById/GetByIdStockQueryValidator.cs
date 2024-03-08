@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
+using Teknoroma.Application.Features.Stocks.Contants;
 
 namespace Teknoroma.Application.Features.Stocks.Queries.GetById
 {
-    internal class GetByIdStockQueryValidator
+    public class GetByIdStockQueryValidator:AbstractValidator<GetByIdStockQueryRequest>
     {
+        public GetByIdStockQueryValidator()
+        {
+            RuleFor(x => x.BranchID).NotEmpty().WithMessage(StockMessages.BranchIdNotNull);
+            RuleFor(x => x.ProductID).NotEmpty().WithMessage(StockMessages.ProductIdNotNull);
+        }
     }
 }

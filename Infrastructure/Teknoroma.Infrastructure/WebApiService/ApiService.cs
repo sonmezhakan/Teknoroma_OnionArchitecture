@@ -9,7 +9,7 @@ namespace Teknoroma.Infrastructure.WebApiService
 		public ApiService(IHttpClientFactory httpClientFactory,IConfiguration configuration)
         {
             _httpClient = httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri(configuration["ApiServiceSettings:BaseAddress"]);
+            _httpClient.BaseAddress = new Uri(configuration["WebApiConfiguration:BaseAddress"]);
 		}
 
         public HttpClient HttpClient => _httpClient;

@@ -6,9 +6,11 @@ namespace Teknoroma.Application.Features.StockInputs.Models
     public class CreateStockInputViewModel
     {
         [Display(Name = StockInputColumnNames.BranchID)]
+        [Required (ErrorMessage =StockInputsMessages.BranchNotNull)]
         public Guid BranchID { get; set; }
 
         [Display(Name = StockInputColumnNames.ProductID)]
+        [Required(ErrorMessage = StockInputsMessages.ProductNotNull)]
         public Guid ProductID { get; set; }
 
         [Display(Name = StockInputColumnNames.SupplierID)]
@@ -18,6 +20,7 @@ namespace Teknoroma.Application.Features.StockInputs.Models
         public string? InoviceNumber { get; set; }
 
         [Display(Name = StockInputColumnNames.Quantity)]
+        [Required(ErrorMessage = StockInputsMessages.QuantityNotNull)]
         public int Quantity { get; set; }
 
         [Display(Name = StockInputColumnNames.StockEntryDate)]
