@@ -1,8 +1,8 @@
 ﻿@using Teknoroma.Application.Features.StockInputs.Models
 @model StockInputViewModel
 @{
-    ViewData["Title"] = "Detail";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Stok Detayları - Teknoroma";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="row">
@@ -20,10 +20,6 @@
                                 <div asp-validation-summary="All">
                                 </div>
                                 <div class="form-group">
-                                    <div class="form-group">
-                                        <label asp-for="ID"></label>
-                                        <input type="text" class="form-control" asp-for="@Model.ID" disabled>
-                                    </div>
                                     <label asp-for="BranchID"></label>
                                     <select class="form-control" data-toggle="select2" aria-label="Default select example" asp-for="BranchID" disabled>
                                         @if (ViewBag.BranchList != null)

@@ -7,8 +7,10 @@ namespace Teknoroma.Application.Services.Employees
     {
         Task<IQueryable<Employee>> GetAllAsync(Expression<Func<Employee, bool>> filter = null);
         Task<Employee> GetAsync(Expression<Func<Employee, bool>> filter);
+        Task<IQueryable<Employee>> GetFullAll(Expression<Func<Employee, bool>> filter = null);
+		Task<Employee> GetFullSearch(Expression<Func<Employee, bool>> filter);
 
-        Task<bool> AnyAsync(Expression<Func<Employee, bool>> filter);
+		Task<bool> AnyAsync(Expression<Func<Employee, bool>> filter);
 
         Task AddAsync(Employee employee);
         Task AddRangeAsync(List<Employee> employees);

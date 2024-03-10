@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Teknoroma.Application.Features.Categories.Commands.Create;
 using Teknoroma.Application.Features.Categories.Commands.Update;
+using Teknoroma.Application.Features.Categories.Dtos;
 using Teknoroma.Application.Features.Categories.Models;
 using Teknoroma.Application.Features.Categories.Queries.GetById;
 using Teknoroma.Application.Features.Categories.Queries.GetCategoryEarningReport;
@@ -29,6 +30,8 @@ namespace Teknoroma.Application.Features.Categories.Profiles
             CreateMap<CategorySellingReportViewModel, GetCategorySellingReportQueryResponse>().ReverseMap();
             CreateMap<CategoryEarningReportViewModel, GetCategoryEarningReportQueryResponse>().ReverseMap();
             CreateMap<CategorySupplyReportViewModel, GetCategorySupplyReportQueryResponse>().ReverseMap();
+
+            CreateMap<CategoryHomePageListDto, GetAllCategoryQueryResponse>().ReverseMap();
         }
     }
 }

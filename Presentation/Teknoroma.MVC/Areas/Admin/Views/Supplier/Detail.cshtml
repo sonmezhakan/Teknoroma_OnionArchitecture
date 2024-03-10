@@ -1,7 +1,7 @@
 ﻿@using Teknoroma.Application.Features.Suppliers.Models
 @model SupplierViewModel
 @{
-    ViewData["Title"] = "Detail";
+    ViewData["Title"] = "Tedarikçi Detayları - Teknoroma";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -36,10 +36,6 @@
                 <form>
                     <div class="card-body">
                         <div asp-validation-summary="All">
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="ID"></label>
-                            <input type="text" class="form-control" asp-for="@Model.ID" disabled />
                         </div>
                         <div class="form-group">
                             <label asp-for="CompanyName"></label>

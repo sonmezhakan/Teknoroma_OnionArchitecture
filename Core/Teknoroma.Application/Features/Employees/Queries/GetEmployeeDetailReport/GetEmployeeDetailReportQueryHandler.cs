@@ -13,7 +13,7 @@ namespace Teknoroma.Application.Features.Employees.Queries.GetEmployeeDetailRepo
 		}
         public async Task<List<GetEmployeeDetailReportQueryResponse>> Handle(GetEmployeeDetailReportQueryRequest request, CancellationToken cancellationToken)
         {
-            var employees = await _employeeService.GetAllAsync();
+            var employees = await _employeeService.GetFullAll();
 
             List<GetEmployeeDetailReportQueryResponse> getByIdDetailReportQueryResponses = new List<GetEmployeeDetailReportQueryResponse>();
 

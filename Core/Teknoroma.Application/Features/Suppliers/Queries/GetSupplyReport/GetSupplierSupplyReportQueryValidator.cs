@@ -7,8 +7,8 @@ namespace Teknoroma.Application.Features.Suppliers.Queries.GetSupplyReport
     {
         public GetSupplierSupplyReportQueryValidator()
         {
-            RuleFor(x => x.StartDate).NotEmpty().WithMessage(SuppliersMessages.StartDateTimeNotNull);
-            RuleFor(x => x.EndDate).NotEmpty().WithMessage(SuppliersMessages.EndDateTimeNotNull);
+            RuleFor(x => x.StartDate).NotNull().WithMessage(SuppliersMessages.StartDateTimeNotNull);
+            RuleFor(x => x.EndDate).NotNull().WithMessage(SuppliersMessages.EndDateTimeNotNull);
         }
     }
 }

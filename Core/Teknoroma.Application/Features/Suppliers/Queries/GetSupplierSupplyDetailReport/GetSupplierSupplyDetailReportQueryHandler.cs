@@ -1,22 +1,19 @@
-﻿using AutoMapper;
-using MediatR;
-using Teknoroma.Application.Services.Repositories;
+﻿using MediatR;
+using Teknoroma.Application.Services.Suppliers;
 
 namespace Teknoroma.Application.Features.Suppliers.Queries.GetSupplierSupplyDetailReport
 {
-    public class GetSupplierSupplyDetailReportQueryHandler : IRequestHandler<GetSupplierSupplyDetailReportQueryRequest, List<GetSupplierSupplyDetailReportQueryResponse>>
+	public class GetSupplierSupplyDetailReportQueryHandler : IRequestHandler<GetSupplierSupplyDetailReportQueryRequest, List<GetSupplierSupplyDetailReportQueryResponse>>
 	{
-		private readonly ISupplierRepository _supplierRepository;
-		private readonly IMapper _mapper;
+		private readonly ISupplierService _supplierService;
 
-		public GetSupplierSupplyDetailReportQueryHandler(ISupplierRepository supplierRepository,IMapper mapper)
+		public GetSupplierSupplyDetailReportQueryHandler(ISupplierService supplierService)
         {
-			_supplierRepository = supplierRepository;
-			_mapper = mapper;
+			_supplierService = supplierService;
 		}
         public async Task<List<GetSupplierSupplyDetailReportQueryResponse>> Handle(GetSupplierSupplyDetailReportQueryRequest request, CancellationToken cancellationToken)
 		{
-			var suppliers = await _supplierRepository.GetAllAsync();
+			var suppliers = await _supplierService.GetAllAsync();
 
 			List<GetSupplierSupplyDetailReportQueryResponse> getSupplierSupplyDetailReportQueryResponses = new List<GetSupplierSupplyDetailReportQueryResponse>();
 

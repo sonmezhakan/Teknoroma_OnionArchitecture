@@ -27,6 +27,8 @@ namespace Teknoroma.Application.Features.AppUsers.Commands.Login
 
 			await _appUserBusinessRules.LoginCheckPassword(appUser, request.Password);
 
+			await _appUserBusinessRules.LoginCheckIsActive(appUser);
+
 			string token = await _jwtHelper.GetJwtToken(appUser.Id, appUser.UserName);
 
 			return new LoginAppUserCommandResponse

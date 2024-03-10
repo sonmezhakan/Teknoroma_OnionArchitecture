@@ -1,31 +1,29 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Features.Products.Command.Update;
-using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Application.Features.Stocks.Command.Update;
 using Teknoroma.Application.Features.Stocks.Queries.GetById;
-using Teknoroma.Application.Services.Repositories;
+using Teknoroma.Application.Services.StockInputs;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.StockInputs.Command.Create
 {
-    public class CreateStockInputCommandHandler : IRequestHandler<CreateStockInputCommandRequest, Unit>
+	public class CreateStockInputCommandHandler : IRequestHandler<CreateStockInputCommandRequest, Unit>
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        private readonly IStockInputRepository _stockInputRepository;
+		private readonly IStockInputService _stockInputService;
 
-        public CreateStockInputCommandHandler(IMediator mediator,IMapper mapper,IStockInputRepository stockInputRepository)
+		public CreateStockInputCommandHandler(IMediator mediator,IMapper mapper,IStockInputService stockInputService)
         {
             _mediator = mediator;
             _mapper = mapper;
-            _stockInputRepository = stockInputRepository;
-        }
+			_stockInputService = stockInputService;
+		}
         public async Task<Unit> Handle(CreateStockInputCommandRequest request, CancellationToken cancellationToken)
         {
             StockInput stockInput = _mapper.Map<StockInput>(request);
 
-            await _stockInputRepository.AddAsync(stockInput);
+            await _stockInputService.AddAsync(stockInput);
 
             //stock Process
             var stock = await _mediator.Send(new GetByIdStockQueryRequest { BranchID = request.BranchID, ProductID = request.ProductID });

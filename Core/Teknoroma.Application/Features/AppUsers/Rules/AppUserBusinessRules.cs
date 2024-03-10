@@ -75,5 +75,10 @@ namespace Teknoroma.Application.Features.AppUsers.Rules
             if (!result)
                 throw new BusinessException(AppUsersMessages.PasswordError);
         }
+        public async Task LoginCheckIsActive(AppUser appUser)
+        {
+            if (appUser.Employee.IsActive != true)
+                throw new BusinessException(AppUsersMessages.EmployeeDontWork);
+        }
     }
 }

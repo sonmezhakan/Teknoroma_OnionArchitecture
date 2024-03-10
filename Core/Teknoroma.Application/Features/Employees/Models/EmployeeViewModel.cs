@@ -43,5 +43,7 @@ namespace Teknoroma.Application.Features.Employees.Models
 
 		[Display(Name = EmployeeColumnNames.Salary)]
 		public decimal? Salary { get; set; }
-	}
+
+        public bool? IsActive { get; set; }
+    }
 }

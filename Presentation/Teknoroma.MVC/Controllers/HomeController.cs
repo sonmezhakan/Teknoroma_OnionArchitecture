@@ -1,32 +1,45 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using Teknoroma.MVC.Models;
+using Teknoroma.Application.Features.Categories.Dtos;
+using Teknoroma.Application.Features.Products.Dtos;
+using Teknoroma.Application.Features.Products.Models;
+using Teknoroma.MVC.Areas.Admin.Controllers;
 
 namespace Teknoroma.MVC.Controllers
 {
-    public class HomeController : Controller
+
+	public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
+		[HttpGet]
+		public async Task<IActionResult> Index(string? categoryName)
+		{
+			await ViewBagCategoryList();
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+			var products = await ProductHomePageList();
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+			if (categoryName != null)
+			{
+				List< ProductHomePageListViewModel> queryProducts = products.Where(x => x.CategoryName == categoryName).ToList();
+				return View(queryProducts);
+			}
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+			return View(products);
+		}
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+
+		private async Task<List<ProductHomePageListViewModel>> ProductHomePageList()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+			var response = await ApiService.HttpClient.GetFromJsonAsync<List<ProductHomePageListDto>>("product/ProductHomePageList");
+
+			List<ProductHomePageListViewModel> productHomePageListViewModels = Mapper.Map<List<ProductHomePageListViewModel>>(response);
+
+            return productHomePageListViewModels;
+		}
+
+        private async Task ViewBagCategoryList()
+        {
+            var categories = await ApiService.HttpClient.GetFromJsonAsync<List<CategoryHomePageListDto>>("category/CategoryHomePageList");
+
+            ViewBag.CategoryList = categories;
         }
     }
 }

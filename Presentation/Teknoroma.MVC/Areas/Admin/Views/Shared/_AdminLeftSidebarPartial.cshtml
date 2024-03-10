@@ -1,0 +1,221 @@
+﻿ <!-- ========== Left Sidebar Start ========== -->
+<div class="vertical-menu">
+
+    <div data-simplebar class="h-100">
+
+        <div class="navbar-brand-box">
+            <a href="index.html" class="logo">
+                <i class="mdi mdi-alpha-x-circle"></i>
+                <span>
+                    Xacton
+                </span>
+            </a>
+        </div>
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+            <!-- Left Menu Start -->
+            <ul class="metismenu list-unstyled" id="side-menu">
+                <li class="menu-title">Menu</li>
+
+                <li>
+                    <a asp-controller="Home" asp-action="Index" class="waves-effect">
+                        <i class="feather-airplay"></i><span class="badge badge-pill badge-primary float-right">7</span><span>Dashboard</span>
+                    </a>
+                </li>
+
+                <!--Stocks-->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="feather-copy"></i><span>Stok İşlemleri</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a asp-controller="StockInput" asp-action="Create">Stok Girişi</a></li>
+                        <li><a asp-controller="StockInput" asp-action="Update">Güncelle</a></li>
+                        <li><a asp-controller="StockInput" asp-action="Detail">Detaylar</a></li>
+                        <li><a asp-controller="StockInput" asp-action="StockInputList">Stok Giriş Listesi</a></li>
+                        <li><a asp-controller="Stock" asp-action="StockTrackingReport">Stok Takip Raporu</a></li>
+
+                    </ul>
+                </li>
+
+
+                <!--Products-->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="feather-copy"></i><span>Ürünler</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a asp-controller="Product" asp-action="Create">Ekle</a></li>
+                        <li><a asp-controller="Product" asp-action="Update">Güncelle</a></li>
+                        <li><a asp-controller="Product" asp-action="Detail">Detaylar</a></li>
+                        <li><a asp-controller="Product" asp-action="ProductList">Ürün Listesi</a></li>
+                        <li><a asp-controller="Product" asp-action="ProductReport">Ürün Raporları</a></li>
+
+                    </ul>
+                </li>
+
+                <!--Categories-->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="feather-copy"></i><span>Kategoriler</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a asp-controller="Category" asp-action="Create">Ekle</a></li>
+                        <li><a asp-controller="Category" asp-action="Update">Güncelle</a></li>
+                        <li><a asp-controller="Category" asp-action="Detail">Detaylar</a></li>
+                        <li><a asp-controller="Category" asp-action="CategoryList">Kategori Listesi</a></li>
+                        <li><a asp-controller="Category" asp-action="CategoryReport">Kategori Raporları</a></li>
+
+                    </ul>
+                </li>
+
+                <!--Users-->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="feather-copy"></i><span>Kullanıcılar</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a asp-controller="AppUser" asp-action="Create">Ekle</a></li>
+                        <li><a asp-controller="AppUser" asp-action="Update">Güncelle</a></li>
+                        <li><a asp-controller="AppUser" asp-action="Detail">Detaylar</a></li>
+                        <li><a asp-controller="AppUser" asp-action="AppUserList">Kullanıcı Listesi</a></li>
+                    </ul>
+                </li>
+
+
+                <!--User Roles-->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="feather-copy"></i><span>Yetkiler</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a asp-controller="AppUserRole" asp-action="Create">Ekle</a></li>
+                        <li><a asp-controller="AppUserRole" asp-action="Update">Güncelle</a></li>
+                        <li><a asp-controller="AppUserRole" asp-action="Detail">Detaylar</a></li>
+                        <li><a asp-controller="AppUserRole" asp-action="AppUserRoleList">Yetki Listesi</a></li>
+                    </ul>
+                </li>
+
+
+                <!--Branch-->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="feather-copy"></i><span>Şubeler</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a asp-controller="Branch" asp-action="Create">Ekle</a></li>
+                        <li><a asp-controller="Branch" asp-action="Update">Güncelle</a></li>
+                        <li><a asp-controller="Branch" asp-action="Detail">Detaylar</a></li>
+                        <li><a asp-controller="Branch" asp-action="BranchList">Şube Listesi</a></li>
+                        <li><a asp-controller="Branch" asp-action="BranchReport">Şube Raporları</a></li>
+                    </ul>
+                </li>
+
+                <!--Departments-->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="feather-copy"></i><span>Departmanlar</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a asp-controller="Department" asp-action="Create">Ekle</a></li>
+                        <li><a asp-controller="Department" asp-action="Update">Güncelle</a></li>
+                        <li><a asp-controller="Department" asp-action="Detail">Detaylar</a></li>
+                        <li><a asp-controller="Department" asp-action="DepartmentList">Departman Listesi</a></li>
+                    </ul>
+                </li>
+
+                <!--Employee-->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="feather-copy"></i><span>Çalışanlar</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a asp-controller="Employee" asp-action="Create">Ekle</a></li>
+                        <li><a asp-controller="Employee" asp-action="Update">Güncelle</a></li>
+                        <li><a asp-controller="Employee" asp-action="Detail">Detaylar</a></li>
+                        <li><a asp-controller="Employee" asp-action="EmployeeList">Çalışan Listesi</a></li>
+                        <li><a asp-controller="Employee" asp-action="EmployeeReport">Çalışan Raporları</a></li>
+                    </ul>
+                </li>
+
+                <!--Sales-->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="feather-copy"></i><span>Satışlar</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a asp-controller="Order" asp-action="Index">Satış Yap</a></li>
+                        <li><a asp-controller="Order" asp-action="OrderList">Satış Listesi</a></li>
+                        <li><a asp-controller="Order" asp-action="SaleReport">Satış Raporları</a></li>
+                    </ul>
+                </li>
+
+
+                <!--Orders-->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="feather-copy"></i><span>Siparişler</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a asp-controller="Order" asp-action="OrderList">Sipariş Listesi</a></li>
+                    </ul>
+                </li>
+
+                <!--Customers-->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="feather-copy"></i><span>Müşteriler</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a asp-controller="Customer" asp-action="Create">Ekle</a></li>
+                        <li><a asp-controller="Customer" asp-action="Update">Güncelle</a></li>
+                        <li><a asp-controller="Customer" asp-action="Detail">Detaylar</a></li>
+                        <li><a asp-controller="Customer" asp-action="CustomerList">Müşteri Listesi</a></li>
+                        <li><a asp-controller="Customer" asp-action="CustomerReport">Müşteri Raporları</a></li>
+                    </ul>
+
+                    <!--Supplier-->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="feather-copy"></i><span>Tedarikçiler</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a asp-controller="Supplier" asp-action="Create">Ekle</a></li>
+                        <li><a asp-controller="Supplier" asp-action="Update">Güncelle</a></li>
+                        <li><a asp-controller="Supplier" asp-action="Detail">Detaylar</a></li>
+                        <li><a asp-controller="Supplier" asp-action="SupplierList">Tedarikçi Listesi</a></li>
+                        <li><a asp-controller="Supplier" asp-action="SupplierReport">Tedarikçi Raporları</a></li>
+                    </ul>
+                </li>
+
+                <!--Brands-->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="feather-copy"></i><span>Markalar</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a asp-controller="Brand" asp-action="Create">Ekle</a></li>
+                        <li><a asp-controller="Brand" asp-action="Update">Güncelle</a></li>
+                        <li><a asp-controller="Brand" asp-action="Detail">Detaylar</a></li>
+                        <li><a asp-controller="Brand" asp-action="BrandList">Marka Listesi</a></li>
+                        <li><a asp-controller="Brand" asp-action="BrandReport">Marka Raporları</a></li>
+                    </ul>
+                </li>
+
+                <!--TechnicalProblems-->
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="feather-copy"></i><span>Teknik</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a asp-controller="TechnicalProblem" asp-action="TechnicalProblemReport">Sorun Bildir</a></li>
+                        <li><a asp-controller="TechnicalProblem" asp-action="TechnicalProblemList">Sorun Listesi</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- Sidebar -->
+    </div>
+</div>
+<!-- Left Sidebar End -->

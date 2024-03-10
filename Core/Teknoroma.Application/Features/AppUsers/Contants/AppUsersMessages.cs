@@ -25,5 +25,7 @@ namespace Teknoroma.Application.Features.AppUsers.Contants
 
         public const string FirstNameNotNull = "Ad Boş Olamaz!";
         public const string LastNameNotNull = "Soyad Boş Olamaz!";
+
+        public const string EmployeeDontWork = "Artık Çalışmıyorsunuz!";
     }
 }

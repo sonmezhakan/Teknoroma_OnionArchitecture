@@ -1,8 +1,8 @@
 ﻿@using Teknoroma.Application.Features.AppUsers.Models
 @model AppUserViewModel
 @{
-    ViewData["Title"] = "Update";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Kullanıcı Güncelle - Teknoroma";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 
@@ -38,11 +38,6 @@
                         <form method="post" enctype="multipart/form-data" asp-route-ID="@Model.ID" asp-route-UserName="@Model.UserName">
                             <div class="card-body">
                                 <div asp-validation-summary="All">
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="ID"></label>
-                                    <input type="text" class="form-control" value="@Model.ID" disabled>
-
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="UserName"></label>

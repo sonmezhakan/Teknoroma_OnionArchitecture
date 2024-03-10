@@ -2,6 +2,7 @@
 using Teknoroma.Application.Features.Orders.Models;
 using Teknoroma.Application.Features.Products.Command.Create;
 using Teknoroma.Application.Features.Products.Command.Update;
+using Teknoroma.Application.Features.Products.Dtos;
 using Teknoroma.Application.Features.Products.Models;
 using Teknoroma.Application.Features.Products.Queries.GetByBarcodeCode;
 using Teknoroma.Application.Features.Products.Queries.GetById;
@@ -22,6 +23,8 @@ namespace Teknoroma.Application.Features.Products.Profiles
 			CreateMap<Product, CreateProductCommandRequest>().ReverseMap();
 			CreateMap<Product,UpdateProductCommandRequest>().ReverseMap();
 			CreateMap<Product, GetByIdProductQueryResponse>()
+				.ForMember(dest=>dest.BrandName, opt=>opt.MapFrom(src=>src.Brand.BrandName))
+				.ForMember(dest=>dest.CategoryName, opt=>opt.MapFrom(src=>src.Category.CategoryName))
 				.AfterMap((src, dest) => dest.UnitsInStock = src.stocks.Where(x => x.IsActive == true).Sum(x => x.UnitsInStock))
 				.ReverseMap();
 
@@ -53,7 +56,13 @@ namespace Teknoroma.Application.Features.Products.Profiles
 				.AfterMap((src, dest) => dest.UnitsInStock = src.stocks.Where(x => x.IsActive == true).Sum(x => x.UnitsInStock))
 				.ReverseMap();
 
-			CreateMap<ProductListViewModel, GetByBarcodeCodeQueryResponse>().ReverseMap();	
+			CreateMap<ProductListViewModel, GetByBarcodeCodeQueryResponse>().ReverseMap();
+
+			CreateMap<ProductHomePageListDto, GetAllProductQueryResponse>();
+			CreateMap<ProductHomePageListViewModel, ProductHomePageListDto>().ReverseMap();
+
+			CreateMap<ProductPageDto, GetByIdProductQueryResponse>().ReverseMap();
+			CreateMap<ProductPageViewModel, ProductPageDto>().ReverseMap();
 		}
     }
 }

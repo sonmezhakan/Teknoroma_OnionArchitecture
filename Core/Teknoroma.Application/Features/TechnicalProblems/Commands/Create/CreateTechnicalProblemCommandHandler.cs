@@ -1,25 +1,25 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.Repositories;
+using Teknoroma.Application.Services.TechnicalProblems;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.TechnicalProblems.Commands.Create
 {
-    public class CreateTechnicalProblemCommandHandler : IRequestHandler<CreateTechnicalProblemCommandRequest, Unit>
+	public class CreateTechnicalProblemCommandHandler : IRequestHandler<CreateTechnicalProblemCommandRequest, Unit>
     {
         private readonly IMapper _mapper;
-        private readonly ITechnicalProblemRepository _technicalProblemRepository;
+		private readonly ITechnicalProblemService _technicalProblemService;
 
-        public CreateTechnicalProblemCommandHandler(IMapper mapper,ITechnicalProblemRepository technicalProblemRepository)
+		public CreateTechnicalProblemCommandHandler(IMapper mapper,ITechnicalProblemService technicalProblemService)
         {
             _mapper = mapper;
-            _technicalProblemRepository = technicalProblemRepository;
-        }
+			_technicalProblemService = technicalProblemService;
+		}
         public async Task<Unit> Handle(CreateTechnicalProblemCommandRequest request, CancellationToken cancellationToken)
         {
             TechnicalProblem technicalProblem = _mapper.Map<TechnicalProblem>(request);
 
-            await _technicalProblemRepository.AddAsync(technicalProblem);
+            await _technicalProblemService.AddAsync(technicalProblem);
 
             return Unit.Value;
         }

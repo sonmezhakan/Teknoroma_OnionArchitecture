@@ -7,8 +7,8 @@ namespace Teknoroma.Application.Features.Products.Queries.GetProductSalesDetailR
     {
         public GetProductSalesDetailReportQueryValidator()
         {
-            RuleFor(x => x.StartDate).NotEmpty().WithMessage(ProductsMessages.StartDateTimeNotNull);
-            RuleFor(x => x.EndDate).NotEmpty().WithMessage(ProductsMessages.EndDateTimeNotNull);
+            RuleFor(x => x.StartDate).NotNull().WithMessage(ProductsMessages.StartDateTimeNotNull);
+            RuleFor(x => x.EndDate).NotNull().WithMessage(ProductsMessages.EndDateTimeNotNull);
         }
     }
 }

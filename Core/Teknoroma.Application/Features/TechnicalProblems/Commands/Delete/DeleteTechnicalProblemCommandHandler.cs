@@ -1,25 +1,22 @@
-﻿using AutoMapper;
-using MediatR;
-using Teknoroma.Application.Services.Repositories;
+﻿using MediatR;
+using Teknoroma.Application.Services.TechnicalProblems;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.TechnicalProblems.Commands.Delete
 {
-    public class DeleteTechnicalProblemCommandHandler : IRequestHandler<DeleteTechnicalProblemCommandRequest, Unit>
+	public class DeleteTechnicalProblemCommandHandler : IRequestHandler<DeleteTechnicalProblemCommandRequest, Unit>
     {
-        private readonly IMapper _mapper;
-        private readonly ITechnicalProblemRepository _technicalProblemRepository;
+		private readonly ITechnicalProblemService _technicalProblemService;
 
-        public DeleteTechnicalProblemCommandHandler(IMapper mapper,ITechnicalProblemRepository technicalProblemRepository)
+		public DeleteTechnicalProblemCommandHandler(ITechnicalProblemService technicalProblemService)
         {
-            _mapper = mapper;
-            _technicalProblemRepository = technicalProblemRepository;
-        }
+			_technicalProblemService = technicalProblemService;
+		}
         public async Task<Unit> Handle(DeleteTechnicalProblemCommandRequest request, CancellationToken cancellationToken)
         {
-            TechnicalProblem technicalProblem = await _technicalProblemRepository.GetAsync(x => x.ID == request.ID);
+            TechnicalProblem technicalProblem = await _technicalProblemService.GetAsync(x => x.ID == request.ID);
 
-            await _technicalProblemRepository.DeleteAsync(technicalProblem);
+            await _technicalProblemService.DeleteAsync(technicalProblem);
 
             return Unit.Value;
         }

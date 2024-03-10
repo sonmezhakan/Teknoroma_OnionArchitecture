@@ -7,8 +7,8 @@ namespace Teknoroma.Application.Features.Categories.Queries.GetCategorySellingRe
     {
         public GetCategorySellingReportQueryVallidator()
         {
-            RuleFor(x => x.StartDate).NotEmpty().WithMessage(CategoryMessages.StartDateTimeNotNull);
-            RuleFor(x => x.EndDate).NotEmpty().WithMessage(CategoryMessages.EndDateTimeNotNull);
+            RuleFor(x => x.StartDate).NotNull().WithMessage(CategoryMessages.StartDateTimeNotNull);
+            RuleFor(x => x.EndDate).NotNull().WithMessage(CategoryMessages.EndDateTimeNotNull);
         }
     }
 }

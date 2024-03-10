@@ -1,22 +1,19 @@
-﻿using AutoMapper;
-using MediatR;
-using Teknoroma.Application.Services.Repositories;
+﻿using MediatR;
+using Teknoroma.Application.Services.Suppliers;
 
 namespace Teknoroma.Application.Features.Suppliers.Queries.GetSupplyReport
 {
-    public class GetSupplierSupplyReportQueryHandler : IRequestHandler<GetSupplierSupplyReportQueryRequest, List<GetSupplierSupplyReportQueryResponse>>
+	public class GetSupplierSupplyReportQueryHandler : IRequestHandler<GetSupplierSupplyReportQueryRequest, List<GetSupplierSupplyReportQueryResponse>>
 	{
-		private readonly IMapper _mapper;
-		private readonly ISupplierRepository _supplierRepository;
+		private readonly ISupplierService _supplierService;
 
-		public GetSupplierSupplyReportQueryHandler(IMapper mapper,ISupplierRepository supplierRepository)
+		public GetSupplierSupplyReportQueryHandler(ISupplierService supplierService)
         {
-			_mapper = mapper;
-			_supplierRepository = supplierRepository;
+			_supplierService = supplierService;
 		}
         public async Task<List<GetSupplierSupplyReportQueryResponse>> Handle(GetSupplierSupplyReportQueryRequest request, CancellationToken cancellationToken)
 		{
-			var suppliers = await _supplierRepository.GetAllAsync();
+			var suppliers = await _supplierService.GetAllAsync();
 
 			var bestSupplyReports = suppliers.GroupBy(x => x.ID)
 				.Select(grouped => new

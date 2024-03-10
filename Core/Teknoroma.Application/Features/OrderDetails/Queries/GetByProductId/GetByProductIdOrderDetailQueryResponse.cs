@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Teknoroma.Application.Features.OrderDetails.Queries.GetByProductId
+﻿namespace Teknoroma.Application.Features.OrderDetails.Queries.GetByProductId
 {
-	internal class GetByProductIdOrderDetailQueryResponse
+	public class GetByProductIdOrderDetailQueryResponse
 	{
+		public Guid OrderId { get; set; }
+		public Guid ProductId { get; set; }
+		public int Quantity { get; set; }
+		public decimal UnitPrice { get; set; }
 	}
 }

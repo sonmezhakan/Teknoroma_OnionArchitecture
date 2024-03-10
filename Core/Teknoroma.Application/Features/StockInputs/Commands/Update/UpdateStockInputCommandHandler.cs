@@ -1,28 +1,27 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Features.Products.Command.Update;
 using Teknoroma.Application.Features.Stocks.Command.Update;
-using Teknoroma.Application.Services.Repositories;
+using Teknoroma.Application.Services.StockInputs;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.StockInputs.Command.Update
 {
-    public class UpdateStockInputCommandHandler:IRequestHandler<UpdateStockInputCommandRequest,Unit>
+	public class UpdateStockInputCommandHandler:IRequestHandler<UpdateStockInputCommandRequest,Unit>
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        private readonly IStockInputRepository _stockInputRepository;
+		private readonly IStockInputService _stockInputService;
 
-        public UpdateStockInputCommandHandler(IMediator mediator,IMapper mapper,IStockInputRepository stockInputRepository)
+		public UpdateStockInputCommandHandler(IMediator mediator,IMapper mapper,IStockInputService stockInputService)
         {
             _mediator = mediator;
             _mapper = mapper;
-            _stockInputRepository = stockInputRepository;
-        }
+			_stockInputService = stockInputService;
+		}
 
         public async Task<Unit> Handle(UpdateStockInputCommandRequest request, CancellationToken cancellationToken)
         {
-            StockInput stockInput = await _stockInputRepository.GetAsync(x => x.ID == request.ID);
+            StockInput stockInput = await _stockInputService.GetAsync(x => x.ID == request.ID);
 
             //stock Process
             var stock = stockInput.Branch.stocks.FirstOrDefault(x => x.BranchId == request.BranchID && x.ProductId == request.ProductID);
@@ -34,7 +33,7 @@ namespace Teknoroma.Application.Features.StockInputs.Command.Update
             //StockInput Process
             stockInput = _mapper.Map(request, stockInput);
 
-            await _stockInputRepository.UpdateAsync(stockInput);
+            await _stockInputService.UpdateAsync(stockInput);
 
             return Unit.Value;
         }

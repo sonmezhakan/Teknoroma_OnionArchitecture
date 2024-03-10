@@ -1,22 +1,22 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.Repositories;
+using Teknoroma.Application.Services.TechnicalProblems;
 
 namespace Teknoroma.Application.Features.TechnicalProblems.Queries.GetList
 {
-    public class GetAllTechnicalProblemQueryHandler : IRequestHandler<GetAllTechnicalProblemQueryRequest, List<GetAllTechnicalProblemQueryResponse>>
+	public class GetAllTechnicalProblemQueryHandler : IRequestHandler<GetAllTechnicalProblemQueryRequest, List<GetAllTechnicalProblemQueryResponse>>
     {
         private readonly IMapper _mapper;
-        private readonly ITechnicalProblemRepository _technicalProblemRepository;
+		private readonly ITechnicalProblemService _technicalProblemService;
 
-        public GetAllTechnicalProblemQueryHandler(IMapper mapper, ITechnicalProblemRepository technicalProblemRepository)
+		public GetAllTechnicalProblemQueryHandler(IMapper mapper, ITechnicalProblemService technicalProblemService)
         {
             _mapper = mapper;
-            _technicalProblemRepository = technicalProblemRepository;
-        }
+			_technicalProblemService = technicalProblemService;
+		}
         public async Task<List<GetAllTechnicalProblemQueryResponse>> Handle(GetAllTechnicalProblemQueryRequest request, CancellationToken cancellationToken)
         {
-            var technicalProblems = await _technicalProblemRepository.GetAllAsync();
+            var technicalProblems = await _technicalProblemService.GetAllAsync();
 
             List<GetAllTechnicalProblemQueryResponse> getAllTechnicalProblemQueryResponses = _mapper.Map<List<GetAllTechnicalProblemQueryResponse>>(technicalProblems.ToList());
 

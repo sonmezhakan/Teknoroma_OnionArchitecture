@@ -13,7 +13,7 @@ namespace Teknoroma.Application.Features.Employees.Queries.GetEmployeeEarningRep
 		}
         public async Task<List<GetEmployeeEarningReportQueryResponse>> Handle(GetEmployeeEarningReportQueryRequest request, CancellationToken cancellationToken)
         {
-            var employees = await _employeeService.GetAllAsync();
+            var employees = await _employeeService.GetFullAll();
 
             var bestEarningEmployees = employees.GroupBy(employee => employee.AppUser.UserName)
                 .Select(grouped => new

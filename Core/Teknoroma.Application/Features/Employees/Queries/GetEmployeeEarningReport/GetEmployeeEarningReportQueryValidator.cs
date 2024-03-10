@@ -7,8 +7,8 @@ namespace Teknoroma.Application.Features.Employees.Queries.GetEmployeeEarningRep
     {
         public GetEmployeeEarningReportQueryValidator()
         {
-            RuleFor(x => x.StartDate).NotEmpty().WithMessage(EmployeesMessages.StartDateTimeNotNull);
-            RuleFor(x => x.EndDate).NotEmpty().WithMessage(EmployeesMessages.EndDateTimeNotNull);
+            RuleFor(x => x.StartDate).NotNull().WithMessage(EmployeesMessages.StartDateTimeNotNull);
+            RuleFor(x => x.EndDate).NotNull().WithMessage(EmployeesMessages.EndDateTimeNotNull);
         }
     }
 }

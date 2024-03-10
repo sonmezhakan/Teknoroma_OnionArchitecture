@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Teknoroma.Application.Features.AppUserRoles.Queries.GetList;
 using Teknoroma.Application.Features.AppUsers.Queries.GetList;
 using Teknoroma.Application.Features.Branches.Queries.GetAll;
 using Teknoroma.Application.Features.Departments.Queries.GetList;
@@ -11,8 +10,8 @@ using Teknoroma.Application.Features.Employees.Queries.GetById;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeDetailReport;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeEarningReport;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeSellingReport;
+using Teknoroma.Application.Features.Employees.Queries.GetFullList;
 using Teknoroma.Application.Features.Employees.Queries.GetList;
-using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
@@ -110,7 +109,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		public async Task<IActionResult> EmployeeList()
 		{
             await CheckJwtBearer();
-            var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllEmployeeQueryResponse>>("employee/getall");
+            var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetFullListEmployeeQueryResponse>>("employee/GetFullAll");
 
 			List<EmployeeViewModel> employeeViewModel = Mapper.Map<List<EmployeeViewModel>>(response);
 
@@ -147,11 +146,25 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(employeeReportViewModel);
 		}
 
-		
+		[HttpGet]
+		public async Task<IActionResult> UpdateEmployeeActive(Guid id)
+		{
+			await CheckJwtBearer();
+			var getEmployee = await GetByEmployeeId(id);
+
+			UpdateEmployeeCommandRequest updateEmployeeCommandRequest = Mapper.Map<UpdateEmployeeCommandRequest>(getEmployee);
+			updateEmployeeCommandRequest.IsActive = true;
+
+			await ApiService.HttpClient.PutAsJsonAsync("employee/update", updateEmployeeCommandRequest);
+
+			return RedirectToAction("EmployeeList", "Employee");
+		}
 
 		private async Task<GetByIdEmployeeQueryResponse> GetByEmployeeId(Guid id)
 		{
-          return await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{id}");
+          var result = await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{id}");
+
+			return result;
         }
 		private async Task ViewBagList()
 		{

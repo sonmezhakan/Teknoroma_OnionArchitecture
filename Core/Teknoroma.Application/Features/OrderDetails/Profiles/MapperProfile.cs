@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Teknoroma.Application.Features.OrderDetails.Command.Delete;
 using Teknoroma.Application.Features.OrderDetails.Command.Update;
 using Teknoroma.Application.Features.OrderDetails.Models;
+using Teknoroma.Application.Features.OrderDetails.Queries.GetById;
 using Teknoroma.Application.Features.OrderDetails.Queries.GetByOrderAndProductId;
 using Teknoroma.Application.Features.OrderDetails.Queries.GetByProductId;
 using Teknoroma.Domain.Entities;
@@ -24,6 +24,7 @@ namespace Teknoroma.Application.Features.OrderDetails.Profiles
 			CreateMap<OrderDetail, GetByOrderAndProductIdOrderDetailQueryResponse>().ReverseMap();
 			CreateMap<OrderDetail, UpdateOrderDetailCommandRequest>().ReverseMap();
 			CreateMap<OrderDetail, GetByProductIdOrderDetailQueryResponse>().ReverseMap();
+			CreateMap<OrderDetail, GetByIdOrderDetailQueryResponse>().ReverseMap();
 		}
 	}
 }

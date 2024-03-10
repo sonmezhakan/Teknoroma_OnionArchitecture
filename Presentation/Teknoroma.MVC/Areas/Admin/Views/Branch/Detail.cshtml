@@ -1,8 +1,8 @@
 ﻿@using Teknoroma.Application.Features.Branches.Models
 @model BranchViewModel
 @{
-	ViewData["Title"] = "Detail";
-	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+	ViewData["Title"] = "Şube Detayları - Teknoroma";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 	string branchName = null;
 	if(Model != null)
 	{
@@ -43,10 +43,6 @@
 						<form>
 							<div class="card-body">
 								<div asp-validation-summary="All">
-								</div>
-								<div class="form-group">
-									<label asp-for="ID"></label>
-									<input type="text" class="form-control" asp-for="@Model.ID" disabled>
 								</div>
 								<div class="form-group">
 									<label asp-for="BranchName"></label>

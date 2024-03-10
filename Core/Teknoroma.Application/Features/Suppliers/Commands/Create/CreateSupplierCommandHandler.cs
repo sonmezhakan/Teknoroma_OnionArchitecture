@@ -1,26 +1,20 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Teknoroma.Application.Features.Suppliers.Rules;
-using Teknoroma.Application.Services.Repositories;
-using Teknoroma.Domain.Entities;
+using Teknoroma.Application.Services.Suppliers;
 
 namespace Teknoroma.Application.Features.Suppliers.Command.Create
 {
-    public class CreateSupplierCommandHandler:IRequestHandler<CreateSupplierCommandRequest, Unit>
+	public class CreateSupplierCommandHandler:IRequestHandler<CreateSupplierCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
-		private readonly ISupplierRepository _supplierRepository;
+		private readonly ISupplierService _supplierService;
 		private readonly SupplierBusinessRules _supplierBusinessRules;
 
-		public CreateSupplierCommandHandler(IMapper mapper, ISupplierRepository supplierRepository,SupplierBusinessRules supplierBusinessRules)
+		public CreateSupplierCommandHandler(IMapper mapper,ISupplierService supplierService,SupplierBusinessRules supplierBusinessRules)
         {
 			_mapper = mapper;
-			_supplierRepository = supplierRepository;
+			_supplierService = supplierService;
 			_supplierBusinessRules = supplierBusinessRules;
 		}
 
@@ -31,7 +25,7 @@ namespace Teknoroma.Application.Features.Suppliers.Command.Create
 
 			Teknoroma.Domain.Entities.Supplier supplier = _mapper.Map<Teknoroma.Domain.Entities.Supplier>(request);
 
-			await _supplierRepository.AddAsync(supplier);
+			await _supplierService.AddAsync(supplier);
 
 			return Unit.Value;
 		}

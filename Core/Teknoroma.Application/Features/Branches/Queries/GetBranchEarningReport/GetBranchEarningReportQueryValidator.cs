@@ -7,8 +7,8 @@ namespace Teknoroma.Application.Features.Branches.Queries.GetBranchEarningReport
     {
         public GetBranchEarningReportQueryValidator()
         {
-            RuleFor(x => x.StartDate).NotEmpty().WithMessage(BranchesMessages.StartDateTimeNotNull);
-            RuleFor(x => x.EndDate).NotEmpty().WithMessage(BranchesMessages.EndDateTimeNotNull);
+            RuleFor(x => x.StartDate).NotNull().WithMessage(BranchesMessages.StartDateTimeNotNull);
+            RuleFor(x => x.EndDate).NotNull().WithMessage(BranchesMessages.EndDateTimeNotNull);
         }
     }
 }

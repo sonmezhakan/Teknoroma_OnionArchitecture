@@ -1,21 +1,23 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.Employees.Command.Create;
+using Teknoroma.Application.Features.Employees.Command.Delete;
 using Teknoroma.Application.Features.Employees.Command.Update;
 using Teknoroma.Application.Features.Employees.Queries.GetById;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeDetailReport;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeEarningReport;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeSellingReport;
+using Teknoroma.Application.Features.Employees.Queries.GetFullList;
 using Teknoroma.Application.Features.Employees.Queries.GetList;
 
 namespace Teknoroma.WebApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
+	[Route("api/[controller]/[action]")]
 	[ApiController]
-    [Authorize(AuthenticationSchemes = "Bearer")]
-    public class EmployeeController : BaseController
+	[Authorize(AuthenticationSchemes = "Bearer")]
+	public class EmployeeController : BaseController
 	{
-		[HttpPost]
+        [HttpPost]
 		public async Task<IActionResult> Create(CreateEmployeeCommandRequest createEmployeeCommandRequest)
 		{
 			var result = await Mediator.Send(createEmployeeCommandRequest);
@@ -30,13 +32,13 @@ namespace Teknoroma.WebApi.Controllers
 
 			return Ok(result);
 		}
-		/*[HttpDelete("{id}")]
+		[HttpDelete("{id}")]
 		public async Task<IActionResult> Delete(Guid id)
 		{
 			var result = await Mediator.Send(new DeleteEmployeeCommandRequest { ID = id });
 
 			return Ok(result);
-		}*/
+		}
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetById(Guid id)
 		{
@@ -69,6 +71,13 @@ namespace Teknoroma.WebApi.Controllers
 		public async Task<IActionResult> EmployeeDetailReport(string startDate,string endDate)
 		{
 			var result = await Mediator.Send(new GetEmployeeDetailReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+
+			return Ok(result);
+		}
+		[HttpGet]
+		public async Task<IActionResult> GetFullAll()
+		{
+			var result = await Mediator.Send(new GetFullListEmployeeQueryRequest());
 
 			return Ok(result);
 		}

@@ -1,22 +1,19 @@
-﻿using AutoMapper;
-using MediatR;
-using Teknoroma.Application.Services.Repositories;
+﻿using MediatR;
+using Teknoroma.Application.Services.Products;
 
 namespace Teknoroma.Application.Features.Products.Queries.GetProductSalesDetailReport
 {
-    public class GetProductSalesDetailReportQueryHandler : IRequestHandler<GetProductSalesDetailReportQueryRequest, List<GetProductSalesDetailReportQueryResponse>>
+	public class GetProductSalesDetailReportQueryHandler : IRequestHandler<GetProductSalesDetailReportQueryRequest, List<GetProductSalesDetailReportQueryResponse>>
     {
-		private readonly IMapper _mapper;
-		private readonly IProductRepository _productRepository;
+		private readonly IProductService _productService;
 
-        public GetProductSalesDetailReportQueryHandler(IMapper mapper,IProductRepository productRepository)
+		public GetProductSalesDetailReportQueryHandler(IProductService productService)
         {
-			_mapper = mapper;
-			_productRepository = productRepository;
-        }
+			_productService = productService;
+		}
         public async Task<List<GetProductSalesDetailReportQueryResponse>> Handle(GetProductSalesDetailReportQueryRequest request, CancellationToken cancellationToken)
         {
-			var products = await _productRepository.GetAllAsync();
+			var products = await _productService.GetAllAsync();
 
 			List<GetProductSalesDetailReportQueryResponse> getProductDetailSalesReportQueryResponses = new List<GetProductSalesDetailReportQueryResponse>();
 

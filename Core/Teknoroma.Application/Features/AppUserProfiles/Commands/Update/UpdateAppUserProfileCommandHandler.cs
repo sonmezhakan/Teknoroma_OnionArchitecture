@@ -2,7 +2,6 @@
 using MediatR;
 using Teknoroma.Application.Features.AppUserProfiles.Rules;
 using Teknoroma.Application.Services.AppUserProfiles;
-using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.AppUserProfiles.Command.Update

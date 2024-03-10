@@ -53,7 +53,21 @@ namespace Teknoroma.Application.Services.Employees
             return result;
         }
 
-        public async Task UpdateAsync(Employee employee)
+		public async Task<IQueryable<Employee>> GetFullAll(Expression<Func<Employee, bool>> filter = null)
+		{
+			var result = await _employeeRepository.GetFullAll(filter);
+
+            return result;
+		}
+
+		public async Task<Employee> GetFullSearch(Expression<Func<Employee, bool>> filter)
+		{
+			var result = await _employeeRepository.GetFullSearch(filter);
+
+            return result;
+		}
+
+		public async Task UpdateAsync(Employee employee)
         {
             await _employeeRepository.UpdateAsync(employee);
         }

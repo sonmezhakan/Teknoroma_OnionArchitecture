@@ -1,0 +1,93 @@
+﻿@model ContactMailSenderViewModel
+@{
+    ViewData["Title"] = "İletişim - Teknoroma";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header mx-auto" style="background-color:white;">
+                <h1>İletişim</h1>
+            </div>
+            <hr />
+            <div class="card-body d-flex">
+                <div class="col-md-6 mx-1">
+                    <div class="card">
+                        <div class="card-header">
+
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <span>
+                                    <b>Adres</b>
+                                    <br /><br />
+                                    Caferağa, Mühürdar Cd. No:76, 34710 Kadıköy/İstanbul
+                                </span>
+                            </div>
+                            <br />
+                            <div>
+                                <span>
+                                    <b>Telefon</b>
+                                    <br /><br />
+                                    + 90 212 222 22 22
+                                    <br />
+                                    + 90 555 555 55 55
+                                </span>
+                            </div>
+                            <br />
+                            <div>
+                                <span>
+                                    <b>Mail</b>
+                                    <br />
+                                    <br />
+                                    info@teknoroma.com
+                                    <br />
+                                    teknoroma@gmail.com
+                                    <br />
+                                    teknoroma@outlook.com
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mx-1">
+                    <div class="card">
+                        <div class="card-header">
+                            
+                        </div>
+                        <div class="card-body">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12046.707291356115!2d29.023022000000005!3d40.988557!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab98565932cb9%3A0xafaaa9dbc4bf05ab!2sBilgeAdam%20Akademi%20Kad%C4%B1k%C3%B6y!5e0!3m2!1str!2sus!4v1710085314353!5m2!1str!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card footer my-4 bg-light">
+                <h3 class="mx-auto"">İletişim Formu</h3>
+                <div asp-validation-summary="All">
+                </div>
+                <form method="post">
+                    <div class="form-group my-2">
+                        <input type="text" class="form-control" placeholder="Ad Soyad..." name="FullName" />
+                    </div>
+                    <div class="form-group my-2">
+                        <input type="text" class="form-control" placeholder="Mail Adresi..." name="Mail"/>
+                    </div>
+                    <div class="form-group my-2">
+                        <input type="number" class="form-control" placeholder="Telefon Numarası..." name="PhoneNumber" />
+                    </div>
+                    <div class="form-group my-2">
+                        <input type="text" class="form-control" placeholder="Konu..." name="Subject"/>
+                    </div>
+                    <div class="form-group my-2">
+                        <textarea rows="4" class="form-control" placeholder="Mesaj..." name="Message"></textarea>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-dark btn-block waves-effect waves-light" type="submit">Gönder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

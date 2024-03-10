@@ -9,5 +9,6 @@ namespace Teknoroma.Application.Features.Employees.Command.Update
 		public Guid BranchID { get; set; }
 		public Guid DepartmentID { get; set; }
 		public decimal? Salary { get; set; }
-	}
+        public bool? IsActive { get; set; }
+    }
 }

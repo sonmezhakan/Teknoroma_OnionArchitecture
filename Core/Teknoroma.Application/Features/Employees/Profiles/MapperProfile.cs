@@ -6,6 +6,7 @@ using Teknoroma.Application.Features.Employees.Queries.GetById;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeDetailReport;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeEarningReport;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeSellingReport;
+using Teknoroma.Application.Features.Employees.Queries.GetFullList;
 using Teknoroma.Application.Features.Employees.Queries.GetList;
 using Teknoroma.Domain.Entities;
 
@@ -36,6 +37,7 @@ namespace Teknoroma.Application.Features.Employees.Profiles
                 .ForMember(dest=>dest.Address, opt=>opt.MapFrom(src=>src.AppUser.AppUserProfile.Address))
                 .ForMember(dest=>dest.NationalityNumber, opt=>opt.MapFrom(src=>src.AppUser.AppUserProfile.NationalityNumber))
                 .ForMember(dest=>dest.Salary, opt=>opt.MapFrom(src=>src.Salary))
+				.ForMember(dest=>dest.IsActive, opt=>opt.MapFrom(src=>src.IsActive))
                 .ReverseMap();
 
 			CreateMap<Employee, GetAllEmployeeQueryResponse>()
@@ -54,7 +56,24 @@ namespace Teknoroma.Application.Features.Employees.Profiles
             CreateMap<EmployeeSellingReportViewModel, GetEmployeeSellingReportQueryResponse>().ReverseMap();
             CreateMap<EmployeeEarningReportViewModel, GetEmployeeEarningReportQueryResponse>().ReverseMap();
             CreateMap<EmployeeDetailReportViewModel, GetEmployeeDetailReportQueryResponse>().ReverseMap();
-            
+
+			CreateMap<Employee, GetFullListEmployeeQueryResponse>()
+				.ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.BranchName))
+				.ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.DepartmentName))
+				.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.AppUser.UserName))
+				.ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.AppUser.Email))
+				.ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.AppUser.PhoneNumber))
+				.ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.AppUser.AppUserProfile.FirstName))
+				.ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.AppUser.AppUserProfile.LastName))
+				.ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.AppUser.AppUserProfile.Address))
+				.ForMember(dest => dest.NationalityNumber, opt => opt.MapFrom(src => src.AppUser.AppUserProfile.NationalityNumber))
+				.ForMember(dest => dest.Salary, opt => opt.MapFrom(src => src.Salary))
+				.ForMember(dest=> dest.IsActive, opt=>opt.MapFrom(src=>src.IsActive))
+				.ReverseMap();
+			CreateMap<EmployeeViewModel, GetFullListEmployeeQueryResponse>().ReverseMap();
+
+			CreateMap<GetByIdEmployeeQueryResponse, UpdateEmployeeCommandRequest>().ReverseMap();
+
 		}
     }
 }

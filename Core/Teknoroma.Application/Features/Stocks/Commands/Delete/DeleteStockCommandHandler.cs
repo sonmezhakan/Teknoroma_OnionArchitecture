@@ -1,22 +1,22 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.Repositories;
+using Teknoroma.Application.Services.Stocks;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Stocks.Command.Delete
 {
-    public class DeleteStockCommandHandler : IRequestHandler<DeleteStockCommandRequest, Unit>
+	public class DeleteStockCommandHandler : IRequestHandler<DeleteStockCommandRequest, Unit>
 	{
-		private readonly IStockRepository _stockRepository;
+		private readonly IStockService _stockService;
 
-		public DeleteStockCommandHandler(IStockRepository stockRepository)
+		public DeleteStockCommandHandler(IStockService stockService)
         {
-			_stockRepository = stockRepository;
+			_stockService = stockService;
 		}
         public async Task<Unit> Handle(DeleteStockCommandRequest request, CancellationToken cancellationToken)
 		{
-			Stock stock = await _stockRepository.GetAsync(x=>x.BranchId == request.BranchId && x.ProductId == request.ProductId);
+			Stock stock = await _stockService.GetAsync(x=>x.BranchId == request.BranchId && x.ProductId == request.ProductId);
 
-			await _stockRepository.DeleteAsync(stock);
+			await _stockService.DeleteAsync(stock);
 
 			return Unit.Value;
 		}

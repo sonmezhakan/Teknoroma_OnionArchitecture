@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Net.Http.Headers;
 using Teknoroma.Application.Features.AppUsers.Commands.Login;
 using Teknoroma.Application.Features.AppUsers.Models;
 using Teknoroma.Domain.Entities;
@@ -10,9 +9,10 @@ using Teknoroma.Infrastructure.WebApiService;
 using Teknoroma.MVC.Areas.Admin.Controllers;
 using Teknoroma.MVC.Models;
 
+
 namespace Teknoroma.MVC.Controllers
 {
-    public class LoginController : BaseController
+	public class LoginController : BaseController
     {
         private readonly IMapper _mapper;
         private readonly IApiService _apiService;
@@ -64,8 +64,8 @@ namespace Teknoroma.MVC.Controllers
                 Expires = DateTime.UtcNow.AddHours(1)
             });
 
-            ApiService.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
-            return RedirectToAction("Index", "Home");     
+			await CheckJwtBearer();
+			return RedirectToAction("Index", "Home");     
         }
 
         

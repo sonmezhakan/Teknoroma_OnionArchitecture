@@ -10,7 +10,9 @@
 		public int CriticalStock { get; set; }
 		public string Description { get; set; }
 		public string ImagePath { get; set; }
-		public Guid BrandId { get; set; }
-		public Guid CategoryId { get; set; }
+        public string BrandName { get; set; }
+        public Guid BrandId { get; set; }
+        public string CategoryName { get; set; }
+        public Guid CategoryId { get; set; }
 	}
 }

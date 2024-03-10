@@ -17,7 +17,7 @@ namespace Teknoroma.Application.Features.Employees.Command.Update
 		}
         public async Task<Unit> Handle(UpdateEmployeeCommandRequest request, CancellationToken cancellationToken)
 		{
-			Employee employee = await _employeeService.GetAsync(x => x.ID == request.ID);
+			Employee employee = await _employeeService.GetFullSearch(x => x.ID == request.ID);
 
 			employee = _mapper.Map(request, employee);
 

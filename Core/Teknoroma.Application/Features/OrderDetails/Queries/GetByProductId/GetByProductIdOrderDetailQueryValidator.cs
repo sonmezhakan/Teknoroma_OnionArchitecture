@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
+using Teknoroma.Application.Features.OrderDetails.Contants;
 
 namespace Teknoroma.Application.Features.OrderDetails.Queries.GetByProductId
 {
-	internal class GetByProductIdOrderDetailQueryValidator
+	public class GetByProductIdOrderDetailQueryValidator:AbstractValidator<GetByProductIdOrderDetailQueryRequest>
 	{
-	}
+        public GetByProductIdOrderDetailQueryValidator()
+        {
+            RuleFor(x=>x.ProductId).NotEmpty().WithMessage(OrderDetailsMessages.ProductIDNotNull);
+        }
+    }
 }

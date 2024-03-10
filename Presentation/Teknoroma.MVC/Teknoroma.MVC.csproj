@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Shared\Admin\**" />
+    <Content Remove="Views\Shared\Admin\**" />
+    <EmbeddedResource Remove="Views\Shared\Admin\**" />
+    <None Remove="Views\Shared\Admin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="wwwroot\images\profile\" />
     <Folder Include="wwwroot\images\product\" />

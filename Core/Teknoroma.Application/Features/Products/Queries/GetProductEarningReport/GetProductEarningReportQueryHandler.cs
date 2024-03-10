@@ -1,19 +1,19 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.Repositories;
+using Teknoroma.Application.Services.Products;
 
 namespace Teknoroma.Application.Features.Products.Queries.GetProductEarningReport
 {
-    public class GetProductEarningReportQueryHandler : IRequestHandler<GetProductEarningReportQueryRequest, List<GetProductEarningReportQueryResponse>>
+	public class GetProductEarningReportQueryHandler : IRequestHandler<GetProductEarningReportQueryRequest, List<GetProductEarningReportQueryResponse>>
 	{
-		private readonly IProductRepository _productRepository;
+		private readonly IProductService _productService;
 
-		public GetProductEarningReportQueryHandler(IProductRepository productRepository)
+		public GetProductEarningReportQueryHandler(IProductService productService)
         {
-			_productRepository = productRepository;
+			_productService = productService;
 		}
         public async Task<List<GetProductEarningReportQueryResponse>> Handle(GetProductEarningReportQueryRequest request, CancellationToken cancellationToken)
 		{
-			var products = await _productRepository.GetAllAsync();
+			var products = await _productService.GetAllAsync();
 
 			var bestSellingProduct = products.GroupBy(product => product.ID)
 				.Select(grouped => new

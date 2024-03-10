@@ -7,8 +7,8 @@ namespace Teknoroma.Application.Features.Brands.Quries.GetBrandSellingReport
     {
         public GetBrandSellingReportQueryValidator()
         {
-            RuleFor(x => x.StartDate).NotEmpty().WithMessage(BrandsMessages.StartDateTimeNotNull);
-            RuleFor(x => x.EndDate).NotEmpty().WithMessage(BrandsMessages.EndDateTimeNotNull);
+            RuleFor(x => x.StartDate).NotNull().WithMessage(BrandsMessages.StartDateTimeNotNull);
+            RuleFor(x => x.EndDate).NotNull().WithMessage(BrandsMessages.EndDateTimeNotNull);
         }
     }
 }

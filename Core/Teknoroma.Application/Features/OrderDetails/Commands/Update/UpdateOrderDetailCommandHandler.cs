@@ -2,7 +2,6 @@
 using MediatR;
 using Teknoroma.Application.Features.Stocks.Command.Update;
 using Teknoroma.Application.Services.OrderDetails;
-using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.OrderDetails.Command.Update
