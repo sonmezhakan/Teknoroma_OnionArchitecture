@@ -18,6 +18,7 @@ namespace Teknoroma.WebApi.Controllers
     public class SupplierController : BaseController
 	{
 		[HttpPost]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Depo Sorumlusu,Şube Müdürü")]
 		public async Task<IActionResult> Create(CreateSupplierCommandRequest createSupplierCommandRequest)
 		{
 			var result = await Mediator.Send(createSupplierCommandRequest);
@@ -25,6 +26,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(result);
 		}
 		[HttpPut]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Depo Sorumlusu,Şube Müdürü")]
 		public async Task<IActionResult> Update(UpdateSupplierCommandRequest updateSupplierCommandRequest)
 		{
 			var result = await Mediator.Send(updateSupplierCommandRequest);
@@ -32,6 +34,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(result);
 		}
 		[HttpDelete("{id}")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Depo Sorumlusu,Şube Müdürü")]
 		public async Task<IActionResult> Delete(Guid id)
 		{
 			var result = await Mediator.Send(new DeleteSupplierCommandRequest { ID = id });
@@ -39,6 +42,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(result);
 		}
 		[HttpGet("{id}")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Depo Sorumlusu,Şube Müdürü")]
 		public async Task<IActionResult> GetById(Guid id)
 		{
 			var result = await Mediator.Send(new GetByIdSupplierQueryRequest { ID = id });
@@ -46,6 +50,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(result);
 		}
 		[HttpGet]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Depo Sorumlusu,Şube Müdürü")]
 		public async Task<IActionResult> GetAll()
 		{
 			var result = await Mediator.Send(new GetAllSupplierQueryRequest());
@@ -53,6 +58,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(result);
 		}
 		[HttpGet("{startDate}/{endDate}")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> SupplierSupplyReport(string startDate,string endDate)
 		{
 			var result = await Mediator.Send(new GetSupplierSupplyReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
@@ -60,6 +66,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(result);
 		}
 		[HttpGet("{startDate}/{endDate}")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> SupplierSupplyDetailReport(string startDate, string endDate)
 		{
 			var result = await Mediator.Send(new GetSupplierSupplyDetailReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });

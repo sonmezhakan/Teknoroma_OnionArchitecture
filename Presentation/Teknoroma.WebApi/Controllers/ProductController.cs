@@ -29,7 +29,7 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
         [HttpPost]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> Create(CreateProductCommandRequest createProductCommandRequest)
         {
 			var result = await Mediator.Send(createProductCommandRequest);
@@ -38,7 +38,7 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
         [HttpPut]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> Update(UpdateProductCommandRequest updateProductCommandRequest)
         {
 			var result = await Mediator.Send(updateProductCommandRequest);
@@ -47,7 +47,7 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
         [HttpDelete("{id}")]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> Delete(Guid id)
         {
 			var result = await Mediator.Send(new DeleteProductCommandRequest { ID = id });
@@ -56,7 +56,7 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
         [HttpGet]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> GetAll()
         {
             var result = await Mediator.Send(new GetAllProductQueryRequest());
@@ -65,7 +65,7 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> GetById(Guid id)
         {
 			var result = await Mediator.Send(new GetByIdProductQueryRequest { ID = id });
@@ -74,7 +74,7 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
 		[HttpGet("{startDate}/{endDate}")]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> ProductSellingReport(string startDate, string endDate)
 		{
 			var resut = await Mediator.Send(new GetProductSellingReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
@@ -82,7 +82,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(resut);
 		}
 		[HttpGet("{startDate}/{endDate}")]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> ProductEarningReport(string startDate, string endDate)
 		{
 			var resut = await Mediator.Send(new GetProductEarningReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
@@ -90,7 +90,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(resut);
 		}
         [HttpGet("{startDate}/{endDate}")]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> ProductSupplyReport(string startDate, string endDate)
         {
             var resut = await Mediator.Send(new GetProductSupplyReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
@@ -98,7 +98,7 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(resut);
         }
 		[HttpGet("{startDate}/{endDate}")]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> ProductSalesDetailReport(string startDate, string endDate)
 		{
 			var resut = await Mediator.Send(new GetProductSalesDetailReportQueryRequest {StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
@@ -106,7 +106,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(resut);
 		}
 		[HttpGet("{startDate}/{endDate}")]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> ProductSupplyDetailReport(string startDate, string endDate)
 		{
 			var resut = await Mediator.Send(new GetProductSupplyDetailReportQueryRequest {StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
@@ -114,7 +114,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(resut);
 		}
 		[HttpGet("{barcodeCode}")]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> GetByBarcodeCode(string barcodeCode)
 		{
 			var result = await Mediator.Send(new GetByBarcodeCodeQueryRequest { BarcodeCode = barcodeCode });
@@ -127,9 +127,9 @@ namespace Teknoroma.WebApi.Controllers
 		{
 			var result = await Mediator.Send(new GetAllProductQueryRequest());
 
-			if(result is GetAllProductQueryResponse)
+			if(result is List<GetAllProductQueryResponse>)
 			{
-				List< ProductHomePageListDto> productHomePageListDto = _mapper.Map<List<ProductHomePageListDto>>(result);
+				List<ProductHomePageListDto> productHomePageListDto = _mapper.Map<List<ProductHomePageListDto>>(result.ToList());
 				return Ok(productHomePageListDto);
 			}
 

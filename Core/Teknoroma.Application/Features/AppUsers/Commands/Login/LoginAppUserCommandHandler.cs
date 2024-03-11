@@ -29,7 +29,8 @@ namespace Teknoroma.Application.Features.AppUsers.Commands.Login
 
 			await _appUserBusinessRules.LoginCheckIsActive(appUser);
 
-			string token = await _jwtHelper.GetJwtToken(appUser.Id, appUser.UserName);
+			IList<string> roles = await _userManager.GetRolesAsync(appUser);
+			string token = await _jwtHelper.GetJwtToken(appUser.Id, appUser.UserName, roles);
 
 			return new LoginAppUserCommandResponse
 			{

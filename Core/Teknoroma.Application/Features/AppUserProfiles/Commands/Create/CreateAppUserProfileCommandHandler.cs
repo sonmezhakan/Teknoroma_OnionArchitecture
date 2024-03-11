@@ -20,6 +20,7 @@ namespace Teknoroma.Application.Features.AppUserProfiles.Command.Create
         }
         public async Task<Unit> Handle(CreateAppUserProfileCommandRequest request, CancellationToken cancellationToken)
         {
+            throw new NotImplementedException();
             AppUserProfile appUserProfile = _mapper.Map<AppUserProfile>(request);
 
             await _appUserProfileService.AddAsync(appUserProfile);

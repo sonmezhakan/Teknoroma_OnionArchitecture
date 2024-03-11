@@ -24,6 +24,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 	public class OrderController : BaseController
 	{
 		[HttpGet]
+		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> Index()
 		{
             await CheckJwtBearer();
@@ -40,6 +41,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(stockListViewModel);
 		}
 		[HttpPost]
+		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> AddToCart(Guid id, int quantity)
 		{
             await CheckJwtBearer();
@@ -83,6 +85,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> CartItemDelete(Guid id)
 		{
             await CheckJwtBearer();
@@ -103,6 +106,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> CompleteCart(Guid customerId)
 		{
             await CheckJwtBearer();
@@ -153,6 +157,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 
 		[HttpGet]
+		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> OrderList()
 		{
             await CheckJwtBearer();
@@ -168,6 +173,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> UpdateOrderDetail(Guid orderId,Guid productId,int quantity)
 		{
             await CheckJwtBearer();
@@ -190,6 +196,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> DeleteOrderDetail(Guid orderId,Guid productId)
 		{
             await CheckJwtBearer();
@@ -201,6 +208,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> UpdateOrderStatu(Guid orderId,OrderStatu orderStatu)
 		{
             await CheckJwtBearer();
@@ -215,6 +223,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> Delete(Guid id)
 		{
 			await ApiService.HttpClient.DeleteAsync($"order/delete/{id}");
@@ -224,6 +233,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 
 		[HttpGet]
+		[Authorize(Roles = "Şube Müdürü")]
 		public async Task<IActionResult> SaleReport()
 		{
             await CheckJwtBearer();

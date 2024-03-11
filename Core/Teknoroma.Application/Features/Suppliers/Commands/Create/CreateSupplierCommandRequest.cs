@@ -1,13 +1,9 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Teknoroma.Application.Pipelines.Transaction;
 
 namespace Teknoroma.Application.Features.Suppliers.Command.Create
 {
-	public class CreateSupplierCommandRequest : IRequest<Unit>
+	public class CreateSupplierCommandRequest : IRequest<Unit>, ITransactionalRequest
 	{
 		public string CompanyName { get; set; }
 		public string? ContactName { get; set; }

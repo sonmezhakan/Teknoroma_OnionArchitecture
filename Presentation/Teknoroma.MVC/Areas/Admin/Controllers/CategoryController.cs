@@ -8,23 +8,24 @@ using Teknoroma.Application.Features.Categories.Queries.GetCategoryEarningReport
 using Teknoroma.Application.Features.Categories.Queries.GetCategorySellingReport;
 using Teknoroma.Application.Features.Categories.Queries.GetCategorySupplyReport;
 using Teknoroma.Application.Features.Categories.Queries.GetList;
-using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+	[Area("Admin")]
     [Authorize]
     public class CategoryController : BaseController
     {
 
         [HttpGet]
-        public IActionResult Create()
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCategoryViewModel model)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Create(CreateCategoryViewModel model)
         {
             await CheckJwtBearer();
             if (!ModelState.IsValid)
@@ -46,7 +47,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(Guid? id)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Update(Guid? id)
         {
             await CheckJwtBearer();
             await CategoryViewBag();
@@ -61,7 +63,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(CategoryViewModel model)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Update(CategoryViewModel model)
         {
             await CheckJwtBearer();
             if (!ModelState.IsValid)
@@ -84,7 +87,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return RedirectToAction("Update", model.ID);
         }
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Delete(Guid id)
         {
             await CheckJwtBearer();
             await ApiService.HttpClient.DeleteAsync($"category/Delete/{id}");
@@ -93,7 +97,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Detail(Guid? id)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Detail(Guid? id)
         {
             await CheckJwtBearer();
             await CategoryViewBag();
@@ -108,7 +113,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CategoryList()
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> CategoryList()
         {
             await CheckJwtBearer();
             var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllCategoryQueryResponse>>("category/getall");
@@ -120,7 +126,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(categoryViewModels);
         }
         [HttpGet]
-        public async Task<IActionResult> CategoryReport(DateTime? startDate, DateTime? endDate)
+		[Authorize(Roles = "Şube Müdürü")]
+		public async Task<IActionResult> CategoryReport(DateTime? startDate, DateTime? endDate)
         {
             await CheckJwtBearer();
             if (startDate == null || endDate == null)

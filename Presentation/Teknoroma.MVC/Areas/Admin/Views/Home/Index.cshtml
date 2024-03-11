@@ -2,230 +2,223 @@
 @model DashboardViewModel
 @{
 	ViewData["Title"] = "Dashboard - Teknoroma";
-	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";	
 }
 
 <div class="row">
 	<h2>Dashboard</h2>
-	<div class="col-md-12">
-		<div class="d-flex">
-			<div class="col-xl-3">
-				<div class="card bg-primary border-primary">
-					<div class="card-body">
-						<div class="mb-4">
-							<span class="badge badge-soft-light float-right">Günlük</span>
-							<h5 class="card-title mb-0 text-white">Kazanç</h5>
-						</div>
-						<div class="row d-flex align-items-center mb-4">
-							<div class="col-12">
-								<h4 class="d-flex align-items-center mb-0 text-white">
-									@Model.DailyTotalPrice ₺
-								</h4>
-							</div>
-						</div>
-						<div class="progress badge-soft-light shadow-sm" style="height: 5px;">
-							<div class="progress-bar bg-light" role="progressbar" style="width: 100%;"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3">
-				<div class="card bg-success border-success">
-					<div class="card-body">
-						<div class="mb-4">
-							<span class="badge badge-soft-light float-right">Günlük</span>
-							<h5 class="card-title mb-0 text-white">Toplam Satılan Ürün Adeti</h5>
-						</div>
-						<div class="row d-flex align-items-center mb-4">
-							<div class="col-12">
-								<h4 class="d-flex align-items-center mb-0 text-white">
-									@Model.DailyTotalSales Adet
-								</h4>
-							</div>
-						</div>
-						<div class="progress badge-soft-light shadow-sm" style="height: 5px;">
-							<div class="progress-bar bg-light" role="progressbar" style="width: 100%;"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3">
-				<div class="card bg-warning border-warning">
-					<div class="card-body">
-						<div class="mb-4">
-							<span class="badge badge-soft-light float-right">Günlük</span>
-							<h5 class="card-title mb-0 text-white">En Çok Satış Yapılan Ürün</h5>
-						</div>
-						<div class="row d-flex align-items-center mb-4">
-							<div class="col-12">
-								<h4 class="d-flex align-items-center mb-0 text-white">
-									@Model.DailyBestSalesProduct
-								</h4>
-							</div>
-						</div>
-						<div class="progress badge-soft-light shadow-sm" style="height: 5px;">
-							<div class="progress-bar bg-light" role="progressbar" style="width: 100%;"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3">
-				<div class="card bg-info border-info">
-					<div class="card-body">
-						<div class="mb-4">
-							<span class="badge badge-soft-light float-right">Günlük</span>
-							<h5 class="card-title mb-0 text-white">En Çok Satış Yapılan Marka</h5>
-						</div>
-						<div class="row d-flex align-items-center mb-4">
-							<div class="col-12">
-								<h4 class="d-flex align-items-center mb-0 text-white">
-									@Model.DailyBestSalesBrand
-								</h4>
-							</div>
-						</div>
-						<div class="progress badge-soft-light shadow-sm" style="height: 5px;">
-							<div class="progress-bar bg-light" role="progressbar" style="width: 100%;"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-12">
-		<div class="d-flex">
-			<div class="col-md-7">
-				<div class="card-body">
-					<table id="datatable-buttons-orderProductList" width="100%" class="table dt-responsive table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
-						<thead>
-							<tr>
-								<th rowspan="1" colspan="1">Barkod No</th>
-								<th rowspan="1" colspan="1">Ürün Adı</th>
-								<th rowspan="1" colspan="1">Marka Adı</th>
-								<th rowspan="1" colspan="1">Fiyat</th>
-								<th rowspan="1" colspan="1">Stok Miktarı</th>
-								<th rowspan="1" colspan="1">
-									Sepete Ekle
-								</th>
-							</tr>
-
-						</thead>
-						<tbody>
-							@if (Model.StockListViewModels != null)
-							{
-								@foreach (var product in Model.StockListViewModels)
-								{
-									<tr class="product-row">
-										<td>
-											@product.BarcodeCode
-										</td>
-										<td>
-											@product.ProductName
-										</td>
-										<td>
-											@product.BrandName
-										</td>
-										<td>
-											@product.UnitPrice
-										</td>
-										<td>
-											@product.UnitsInStock
-										</td>
-										<td>
-											<form id="CartAdded" method="post" asp-controller="Order" asp-action="AddToCart" asp-route-id="@product.ProductID">
-												<input class="form-control text-center me-4" name="quantity" id="quantity$@product.ProductID" type="num" value="1" style="max-width: 4rem">
-												<button class="btn btn-info btn-sm waves-effect waves-light" type="button"
-														data-units-in-stock="@product.UnitsInStock"
-														data-input-id="quantity$@product.ProductID"
-														onclick="showSweetAlertCartAdded(this)">
-													Sepete Ekle
-												</button>
-											</form>
-										</td>
-									</tr>
-								}
-							}
-						</tbody>
-					</table>
-				</div>
-				<div class="col-md-3">
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="col-lg-12">
-					<div class="card">
+	@if(User.IsInRole("Şube Müdürü") && Model.DailyTotalSales != null && Model.DailyTotalPrice != null && Model.DailyBestSalesBrand != null && Model.DailyBestSalesProduct != null)
+	{
+		<div class="col-md-12">
+			<div class="d-flex">
+				<div class="col-xl-3">
+					<div class="card bg-primary border-primary">
 						<div class="card-body">
-							<h4 class="card-title d-inline-block">Günlük Kategoriye Göre Satış</h4>
-
-							@if(Model.CategorySellingReportViewModels != null)
-							{
-								<div id="donutChartDailySales" class="donutChartDailySales" style="height: 260px;"></div>								
-							}
+							<div class="mb-4">
+								<span class="badge badge-soft-light float-right">Günlük</span>
+								<h5 class="card-title mb-0 text-white">Kazanç</h5>
+							</div>
+							<div class="row d-flex align-items-center mb-4">
+								<div class="col-12">
+									<h4 class="d-flex align-items-center mb-0 text-white">
+										@Model.DailyTotalPrice ₺
+									</h4>
+								</div>
+							</div>
+							<div class="progress badge-soft-light shadow-sm" style="height: 5px;">
+								<div class="progress-bar bg-light" role="progressbar" style="width: 100%;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3">
+					<div class="card bg-success border-success">
+						<div class="card-body">
+							<div class="mb-4">
+								<span class="badge badge-soft-light float-right">Günlük</span>
+								<h5 class="card-title mb-0 text-white">Toplam Satılan Ürün Adeti</h5>
+							</div>
+							<div class="row d-flex align-items-center mb-4">
+								<div class="col-12">
+									<h4 class="d-flex align-items-center mb-0 text-white">
+										@Model.DailyTotalSales Adet
+									</h4>
+								</div>
+							</div>
+							<div class="progress badge-soft-light shadow-sm" style="height: 5px;">
+								<div class="progress-bar bg-light" role="progressbar" style="width: 100%;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3">
+					<div class="card bg-warning border-warning">
+						<div class="card-body">
+							<div class="mb-4">
+								<span class="badge badge-soft-light float-right">Günlük</span>
+								<h5 class="card-title mb-0 text-white">En Çok Satış Yapılan Ürün</h5>
+							</div>
+							<div class="row d-flex align-items-center mb-4">
+								<div class="col-12">
+									<h4 class="d-flex align-items-center mb-0 text-white">
+										@Model.DailyBestSalesProduct
+									</h4>
+								</div>
+							</div>
+							<div class="progress badge-soft-light shadow-sm" style="height: 5px;">
+								<div class="progress-bar bg-light" role="progressbar" style="width: 100%;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3">
+					<div class="card bg-info border-info">
+						<div class="card-body">
+							<div class="mb-4">
+								<span class="badge badge-soft-light float-right">Günlük</span>
+								<h5 class="card-title mb-0 text-white">En Çok Satış Yapılan Marka</h5>
+							</div>
+							<div class="row d-flex align-items-center mb-4">
+								<div class="col-12">
+									<h4 class="d-flex align-items-center mb-0 text-white">
+										@Model.DailyBestSalesBrand
+									</h4>
+								</div>
+							</div>
+							<div class="progress badge-soft-light shadow-sm" style="height: 5px;">
+								<div class="progress-bar bg-light" role="progressbar" style="width: 100%;"></div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="cold-md-12">
+	}
+	@if((User.IsInRole("Şube Müdürü") || User.IsInRole("Satış Temsilcisi")) && Model.StockListViewModels != null)
+	{
+		<div class="col-md-12">
+			<div class="d-flex">
+				<div class="col-md-7">
+					<div class="card-body">
+						<table id="datatable-buttons-orderProductList" width="100%" class="table dt-responsive table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+							<thead>
+								<tr>
+									<th rowspan="1" colspan="1">Barkod No</th>
+									<th rowspan="1" colspan="1">Ürün Adı</th>
+									<th rowspan="1" colspan="1">Marka Adı</th>
+									<th rowspan="1" colspan="1">Fiyat</th>
+									<th rowspan="1" colspan="1">Stok Miktarı</th>
+									<th rowspan="1" colspan="1">
+										Sepete Ekle
+									</th>
+								</tr>
 
-		<div class="table-responsive">
-			<table class="table table-centered table-hover table-xl mb-0" id="recent-orders">
-				<thead>
-					<tr>
-						<th class="border-top-0">Şube</th>
-						<th class="border-top-0">Müşteri</th>
-						<th class="border-top-0">Ürün Adeti</th>
-						<th class="border-top-0">Fiyat</th>
-						<th class="border-top-0">Sipariş Tarihi</th>
-						<th class="border-top-0">Sipariş Durumu</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var order in Model.OrderListViewModels)
-					{
-						<tr>
-							<td class="text-truncate">@order.BranchName</td>
-
-							<td class="text-truncate">@order.CustomerName</td>
-
-							<td class="text-truncate">@order.TotalProductQuantity</td>
-
-							<td class="text-truncate">@order.TotalPrice ₺</td>
-
-							<td class="text-truncate">@order.OrderDate</td>
-							@if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.GettingReady)
-							{
-								<td class="text-truncate" style="background-color:darkred; color:white">
-									1- Hazırlanıyor
-								</td>
-							}
-							else if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Ready)
-							{
-								<td class="text-truncate" style="background-color:dodgerblue; color:white">
-									2- Hazırlandı
-								</td>
-							}
-							else if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Delivered)
-							{
-								<td class="text-truncate">
-									3 - Teslim Edildi
-								</td>
-							}
-						</tr>
-					}
-				</tbody>
-			</table>
+							</thead>
+							<tbody>
+								@if (Model.StockListViewModels != null)
+								{
+									@foreach (var product in Model.StockListViewModels)
+									{
+										<tr class="product-row">
+											<td>
+												@product.BarcodeCode
+											</td>
+											<td>
+												@product.ProductName
+											</td>
+											<td>
+												@product.BrandName
+											</td>
+											<td>
+												@product.UnitPrice
+											</td>
+											<td>
+												@product.UnitsInStock
+											</td>
+											<td>
+												<form id="CartAdded" method="post" asp-controller="Order" asp-action="AddToCart" asp-route-id="@product.ProductID">
+													<input class="form-control text-center me-4" name="quantity" id="quantity$@product.ProductID" type="num" value="1" style="max-width: 4rem">
+													<button class="btn btn-info btn-sm waves-effect waves-light" type="button"
+															data-units-in-stock="@product.UnitsInStock"
+															data-input-id="quantity$@product.ProductID"
+															onclick="showSweetAlertCartAdded(this)">
+														Sepete Ekle
+													</button>
+												</form>
+											</td>
+										</tr>
+									}
+								}
+							</tbody>
+						</table>
+					</div>
+					<div class="col-md-3">
+					</div>
+				</div>
+				
+			</div>
 		</div>
+	}
+	@if ((User.IsInRole("Şube Müdürü") || User.IsInRole("Satış Temsilcisi") || User.IsInRole("Depo Temsilcisi")) && Model.OrderListViewModels != null)
+	{
+		<div class="cold-md-12">
+			<div class="table-responsive">
+				<table class="table table-centered table-hover table-xl mb-0" id="recent-orders">
+					<thead>
+						<tr>
+							<th class="border-top-0">Şube</th>
+							<th class="border-top-0">Müşteri</th>
+							<th class="border-top-0">Ürün Adeti</th>
+							<th class="border-top-0">Fiyat</th>
+							<th class="border-top-0">Sipariş Tarihi</th>
+							<th class="border-top-0">Sipariş Durumu</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var order in Model.OrderListViewModels)
+						{
+							<tr>
+								<td class="text-truncate">@order.BranchName</td>
 
-	</div>
+								<td class="text-truncate">@order.CustomerName</td>
+
+								<td class="text-truncate">@order.TotalProductQuantity</td>
+
+								<td class="text-truncate">@order.TotalPrice ₺</td>
+
+								<td class="text-truncate">@order.OrderDate</td>
+								@if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.GettingReady)
+								{
+									<td class="text-truncate" style="background-color:darkred; color:white">
+										1- Hazırlanıyor
+									</td>
+								}
+								else if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Ready)
+								{
+									<td class="text-truncate" style="background-color:dodgerblue; color:white">
+										2- Hazırlandı
+									</td>
+								}
+								else if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Delivered)
+								{
+									<td class="text-truncate">
+										3 - Teslim Edildi
+									</td>
+								}
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	}
 </div>
 
 <script>
-
 	window.onload = function () {
-
-		var modelData = @Html.Raw(Json.Serialize(Model.CategorySellingReportViewModels.Select(item => new { label = item.CategoryName, value = item.TotalSales })));
-		generateDonutChart('donutChartDailySales', modelData);
+		
 		initializeDataTable('datatable-buttons-orderProductList', 1, 'asc', [1, 2, 3, 4]);
+
 	};
 </script>

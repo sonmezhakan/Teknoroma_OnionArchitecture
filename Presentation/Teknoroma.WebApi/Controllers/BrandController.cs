@@ -16,7 +16,8 @@ namespace Teknoroma.WebApi.Controllers
     public class BrandController : BaseController
     {
         [HttpPost]
-        public async Task<IActionResult> Create(CreateBrandCommandRequest createBrandCommandRequest)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Create(CreateBrandCommandRequest createBrandCommandRequest)
         {
 			var result = await Mediator.Send(createBrandCommandRequest);
 
@@ -24,14 +25,16 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateBrandCommandRequest updateBrandCommandRequest)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Update(UpdateBrandCommandRequest updateBrandCommandRequest)
         {
 			var result = await Mediator.Send(updateBrandCommandRequest);
 
 			return Ok(result);
 		}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Delete(Guid id)
         {
 			var result = await Mediator.Send(new DeleteBrandCommandRequest { ID = id });
 
@@ -39,7 +42,8 @@ namespace Teknoroma.WebApi.Controllers
 		}
         
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> GetById(Guid id)
         {
 			var result = await Mediator.Send(new GetByIdBrandQueryRequest { ID = id });
 
@@ -47,21 +51,24 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> GetAll()
         {
 			var result = await Mediator.Send(new GetAllBrandCommandRequest());
 
 			return Ok(result);
 		}
         [HttpGet("{startDate}/{endDate}")]
-        public async Task<IActionResult> BrandSellingReport(string startDate,string endDate)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
+		public async Task<IActionResult> BrandSellingReport(string startDate,string endDate)
         {
             var result = await Mediator.Send(new GetBrandSellingReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
 
             return Ok(result);
         }
         [HttpGet("{startDate}/{endDate}")]
-        public async Task<IActionResult> BrandEarningReport(string startDate, string endDate)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
+		public async Task<IActionResult> BrandEarningReport(string startDate, string endDate)
         {
             var result = await Mediator.Send(new GetBrandEarningReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
 

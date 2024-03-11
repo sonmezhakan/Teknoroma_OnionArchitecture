@@ -7,25 +7,21 @@ using Teknoroma.Application.Features.Suppliers.Queries.GetById;
 using Teknoroma.Application.Features.Suppliers.Queries.GetList;
 using Teknoroma.Application.Features.Suppliers.Queries.GetSupplierSupplyDetailReport;
 using Teknoroma.Application.Features.Suppliers.Queries.GetSupplyReport;
-using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+	[Area("Admin")]
 	[Authorize]
 	public class SupplierController : BaseController
 	{
-        public IActionResult Index()
-		{
-			return View();
-		}
-
 		[HttpGet]
+		[Authorize(Roles = "Depo Sorumlusu,Şube Müdürü")]
 		public async Task<IActionResult> Create()
 		{
 			return View();
 		}
 		[HttpPost]
+		[Authorize(Roles = "Depo Sorumlusu,Şube Müdürü")]
 		public async Task<IActionResult> Create(CreateSupplierViewModel model)
 		{
             await CheckJwtBearer();
@@ -48,6 +44,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
 		[HttpGet]
+		[Authorize(Roles = "Depo Sorumlusu,Şube Müdürü")]
 		public async Task<IActionResult> Update(Guid? id)
 		{
             await CheckJwtBearer();
@@ -61,6 +58,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(supplierViewModel);
 		}
 		[HttpPost]
+		[Authorize(Roles = "Depo Sorumlusu,Şube Müdürü")]
 		public async Task<IActionResult> Update(SupplierViewModel model)
 		{
             await CheckJwtBearer();
@@ -84,6 +82,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return RedirectToAction("Update", model.ID);
         }
 		[HttpGet]
+		[Authorize(Roles = "Depo Sorumlusu,Şube Müdürü")]
 		public async Task<IActionResult> Delete(Guid id)
 		{
             await CheckJwtBearer();
@@ -92,6 +91,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return RedirectToAction("SupplierList", "Supplier");
 		}
 		[HttpGet]
+		[Authorize(Roles = "Depo Sorumlusu,Şube Müdürü")]
 		public async Task<IActionResult> Detail(Guid? id)
 		{
 			await SupplierViewBag();
@@ -106,6 +106,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(supplierViewModel);
 		}
 		[HttpGet]
+		[Authorize(Roles = "Depo Sorumlusu,Şube Müdürü")]
 		public async Task<IActionResult> SupplierList()
 		{
             await CheckJwtBearer();
@@ -117,6 +118,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Şube Müdürü")]
 		public async Task<IActionResult> SupplierReport(DateTime? startDate, DateTime? endDate)
 		{
             await CheckJwtBearer();

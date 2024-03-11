@@ -13,6 +13,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 	public class StockController : BaseController
 	{
 		[HttpGet]
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> StockTrackingReport(string? listStatus)
 		{
             await CheckJwtBearer();

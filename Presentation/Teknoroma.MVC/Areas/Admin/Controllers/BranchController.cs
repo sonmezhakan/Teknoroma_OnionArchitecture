@@ -13,7 +13,7 @@ using Teknoroma.Application.Features.Stocks.Queries.GetList;
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-	[Authorize]
+	[Authorize(Roles = "Şube Müdürü")]
 	public class BranchController : BaseController
 	{
         [HttpGet]

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Net;
 using System.Text;
 using Teknoroma.Application.Exceptions.Extensions;
 using Teknoroma.Persistence.DependencyResolvers;
@@ -47,6 +48,26 @@ namespace Teknoroma.MVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseStatusCodePages(async context =>
+            {
+                if (context.HttpContext.Response.StatusCode == (int)HttpStatusCode.Forbidden)
+                {
+                    context.HttpContext.Response.Redirect("/Error/Forbidden");
+                }
+                else if (context.HttpContext.Response.StatusCode == (int)HttpStatusCode.NotFound)
+                {
+                    context.HttpContext.Response.Redirect("/Error/NotFound");
+                }
+                else if(context.HttpContext.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
+                {
+                    context.HttpContext.Response.Redirect("/Login");
+                }
+                else if(context.HttpContext.Response.StatusCode == (int)HttpStatusCode.InternalServerError)
+                {
+                    context.HttpContext.Response.Redirect("Error/InternalServer");
+                }
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

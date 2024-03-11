@@ -14,35 +14,41 @@ namespace Teknoroma.WebApi.Controllers
     public class RoleController : BaseController
     {
         [HttpPost]
-        public async Task<IActionResult> Create(CreateAppUserRoleCommandRequest createAppUserRoleCommandRequest)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+		public async Task<IActionResult> Create(CreateAppUserRoleCommandRequest createAppUserRoleCommandRequest)
         {
             var result = await Mediator.Send(createAppUserRoleCommandRequest);
 
             return Ok(result);
         }
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateAppUserRoleCommandRequest updateAppUserRoleCommandRequest)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+		public async Task<IActionResult> Update(UpdateAppUserRoleCommandRequest updateAppUserRoleCommandRequest)
         {
             var result = await Mediator.Send(updateAppUserRoleCommandRequest);
 
             return Ok(result);
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+		public async Task<IActionResult> Delete(Guid id)
         {
             var result = await Mediator.Send(new DeleteAppUserRoleCommandRequest { ID = id });
 
             return Ok(result);
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+		public async Task<IActionResult> GetById(Guid id)
         {
             var result = await Mediator.Send(new GetByIdAppUserRoleQueryRequest { ID = id });
 
             return Ok(result);
         }
+
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+		public async Task<IActionResult> GetAll()
         {
             var result = await Mediator.Send(new GetAllAppUserRoleQueryRequest());
 

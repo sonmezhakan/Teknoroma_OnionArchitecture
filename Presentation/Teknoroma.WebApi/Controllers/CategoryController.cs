@@ -26,7 +26,7 @@ namespace Teknoroma.WebApi.Controllers
 			_mapper = mapper;
 		}
         [HttpPost]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> Create([FromBody]CreateCategoryCommandRequest createCategoryCommandRequest)
         {
             var result = await Mediator.Send(createCategoryCommandRequest);
@@ -34,7 +34,7 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
         [HttpPut]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> Update([FromBody] UpdateCategoryCommandRequest updateCategoryCommandRequest)
         {
             var result = await Mediator.Send(updateCategoryCommandRequest);
@@ -43,7 +43,7 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var result = await Mediator.Send(new DeleteCategoryCommandRequest { ID = id});
@@ -51,7 +51,7 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
         [HttpGet("{id}")]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             var result = await Mediator.Send(new GetByIdCategoryQueryRequest { ID = id });
@@ -60,7 +60,7 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpGet]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> GetAll()
         {
             var result = await Mediator.Send(new GetAllCategoryQueryRequest());
@@ -69,7 +69,7 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpGet("{startDate}/{endDate}")]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> CategorySellingReport(string startDate,string endDate)
         {
             var result = await Mediator.Send(new GetCategorySellingReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
@@ -78,7 +78,7 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpGet("{startDate}/{endDate}")]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> CategoryEarningReport(string startDate, string endDate)
         {
             var result = await Mediator.Send(new GetCategoryEarningReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
@@ -87,7 +87,7 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpGet("{startDate}/{endDate}")]
-		[Authorize(AuthenticationSchemes = "Bearer")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> CategorySupplyReport(string startDate, string endDate)
         {
             var result = await Mediator.Send(new GetCategorySupplyReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
@@ -100,9 +100,9 @@ namespace Teknoroma.WebApi.Controllers
         {
             var result = await Mediator.Send(new GetAllCategoryQueryRequest());
 
-            if(result is GetAllCategoryQueryResponse)
+            if(result is List<GetAllCategoryQueryResponse>)
             {
-                List<CategoryHomePageListDto> categoryHomePageListDtos = _mapper.Map<List<CategoryHomePageListDto>>(result);
+                List<CategoryHomePageListDto> categoryHomePageListDtos = _mapper.Map<List<CategoryHomePageListDto>>(result.ToList());
 
                 return Ok(categoryHomePageListDtos);
             }

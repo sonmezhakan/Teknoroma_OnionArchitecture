@@ -8,7 +8,7 @@ using Teknoroma.Application.Features.AppUsers.Queries.GetByUserName;
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Authorize]
+	[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi,Depo Temsilcisi,Teknik Servis")]
 	public class AccountController : BaseController
 	{
 		[HttpGet]

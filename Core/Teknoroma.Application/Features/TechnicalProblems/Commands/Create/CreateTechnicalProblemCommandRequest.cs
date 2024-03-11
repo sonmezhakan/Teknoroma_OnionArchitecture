@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using Teknoroma.Application.Pipelines.Transaction;
 using Teknoroma.Domain.Enums;
 
 namespace Teknoroma.Application.Features.TechnicalProblems.Commands.Create
 {
-    public class CreateTechnicalProblemCommandRequest:IRequest<Unit>
-    {
+    public class CreateTechnicalProblemCommandRequest:IRequest<Unit>, ITransactionalRequest
+	{
 
         public string ReportedProblem { get; set; }
         public string? ProblemSolution { get; set; }

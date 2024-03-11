@@ -11,12 +11,11 @@ using Teknoroma.Application.Features.Employees.Queries.GetEmployeeDetailReport;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeEarningReport;
 using Teknoroma.Application.Features.Employees.Queries.GetEmployeeSellingReport;
 using Teknoroma.Application.Features.Employees.Queries.GetFullList;
-using Teknoroma.Application.Features.Employees.Queries.GetList;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Authorize]
+	[Authorize(Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
 	public class EmployeeController : BaseController
 	{
 		[HttpGet]

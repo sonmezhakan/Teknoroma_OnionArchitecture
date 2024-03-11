@@ -17,7 +17,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
     public class TechnicalProblemController : BaseController
     {
         [HttpGet]
-        public async Task<IActionResult> TechnicalProblemReport()
+		[Authorize]
+		public async Task<IActionResult> TechnicalProblemReport()
         {
             return View();
         }
@@ -51,7 +52,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<IActionResult> Update(Guid id)
+		[Authorize(Roles = "Teknik Servis,Şube Müdürü")]
+		public async Task<IActionResult> Update(Guid id)
         {
             await CheckJwtBearer();
             var getTechnicalProblemDetail = await GetById(id);
@@ -64,7 +66,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(TechnicalProblemViewModel model)
+		[Authorize(Roles = "Teknik Servis,Şube Müdürü")]
+		public async Task<IActionResult> Update(TechnicalProblemViewModel model)
         {
             await CheckJwtBearer();
             if (!ModelState.IsValid)
@@ -86,7 +89,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> TechnicalProblemList()
+		[Authorize(Roles = "Teknik Servis,Şube Müdürü")]
+		public async Task<IActionResult> TechnicalProblemList()
         {
             await CheckJwtBearer();
             var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllTechnicalProblemQueryResponse>>("technicalproblem/getall");
@@ -99,7 +103,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Detail(Guid id)
+		[Authorize(Roles = "Teknik Servis,Şube Müdürü")]
+		public async Task<IActionResult> Detail(Guid id)
         {
             await CheckJwtBearer();
             var getTechnicalProblemDetail = await GetById(id);
@@ -112,7 +117,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
         [HttpGet]
-        public async Task<IActionResult> UpdateTechnicalStatu(Guid id, TechnicalProblemStatu technicalProblemStatu)
+		[Authorize(Roles = "Teknik Servis,Şube Müdürü")]
+		public async Task<IActionResult> UpdateTechnicalStatu(Guid id, TechnicalProblemStatu technicalProblemStatu)
         {
             await CheckJwtBearer();
             var getTechnicalProblem = await GetById(id);
@@ -127,7 +133,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+		[Authorize(Roles = "Teknik Servis,Şube Müdürü")]
+		public async Task<IActionResult> Delete(Guid id)
         {
             await CheckJwtBearer();
             await ApiService.HttpClient.DeleteAsync($"technicalproblem/delete/{id}");

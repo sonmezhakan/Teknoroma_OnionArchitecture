@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using Teknoroma.Application.Pipelines.Transaction;
 
 namespace Teknoroma.Application.Features.OrderDetails.Command.Update
 {
-	public class UpdateOrderDetailCommandRequest:IRequest<Unit>
+	public class UpdateOrderDetailCommandRequest:IRequest<Unit>, ITransactionalRequest
 	{
         public Guid BranchId { get; set; }
         public Guid OrderId { get; set; }

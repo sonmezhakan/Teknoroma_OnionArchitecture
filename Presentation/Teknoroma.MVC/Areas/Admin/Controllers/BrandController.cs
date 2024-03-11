@@ -15,12 +15,14 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 	public class BrandController : BaseController
 	{
 		[HttpGet]
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public IActionResult Create()
 		{
 			return View();
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> Create(CreateBrandViewModel model)
 		{
             await CheckJwtBearer();
@@ -45,6 +47,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
 		[HttpGet]
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> Update(Guid? id)
 		{
             await CheckJwtBearer();
@@ -60,6 +63,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> Update(BrandViewModel model)
 		{
             await CheckJwtBearer();
@@ -85,6 +89,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> Delete(Guid id)
 		{
             await CheckJwtBearer();
@@ -94,6 +99,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
 		[HttpGet]
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> Detail(Guid? id)
 		{
 			await BrandViewBag();
@@ -109,6 +115,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> BrandList()
 		{
             await CheckJwtBearer();
@@ -121,6 +128,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(brandViewModels);
 		}
 		[HttpGet]
+		[Authorize(Roles = "Şube Müdürü")]
 		public async Task<IActionResult> BrandReport(DateTime? startDate,DateTime? endDate)
 		{
             await CheckJwtBearer();

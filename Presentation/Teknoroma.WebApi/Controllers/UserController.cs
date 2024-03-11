@@ -31,7 +31,7 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
         public async Task<IActionResult> Create(CreateAppUserCommandRequest createAppUserCommandRequest)
         {
             var result = await Mediator.Send(createAppUserCommandRequest);
@@ -49,8 +49,8 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> Delete(Guid id)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+		public async Task<IActionResult> Delete(Guid id)
         {
             var result = await Mediator.Send(new DeleteAppUserCommandRequest { ID = id });
 
@@ -67,8 +67,8 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> GetAll()
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+		public async Task<IActionResult> GetAll()
         {
             var result = await Mediator.Send(new GetAllAppUserQueryRequest());
 

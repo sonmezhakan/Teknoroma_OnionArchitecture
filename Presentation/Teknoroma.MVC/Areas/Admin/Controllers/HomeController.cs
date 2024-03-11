@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Teknoroma.Application.Features.AppUsers.Queries.GetByUserName;
 using Teknoroma.Application.Features.Brands.Quries.GetBrandSellingReport;
-using Teknoroma.Application.Features.Categories.Models;
-using Teknoroma.Application.Features.Categories.Queries.GetCategorySellingReport;
 using Teknoroma.Application.Features.Employees.Queries.GetById;
 using Teknoroma.Application.Features.Orders.Models;
 using Teknoroma.Application.Features.Orders.Queries.GetList;
@@ -16,9 +14,9 @@ using Teknoroma.MVC.Areas.Admin.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize]
-    public class HomeController : BaseController
+	[Area("Admin")]
+	[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi,Depo Temsilcisi,Teknik Servis,Muhasebe Temsilcisi")]
+	public class HomeController : BaseController
     {
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -30,35 +28,41 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			DateTime startDate = DateTime.Now.Date;
             DateTime endDate = DateTime.MaxValue;
 
-			var categorySellingReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetCategorySellingReportQueryResponse>>($"category/CategorySellingReport/{startDate.ToString("yyyy-MM-dd")}/{endDate.ToString("yyyy-MM-dd")}");
-
-			List<CategorySellingReportViewModel> categorySellingReportViewModels = Mapper.Map<List<CategorySellingReportViewModel>>(categorySellingReports);
-
-			var productSellingReport = await ApiService.HttpClient.GetFromJsonAsync<List<GetProductSellingReportQueryResponse>>($"product/ProductSellingReport/{startDate.ToString("yyyy-MM-dd")}/{endDate.ToString("yyyy-MM-dd")}");
-
-			var productEarningReport = await ApiService.HttpClient.GetFromJsonAsync<List<GetProductEarningReportQueryResponse>>($"product/ProductEarningReport/{startDate.ToString("yyyy-MM-dd")}/{endDate.ToString("yyyy-MM-dd")}");
-
-			var brandSellingReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetBrandSellingReportQueryResponse>>($"brand/BrandSellingReport/{startDate.ToString("yyyy.MM.dd")}/{endDate.ToString("yyyy.MM.dd")}");
-
-			var orderlist = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllOrderQueryResponse>>($"order/getall");
-
-			List<OrderListViewModel> orderListViewModels = Mapper.Map<List<OrderListViewModel>>(orderlist);
-
-			var stockList = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockQueryResponse>>($"stock/getall/{ViewBag.Branch.Value}");
+			DashboardViewModel dashboardViewModel = new DashboardViewModel();
 
 
-			List<StockListViewModel> stockListViewModel = Mapper.Map<List<StockListViewModel>>(stockList);
+            if (User.IsInRole("Şube Müdürü"))
+			{
+                var productSellingReport = await ApiService.HttpClient.GetFromJsonAsync<List<GetProductSellingReportQueryResponse>>($"product/ProductSellingReport/{startDate.ToString("yyyy-MM-dd")}/{endDate.ToString("yyyy-MM-dd")}");
 
-			DashboardViewModel dashboardViewModel = new DashboardViewModel
-            {
-                CategorySellingReportViewModels = categorySellingReportViewModels.Take(10).ToList(),
-                DailyBestSalesProduct = productSellingReport.First().ProductName,
-                DailyTotalSales = productSellingReport.Sum(x => x.TotalSales),
-                DailyTotalPrice = productEarningReport.Sum(x=>x.TotalPrice),
-                DailyBestSalesBrand = brandSellingReports.First().BrandName,
-                OrderListViewModels = orderListViewModels.Take(10).ToList(),
-                StockListViewModels = stockListViewModel
-			};
+                var productEarningReport = await ApiService.HttpClient.GetFromJsonAsync<List<GetProductEarningReportQueryResponse>>($"product/ProductEarningReport/{startDate.ToString("yyyy-MM-dd")}/{endDate.ToString("yyyy-MM-dd")}");
+
+                var brandSellingReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetBrandSellingReportQueryResponse>>($"brand/BrandSellingReport/{startDate.ToString("yyyy.MM.dd")}/{endDate.ToString("yyyy.MM.dd")}");
+
+				dashboardViewModel.DailyBestSalesProduct = productSellingReport.First().ProductName;
+				dashboardViewModel.DailyTotalSales = productSellingReport.Sum(x => x.TotalSales);
+				dashboardViewModel.DailyTotalPrice = productEarningReport.Sum(x => x.TotalPrice);
+				dashboardViewModel.DailyBestSalesBrand = brandSellingReports.First().BrandName;
+            }
+			
+			if(User.IsInRole("Şube Müdürü") || User.IsInRole("Satış Temsilcisi") || User.IsInRole("Depo Temsilcisi"))
+			{
+                var orderlist = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllOrderQueryResponse>>($"order/getall");
+
+                List<OrderListViewModel> orderListViewModels = Mapper.Map<List<OrderListViewModel>>(orderlist);
+
+				dashboardViewModel.OrderListViewModels = orderListViewModels.Take(10).ToList();
+            }
+
+			if(User.IsInRole("Şube Müdürü") || User.IsInRole("Satış Temsilcisi"))
+			{
+                var stockList = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockQueryResponse>>($"stock/getall/{ViewBag.Branch.Value}");
+
+                List<StockListViewModel> stockListViewModel = Mapper.Map<List<StockListViewModel>>(stockList);
+
+				dashboardViewModel.StockListViewModels = stockListViewModel;
+            }
+
 			return View(dashboardViewModel);
         }
 

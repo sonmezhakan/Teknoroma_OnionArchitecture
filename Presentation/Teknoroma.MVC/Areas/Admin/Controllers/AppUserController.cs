@@ -12,7 +12,7 @@ using Teknoroma.Domain.Entities;
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
     public class AppUserController : BaseController
     {
         private readonly SignInManager<AppUser> _signInManager;
@@ -24,7 +24,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            await AppUserRoleViewBag();
+			await CheckJwtBearer();
+			await AppUserRoleViewBag();
 			return View();
         }
         [HttpPost]
@@ -50,7 +51,6 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid? id)
         {
-            await CheckJwtBearer();
             await CheckJwtBearer();
             await AppUserViewBag();
 			await AppUserRoleViewBag();

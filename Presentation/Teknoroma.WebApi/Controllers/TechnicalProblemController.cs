@@ -15,7 +15,8 @@ namespace Teknoroma.WebApi.Controllers
     public class TechnicalProblemController : BaseController
     {
         [HttpPost]
-        public async Task<IActionResult> Create(CreateTechnicalProblemCommandRequest createTechnicalProblemCommandRequest)
+		[Authorize(AuthenticationSchemes = "Bearer")]
+		public async Task<IActionResult> Create(CreateTechnicalProblemCommandRequest createTechnicalProblemCommandRequest)
         {
             var result = await Mediator.Send(createTechnicalProblemCommandRequest);
 
@@ -23,7 +24,8 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateTechnicalProblemCommandRequest updateTechnicalProblemCommandRequest)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Teknik Servis,Şube Müdürü")]
+		public async Task<IActionResult> Update(UpdateTechnicalProblemCommandRequest updateTechnicalProblemCommandRequest)
         {
             var result = await Mediator.Send(updateTechnicalProblemCommandRequest);
 
@@ -31,7 +33,8 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Teknik Servis,Şube Müdürü")]
+		public async Task<IActionResult> Delete(Guid id)
         {
             var result = await Mediator.Send(new DeleteTechnicalProblemCommandRequest { ID = id });
 
@@ -39,7 +42,8 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Teknik Servis,Şube Müdürü")]
+		public async Task<IActionResult> GetById(Guid id)
         {
             var result = await Mediator.Send(new GetByIdTechnicalProblemQueryRequest { ID = id });
 
@@ -47,7 +51,8 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Teknik Servis,Şube Müdürü")]
+		public async Task<IActionResult> GetAll()
         {
             var result = await Mediator.Send(new GetAllTechnicalProblemQueryRequest());
 

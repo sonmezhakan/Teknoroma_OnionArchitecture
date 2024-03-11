@@ -28,6 +28,7 @@ namespace Teknoroma.Application.Features.Categories.Commands.Create
 
             await _categoryService.AddAsync(category);
 
+
 			return Unit.Value;
 		}
     }

@@ -17,12 +17,14 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
     {
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+		[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi")]
+		public async Task<IActionResult> Create()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCustomerViewModel model)
+		[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi")]
+		public async Task<IActionResult> Create(CreateCustomerViewModel model)
         {
             await CheckJwtBearer();
             if (!ModelState.IsValid)
@@ -41,7 +43,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(Guid? id)
+		[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi")]
+		public async Task<IActionResult> Update(Guid? id)
         {
             await CheckJwtBearer();
             await CustomerViewBag();
@@ -55,7 +58,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(customerViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> Update(CustomerViewModel model)
+		[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi")]
+		public async Task<IActionResult> Update(CustomerViewModel model)
         {
             await CheckJwtBearer();
             if (!ModelState.IsValid)
@@ -79,7 +83,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+		[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi")]
+		public async Task<IActionResult> Delete(Guid id)
         {
             await CheckJwtBearer();
             await ApiService.HttpClient.DeleteAsync($"customer/delete/{id}");
@@ -88,7 +93,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Detail(Guid? id)
+		[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi")]
+		public async Task<IActionResult> Detail(Guid? id)
         {
             await CheckJwtBearer();
             await CustomerViewBag();
@@ -105,7 +111,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CustomerList()
+		[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi")]
+		public async Task<IActionResult> CustomerList()
         {
             await CheckJwtBearer();
             var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllCustomerQueryResponse>>("customer/getall");
@@ -117,7 +124,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(customerViewModels);
         }
         [HttpGet]
-        public async Task<IActionResult> CustomerReport(DateTime? startDate,DateTime? endDate)
+		[Authorize(Roles = "Şube Müdürü")]
+		public async Task<IActionResult> CustomerReport(DateTime? startDate,DateTime? endDate)
         {
             await CheckJwtBearer();
             if (startDate == null || endDate == null)

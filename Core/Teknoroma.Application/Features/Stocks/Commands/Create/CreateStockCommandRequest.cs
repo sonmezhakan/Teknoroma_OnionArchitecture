@@ -1,14 +1,10 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Teknoroma.Application.Pipelines.Transaction;
 
 namespace Teknoroma.Application.Features.Stocks.Command.Create
 {
-    public class CreateStockCommandRequest : IRequest<Unit>
-    {
+	public class CreateStockCommandRequest : IRequest<Unit>, ITransactionalRequest
+	{
         public Guid BranchId { get; set; }
         public Guid ProductId { get; set; }
         public int UnitsInStock { get; set; }

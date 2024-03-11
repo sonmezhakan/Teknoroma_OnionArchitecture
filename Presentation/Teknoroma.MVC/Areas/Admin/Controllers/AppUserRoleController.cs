@@ -10,8 +10,8 @@ using Teknoroma.MVC.Models;
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
-    public class AppUserRoleController : BaseController
+	[Authorize(Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+	public class AppUserRoleController : BaseController
     {
         [HttpGet]
         public async Task<IActionResult> Create()

@@ -1,13 +1,9 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Teknoroma.Application.Pipelines.Transaction;
 
 namespace Teknoroma.Application.Features.Suppliers.Command.Update
 {
-	public class UpdateSupplierCommandRequest:IRequest<Unit>
+	public class UpdateSupplierCommandRequest:IRequest<Unit>, ITransactionalRequest
 	{
         public Guid ID { get; set; }
         public string CompanyName { get; set; }

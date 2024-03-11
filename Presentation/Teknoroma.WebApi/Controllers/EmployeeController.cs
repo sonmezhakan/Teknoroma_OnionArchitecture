@@ -14,11 +14,12 @@ namespace Teknoroma.WebApi.Controllers
 {
 	[Route("api/[controller]/[action]")]
 	[ApiController]
-	[Authorize(AuthenticationSchemes = "Bearer")]
+	
 	public class EmployeeController : BaseController
 	{
         [HttpPost]
-		public async Task<IActionResult> Create(CreateEmployeeCommandRequest createEmployeeCommandRequest)
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+        public async Task<IActionResult> Create(CreateEmployeeCommandRequest createEmployeeCommandRequest)
 		{
 			var result = await Mediator.Send(createEmployeeCommandRequest);
 
@@ -26,41 +27,47 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
 		[HttpPut]
-		public async Task<IActionResult> Update(UpdateEmployeeCommandRequest updateEmployeeCommandRequest)
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+        public async Task<IActionResult> Update(UpdateEmployeeCommandRequest updateEmployeeCommandRequest)
 		{
 			var result = await Mediator.Send(updateEmployeeCommandRequest);
 
 			return Ok(result);
 		}
 		[HttpDelete("{id}")]
-		public async Task<IActionResult> Delete(Guid id)
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+        public async Task<IActionResult> Delete(Guid id)
 		{
 			var result = await Mediator.Send(new DeleteEmployeeCommandRequest { ID = id });
 
 			return Ok(result);
 		}
 		[HttpGet("{id}")]
-		public async Task<IActionResult> GetById(Guid id)
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi,Satış Temsilcisi,Depo Temsilcisi")]
+        public async Task<IActionResult> GetById(Guid id)
 		{
 			var result = await Mediator.Send(new GetByIdEmployeeQueryRequest { ID = id });
 
 			return Ok(result);	
 		}
 		[HttpGet]
-		public async Task<IActionResult> GetAll()
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+        public async Task<IActionResult> GetAll()
 		{
 			var result = await Mediator.Send(new GetAllEmployeeQueryRequest());
 
 			return Ok(result);
 		}
 		[HttpGet("{startDate}/{endDate}")]
-		public async Task<IActionResult> EmployeeSellingReport(string startDate,string endDate)
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
+        public async Task<IActionResult> EmployeeSellingReport(string startDate,string endDate)
 		{
 			var result = await Mediator.Send(new GetEmployeeSellingReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
 
 			return Ok(result);
 		}
         [HttpGet("{startDate}/{endDate}")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
         public async Task<IActionResult> EmployeeEarningReport(string startDate, string endDate)
         {
             var result = await Mediator.Send(new GetEmployeeEarningReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
@@ -68,7 +75,8 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
 		[HttpGet("{startDate}/{endDate}")]
-		public async Task<IActionResult> EmployeeDetailReport(string startDate,string endDate)
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
+        public async Task<IActionResult> EmployeeDetailReport(string startDate,string endDate)
 		{
 			var result = await Mediator.Send(new GetEmployeeDetailReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
 

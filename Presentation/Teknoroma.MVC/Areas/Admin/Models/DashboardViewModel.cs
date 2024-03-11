@@ -7,13 +7,12 @@ namespace Teknoroma.MVC.Areas.Admin.Models
 {
 	public class DashboardViewModel
 	{
-        public decimal DailyTotalPrice { get; set; }
-        public int DailyTotalSales { get; set; }
-        public string DailyBestSalesBrand { get; set; }
-        public string DailyBestSalesProduct { get; set; }
+        public decimal? DailyTotalPrice { get; set; }
+        public int? DailyTotalSales { get; set; }
+        public string? DailyBestSalesBrand { get; set; }
+        public string? DailyBestSalesProduct { get; set; }
 
-        public List<StockListViewModel> StockListViewModels { get; set; }
-        public List<CategorySellingReportViewModel> CategorySellingReportViewModels { get; set; }
-        public List<OrderListViewModel> OrderListViewModels { get; set; }
+        public List<StockListViewModel>? StockListViewModels { get; set; }
+        public List<OrderListViewModel>? OrderListViewModels { get; set; }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Teknoroma.Application.Features.Customers.Command.Delete;
 using Teknoroma.Application.Features.Departments.Command.Create;
 using Teknoroma.Application.Features.Departments.Command.Delete;
 using Teknoroma.Application.Features.Departments.Command.Update;
@@ -10,9 +8,9 @@ using Teknoroma.Application.Features.Departments.Queries.GetList;
 
 namespace Teknoroma.WebApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
+	[Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
     public class DepartmentController : BaseController
     {
         [HttpPost]

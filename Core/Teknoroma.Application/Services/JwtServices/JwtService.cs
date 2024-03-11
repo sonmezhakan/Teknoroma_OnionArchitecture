@@ -15,7 +15,7 @@ namespace Teknoroma.Application.Security.JWTHelpers
             _configuration = configuration;
         }
 
-        public async Task<string> GetJwtToken(Guid Id, string userName)
+        public async Task<string> GetJwtToken(Guid Id, string userName, IList<string> roles)
         {
             var claims = new List<Claim>
             {
@@ -23,6 +23,11 @@ namespace Teknoroma.Application.Security.JWTHelpers
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
             };
+
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
 

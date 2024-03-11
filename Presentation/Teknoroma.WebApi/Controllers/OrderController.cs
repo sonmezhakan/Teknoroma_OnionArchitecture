@@ -16,46 +16,53 @@ namespace Teknoroma.WebApi.Controllers
     public class OrderController : BaseController
     {
         [HttpPost]
-        public async Task<IActionResult> Create(CreateOrderCommandRequest createOrderCommandRequest)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Satış Temsilcisi,Şube Müdürü")]
+		public async Task<IActionResult> Create(CreateOrderCommandRequest createOrderCommandRequest)
         {
             var result = await Mediator.Send(createOrderCommandRequest);
             return Ok(result);
         }
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateOrderCommandRequest updateOrderCommandRequest)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Satış Temsilcisi,Şube Müdürü")]
+		public async Task<IActionResult> Update(UpdateOrderCommandRequest updateOrderCommandRequest)
         {
             var result = await Mediator.Send(updateOrderCommandRequest);
 
             return Ok(result);
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Satış Temsilcisi,Şube Müdürü")]
+		public async Task<IActionResult> Delete(Guid id)
         {
             var result = await Mediator.Send(new DeleteOrderCommandRequest { ID = id });
 
             return Ok(result);
         }
         [HttpGet("{branchId}")]
-        public async Task<IActionResult> GetByBranchIdOrderList(Guid branchId)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Satış Temsilcisi,Şube Müdürü")]
+		public async Task<IActionResult> GetByBranchIdOrderList(Guid branchId)
         {
 			var result = await Mediator.Send(new GetByBranchIdOrderListQueryRequest { BranchId = (Guid)branchId });
 			return Ok(result);
 		}
         [HttpGet("{orderId}")]
-        public async Task<IActionResult> GetById(Guid orderId)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Satış Temsilcisi,Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> GetById(Guid orderId)
         {
             var result = await Mediator.Send(new GetByIdOrderQueryRequest { ID = orderId });
 
             return Ok(result);
         }
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Satış Temsilcisi,Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> GetAll()
         {
 			var result = await Mediator.Send(new GetAllOrderQueryRequest());
 			return Ok(result);
 		}
         [HttpGet]
-        public async Task<IActionResult> SalesReport()
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
+		public async Task<IActionResult> SalesReport()
         {
             var result = await Mediator.Send(new GetSalesReportQueryRequest());
 

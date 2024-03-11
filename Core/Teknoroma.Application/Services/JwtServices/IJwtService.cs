@@ -2,6 +2,6 @@
 {
     public interface IJwtService
     {
-        Task<string> GetJwtToken(Guid Id, string userName);
+        Task<string> GetJwtToken(Guid Id, string userName, IList<string> roles);
     }
 }

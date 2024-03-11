@@ -21,14 +21,16 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
     {
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Create()
         {
             await CheckJwtBearer();
             await ViewBagList();
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateStockInputViewModel model)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Create(CreateStockInputViewModel model)
         {
             await CheckJwtBearer();
             await ViewBagList();
@@ -51,7 +53,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(Guid? id)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Update(Guid? id)
         {
             await CheckJwtBearer();
             await ViewBagList();
@@ -68,7 +71,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(StockInputViewModel model)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Update(StockInputViewModel model)
         {
             await CheckJwtBearer();
             await ViewBagList();
@@ -89,7 +93,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Delete(Guid id)
         {
             await CheckJwtBearer();
             await ApiService.HttpClient.DeleteAsync($"stockInput/delete/{id}");
@@ -98,7 +103,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Detail(Guid? id)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Detail(Guid? id)
         {
             await CheckJwtBearer();
             await ViewBagList();
@@ -115,7 +121,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> StockInputList()
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> StockInputList()
         {
             await CheckJwtBearer();
             await BranchViewBag();
@@ -131,7 +138,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> StockTrackingReport()
+		[Authorize(Roles = "Şube Müdürü")]
+		public async Task<IActionResult> StockTrackingReport()
         {
             await CheckJwtBearer();
             await BranchIDViewBag();

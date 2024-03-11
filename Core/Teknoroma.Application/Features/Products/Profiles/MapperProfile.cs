@@ -58,7 +58,7 @@ namespace Teknoroma.Application.Features.Products.Profiles
 
 			CreateMap<ProductListViewModel, GetByBarcodeCodeQueryResponse>().ReverseMap();
 
-			CreateMap<ProductHomePageListDto, GetAllProductQueryResponse>();
+			CreateMap<ProductHomePageListDto, GetAllProductQueryResponse>().ReverseMap();
 			CreateMap<ProductHomePageListViewModel, ProductHomePageListDto>().ReverseMap();
 
 			CreateMap<ProductPageDto, GetByIdProductQueryResponse>().ReverseMap();

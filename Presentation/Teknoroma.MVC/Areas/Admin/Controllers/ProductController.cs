@@ -22,12 +22,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
     public class ProductController : BaseController
     {
         [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
-        [HttpGet]
-        public async Task<IActionResult> Create()
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Create()
         {
             await CheckJwtBearer();
             await CategoryViewBag();
@@ -35,7 +31,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateProductViewModel model,IFormFile? productImage)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Create(CreateProductViewModel model,IFormFile? productImage)
         {
             await CheckJwtBearer();
             model.ImagePath = await ImageHelper.ImageFile(productImage);
@@ -62,7 +59,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(Guid? id)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Update(Guid? id)
         {
             await CheckJwtBearer();
             await ProductViewBag();
@@ -78,7 +76,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(ProductViewModel model,IFormFile? productImage)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Update(ProductViewModel model,IFormFile? productImage)
         {
             await CheckJwtBearer();
             await ProductViewBag();
@@ -127,7 +126,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Delete(Guid id)
         {
             await CheckJwtBearer();
             //ürünün eski resim yolunu alıyoruz
@@ -146,7 +146,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ProductList()
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> ProductList()
         {
             await CheckJwtBearer();
             var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllProductQueryResponse>>("product/getall");
@@ -157,7 +158,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Detail(Guid? id)
+		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		public async Task<IActionResult> Detail(Guid? id)
         {
             await CheckJwtBearer();
             await ProductViewBag();
@@ -174,7 +176,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ProductReport(DateTime? startDate, DateTime? endDate)
+		[Authorize(Roles = "Şube Müdürü")]
+		public async Task<IActionResult> ProductReport(DateTime? startDate, DateTime? endDate)
         {
             await CheckJwtBearer();
             if (startDate == null || endDate == null)
