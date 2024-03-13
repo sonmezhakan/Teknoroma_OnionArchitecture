@@ -1,6 +1,6 @@
 # Teknoroma Project
 
-Teknoroma is a project designed for companies engaged in retail, dealership, and alternative sales processes. The project includes features that allow comprehensive tracking of suppliers, personnel, inventory, and sales. Multiple branches can be created, enabling control over all branches through this system. The project is developed following the principles of "Onion Architecture."
+This project has been developed for the Bilgeadam Academy Full Stack Developer Training success certification. Teknoroma is a project designed for companies engaged in retail, dealership, and alternative sales processes. The project includes features that allow comprehensive tracking of suppliers, personnel, inventory, and sales. Multiple branches can be created, enabling control over all branches through this system. The project is developed following the principles of "Onion Architecture."
 
 ## Onion Architecture
 
@@ -44,10 +44,35 @@ The Presentation layer is located in the outermost layer. It creates the user in
 
 ## Technologies
 
+### BackEnd
 - .Net
 - MsSql
 - Asp.Net
 - Restful Api
+- FluentValidation
+- AutoMapper
+
+### FrontEnd
+- Jquery
+- Bootstrap
+- Datatables
+- Select2
+- SweetAlert
+- Charts
 
 
 ## Libraries
+
+
+- [AutoMapper](https://www.nuget.org/packages/AutoMapper/13.0.1)
+- [FluentValidation](https://www.nuget.org/packages/FluentValidation/11.9.0)
+- [FluentValidation.DependencyInjectionExtensions](https://www.nuget.org/packages/FluentValidation.DependencyInjectionExtensions/11.9.0)
+- [MediatR](https://www.nuget.org/packages/MediatR/12.1.1)
+- [Microsoft.AspNetCore.Authentication.JwtBearer](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer/7.0.16)
+- [Microsoft.AspNetCore.Identity](https://www.nuget.org/packages/Microsoft.AspNetCore.Identity/2.2.0)
+- [Microsoft.AspNetCore.Identity.EntityFrameworkCore](https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.EntityFrameworkCore/7.0.15)
+- [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/7.0.16)
+- [Microsoft.EntityFrameworkCore.SqlServer](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/7.0.15)
+- [Microsoft.EntityFrameworkCore.Tools](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/7.0.15)
+- [Microsoft.Extensions.DependencyInjection.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.Abstractions/7.0.0)
+- [Microsoft.Extensions.Http](https://www.nuget.org/packages/Microsoft.Extensions.Http/7.0.0)
