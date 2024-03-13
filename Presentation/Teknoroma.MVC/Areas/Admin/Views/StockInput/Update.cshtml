@@ -10,26 +10,15 @@
 		<div class="card">
 			<div class="card-header bg-info">
 				<h2 class="text-white">Stok Giriş Güncelle</h2>
+				<h4 style="color:green">@ViewBag.Branch.Text</h4>
 			</div>
 		@if(Model != null)
 			{
 				<div class="row">
 					<div class="col-md-3 mx-auto">
-						<form method="post" enctype="multipart/form-data" asp-route-ID="@Model.ID" asp-route-BranchID="@Model.BranchID" asp-route-ProductID="@Model.ProductID" asp-route-StockEntryDate="@Model.StockEntryDate">
+						<form method="post" enctype="multipart/form-data" asp-route-ID="@Model.ID" asp-route-BranchID="@Model.BranchID" asp-route-ProductID="@Model.ProductID">
 							<div class="card-body">
 								<div asp-validation-summary="All">
-								</div>
-								<div class="form-group">
-									<label asp-for="BranchID"></label>
-									<select class="form-control" data-toggle="select2" aria-label="Default select example" disabled>
-										@if (ViewBag.BranchList != null)
-										{
-											@foreach (var branch in ViewBag.BranchList)
-											{
-												<option value="@branch.ID">@branch.BranchName</option>
-											}
-										}
-									</select>
 								</div>
 								<div class="form-group">
 									<label asp-for="ProductID"></label>

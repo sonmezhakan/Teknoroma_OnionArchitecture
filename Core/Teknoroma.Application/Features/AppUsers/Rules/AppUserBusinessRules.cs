@@ -77,8 +77,13 @@ namespace Teknoroma.Application.Features.AppUsers.Rules
         }
         public async Task LoginCheckIsActive(AppUser appUser)
         {
-            if (appUser.Employee.IsActive != true)
+            if (appUser.Employee != null)
+            {
+				if (appUser.Employee.IsActive != true)
+					throw new BusinessException(AppUsersMessages.EmployeeDontWork);
+			}
+            else
                 throw new BusinessException(AppUsersMessages.EmployeeDontWork);
-        }
+		}
     }
 }

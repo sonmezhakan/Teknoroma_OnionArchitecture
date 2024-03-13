@@ -24,7 +24,6 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
-                 
                 return View(model);
             }
             CreateAppUserRoleCommandRequest createAppUserRoleCommandRequest = Mapper.Map<CreateAppUserRoleCommandRequest>(model);
@@ -56,7 +55,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Update(AppUserRoleViewModel model)
         {
             await CheckJwtBearer();
-            await AppUserRoleViewbag();
+            
             if (!ModelState.IsValid)
             {
                 await AppUserRoleViewbag();
@@ -67,7 +66,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
             HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("role/update", updateAppUserRoleCommandRequest);
 
-            if (response.IsSuccessStatusCode) return View(model.ID);
+            if (response.IsSuccessStatusCode) return RedirectToAction("Update", "AppUserRole", new { id = model.ID });
 
             await HandleErrorResponse(response);
             await AppUserRoleViewbag();

@@ -124,7 +124,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
                 startDate = DateTime.MinValue;
                 endDate = DateTime.MaxValue;
             }
-			var employeeSellingReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetEmployeeSellingReportQueryResponse>>($"employee/EmployeeSellingReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+            else
+            {
+                endDate = endDate.Value.AddDays(1);
+            }
+            var employeeSellingReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetEmployeeSellingReportQueryResponse>>($"employee/EmployeeSellingReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
 
 			List<EmployeeSellingReportViewModel> employeeSellingReportViewModels = Mapper.Map<List<EmployeeSellingReportViewModel>>(employeeSellingReports);
 

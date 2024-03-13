@@ -11,7 +11,7 @@ using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+	[Area("Admin")]
     [Authorize(Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
     public class AppUserController : BaseController
     {
@@ -86,12 +86,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             await HandleErrorResponse(response);
             return View(model);
         }
-        [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            await CheckJwtBearer();
-            return View();
-        }
+        
         [HttpGet]
         public async Task<IActionResult> Detail(Guid? id)
         {

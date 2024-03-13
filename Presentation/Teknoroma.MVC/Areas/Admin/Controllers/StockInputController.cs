@@ -8,6 +8,7 @@ using Teknoroma.Application.Features.Products.Queries.GetList;
 using Teknoroma.Application.Features.StockInputs.Command.Create;
 using Teknoroma.Application.Features.StockInputs.Command.Update;
 using Teknoroma.Application.Features.StockInputs.Models;
+using Teknoroma.Application.Features.StockInputs.Queries.GetByBranchIdList;
 using Teknoroma.Application.Features.StockInputs.Queries.GetById;
 using Teknoroma.Application.Features.StockInputs.Queries.GetList;
 using Teknoroma.Application.Features.Stocks.Queries.GetByBranchId;
@@ -33,11 +34,10 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		public async Task<IActionResult> Create(CreateStockInputViewModel model)
         {
             await CheckJwtBearer();
-            await ViewBagList();
-            if (!ModelState.IsValid)
+			await ViewBagList();
+			if (!ModelState.IsValid)
             {
-                 
-                return View(model);
+				return View(model);
             }
 
             CreateStockInputCommandRequest createStockInput = Mapper.Map<CreateStockInputCommandRequest>(model);
@@ -49,7 +49,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (response.IsSuccessStatusCode) return RedirectToAction("Create", "StockInput");
 
             await HandleErrorResponse(response);
-            return View(model);
+			return View(model);
         }
 
         [HttpGet]
@@ -158,8 +158,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
         private async Task StockInputViewBag()
         {
-            
-			var stockInputs = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockInputQueryResponse>>($"stockInput/GetByBranchIdList/{ViewBag.Branch.Value}");
+			var stockInputs = await ApiService.HttpClient.GetFromJsonAsync<List<GetByBranchIdStockInputQueryResponse>>($"stockInput/GetByBranchIdList/{Guid.Parse(ViewBag.Branch.Value)}");
 
             ViewBag.StockInputList = stockInputs;
         }

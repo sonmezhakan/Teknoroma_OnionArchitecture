@@ -54,12 +54,12 @@ namespace Teknoroma.Infrastructure.ImageHelpers
                 }
                 else
                 {
-                    return "placeholer.jpg";
+                    return "placeholder.jpg";
                 }
             }
             else
             {
-                return "placeholer.jpg";
+                return "placeholder.jpg";
             }
         }
 

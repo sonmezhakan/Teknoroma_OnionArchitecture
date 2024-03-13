@@ -19,6 +19,7 @@ namespace Teknoroma.Application.Features.Departments.Profiles
             CreateMap<Department,GetAllDepartmentQueryResponse>().ReverseMap();
 
             CreateMap<CreateDepartmentViewModel, CreateDepartmentCommandRequest>().ReverseMap();
+            CreateMap<DepartmentViewModel, UpdateDepartmentCommandRequest>().ReverseMap();
             CreateMap<DepartmentViewModel, GetByIdDepartmentQueryResponse>().ReverseMap();
 			CreateMap<DepartmentViewModel, GetAllDepartmentQueryResponse>().ReverseMap();
 			CreateMap<DepartmentListViewModel, GetAllDepartmentQueryResponse>().ReverseMap();

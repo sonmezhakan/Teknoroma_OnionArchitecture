@@ -61,7 +61,7 @@ namespace Teknoroma.MVC.Controllers
                 HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.Strict,
-                Expires = DateTime.UtcNow.AddHours(1)
+                Expires = DateTime.UtcNow.AddDays(1)
             });
 
 			await CheckJwtBearer();

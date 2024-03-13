@@ -25,8 +25,8 @@ namespace Teknoroma.Application.Features.StockInputs.Command.Update
 
             //stock Process
             var stock = stockInput.Branch.stocks.FirstOrDefault(x => x.BranchId == request.BranchID && x.ProductId == request.ProductID);
-            stock.UnitsInStock += stockInput.Quantity;
-            stock.UnitsInStock -= request.Quantity;
+            stock.UnitsInStock -= stockInput.Quantity;
+            stock.UnitsInStock += request.Quantity;
             UpdateStockCommandRequest updatestockCommandRequest = _mapper.Map<UpdateStockCommandRequest>(stock);
             await _mediator.Send(updatestockCommandRequest);
 

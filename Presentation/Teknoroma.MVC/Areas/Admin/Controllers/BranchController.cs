@@ -135,6 +135,10 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
                 startDate = DateTime.MinValue;
                 endDate = DateTime.MaxValue;
             }
+            else
+            {
+                endDate = endDate.Value.AddDays(1);
+            }
             var branchSellingReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetBranchSellingReportQueryResponse>>($"branch/branchsellingreport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
 
 			List<BranchSellingReportViewModel> branchSellingReportViewModels = Mapper.Map<List<BranchSellingReportViewModel>>(branchSellingReports);

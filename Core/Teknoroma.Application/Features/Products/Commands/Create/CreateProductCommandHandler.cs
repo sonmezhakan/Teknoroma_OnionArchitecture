@@ -34,7 +34,7 @@ namespace Teknoroma.Application.Features.Products.Command.Create
 				{
 					BranchId = branch.ID,
 					ProductId = product.ID,
-					UnitsInStock = 0,
+					UnitsInStock = 0
 				};
 				await _mediator.Send(createStockCommandRequest);
 			}

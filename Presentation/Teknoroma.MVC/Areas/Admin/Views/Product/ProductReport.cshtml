@@ -40,9 +40,6 @@
 								<th>
 
 								</th>
-								<th>
-
-								</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -183,7 +180,7 @@
 										</div>
 									</td>
 
-									<td>
+									@* <td>
 
 										<!-- Button trigger modal -->
 										<button type="button" class="btn btn-danger btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-selling-productSupplyDetailReport-@productSelling.ProductId" onclick="initializeDataTable('datatable-buttons-selling-productSupplyDetailReport-@productSelling.ProductId', 8, 'desc',[0,1,2,3,4,5,6,7,8],'@productSelling.ProductName Tedarik Detayları')">
@@ -195,7 +192,7 @@
 												<div class="modal-dialog modal-fullscreen">
 													<div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
 														<div class="modal-header">
-															<h5 class="modal-title" id="exampleModalLabel">@productSelling.ProductName Sipariş Detayları</h5>
+															<h5 class="modal-title" id="exampleModalLabel">@productSelling.ProductName Tedarik Detayları</h5>
 															<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 														</div>
 
@@ -300,7 +297,7 @@
 												</div>
 											</div>
 										</div>
-									</td>
+									</td> *@
 								</tr>
 							}
 						</tbody>
@@ -332,9 +329,6 @@
 							<tr>
 								<th class="dt-orderable-asc dt-orderable-desc">Ürün</th>
 								<th aria-sort="descending" class="dt-type-numeric dt-orderable-asc dt-orderable-desc dt-ordering-desc">Kazanç ₺</th>
-								<th>
-
-								</th>
 								<th>
 
 								</th>
@@ -478,7 +472,7 @@
 										</div>
 									</td>
 
-									<td>
+									@* <td>
 
 										<!-- Button trigger modal -->
 										<button type="button" class="btn btn-danger btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-earning-productSupplyDetailReport-@productEarning.ProductId" onclick="initializeDataTable('datatable-buttons-earning-productSupplyDetailReport-@productEarning.ProductId', 8, 'desc',[0,1,2,3,4,5,6,7,8], '@productEarning.ProductName - Tedarik Detayları')">
@@ -595,7 +589,7 @@
 												</div>
 											</div>
 										</div>
-									</td>
+									</td> *@
 								</tr>
 							}
 						</tbody>
@@ -628,9 +622,6 @@
 								<th>
 
 								</th>
-								<th>
-
-								</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -643,7 +634,7 @@
 									<td>
 										@productSupply.TotalSupply
 									</td>
-									<td>
+									@* <td>
 
 										<!-- Button trigger modal -->
 										<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-supply-productSalesDetailReport-@productSupply.ProductId" onclick="initializeDataTable('datatable-buttons-supply-productSalesDetailReport-@productSupply.ProductId', 9, 'desc',[0,1,2,3,4,5,6,7,8,9],'@productSupply.ProductName - Satış Detayları')">
@@ -769,7 +760,7 @@
 												</div>
 											</div>
 										</div>
-									</td>
+									</td> *@
 
 									<td>
 
@@ -783,7 +774,7 @@
 												<div class="modal-dialog modal-fullscreen">
 													<div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
 														<div class="modal-header">
-															<h5 class="modal-title" id="exampleModalLabel">@productSupply.ProductName Sipariş Detayları</h5>
+															<h5 class="modal-title" id="exampleModalLabel">@productSupply.ProductName Tedarik Detayları</h5>
 															<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 														</div>
 

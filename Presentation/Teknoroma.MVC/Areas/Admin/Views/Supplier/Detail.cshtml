@@ -12,20 +12,22 @@
                 <div class="form-group">
                     <h2 class="text-white">Tedarikçi Seçiniz</h2>
                     <select class="form-control" data-toggle="select2" onchange="redirectToSelectedPage(this)">
-                        @foreach (var item in ViewBag.SupplierList)
+                        @if(ViewBag.SupplierList != null)
                         {
-                            @if (Model == null)
+                            @foreach (var item in ViewBag.SupplierList)
                             {
-                                <option value="@item.ID" href="@item.ID">@item.CompanyName</option>
-                            }
-                            
-                            @if (item.ID == Model.ID)
-                            {
-                                <option value="@item.ID" selected>@item.CompanyName</option>
-                            }
-                            else
-                            {
-                                <option value="@item.ID" href="@item.ID">@item.CompanyName</option>
+                                @if (Model == null)
+                                {
+                                    <option value="@item.ID" href="@item.ID">@item.CompanyName</option>
+                                }
+                                else if (item.ID == Model.ID)
+                                {
+                                    <option value="@item.ID" selected>@item.CompanyName</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.ID" href="@item.ID">@item.CompanyName</option>
+                                }
                             }
                         }
                     </select>

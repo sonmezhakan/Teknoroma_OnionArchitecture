@@ -14,7 +14,7 @@ namespace Teknoroma.Application.Features.Categories.Rules
 		}
         public async Task CategoryNameCannotBeDuplicatedWhenInserted(string name)
 		{
-			bool result = await _categoryRepository.AnyAsync(x => x.CategoryName == name);
+			bool result = await _categoryRepository.AnyAsync(x => x.IsActive == true && x.CategoryName == name);
 
 			if (result)
 				throw new BusinessException(CategoryMessages.CategoryNameExists);
@@ -23,7 +23,7 @@ namespace Teknoroma.Application.Features.Categories.Rules
 		{
 			if (oldCategoryName != newCategoryName)
 			{
-				bool result = await _categoryRepository.AnyAsync(x => x.CategoryName == newCategoryName);
+				bool result = await _categoryRepository.AnyAsync(x => x.IsActive == true && x.CategoryName == newCategoryName);
 
 				if (result)
 					throw new BusinessException(CategoryMessages.CategoryNameExists);

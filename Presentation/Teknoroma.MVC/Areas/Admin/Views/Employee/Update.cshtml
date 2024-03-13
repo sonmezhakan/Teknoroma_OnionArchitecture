@@ -10,39 +10,38 @@
 	<div class="col-md-12 mx-auto">
 		<div class="card">
 			<div class="card-header bg-info">
-				<h2 class="text-white">Çalışan Güncelle</h2>
+				<h2 class="text-white">Çalışan Seçiniz</h2>
+				<div class="form-group">
+					<select class="form-control" data-toggle="select2" onchange="redirectToSelectedPage(this)" aria-label="Default select example">
+						@if (ViewBag.AppUserList != null)
+						{
+							@foreach (var appUser in ViewBag.AppUserList)
+							{
+								@if (Model == null)
+								{
+									<option value="@appUser.ID" href="@appUser.ID">@appUser.UserName</option>
+								}
+								else if (appUser.ID == Model.ID)
+								{
+									<option value="@appUser.ID" selected>@appUser.UserName</option>
+								}
+								else
+								{
+									<option value="@appUser.ID" href="@appUser.ID">@appUser.UserName</option>
+								}
+							}
+						}
+					</select>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12 mx-auto">
-				@if(Model != null)
-					{
-						<form method="post" enctype="multipart/form-data">
-							<div class="card-body">
-								<div asp-validation-summary="All">
-								</div>
-								<div class="form-group">
-									<label asp-for="ID"></label>
-									<select class="form-control" data-toggle="select2" aria-label="Default select example" asp-for="@Model.ID">
-										@if (ViewBag.AppUserList != null)
-										{
-											@foreach (var appUser in ViewBag.AppUserList)
-											{
-												@if (Model == null)
-												{
-													<option value="@appUser.ID" href="@appUser.ID">@appUser.UserName</option>
-												}
-												else if (appUser.ID == Model.ID)
-												{
-													<option value="@appUser.ID" selected>@appUser.UserName</option>
-												}
-												else
-												{
-													<option value="@appUser.ID" href="@appUser.ID">@appUser.UserName</option>
-												}
-											}
-										}
-									</select>
-								</div>
+					<div class="card-body">
+						<div asp-validation-summary="All">
+						</div>	
+						@if (Model != null)
+						{
+							<form method="post" enctype="multipart/form-data" asp-route-ID="@Model.ID" asp-route-IsActive="@Model.IsActive">
 								<div class="form-group">
 									<label asp-for="BranchID"></label>
 									<select class="form-control" data-toggle="select2" aria-label="Default select example" asp-for="@Model.BranchID">
@@ -93,12 +92,13 @@
 										<input type="text" class="form-control" asp-for="@Model.Salary" />
 									</div>
 								</div>
-							</div>
-							<div class="card-footer">
-								<button type="submit" class="btn btn-warning btn-block waves-effect waves-light">Güncelle</button>
-							</div>
-						</form>
-					}
+								<div class="card-footer">
+									<button type="submit" class="btn btn-warning btn-block waves-effect waves-light">Güncelle</button>
+								</div>
+							</form>
+						}
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -112,7 +112,7 @@
 		var selectedValue = selectElement.value;
 
 		// Yönlendirme yapmak istediğiniz URL'yi oluşturun
-		var redirectUrl = '/Admin/AppUser/Update/' + selectedValue;
+		var redirectUrl = '/Admin/Employee/Update/' + selectedValue;
 
 		// Yönlendirme işlemi
 		window.location.href = redirectUrl;

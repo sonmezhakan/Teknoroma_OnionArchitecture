@@ -8,10 +8,10 @@ namespace Teknoroma.Application.Features.Suppliers.Queries.GetSupplierSupplyDeta
 		private readonly ISupplierService _supplierService;
 
 		public GetSupplierSupplyDetailReportQueryHandler(ISupplierService supplierService)
-        {
+		{
 			_supplierService = supplierService;
 		}
-        public async Task<List<GetSupplierSupplyDetailReportQueryResponse>> Handle(GetSupplierSupplyDetailReportQueryRequest request, CancellationToken cancellationToken)
+		public async Task<List<GetSupplierSupplyDetailReportQueryResponse>> Handle(GetSupplierSupplyDetailReportQueryRequest request, CancellationToken cancellationToken)
 		{
 			var suppliers = await _supplierService.GetAllAsync();
 
@@ -19,7 +19,7 @@ namespace Teknoroma.Application.Features.Suppliers.Queries.GetSupplierSupplyDeta
 
 			foreach (var supplier in suppliers.ToList())
 			{
-				foreach (var stockInput in supplier.StockInputs.ToList())
+				foreach (var stockInput in supplier.StockInputs.Where(x => x.IsActive == true && x.StockEntryDate >= request.StartDate && x.StockEntryDate <= request.EndDate).ToList())
 				{
 					getSupplierSupplyDetailReportQueryResponses.Add(new GetSupplierSupplyDetailReportQueryResponse
 					{

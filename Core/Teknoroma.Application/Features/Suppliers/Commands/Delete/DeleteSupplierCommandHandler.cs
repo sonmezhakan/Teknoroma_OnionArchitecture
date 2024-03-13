@@ -18,7 +18,7 @@ namespace Teknoroma.Application.Features.Suppliers.Command.Delete
 
 		public async Task<Unit> Handle(DeleteSupplierCommandRequest request, CancellationToken cancellationToken)
 		{
-			Teknoroma.Domain.Entities.Supplier supplier = _mapper.Map<Teknoroma.Domain.Entities.Supplier>(request);
+			Teknoroma.Domain.Entities.Supplier supplier = await _supplierService.GetAsync(x=>x.ID == request.ID);
 
 			await _supplierService.DeleteAsync(supplier);
 

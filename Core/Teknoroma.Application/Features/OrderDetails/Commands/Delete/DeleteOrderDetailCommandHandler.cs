@@ -21,7 +21,7 @@ namespace Teknoroma.Application.Features.OrderDetails.Command.Delete
 		}
         public async Task<Unit> Handle(DeleteOrderDetailCommandRequest request, CancellationToken cancellationToken)
 		{
-			OrderDetail orderDetail = await _orderDetailService.GetAsync(x => x.ID == request.OrderId && x.ProductId == request.ProductId);
+			var orderDetail = await _orderDetailService.GetAsync(x => x.ID == request.OrderId && x.ProductId == request.ProductId);
 
 			//stock process
 			var stock = orderDetail.Order.Branch.stocks.FirstOrDefault(x => x.BranchId == request.BranchId && x.ProductId == request.ProductId);

@@ -250,7 +250,7 @@
 				}
 
 				<!--Brands-->
-				@if(User.IsInRole("Şube Müdürü") || User.IsInRole("Depo Sorumlusu"))
+				@if(User.IsInRole("Şube Müdürü") || User.IsInRole("Depo Temsilcisi"))
 				{
 					<li>
 						<a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -276,7 +276,7 @@
 					</a>
 					<ul class="sub-menu" aria-expanded="false">
 						<li><a asp-controller="TechnicalProblem" asp-action="TechnicalProblemReport">Sorun Bildir</a></li>
-						@if (User.IsInRole("Teknik Servis"))
+						@if (User.IsInRole("Teknik Servis") || User.IsInRole("Şube Müdürü"))
 						{
 							<li><a asp-controller="TechnicalProblem" asp-action="TechnicalProblemList">Sorun Listesi</a></li>
 						}

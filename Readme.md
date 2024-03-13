@@ -30,7 +30,7 @@ When reviewing Onion Architecture projects, you might encounter a folder named "
 
 ### Persistence
 
-The Persistence layer is located in the outermost layer. It is the layer where we perform operations related to the database. It undertakes tasks similar to the Data Access (DAL) layer in the N-tier Architecture structure. Operations such as Context, Configuration, Seeding, Interface/Repository are included in this layer.
+The Persistence layer is located in the outermost layer. It is the layer where we perform operations related to the database. It undertakes tasks similar to the Data Access (DAL) layer in the N-tier Architecture structure. Operations such as Context, Configuration, Seeding, Repository are included in this layer.
 
 ### Infrastructure
 

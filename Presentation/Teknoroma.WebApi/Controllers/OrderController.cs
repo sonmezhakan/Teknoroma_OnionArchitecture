@@ -23,7 +23,7 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
         [HttpPut]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Satış Temsilcisi,Şube Müdürü")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Satış Temsilcisi,Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> Update(UpdateOrderCommandRequest updateOrderCommandRequest)
         {
             var result = await Mediator.Send(updateOrderCommandRequest);
@@ -39,7 +39,7 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
         [HttpGet("{branchId}")]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Satış Temsilcisi,Şube Müdürü")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Satış Temsilcisi,Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> GetByBranchIdOrderList(Guid branchId)
         {
 			var result = await Mediator.Send(new GetByBranchIdOrderListQueryRequest { BranchId = (Guid)branchId });

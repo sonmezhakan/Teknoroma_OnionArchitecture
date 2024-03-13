@@ -102,7 +102,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
 		public async Task<IActionResult> Detail(Guid? id)
 		{
-			await BrandViewBag();
+            await CheckJwtBearer();
+            await BrandViewBag();
 
 			if (id == null) return View();
 
@@ -137,6 +138,10 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
                 startDate = DateTime.MinValue;
                 endDate = DateTime.MaxValue;
             }
+			else
+			{
+				endDate = endDate.Value.AddDays(1);
+			}
             var brandSellingReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetBrandSellingReportQueryResponse>>($"brand/BrandSellingReport/{startDate?.ToString("yyyy.MM.dd")}/{endDate?.ToString("yyyy.MM.dd")}");
 
 			List<BrandSellingReportViewModel> brandSellingReportViewModels = Mapper.Map<List<BrandSellingReportViewModel>>(brandSellingReports);

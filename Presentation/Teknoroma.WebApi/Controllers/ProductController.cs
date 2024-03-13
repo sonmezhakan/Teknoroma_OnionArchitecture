@@ -65,7 +65,7 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi,Satış Temsilcisi")]
 		public async Task<IActionResult> GetById(Guid id)
         {
 			var result = await Mediator.Send(new GetByIdProductQueryRequest { ID = id });

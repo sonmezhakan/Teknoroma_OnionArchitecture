@@ -24,7 +24,7 @@ namespace Teknoroma.Application.Features.Orders.Command.Delete
 			if(order.OrderDetails.Where(x=>x.IsActive == true).Count() > 0)
 			{
 				List<OrderDetail> orderDetails = order.OrderDetails;
-				foreach (OrderDetail orderDetail in orderDetails)
+				foreach (OrderDetail orderDetail in orderDetails.Where(x=>x.IsActive == true).ToList())
 				{
 					await _mediator.Send(new DeleteOrderDetailCommandRequest
 					{

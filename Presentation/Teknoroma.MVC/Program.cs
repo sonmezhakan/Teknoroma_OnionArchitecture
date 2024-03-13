@@ -29,14 +29,14 @@ namespace Teknoroma.MVC
 
                 x.LoginPath = new PathString("/Login");
                 x.SlidingExpiration = true;
-                x.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                x.ExpireTimeSpan = TimeSpan.FromDays(1);
             });
 
 			//Session
 			builder.Services.AddSession(x =>
 			{
 				x.Cookie.Name = "product_cart";
-				x.IdleTimeout = TimeSpan.FromMinutes(60);
+				x.IdleTimeout = TimeSpan.FromDays(1);
 			});
 
 			var app = builder.Build();

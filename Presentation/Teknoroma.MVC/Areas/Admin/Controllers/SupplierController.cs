@@ -15,13 +15,13 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 	public class SupplierController : BaseController
 	{
 		[HttpGet]
-		[Authorize(Roles = "Depo Sorumlusu,Şube Müdürü")]
+		[Authorize(Roles = "Depo Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> Create()
 		{
 			return View();
 		}
 		[HttpPost]
-		[Authorize(Roles = "Depo Sorumlusu,Şube Müdürü")]
+		[Authorize(Roles = "Depo Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> Create(CreateSupplierViewModel model)
 		{
             await CheckJwtBearer();
@@ -44,7 +44,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
 		[HttpGet]
-		[Authorize(Roles = "Depo Sorumlusu,Şube Müdürü")]
+		[Authorize(Roles = "Depo Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> Update(Guid? id)
 		{
             await CheckJwtBearer();
@@ -58,7 +58,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(supplierViewModel);
 		}
 		[HttpPost]
-		[Authorize(Roles = "Depo Sorumlusu,Şube Müdürü")]
+		[Authorize(Roles = "Depo Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> Update(SupplierViewModel model)
 		{
             await CheckJwtBearer();
@@ -82,7 +82,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return RedirectToAction("Update", model.ID);
         }
 		[HttpGet]
-		[Authorize(Roles = "Depo Sorumlusu,Şube Müdürü")]
+		[Authorize(Roles = "Depo Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> Delete(Guid id)
 		{
             await CheckJwtBearer();
@@ -91,9 +91,10 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return RedirectToAction("SupplierList", "Supplier");
 		}
 		[HttpGet]
-		[Authorize(Roles = "Depo Sorumlusu,Şube Müdürü")]
+		[Authorize(Roles = "Depo Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> Detail(Guid? id)
 		{
+			await CheckJwtBearer();
 			await SupplierViewBag();
 
 			if (id == null) return View();
@@ -106,7 +107,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(supplierViewModel);
 		}
 		[HttpGet]
-		[Authorize(Roles = "Depo Sorumlusu,Şube Müdürü")]
+		[Authorize(Roles = "Depo Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> SupplierList()
 		{
             await CheckJwtBearer();
@@ -127,7 +128,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 				startDate = DateTime.MinValue;
 				endDate = DateTime.MaxValue;
 			}
-			var supplierSupplyReports =await ApiService.HttpClient.GetFromJsonAsync<List<GetSupplierSupplyReportQueryResponse>>($"supplier/SupplierSupplyReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+            else
+            {
+                endDate = endDate.Value.AddDays(1);
+            }
+            var supplierSupplyReports =await ApiService.HttpClient.GetFromJsonAsync<List<GetSupplierSupplyReportQueryResponse>>($"supplier/SupplierSupplyReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
 
 			List <SupplierSupplyReportViewModel> supplierSupplyReportViewModels = Mapper.Map<List<SupplierSupplyReportViewModel>>(supplierSupplyReports);
 

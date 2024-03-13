@@ -12,7 +12,7 @@ namespace Teknoroma.WebApi.Controllers
     public class StockController : BaseController
 	{
 		[HttpGet("{id}")]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Depo Temsilicisi,Şube Müdürü,Satış Temsilcisi")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Depo Temsilcisi,Şube Müdürü,Satış Temsilcisi")]
 		public async Task<IActionResult> GetAll(Guid? id)
 		{
 			if (id != null)

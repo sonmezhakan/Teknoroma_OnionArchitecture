@@ -18,7 +18,7 @@ namespace Teknoroma.Application.Features.Stocks.Command.Update
 
         public async Task<Unit> Handle(UpdateStockCommandRequest request, CancellationToken cancellationToken)
         {
-            Stock stock = await _stockService.GetAsync(x => x.BranchId == request.BranchId && x.ProductId == request.ProductId);
+            var stock = await _stockService.GetAsync(x => x.BranchId == request.BranchId && x.ProductId == request.ProductId);
 
             stock = _mapper.Map(request, stock);
             await _stockService.UpdateAsync(stock);

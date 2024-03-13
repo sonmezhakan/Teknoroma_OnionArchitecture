@@ -52,7 +52,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (!response.IsSuccessStatusCode)
             {
                 ImageHelper.ImageFileDelete(model.ImagePath);
-                await HandleErrorResponse(response);
+				await CategoryViewBag();
+				await BrandViewBag();
+				await HandleErrorResponse(response);
                 return View(model);
             }
             return View();
@@ -130,17 +132,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		public async Task<IActionResult> Delete(Guid id)
         {
             await CheckJwtBearer();
-            //ürünün eski resim yolunu alıyoruz
-            string oldImagePath = GetByProductId(id).Result.ImagePath;
 
-            HttpResponseMessage response = await ApiService.HttpClient.DeleteAsync($"product/delete/{id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                ImageHelper.ImageFileDelete(oldImagePath);
-
-                return RedirectToAction("ProductList", "Product");
-            }    
+            await ApiService.HttpClient.DeleteAsync($"product/delete/{id}");  
 
             return RedirectToAction("ProductList", "Product");
         }
@@ -185,8 +178,12 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 				startDate = DateTime.MinValue;
 				endDate = DateTime.MaxValue;
 			}
+            else
+            {
+                endDate = endDate.Value.AddDays(1);
+            }
 
-			var productSellingReport = await ApiService.HttpClient.GetFromJsonAsync<List<GetProductSellingReportQueryResponse>>($"product/ProductSellingReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
+            var productSellingReport = await ApiService.HttpClient.GetFromJsonAsync<List<GetProductSellingReportQueryResponse>>($"product/ProductSellingReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
 
             List<ProductSellingReportViewModel> productSellingViewModels = Mapper.Map<List<ProductSellingReportViewModel>>(productSellingReport);
             

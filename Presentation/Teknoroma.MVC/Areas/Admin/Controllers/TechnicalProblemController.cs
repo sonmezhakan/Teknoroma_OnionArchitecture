@@ -71,9 +71,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         {
             await CheckJwtBearer();
             if (!ModelState.IsValid)
-            {
-                 
-                return View();
+            { 
+                return View(model);
             }
 			UpdateTechnicalProblemCommandRequest updateTechnicalProblemCommandRequest = Mapper.Map<UpdateTechnicalProblemCommandRequest>(model);
 
@@ -82,10 +81,10 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (!response.IsSuccessStatusCode)
             {
                 await HandleErrorResponse(response);
-                return View();
+                return View(model);
             }
 
-            return RedirectToAction("Update",  new { id= model.ID });
+            return RedirectToAction("Update","TechnicalProblem",  new { id= model.ID });
         }
 
         [HttpGet]

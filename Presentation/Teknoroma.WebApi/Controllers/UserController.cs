@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.AppUsers.Command.Create;
-using Teknoroma.Application.Features.AppUsers.Command.Delete;
 using Teknoroma.Application.Features.AppUsers.Command.Update;
 using Teknoroma.Application.Features.AppUsers.Commands.Login;
 using Teknoroma.Application.Features.AppUsers.Queries.GetById;
@@ -10,7 +9,7 @@ using Teknoroma.Application.Features.AppUsers.Queries.GetList;
 
 namespace Teknoroma.WebApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
+	[Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : BaseController
     {
@@ -24,7 +23,8 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpGet("{userName}")]
-        public async Task<IActionResult> GetByUserName(string userName)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi,Depo Temsilcisi,Satış Temsilcisi")]
+		public async Task<IActionResult> GetByUserName(string userName)
         {
             var result = await Mediator.Send(new GetByUserNameAppUserQueryRequest { UserName = userName});
             return Ok(result);
@@ -48,18 +48,9 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
-		public async Task<IActionResult> Delete(Guid id)
-        {
-            var result = await Mediator.Send(new DeleteAppUserCommandRequest { ID = id });
-
-            return Ok(result);
-        }
-
         [HttpGet("{id}")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> GetById(Guid id)
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi,Depo Temsilcisi,Satış Temsilcisi")]
+		public async Task<IActionResult> GetById(Guid id)
         {
             var result = await Mediator.Send(new GetByIdAppUserQueryRequest { ID = id });
 

@@ -18,7 +18,7 @@ namespace Teknoroma.Application.Features.TechnicalProblems.Models
 		public string? ProblemSolution { get; set; }
 
 		[Display(Name = TechnicalProblemColumnNames.NotificationDate)]
-		public DateTime NotificationDate { get; set; }
+		public DateTime? NotificationDate { get; set; }
 
         [Display(Name = TechnicalProblemColumnNames.BranchId)]
         [Required(ErrorMessage = TechnicalProblemsMessages.BranchIdNotNull)]

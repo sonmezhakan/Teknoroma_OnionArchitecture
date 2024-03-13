@@ -2,7 +2,6 @@
 using MediatR;
 using Teknoroma.Application.Features.Stocks.Command.Update;
 using Teknoroma.Application.Services.StockInputs;
-using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.StockInputs.Command.Delete
 {
@@ -20,15 +19,15 @@ namespace Teknoroma.Application.Features.StockInputs.Command.Delete
 		}
         public async Task<Unit> Handle(DeleteStockInputCommandRequest request, CancellationToken cancellationToken)
         {
-            StockInput stockInput = await _stockInputService.GetAsync(x => x.ID == request.ID);
+            var stockInput = await _stockInputService.GetAsync(x => x.ID == request.ID);
 
             //stock Process
             var stock = stockInput.Branch.stocks.FirstOrDefault(x=>x.BranchId == stockInput.BranchID && x.ProductId == stockInput.ProductID);
             stock.UnitsInStock -= stockInput.Quantity;
-            UpdateStockCommandRequest updatestockCommandRequest = _mapper.Map<UpdateStockCommandRequest>(stock);
-            await _mediator.Send(updatestockCommandRequest);
+			UpdateStockCommandRequest updatestockCommandRequest = _mapper.Map<UpdateStockCommandRequest>(stock);
+			await _mediator.Send(updatestockCommandRequest);
 
-            await _stockInputService.DeleteAsync(stockInput);
+			await _stockInputService.DeleteAsync(stockInput);
 
             return Unit.Value;
         }

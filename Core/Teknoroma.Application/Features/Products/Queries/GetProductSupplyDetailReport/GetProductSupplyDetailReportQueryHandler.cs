@@ -20,7 +20,7 @@ namespace Teknoroma.Application.Features.Products.Queries.GetProductSupplyDetail
 
 			foreach (var product in products.ToList())
 			{
-				foreach (var stockInput in product.StockInputs.ToList())
+				foreach (var stockInput in product.StockInputs.Where(x=>x.IsActive == true && x.StockEntryDate >= request.StartDate && x.StockEntryDate <= request.EndDate).ToList())
 				{
 					getProductSupplyDetailReportQueryReponses.Add(new GetProductSupplyDetailReportQueryResponse
 					{

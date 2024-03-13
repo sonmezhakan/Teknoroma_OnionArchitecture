@@ -53,7 +53,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(result);
 		}
 		[HttpGet]
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi,Depo Temsilcisi")]
         public async Task<IActionResult> GetAll()
 		{
 			var result = await Mediator.Send(new GetAllBranchQueryRequest());

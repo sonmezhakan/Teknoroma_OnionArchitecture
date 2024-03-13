@@ -226,7 +226,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
 		public async Task<IActionResult> Delete(Guid id)
 		{
-			await ApiService.HttpClient.DeleteAsync($"order/delete/{id}");
+			await CheckJwtBearer();
+			await ApiService.HttpClient.DeleteAsync($"order/Delete/{id}");
 
 			return RedirectToAction("OrderList", "Order");
 		}

@@ -135,6 +135,10 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
                 startDate = DateTime.MinValue;
                 endDate = DateTime.MaxValue;
             }
+            else
+            {
+                endDate = endDate.Value.AddDays(1);
+            }
 
             var categorySellingReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetCategorySellingReportQueryResponse>>($"category/CategorySellingReport/{startDate?.ToString("yyyy-MM-dd")}/{endDate?.ToString("yyyy-MM-dd")}");
 

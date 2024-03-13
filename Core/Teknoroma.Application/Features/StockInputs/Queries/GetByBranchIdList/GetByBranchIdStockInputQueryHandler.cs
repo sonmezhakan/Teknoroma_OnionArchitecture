@@ -16,7 +16,7 @@ namespace Teknoroma.Application.Features.StockInputs.Queries.GetByBranchIdList
 		}
         public async Task<List<GetByBranchIdStockInputQueryResponse>> Handle(GetByBranchIdStockInputQueryRequest request, CancellationToken cancellationToken)
         {
-            var stockInputs = _stockInputService.GetAllAsync().Result.Where(x=>x.BranchID == request.BranchId);
+            var stockInputs = await _stockInputService.GetAllAsync(x => x.BranchID == request.BranchId);
 
             List<GetByBranchIdStockInputQueryResponse> getByBranchIdStockInputQueryResponse = _mapper.Map<List<GetByBranchIdStockInputQueryResponse>>(stockInputs.OrderByDescending(x => x.StockEntryDate).ToList());
 

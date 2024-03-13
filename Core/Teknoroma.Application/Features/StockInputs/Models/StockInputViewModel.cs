@@ -27,7 +27,7 @@ namespace Teknoroma.Application.Features.StockInputs.Models
         public int Quantity { get; set; }
 
         [Display(Name = StockInputColumnNames.StockEntryDate)]
-        public DateTime StockEntryDate { get; set; }
+        public DateTime? StockEntryDate { get; set; }
 
         [Display(Name = StockInputColumnNames.Description)]
         public string? Description { get; set; }
