@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.EmailService;
+using Teknoroma.Application.Services.EmailServices;
 using Teknoroma.Application.Services.Orders;
 using Teknoroma.Domain.Entities;
 
@@ -43,7 +43,7 @@ namespace Teknoroma.Application.Features.Orders.Command.Update
                         $"<td><img src='https://www.localhost:7126/images/product/{item.Product.ImagePath}' width='125px' height='75px' /> </td>" +
                         $"<td>{item.Product.ProductName}</td> " +
                         $"<td>{item.Quantity}</td> " +
-                        $"<td>{item.Quantity * item.UnitPrice} ₺ </td></tr>";
+                        $"<td>{item.Quantity * item.UnitPrice} ₺ </td></tr></body>";
                 }
 
                 string endTableHtml = "<tfooter>" +
@@ -53,12 +53,10 @@ namespace Teknoroma.Application.Features.Orders.Command.Update
                     "</tfooter>" +
                     "</table>";
 
-                await _mailService.SendMail(new Mail
-                {
-                    ToEmail = order.Customer.Email,
-                    Subject = "Siparişiniz Teslim Edilmiştir!",
-                    HtmlBody = $@"<h2>Teknroma {order.ID} Numaralı Siparişiniz Teslim Edilmiştir</h2><br>{startTableHtml}{htmlBody}{endTableHtml}"
-                });
+                await _mailService.SendMailAsync("Siparişiniz Teslim Edilmiştir!",
+                    null,
+					$@"<h2>Teknroma {order.ID} Numaralı Siparişiniz Teslim Edilmiştir</h2><br>{startTableHtml}{htmlBody}{endTableHtml}",
+					order.Customer.Email);
             }
 
 			order = _mapper.Map(request,order);

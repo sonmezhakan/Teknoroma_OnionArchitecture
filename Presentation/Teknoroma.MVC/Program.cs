@@ -18,6 +18,7 @@ namespace Teknoroma.MVC
 
 			builder.Services.AddAplicationServiceRegistration();
 			builder.Services.AddPersistenceServiceRegistration();
+            builder.Services.AddInfrastructureServiceRegistration();
 
 			//Cookie
 			builder.Services.ConfigureApplicationCookie(x =>

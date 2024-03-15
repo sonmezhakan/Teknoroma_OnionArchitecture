@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Teknoroma.Application.Services.EmailService;
+using Teknoroma.Application.Services.EmailServices;
 using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Controllers
 {
-    public class ContactController : Controller
+	public class ContactController : Controller
     {
         private readonly IMailService _mailService;
 
@@ -23,16 +23,14 @@ namespace Teknoroma.MVC.Controllers
         {
             if(!ModelState.IsValid) return View(model);
 
-            await _mailService.SendMail(new Mail
-            {
-                ToEmail = "teknoromaproject@outlook.com",
-                Subject = "Teknoroma İletişim Sayfasından Gönderilmiştir!",
-                HtmlBody = $"<b style='color:red;'>Gönderen : </b> {model.FullName} <br/> <br/>" +
-                $"<b style='color:red;'>Mail : </b> {model.Mail} <br/> <br/>" +
-                $"<b style='color:red;'>Telefon Numarası : </b> {model.PhoneNumber} <br/> <br/>" +
-                $"<b style='color:red;'>Konu : </b> {model.Subject} <br/> <br/>" +
-                $"<b style='color:red;'>Mesaj : </b> {model.Message} <br/> <br/>"
-            });
+            await _mailService.SendMailAsync("Teknoroma İletişim Sayfasından Gönderilmiştir!",
+                null,
+				$"<b style='color:red;'>Gönderen : </b> {model.FullName} <br/> <br/>" +
+				$"<b style='color:red;'>Mail : </b> {model.Mail} <br/> <br/>" +
+				$"<b style='color:red;'>Telefon Numarası : </b> {model.PhoneNumber} <br/> <br/>" +
+				$"<b style='color:red;'>Konu : </b> {model.Subject} <br/> <br/>" +
+				$"<b style='color:red;'>Mesaj : </b> {model.Message} <br/> <br/>",
+				"teknoromaproject@outlook.com");
 
             return RedirectToAction("Index","Contact");
         }

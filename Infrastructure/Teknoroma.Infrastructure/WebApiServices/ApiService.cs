@@ -2,7 +2,7 @@
 
 namespace Teknoroma.Infrastructure.WebApiService
 {
-    public class ApiService:IApiService
+	public class ApiService:IApiService
     {
         private readonly HttpClient _httpClient;
 

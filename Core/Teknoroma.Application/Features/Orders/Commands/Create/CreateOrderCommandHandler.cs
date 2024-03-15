@@ -3,7 +3,7 @@ using MediatR;
 using Teknoroma.Application.Features.Customers.Queries.GetById;
 using Teknoroma.Application.Features.OrderDetails.Command.Create;
 using Teknoroma.Application.Pipelines.Transaction;
-using Teknoroma.Application.Services.EmailService;
+using Teknoroma.Application.Services.EmailServices;
 using Teknoroma.Application.Services.Orders;
 using Teknoroma.Domain.Entities;
 
@@ -56,7 +56,7 @@ namespace Teknoroma.Application.Features.Orders.Command.Create
 					$"<td><img src='https://www.localhost:7126/images/product/{item.ImagePath}' width='125px' height='75px' /> </td>" +
 					$"<td>{item.ProductName}</td> " +
 					$"<td>{item.Quantity}</td> " +
-					$"<td>{item.Quantity*item.UnitPrice} ₺ </td></tr>";
+					$"<td>{item.Quantity*item.UnitPrice} ₺ </td></tr></body>";
             }
 
             string endTableHtml = "<tfooter>" +
@@ -67,12 +67,11 @@ namespace Teknoroma.Application.Features.Orders.Command.Create
                 "</table>";
 
             var getCustomer = await _mediator.Send(new GetByIdCustomerQueryRequest { ID = order.CustomerId });
-            await _mailService.SendMail(new Mail
-			{
-				ToEmail = getCustomer.Email,
-				Subject = "Siparişiniz Alınmıştır!",
-				HtmlBody = $@"<h2>Teknroma {order.ID} Numaralı Siparişiniz Hazırlanıyor</h2><br>{startTableHtml}{htmlBody}{endTableHtml}"
-			});
+            await _mailService.SendMailAsync("Siparişiniz Alınmıştır!", 
+				null,
+				$@"<h2>Teknroma {order.ID} Numaralı Siparişiniz Hazırlanıyor</h2><br>{startTableHtml}{htmlBody}{endTableHtml}",
+				getCustomer.Email
+			);
 
 			return Unit.Value;
 		}

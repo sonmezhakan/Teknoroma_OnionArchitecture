@@ -1,7 +1,7 @@
-﻿namespace Teknoroma.Application.Services.EmailService
+﻿namespace Teknoroma.Application.Services.EmailServices
 {
-    public interface IMailService
-    {
-        Task SendMail(Mail mail);
-    }
+	public interface IMailService
+	{
+		Task SendMailAsync(string subject, string? textBody, string? htmlBody, string toEmail);
+	}
 }

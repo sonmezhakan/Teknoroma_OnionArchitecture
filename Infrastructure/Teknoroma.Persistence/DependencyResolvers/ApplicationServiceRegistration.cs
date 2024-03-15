@@ -23,7 +23,7 @@ using Teknoroma.Application.Services.Brands;
 using Teknoroma.Application.Services.Categories;
 using Teknoroma.Application.Services.Customers;
 using Teknoroma.Application.Services.Departments;
-using Teknoroma.Application.Services.EmailService;
+using Teknoroma.Application.Services.EmailServices;
 using Teknoroma.Application.Services.Employees;
 using Teknoroma.Application.Services.OrderDetails;
 using Teknoroma.Application.Services.Orders;
@@ -35,7 +35,7 @@ using Teknoroma.Application.Services.TechnicalProblems;
 
 namespace Teknoroma.Persistence.DependencyResolvers
 {
-    public static class ApplicationServiceRegistration
+	public static class ApplicationServiceRegistration
 	{
 		public static IServiceCollection AddAplicationServiceRegistration(this IServiceCollection services)
 		{
@@ -92,9 +92,7 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddScoped<IStockInputService, StockInputManager>();
 			services.AddScoped<IStockService, StockManager>();
 			services.AddScoped<ISupplierService, SupplierManager>();
-			services.AddScoped<ITechnicalProblemService, TechnicalProblemManager>();
-
-           
+			services.AddScoped<ITechnicalProblemService, TechnicalProblemManager>(); 
 
             return services;
 		}

@@ -49,10 +49,6 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddScoped<UserManager<AppUser>>();
 			services.AddScoped<SignInManager<AppUser>>();
 
-			//WebApi Service
-			services.AddHttpClient();
-			services.AddScoped<IApiService, ApiService>();
-
             return services;
 		}
 	}

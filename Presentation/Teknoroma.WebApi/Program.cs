@@ -42,8 +42,9 @@ namespace Teknoroma.WebApi
 
 			builder.Services.AddAplicationServiceRegistration();
 			builder.Services.AddPersistenceServiceRegistration();
-            
-            var app = builder.Build();
+			builder.Services.AddInfrastructureServiceRegistration();
+
+			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
