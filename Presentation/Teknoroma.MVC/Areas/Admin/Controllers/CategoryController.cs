@@ -164,7 +164,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         private async Task<GetByIdCategoryQueryResponse> GetByCategoryId(Guid id)
         {
-           return await ApiService.HttpClient.GetFromJsonAsync<GetByIdCategoryQueryResponse>($"category/GetById/{id}");
+           var result = await ApiService.HttpClient.GetFromJsonAsync<GetByIdCategoryQueryResponse>($"category/GetById/{id}");
+            return result;
         }
 
         private async Task CategoryViewBag()

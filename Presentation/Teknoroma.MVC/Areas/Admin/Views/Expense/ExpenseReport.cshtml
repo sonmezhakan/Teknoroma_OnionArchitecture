@@ -1,0 +1,71 @@
+﻿@using Teknoroma.Application.Features.Expenses.Models
+@model List<ExpenseDetailReportViewModel>
+@{
+    ViewData["Title"] = "ExpenseReport";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header bg-info">
+				<div class="d-flex">
+					<div class="col-md-10 my-auto">
+						<h2 style="color:white;">Gider Raporu</h2>
+					</div>
+					<div class="col-md-2">
+						<form method="get" asp-controller="Expense" asp-action="ExpenseReport">
+							<div class="d-flex">
+								<div>
+									<input type="text" class="form-control date" name="startDate" id="birthdatepicker" data-toggle="daterangepicker" data-single-date-picker="true">
+								</div>
+								<div>
+									<input type="text" class="form-control date" name="endDate" id="birthdatepicker" data-toggle="daterangepicker" data-single-date-picker="true">
+								</div>
+							</div>
+							<button type="submit" class="btn btn-danger btn-block waves-effect waves-light">Filtrele</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="d-flex">
+					<div class="col-md-8">
+						<table id="datatable-buttons" width="100%" class="table table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
+							<thead>
+								<tr>
+									<th>Gider Adı</th>
+									<th>Toplam Gider</th>
+								</tr>
+							</thead>
+							<tbody>
+								@if (Model != null)
+								{
+									foreach (var item in Model)
+									{
+										<tr>
+											<td>@item.Title</td>
+											<td>@item.TotalExpensePrice</td>
+										</tr>
+									}
+								}
+							</tbody>
+						</table>
+					</div>
+					<div class="col-md-4">
+						<canvas id="pieChartExpenseDetailReport" style="display: block; width: 300px; height: 330px;" width="300" height="300"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+
+	window.onload = function () {
+		initializeDataTable('datatable-buttons', 1, 'desc', [0, 1], 'Gider Raporu');
+		generatePieChart('datatable-buttons', 'pieChartExpenseDetailReport');
+
+	};
+
+</script>

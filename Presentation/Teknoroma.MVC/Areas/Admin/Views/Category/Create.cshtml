@@ -1,33 +1,32 @@
-﻿
-@model CreateCategoryViewModel
+﻿@model CreateCategoryViewModel
 @{
-    ViewData["Title"] = "Kategori Oluştur - Teknoroma";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+	ViewData["Title"] = "Kategori Oluştur - Teknoroma";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-            <div class="row">
-                <div class="col-md-12 mx-auto">
-                    <div class="card">
-                        <div class="card-header bg-info">
-                            <h2 class="text-white">Kategori Ekle</h2>
-                        </div>
-            <form method="post">
-                <div class="card-body">
-                    <div asp-validation-summary="All">   
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="CategoryName"></label>
-                        <input type="text" class="form-control" asp-for="CategoryName">
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Description"></label>
-                        <textarea class="form-control" asp-for="Description" rows="3" cols="4"></textarea>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-success btn-block waves-effect waves-light">Ekle</button>
-                </div>
-            </form>
-        </div>
-    </div>
+<div class="row">
+	<div class="col-md-12 mx-auto">
+		<div class="card">
+			<div class="card-header bg-info">
+				<h2 class="text-white">Kategori Ekle</h2>
+			</div>
+			<form method="post">
+				<div class="card-body">
+					<div asp-validation-summary="All">
+					</div>
+					<div class="form-group">
+						<label asp-for="CategoryName"></label>
+						<input type="text" class="form-control" asp-for="CategoryName">
+					</div>
+					<div class="form-group">
+						<label asp-for="Description"></label>
+						<textarea class="form-control" asp-for="Description" rows="3" cols="4"></textarea>
+					</div>
+				</div>
+				<div class="card-footer">
+					<button type="submit" class="btn btn-success btn-block waves-effect waves-light">Ekle</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>

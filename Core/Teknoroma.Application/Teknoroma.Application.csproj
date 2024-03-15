@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="Features\AppUserProfiles\Models\" />
+    <Folder Include="Features\Expenses\Queries\NewFolder\" />
     <Folder Include="Features\TechnicalProblems\Rules\" />
   </ItemGroup>
 

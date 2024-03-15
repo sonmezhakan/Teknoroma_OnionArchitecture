@@ -25,6 +25,7 @@ using Teknoroma.Application.Services.Customers;
 using Teknoroma.Application.Services.Departments;
 using Teknoroma.Application.Services.EmailServices;
 using Teknoroma.Application.Services.Employees;
+using Teknoroma.Application.Services.ExpenseServices;
 using Teknoroma.Application.Services.OrderDetails;
 using Teknoroma.Application.Services.Orders;
 using Teknoroma.Application.Services.Products;
@@ -92,7 +93,8 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddScoped<IStockInputService, StockInputManager>();
 			services.AddScoped<IStockService, StockManager>();
 			services.AddScoped<ISupplierService, SupplierManager>();
-			services.AddScoped<ITechnicalProblemService, TechnicalProblemManager>(); 
+			services.AddScoped<ITechnicalProblemService, TechnicalProblemManager>();
+			services.AddScoped<IExpenseService, ExpenseManager>();
 
             return services;
 		}

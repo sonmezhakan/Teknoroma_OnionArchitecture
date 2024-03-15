@@ -57,7 +57,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 				await HandleErrorResponse(response);
                 return View(model);
             }
-            return View();
+
+            return RedirectToAction("Create","Product");
         }
 
         [HttpGet]

@@ -56,6 +56,10 @@
 									<label asp-for="Description"></label>
 									<textarea class="form-control" cols="4" rows="3" asp-for="@Model.Description"></textarea>
 								</div>
+								<div class="form-group">
+									<label asp-for="StockEntryDate"></label>
+									<input class="form-control" type="datetime-local" id="datetimepicker" asp-for="@Model.StockEntryDate" />
+								</div>
 							</div>
 							<div class="card-footer">
 								<button type="submit" class="btn btn-warning btn-block waves-effect waves-light">Güncelle</button>

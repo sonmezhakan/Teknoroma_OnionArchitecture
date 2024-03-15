@@ -269,6 +269,23 @@
 					</li>
 				}
 
+				<!--Expenses-->
+				@if (User.IsInRole("Şube Müdürü") || User.IsInRole("Muhasebe Temsilcisi"))
+				{
+					<li>
+						<a href="javascript: void(0);" class="has-arrow waves-effect">
+							<i class="feather-copy"></i><span>Giderler</span>
+						</a>
+						<ul class="sub-menu" aria-expanded="false">
+							<li><a asp-controller="Expense" asp-action="Create">Ekle</a></li>
+							<li><a asp-controller="Expense" asp-action="Update">Güncelle</a></li>
+							<li><a asp-controller="Expense" asp-action="Detail">Detaylar</a></li>
+							<li><a asp-controller="Expense" asp-action="ExpenseList">Gider Listesi</a></li>
+							<li><a asp-controller="Expense" asp-action="ExpenseReport">Gider raporları</a></li>
+						</ul>
+					</li>
+				}
+
 				<!--TechnicalProblems-->
 				<li>
 					<a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -282,6 +299,7 @@
 						}
 					</ul>
 				</li>
+
 			</ul>
 		</div>
 		<!-- Sidebar -->

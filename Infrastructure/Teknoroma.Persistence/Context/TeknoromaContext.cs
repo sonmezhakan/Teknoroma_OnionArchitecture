@@ -38,6 +38,7 @@ namespace Teknoroma.Persistence.Context
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<StockInput> StockInputs { get; set; }
         public DbSet<TechnicalProblem> TechnicalProblems { get; set; }
+        public DbSet<Expense> Expenses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -56,6 +57,7 @@ namespace Teknoroma.Persistence.Context
             builder.ApplyConfiguration(new StockConfiguration());
             builder.ApplyConfiguration(new StockInputConfiguration());
             builder.ApplyConfiguration(new TechnicalProblemConfiguration());
+            builder.ApplyConfiguration(new ExpenseConfiguration());
 
             base.OnModelCreating(builder);
         }

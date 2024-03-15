@@ -665,6 +665,75 @@ namespace Teknoroma.Persistence.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("Teknoroma.Domain.Entities.Expense", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedComputerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedIpAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ExpenseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("MasterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("money");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("UpdatedComputerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Expenses");
+                });
+
             modelBuilder.Entity("Teknoroma.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("ID")
@@ -1255,6 +1324,17 @@ namespace Teknoroma.Persistence.Migrations
                     b.Navigation("Department");
                 });
 
+            modelBuilder.Entity("Teknoroma.Domain.Entities.Expense", b =>
+                {
+                    b.HasOne("Teknoroma.Domain.Entities.Employee", "Employee")
+                        .WithMany("Expenses")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("Teknoroma.Domain.Entities.Order", b =>
                 {
                     b.HasOne("Teknoroma.Domain.Entities.Branch", "Branch")
@@ -1437,6 +1517,8 @@ namespace Teknoroma.Persistence.Migrations
 
             modelBuilder.Entity("Teknoroma.Domain.Entities.Employee", b =>
                 {
+                    b.Navigation("Expenses");
+
                     b.Navigation("Orders");
 
                     b.Navigation("TechnicalProblems");

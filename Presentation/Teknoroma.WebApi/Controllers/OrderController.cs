@@ -16,7 +16,7 @@ namespace Teknoroma.WebApi.Controllers
     public class OrderController : BaseController
     {
         [HttpPost]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Satış Temsilcisi,Şube Müdürü")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Satış Temsilcisi,Şube Müdürü,")]
 		public async Task<IActionResult> Create(CreateOrderCommandRequest createOrderCommandRequest)
         {
             var result = await Mediator.Send(createOrderCommandRequest);

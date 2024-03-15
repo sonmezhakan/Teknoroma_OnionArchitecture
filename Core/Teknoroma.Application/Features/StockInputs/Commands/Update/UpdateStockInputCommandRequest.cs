@@ -12,5 +12,6 @@ namespace Teknoroma.Application.Features.StockInputs.Command.Update
         public string? InoviceNumber { get; set; }
         public int Quantity { get; set; }
         public string? Description { get; set; }
-    }
+		public DateTime? StockEntryDate { get; set; }
+	}
 }

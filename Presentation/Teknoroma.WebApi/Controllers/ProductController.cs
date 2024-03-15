@@ -77,41 +77,41 @@ namespace Teknoroma.WebApi.Controllers
 		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> ProductSellingReport(string startDate, string endDate)
 		{
-			var resut = await Mediator.Send(new GetProductSellingReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+			var result = await Mediator.Send(new GetProductSellingReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
 
-			return Ok(resut);
+			return Ok(result);
 		}
 		[HttpGet("{startDate}/{endDate}")]
 		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> ProductEarningReport(string startDate, string endDate)
 		{
-			var resut = await Mediator.Send(new GetProductEarningReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+			var result = await Mediator.Send(new GetProductEarningReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
 
-			return Ok(resut);
+			return Ok(result);
 		}
         [HttpGet("{startDate}/{endDate}")]
 		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> ProductSupplyReport(string startDate, string endDate)
         {
-            var resut = await Mediator.Send(new GetProductSupplyReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+            var result = await Mediator.Send(new GetProductSupplyReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
 
-            return Ok(resut);
+            return Ok(result);
         }
 		[HttpGet("{startDate}/{endDate}")]
 		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> ProductSalesDetailReport(string startDate, string endDate)
 		{
-			var resut = await Mediator.Send(new GetProductSalesDetailReportQueryRequest {StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+			var result = await Mediator.Send(new GetProductSalesDetailReportQueryRequest {StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
 
-			return Ok(resut);
+			return Ok(result);
 		}
 		[HttpGet("{startDate}/{endDate}")]
 		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
 		public async Task<IActionResult> ProductSupplyDetailReport(string startDate, string endDate)
 		{
-			var resut = await Mediator.Send(new GetProductSupplyDetailReportQueryRequest {StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
+			var result = await Mediator.Send(new GetProductSupplyDetailReportQueryRequest {StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
 
-			return Ok(resut);
+			return Ok(result);
 		}
 		[HttpGet("{barcodeCode}")]
 		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]

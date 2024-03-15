@@ -91,9 +91,9 @@
 											<div>
 												<a class="btn btn-info btn-sm waves-effect waves-light" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.Ready">Hazırlandı</a>
 											</div>
-											<div>
-												<a class="btn btn-success btn-sm waves-effect waves-light" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.Delivered">Teslim Edildi</a>
-											</div>
+												<div>
+													<a class="btn btn-success btn-sm waves-effect waves-light" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.Delivered">Teslim Edildi</a>
+												</div>
 										</td>
 
 										<td>
@@ -156,13 +156,17 @@
 																					<td>
 																							@orderDetail.TotalPrice
 																					</td>
-																					<td>
-																						<button class="btn btn-warning btn-block waves-effect waves-light" type="submit">Güncelle</button>
-																					</td>
+																						@if(order.OrderStatu != Teknoroma.Domain.Enums.OrderStatu.Delivered)
+																						{
+																						<td>
+																							<button class="btn btn-warning btn-block waves-effect waves-light" type="submit">Güncelle</button>
+																						</td>
 
-																					<td>
-																						<a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="Order" asp-action="DeleteOrderDetail" asp-route-orderId="@order.ID" asp-route-productId="@orderDetail.ProductId">Sil</a>
-																					</td></form>
+																						<td>
+																							<a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="Order" asp-action="DeleteOrderDetail" asp-route-orderId="@order.ID" asp-route-productId="@orderDetail.ProductId">Sil</a>
+																						</td>
+																						}
+																					</form>
 																				</tr>
 																			}
 																		}
@@ -179,7 +183,12 @@
 													</div>
 												</div>
 											</div>
-											<a class="btn btn-danger btn-sm waves-effect waves-light" asp-controller="Order" asp-action="Delete" asp-route-id="@order.ID">Siparişi Sil</a>
+
+											@if (order.OrderStatu != Teknoroma.Domain.Enums.OrderStatu.Delivered)
+											{
+												<a class="btn btn-danger btn-sm waves-effect waves-light" asp-controller="Order" asp-action="Delete" asp-route-id="@order.ID">Siparişi Sil</a>
+											}
+											
 										</td>
 
 									</tr>

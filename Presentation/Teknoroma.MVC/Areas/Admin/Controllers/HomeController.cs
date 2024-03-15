@@ -47,7 +47,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			
 			if(User.IsInRole("Şube Müdürü") || User.IsInRole("Satış Temsilcisi") || User.IsInRole("Depo Temsilcisi"))
 			{
-                var orderlist = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllOrderQueryResponse>>($"order/getall");
+                var orderlist = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllOrderQueryResponse>>($"order/GetByBranchIdOrderList/{Guid.Parse(ViewBag.Branch.Value)}");
 
                 List<OrderListViewModel> orderListViewModels = Mapper.Map<List<OrderListViewModel>>(orderlist);
 
