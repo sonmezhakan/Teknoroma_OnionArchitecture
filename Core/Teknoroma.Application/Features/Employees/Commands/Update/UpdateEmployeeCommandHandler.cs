@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.Employees;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Employees.Command.Update
@@ -8,20 +8,20 @@ namespace Teknoroma.Application.Features.Employees.Command.Update
 	public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
-		private readonly IEmployeeService _employeeService;
+		private readonly IEmployeeRepository _employeeRepository;
 
-		public UpdateEmployeeCommandHandler(IMapper mapper,IEmployeeService employeeService)
+		public UpdateEmployeeCommandHandler(IMapper mapper,IEmployeeRepository employeeRepository)
         {
 			_mapper = mapper;
-			_employeeService = employeeService;
+			_employeeRepository = employeeRepository;
 		}
         public async Task<Unit> Handle(UpdateEmployeeCommandRequest request, CancellationToken cancellationToken)
 		{
-			Employee employee = await _employeeService.GetFullSearch(x => x.ID == request.ID);
+			Employee employee = await _employeeRepository.GetFullSearch(x => x.ID == request.ID);
 
 			employee = _mapper.Map(request, employee);
 
-			await _employeeService.UpdateAsync(employee);
+			await _employeeRepository.UpdateAsync(employee);
 
 			return Unit.Value;
 		}

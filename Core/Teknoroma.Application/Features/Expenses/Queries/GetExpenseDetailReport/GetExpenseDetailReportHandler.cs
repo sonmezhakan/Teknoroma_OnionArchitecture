@@ -1,19 +1,19 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.ExpenseServices;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Expenses.Queries.GetExpenseDetailReport
 {
 	public class GetExpenseDetailReportHandler : IRequestHandler<GetExpenseDetailReportRequest, List<GetExpenseDetailReportResponse>>
 	{
-		private readonly IExpenseService _expenseService;
+		private readonly IExpenseRepository _expenseRepository;
 
-		public GetExpenseDetailReportHandler(IExpenseService expenseService)
+		public GetExpenseDetailReportHandler(IExpenseRepository expenseRepository)
         {
-			_expenseService = expenseService;
+			_expenseRepository = expenseRepository;
 		}
         public async Task<List<GetExpenseDetailReportResponse>> Handle(GetExpenseDetailReportRequest request, CancellationToken cancellationToken)
 		{
-			var expenses = await _expenseService.GetAllAsync(x=>x.ExpenseDate >= request.StartDate && x.ExpenseDate <= request.EndDate);
+			var expenses = await _expenseRepository.GetAllAsync(x=>x.ExpenseDate >= request.StartDate && x.ExpenseDate <= request.EndDate);
 
 			var expenseReport = expenses.GroupBy(expense=> expense.Title)
 				.Select(grouped=> new

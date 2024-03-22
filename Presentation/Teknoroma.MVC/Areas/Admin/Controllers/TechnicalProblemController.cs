@@ -17,23 +17,21 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
     public class TechnicalProblemController : BaseController
     {
         [HttpGet]
-		[Authorize]
+		[Authorize(Roles = "Teknik Problem Bildir")]
 		public async Task<IActionResult> TechnicalProblemReport()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> TechnicalProblemReport(CreateTechnicalProblemViewModel model)
+		[Authorize(Roles = "Teknik Problem Bildir")]
+		public async Task<IActionResult> TechnicalProblemReport(CreateTechnicalProblemViewModel model)
         {
             await CheckJwtBearer();
             if (!ModelState.IsValid)
-            {
-                 
-                return View(model);
-            }
+				return View(model);
 
-            CreateTechnicalProblemCommandRequest createTechnicalProblemCommandRequest = Mapper.Map<CreateTechnicalProblemCommandRequest>(model);
+			CreateTechnicalProblemCommandRequest createTechnicalProblemCommandRequest = Mapper.Map<CreateTechnicalProblemCommandRequest>(model);
 
             createTechnicalProblemCommandRequest.BranchId = await CheckBranchId();
 			createTechnicalProblemCommandRequest.EmployeeId = await CheckAppUser();
@@ -52,7 +50,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View();
         }
         [HttpGet]
-		[Authorize(Roles = "Teknik Servis,Şube Müdürü")]
+		[Authorize(Roles = "Teknik Problem Güncelle")]
 		public async Task<IActionResult> Update(Guid id)
         {
             await CheckJwtBearer();
@@ -66,14 +64,13 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-		[Authorize(Roles = "Teknik Servis,Şube Müdürü")]
+		[Authorize(Roles = "Teknik Problem Güncelle")]
 		public async Task<IActionResult> Update(TechnicalProblemViewModel model)
         {
             await CheckJwtBearer();
             if (!ModelState.IsValid)
-            { 
-                return View(model);
-            }
+				return View(model);
+
 			UpdateTechnicalProblemCommandRequest updateTechnicalProblemCommandRequest = Mapper.Map<UpdateTechnicalProblemCommandRequest>(model);
 
 			HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("technicalproblem/update", updateTechnicalProblemCommandRequest);
@@ -88,7 +85,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Teknik Servis,Şube Müdürü")]
+		[Authorize(Roles = "Teknik Problem Listele")]
 		public async Task<IActionResult> TechnicalProblemList()
         {
             await CheckJwtBearer();
@@ -102,7 +99,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Teknik Servis,Şube Müdürü")]
+		[Authorize(Roles = "Teknik Problem Detayları")]
 		public async Task<IActionResult> Detail(Guid id)
         {
             await CheckJwtBearer();
@@ -116,7 +113,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
         [HttpGet]
-		[Authorize(Roles = "Teknik Servis,Şube Müdürü")]
+		[Authorize(Roles = "Teknik Problem Güncelle")]
 		public async Task<IActionResult> UpdateTechnicalStatu(Guid id, TechnicalProblemStatu technicalProblemStatu)
         {
             await CheckJwtBearer();
@@ -132,7 +129,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Teknik Servis,Şube Müdürü")]
+		[Authorize(Roles = "Teknik Problem Sil")]
 		public async Task<IActionResult> Delete(Guid id)
         {
             await CheckJwtBearer();
@@ -148,20 +145,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return getTechnicalProblem;
         }
 
-        private async Task BranchIDViewBag()
-        {
-            Guid getAppUserID = await CheckAppUser();
-
-            var getEmployeeBranch = await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{getAppUserID}");
-
-            ViewBag.Branch = new SelectListItem
-            {
-                Text = getEmployeeBranch.BranchName,
-                Value = getEmployeeBranch.BranchID.ToString(),
-            };
-        }
-
-        private async Task<Guid> CheckBranchId()
+		private async Task<Guid> CheckBranchId()
         {
 			Guid getAppUserID = await CheckAppUser();
 

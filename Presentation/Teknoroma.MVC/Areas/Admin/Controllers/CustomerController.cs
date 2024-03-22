@@ -7,32 +7,30 @@ using Teknoroma.Application.Features.Customers.Queries.GetById;
 using Teknoroma.Application.Features.Customers.Queries.GetCustomerEarningReport;
 using Teknoroma.Application.Features.Customers.Queries.GetCustomerSellingReport;
 using Teknoroma.Application.Features.Customers.Queries.GetList;
-using Teknoroma.MVC.Models;
+using Teknoroma.Application.Features.Customers.Queries.GetListSelectIdAndName;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+	[Area("Admin")]
     [Authorize]
     public class CustomerController : BaseController
     {
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi")]
+		[Authorize(Roles = "Müşteri Ekle")]
 		public async Task<IActionResult> Create()
         {
             return View();
         }
         [HttpPost]
-		[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi")]
+		[Authorize(Roles = "Müşteri Ekle")]
 		public async Task<IActionResult> Create(CreateCustomerViewModel model)
         {
             await CheckJwtBearer();
             if (!ModelState.IsValid)
-            {
-                 
-                return View(model);
-            }
-            CreateCustomerCommandRequest createCustomer = Mapper.Map<CreateCustomerCommandRequest>(model);
+				return View(model);
+
+			CreateCustomerCommandRequest createCustomer = Mapper.Map<CreateCustomerCommandRequest>(model);
 
             HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("customer/create", createCustomer);
 
@@ -43,7 +41,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi")]
+		[Authorize(Roles = "Müşteri Güncelle")]
 		public async Task<IActionResult> Update(Guid? id)
         {
             await CheckJwtBearer();
@@ -58,14 +56,13 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(customerViewModel);
         }
         [HttpPost]
-		[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi")]
+		[Authorize(Roles = "Müşteri Güncelle")]
 		public async Task<IActionResult> Update(CustomerViewModel model)
         {
             await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await CustomerViewBag();
-                 
                 return View(model);
             }
             UpdateCustomerCommandRequest updateCustomer = Mapper.Map<UpdateCustomerCommandRequest>(model);
@@ -83,7 +80,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi")]
+		[Authorize(Roles = "Müşteri Sil")]
 		public async Task<IActionResult> Delete(Guid id)
         {
             await CheckJwtBearer();
@@ -93,7 +90,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi")]
+		[Authorize(Roles = "Müşteri Detayları")]
 		public async Task<IActionResult> Detail(Guid? id)
         {
             await CheckJwtBearer();
@@ -111,7 +108,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi")]
+		[Authorize(Roles = "Müşteri Listele")]
 		public async Task<IActionResult> CustomerList()
         {
             await CheckJwtBearer();
@@ -124,7 +121,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(customerViewModels);
         }
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü")]
+		[Authorize(Roles = "Müşteri Raporları")]
 		public async Task<IActionResult> CustomerReport(DateTime? startDate,DateTime? endDate)
         {
             await CheckJwtBearer();
@@ -159,7 +156,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         private async Task CustomerViewBag()
         {
-            var response = ApiService.HttpClient.GetFromJsonAsync<List<GetAllCustomerQueryResponse>>("customer/getall").Result.Select(x => new GetAllCustomerQueryResponse { ID = x.ID, FullName = x.FullName });
+            var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameCustomerQueryResponse>>("customer/GetAllSelectIdAndName");
 
                 ViewBag.CustomerList = response;
         }

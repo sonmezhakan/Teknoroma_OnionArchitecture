@@ -2,7 +2,7 @@
 using MediatR;
 using Teknoroma.Application.Features.Stocks.Command.Update;
 using Teknoroma.Application.Features.Stocks.Queries.GetById;
-using Teknoroma.Application.Services.OrderDetails;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.OrderDetails.Command.Create
@@ -10,13 +10,13 @@ namespace Teknoroma.Application.Features.OrderDetails.Command.Create
 	public class CreateOrderDetailCommandHandler : IRequestHandler<CreateOrderDetailCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
-		private readonly IOrderDetailService _orderDetailService;
+		private readonly IOrderDetailRepository _orderDetailRepository;
 		private readonly IMediator _mediator;
 
-		public CreateOrderDetailCommandHandler(IMapper mapper, IOrderDetailService orderDetailService,IMediator mediator)
+		public CreateOrderDetailCommandHandler(IMapper mapper, IOrderDetailRepository orderDetailRepository,IMediator mediator)
         {
 			_mapper = mapper;
-			_orderDetailService = orderDetailService;
+			_orderDetailRepository = orderDetailRepository;
 			_mediator = mediator;
 		}
         public async Task<Unit> Handle(CreateOrderDetailCommandRequest request, CancellationToken cancellationToken)
@@ -40,7 +40,7 @@ namespace Teknoroma.Application.Features.OrderDetails.Command.Create
 				await _mediator.Send(updateStockCommandRequest);		
 			}
 
-			await _orderDetailService.AddRangeAsync(orderDetails.ToList());
+			await _orderDetailRepository.AddRangeAsync(orderDetails.ToList());
 
 			return Unit.Value;
 		}

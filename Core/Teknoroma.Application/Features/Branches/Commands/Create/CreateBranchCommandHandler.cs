@@ -3,7 +3,7 @@ using MediatR;
 using Teknoroma.Application.Features.Branches.Rules;
 using Teknoroma.Application.Features.Products.Queries.GetList;
 using Teknoroma.Application.Features.Stocks.Command.Create;
-using Teknoroma.Application.Services.Branches;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Branches.Command.Create
@@ -11,14 +11,14 @@ namespace Teknoroma.Application.Features.Branches.Command.Create
 	public class CreateBranchCommandHandler : IRequestHandler<CreateBranchCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
-		private readonly IBranchService _branchService;
+		private readonly IBranchRepository _branchRepository;
 		private readonly BranchBusinessRules _branchBusinessRules;
 		private readonly IMediator _mediator;
 
-		public CreateBranchCommandHandler(IMapper mapper,IBranchService branchService,BranchBusinessRules branchBusinessRules,IMediator mediator)
+		public CreateBranchCommandHandler(IMapper mapper,IBranchRepository branchRepository,BranchBusinessRules branchBusinessRules,IMediator mediator)
         {
 			_mapper = mapper;
-			_branchService = branchService;
+			_branchRepository = branchRepository;
 			_branchBusinessRules = branchBusinessRules;
 			_mediator = mediator;
 		}
@@ -30,7 +30,7 @@ namespace Teknoroma.Application.Features.Branches.Command.Create
 
 			Branch branch = _mapper.Map<Branch>(request);
 
-			await _branchService.AddAsync(branch);
+			await _branchRepository.AddAsync(branch);
 
 			//Yeni eklenen şubeye tüm ürünler ekleniyor
 			var products = await _mediator.Send(new GetAllProductQueryRequest());

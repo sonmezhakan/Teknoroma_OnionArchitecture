@@ -13,5 +13,5 @@
 		public int Quantity { get; set; }
 		public decimal Subtotal { get { return Quantity * UnitPrice; } }
 		public string ImagePath { get; set; }
-	}
+    }
 }

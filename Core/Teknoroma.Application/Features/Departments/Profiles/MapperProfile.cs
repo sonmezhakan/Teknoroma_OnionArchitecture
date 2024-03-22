@@ -4,6 +4,7 @@ using Teknoroma.Application.Features.Departments.Command.Update;
 using Teknoroma.Application.Features.Departments.Models;
 using Teknoroma.Application.Features.Departments.Queries.GetById;
 using Teknoroma.Application.Features.Departments.Queries.GetList;
+using Teknoroma.Application.Features.Departments.Queries.GetListSelectIdAndName;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Departments.Profiles
@@ -17,6 +18,8 @@ namespace Teknoroma.Application.Features.Departments.Profiles
 
             CreateMap<Department,GetByIdDepartmentQueryResponse>().ReverseMap();
             CreateMap<Department,GetAllDepartmentQueryResponse>().ReverseMap();
+
+            CreateMap<Department , GetAllSelectIdAndNameDepartmentResponse>().ReverseMap();
 
             CreateMap<CreateDepartmentViewModel, CreateDepartmentCommandRequest>().ReverseMap();
             CreateMap<DepartmentViewModel, UpdateDepartmentCommandRequest>().ReverseMap();

@@ -7,6 +7,7 @@ using Teknoroma.Application.Features.Brands.Quries.GetBrandEarningReport;
 using Teknoroma.Application.Features.Brands.Quries.GetBrandSellingReport;
 using Teknoroma.Application.Features.Brands.Quries.GetById;
 using Teknoroma.Application.Features.Brands.Quries.GetList;
+using Teknoroma.Application.Features.Brands.Quries.GetListSelectIdAndName;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
@@ -15,24 +16,21 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 	public class BrandController : BaseController
 	{
 		[HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Marka Ekle")]
 		public IActionResult Create()
 		{
 			return View();
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Marka Ekle")]
 		public async Task<IActionResult> Create(CreateBrandViewModel model)
 		{
             await CheckJwtBearer();
             if (!ModelState.IsValid)
-			{
-                 
-                return View(model);
-            }
+				return View(model);
 
-            CreateBrandCommandRequest createBrand = Mapper.Map<CreateBrandCommandRequest>(model);
+			CreateBrandCommandRequest createBrand = Mapper.Map<CreateBrandCommandRequest>(model);
 
             HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("brand/create", createBrand);
 
@@ -47,7 +45,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
 		[HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Marka Güncelle")]
 		public async Task<IActionResult> Update(Guid? id)
 		{
             await CheckJwtBearer();
@@ -63,14 +61,13 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Marka Güncelle")]
 		public async Task<IActionResult> Update(BrandViewModel model)
 		{
             await CheckJwtBearer();
             if (!ModelState.IsValid)
 			{
-                await BrandViewBag();
-                 
+                await BrandViewBag();   
                 return View(model);
             }
 
@@ -89,7 +86,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Marka Sil")]
 		public async Task<IActionResult> Delete(Guid id)
 		{
             await CheckJwtBearer();
@@ -99,7 +96,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
 		[HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Marka Detayları")]
 		public async Task<IActionResult> Detail(Guid? id)
 		{
             await CheckJwtBearer();
@@ -116,7 +113,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Marka Listele")]
 		public async Task<IActionResult> BrandList()
 		{
             await CheckJwtBearer();
@@ -129,7 +126,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(brandViewModels);
 		}
 		[HttpGet]
-		[Authorize(Roles = "Şube Müdürü")]
+		[Authorize(Roles = "Marka Raporları")]
 		public async Task<IActionResult> BrandReport(DateTime? startDate,DateTime? endDate)
 		{
             await CheckJwtBearer();
@@ -167,11 +164,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         private async Task BrandViewBag()
         {
-            var getBrandList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllBrandCommandResponse>>("brand/getall").Result.Select(x => new GetAllBrandCommandResponse
-			{
-				BrandName = x.BrandName,
-				ID = x.ID
-			}).ToList();
+			var getBrandList = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameBrandQueryResponse>>("brand/GetAllSelectIdAndName");
 
 			ViewBag.BrandList = getBrandList;
 		}

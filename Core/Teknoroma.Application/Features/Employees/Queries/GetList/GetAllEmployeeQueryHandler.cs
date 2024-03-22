@@ -1,22 +1,22 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.Employees;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Employees.Queries.GetList
 {
 	public class GetAllEmployeeQueryHandler : IRequestHandler<GetAllEmployeeQueryRequest, List<GetAllEmployeeQueryResponse>>
 	{
 		private readonly IMapper _mapper;
-		private readonly IEmployeeService _employeeService;
+		private readonly IEmployeeRepository _employeeRepository;
 
-		public GetAllEmployeeQueryHandler(IMapper mapper, IEmployeeService employeeService)
+		public GetAllEmployeeQueryHandler(IMapper mapper, IEmployeeRepository employeeRepository)
         {
 			_mapper = mapper;
-			_employeeService = employeeService;
+			_employeeRepository = employeeRepository;
 		}
         public async Task<List<GetAllEmployeeQueryResponse>> Handle(GetAllEmployeeQueryRequest request, CancellationToken cancellationToken)
 		{
-			var employees = await _employeeService.GetAllAsync();
+			var employees = await _employeeRepository.GetAllAsync();
 
 			List<GetAllEmployeeQueryResponse> getAllEmployeeQueryResponses = _mapper.Map<List<GetAllEmployeeQueryResponse>>(employees.ToList());
 

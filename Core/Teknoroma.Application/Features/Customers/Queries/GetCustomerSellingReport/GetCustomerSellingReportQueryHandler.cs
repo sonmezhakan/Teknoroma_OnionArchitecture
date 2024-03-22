@@ -1,19 +1,19 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.Customers;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Customers.Queries.GetCustomerSellingReport
 {
 	public class GetCustomerSellingReportQueryHandler : IRequestHandler<GetCustomerSellingReportQueryRequest, List<GetCustomerSellingReportQueryResponse>>
     {
-		private readonly ICustomerService _customerService;
+		private readonly ICustomerRepository _customerRepository;
 
-		public GetCustomerSellingReportQueryHandler(ICustomerService customerService)
+		public GetCustomerSellingReportQueryHandler(ICustomerRepository customerRepository)
         {
-			_customerService = customerService;
+			_customerRepository = customerRepository;
 		}
         public async Task<List<GetCustomerSellingReportQueryResponse>> Handle(GetCustomerSellingReportQueryRequest request, CancellationToken cancellationToken)
         {
-            var customers = await _customerService.GetAllAsync();
+            var customers = await _customerRepository.GetAllAsync();
 
             var bestSellingReport = customers.GroupBy(customer => customer.FullName)
                 .Select(grouped => new

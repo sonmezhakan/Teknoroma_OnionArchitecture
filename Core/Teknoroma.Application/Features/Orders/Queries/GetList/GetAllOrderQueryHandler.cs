@@ -1,23 +1,23 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.Orders;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Orders.Queries.GetList
 {
 	public class GetAllOrderQueryHandler : IRequestHandler<GetAllOrderQueryRequest, List<GetAllOrderQueryResponse>>
 	{
 		private readonly IMapper _mapper;
-		private readonly IOrderService _orderService;
+		private readonly IOrderRepository _orderRepository;
 
-		public GetAllOrderQueryHandler(IMapper mapper, IOrderService orderService)
+		public GetAllOrderQueryHandler(IMapper mapper, IOrderRepository orderRepository)
 		{
 			_mapper = mapper;
-			_orderService = orderService;
+			_orderRepository = orderRepository;
 		}
 
 		public async Task<List<GetAllOrderQueryResponse>> Handle(GetAllOrderQueryRequest request, CancellationToken cancellationToken)
 		{
-			var getOrders = await _orderService.GetAllAsync();
+			var getOrders = await _orderRepository.GetAllAsync();
 
 			List<GetAllOrderQueryResponse> getAllOrderQueryResponses = _mapper.Map<List<GetAllOrderQueryResponse>>(getOrders.ToList());
 

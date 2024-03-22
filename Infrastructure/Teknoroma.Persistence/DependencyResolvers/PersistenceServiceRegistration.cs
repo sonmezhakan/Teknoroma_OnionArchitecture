@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
-using Teknoroma.Infrastructure.WebApiService;
 using Teknoroma.Persistence.Context;
 using Teknoroma.Persistence.Repositories;
 

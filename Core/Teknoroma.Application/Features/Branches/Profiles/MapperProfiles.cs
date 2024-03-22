@@ -6,6 +6,7 @@ using Teknoroma.Application.Features.Branches.Queries.GetAll;
 using Teknoroma.Application.Features.Branches.Queries.GetBranchEarningReport;
 using Teknoroma.Application.Features.Branches.Queries.GetBranchSellingReport;
 using Teknoroma.Application.Features.Branches.Queries.GetById;
+using Teknoroma.Application.Features.Branches.Queries.GetListSelectIdAndName;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Branches.Profiles
@@ -30,6 +31,8 @@ namespace Teknoroma.Application.Features.Branches.Profiles
 
             CreateMap<BranchSellingReportViewModel, GetBranchSellingReportQueryResponse>().ReverseMap();
             CreateMap<BranchEarningReportViewModel, GetBranchEarningReportQueryResponse>().ReverseMap();
+
+            CreateMap<Branch, GetAllSelectIdAndNameBranchQueryResponse>().ReverseMap();
         }
     }
 }

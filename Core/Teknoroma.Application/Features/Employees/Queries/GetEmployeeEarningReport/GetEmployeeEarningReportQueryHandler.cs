@@ -1,19 +1,19 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.Employees;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Employees.Queries.GetEmployeeEarningReport
 {
 	public class GetEmployeeEarningReportQueryHandler : IRequestHandler<GetEmployeeEarningReportQueryRequest, List<GetEmployeeEarningReportQueryResponse>>
     {
-		private readonly IEmployeeService _employeeService;
+		private readonly IEmployeeRepository _employeeRepository;
 
-		public GetEmployeeEarningReportQueryHandler(IEmployeeService employeeService)
+		public GetEmployeeEarningReportQueryHandler(IEmployeeRepository employeeRepository)
         {
-			_employeeService = employeeService;
+			_employeeRepository = employeeRepository;
 		}
         public async Task<List<GetEmployeeEarningReportQueryResponse>> Handle(GetEmployeeEarningReportQueryRequest request, CancellationToken cancellationToken)
         {
-            var employees = await _employeeService.GetFullAll();
+            var employees = await _employeeRepository.GetFullAll();
 
             var bestEarningEmployees = employees.GroupBy(employee => employee.AppUser.UserName)
                 .Select(grouped => new

@@ -5,17 +5,18 @@ using Teknoroma.Application.Features.Departments.Command.Update;
 using Teknoroma.Application.Features.Departments.Models;
 using Teknoroma.Application.Features.Departments.Queries.GetById;
 using Teknoroma.Application.Features.Departments.Queries.GetList;
+using Teknoroma.Application.Features.Departments.Queries.GetListSelectIdAndName;
 using Teknoroma.MVC.Models;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
-    public class DepartmentController : BaseController
+	[Authorize]
+	public class DepartmentController : BaseController
     {
         
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+		[Authorize(Roles = "Departman Ekle")]
 		public async Task<IActionResult> Create()
         {
             return View();
@@ -26,11 +27,9 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         {
             await CheckJwtBearer();
             if (!ModelState.IsValid)
-            {
-                 
-                return View(model);
-            }
-            CreateDepartmentCommandRequest createDepartmentDTO = Mapper.Map<CreateDepartmentCommandRequest>(model);
+				return View(model);
+
+			CreateDepartmentCommandRequest createDepartmentDTO = Mapper.Map<CreateDepartmentCommandRequest>(model);
 
             HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("department/create", createDepartmentDTO);
 
@@ -44,7 +43,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         }
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+		[Authorize(Roles = "Departman Güncelle")]
 		public async Task<IActionResult> Update(Guid? id)
         {
             await CheckJwtBearer();
@@ -68,7 +67,6 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 await DepartmentViewBag();
-                 
                 return View(model);
             }
             UpdateDepartmentCommandRequest updateDepartment = Mapper.Map<UpdateDepartmentCommandRequest>(model);
@@ -85,7 +83,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return RedirectToAction("Update", model.ID);
         }
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+		[Authorize(Roles = "Departman Sil")]
 		public async Task<IActionResult> Delete(Guid id)
         {
             await CheckJwtBearer();
@@ -95,7 +93,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
         
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+		[Authorize(Roles = "Departman Listele")]
 		public async Task<IActionResult> DepartmentList()
         {
             await CheckJwtBearer();
@@ -109,7 +107,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+		[Authorize(Roles = "Departman Detayları")]
 		public async Task<IActionResult> Detail(Guid? id)
         {
             await CheckJwtBearer();
@@ -132,11 +130,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         private async Task DepartmentViewBag()
         {
-            var getDepartmentList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllDepartmentQueryResponse>>("department/getall").Result.Select(x => new GetAllDepartmentQueryResponse
-			{
-                ID = x.ID,
-                DepartmentName = x.DepartmentName
-            }).ToList();
+            var getDepartmentList = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameDepartmentResponse>>("department/GetAllSelectIdAndName");
 
             ViewBag.DepartmentList = getDepartmentList;
         }

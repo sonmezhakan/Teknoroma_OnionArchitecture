@@ -1,22 +1,22 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.StockInputs;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.StockInputs.Queries.GetByBranchIdList
 {
 	public class GetByBranchIdStockInputQueryHandler : IRequestHandler<GetByBranchIdStockInputQueryRequest, List<GetByBranchIdStockInputQueryResponse>>
     {
         private readonly IMapper _mapper;
-		private readonly IStockInputService _stockInputService;
+		private readonly IStockInputRepository _stockInputRepository;
 
-		public GetByBranchIdStockInputQueryHandler(IMapper mapper,IStockInputService stockInputService)
+		public GetByBranchIdStockInputQueryHandler(IMapper mapper,IStockInputRepository stockInputRepository)
         {
             _mapper = mapper;
-			_stockInputService = stockInputService;
+			_stockInputRepository = stockInputRepository;
 		}
         public async Task<List<GetByBranchIdStockInputQueryResponse>> Handle(GetByBranchIdStockInputQueryRequest request, CancellationToken cancellationToken)
         {
-            var stockInputs = await _stockInputService.GetAllAsync(x => x.BranchID == request.BranchId);
+            var stockInputs = await _stockInputRepository.GetAllAsync(x => x.BranchID == request.BranchId);
 
             List<GetByBranchIdStockInputQueryResponse> getByBranchIdStockInputQueryResponse = _mapper.Map<List<GetByBranchIdStockInputQueryResponse>>(stockInputs.OrderByDescending(x => x.StockEntryDate).ToList());
 

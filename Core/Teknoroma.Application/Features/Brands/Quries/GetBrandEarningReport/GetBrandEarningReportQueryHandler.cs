@@ -1,19 +1,19 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.Brands;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Brands.Quries.GetBrandEarningReport
 {
 	public class GetBrandEarningReportQueryHandler : IRequestHandler<GetBrandEarningReportQueryRequest, List<GetBrandEarningReportQueryResponse>>
     {
-		private readonly IBrandService _brandService;
+		private readonly IBrandRepository _brandRepository;
 
-		public GetBrandEarningReportQueryHandler(IBrandService brandService)
+		public GetBrandEarningReportQueryHandler(IBrandRepository brandRepository)
         {
-			_brandService = brandService;
+			_brandRepository = brandRepository;
 		}
         public async Task<List<GetBrandEarningReportQueryResponse>> Handle(GetBrandEarningReportQueryRequest request, CancellationToken cancellationToken)
         {
-            var brands = await _brandService.GetAllAsync();
+            var brands = await _brandRepository.GetAllAsync();
 
             var bestEarningBrands = brands.GroupBy(brand => brand.BrandName)
                 .Select(grouped => new

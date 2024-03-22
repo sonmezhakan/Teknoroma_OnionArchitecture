@@ -1,24 +1,23 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.Brands;
 using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Brands.Quries.GetList
 {
-    public class GetAllBrandCommandHandler:IRequestHandler<GetAllBrandCommandRequest,List<GetAllBrandCommandResponse>>
+	public class GetAllBrandCommandHandler:IRequestHandler<GetAllBrandCommandRequest,List<GetAllBrandCommandResponse>>
 	{
 		private readonly IMapper _mapper;
-		private readonly IBrandService _brandService;
+		private readonly IBrandRepository _brandRepository;
 
-		public GetAllBrandCommandHandler(IMapper mapper, IBrandService brandService)
+		public GetAllBrandCommandHandler(IMapper mapper, IBrandRepository brandRepository)
 		{
 			_mapper = mapper;
-			_brandService = brandService;
+			_brandRepository = brandRepository;
 		}
 
 		public async Task<List<GetAllBrandCommandResponse>> Handle(GetAllBrandCommandRequest request, CancellationToken cancellationToken)
 		{
-			var brands = await _brandService.GetAllAsync();
+			var brands = await _brandRepository.GetAllAsync();
 
 			List<GetAllBrandCommandResponse> responses = _mapper.Map<List<GetAllBrandCommandResponse>>(brands.ToList());
 

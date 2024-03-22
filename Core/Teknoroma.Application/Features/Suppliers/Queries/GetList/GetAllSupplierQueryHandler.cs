@@ -1,23 +1,23 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.Suppliers;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Suppliers.Queries.GetList
 {
 	public class GetAllSupplierQueryHandler : IRequestHandler<GetAllSupplierQueryRequest, List<GetAllSupplierQueryResponse>>
 	{
 		private readonly IMapper _mapper;
-		private readonly ISupplierService _supplierService;
+		private readonly ISupplierRepository _supplierRepository;
 
-		public GetAllSupplierQueryHandler(IMapper mapper,ISupplierService supplierService)
+		public GetAllSupplierQueryHandler(IMapper mapper,ISupplierRepository supplierRepository)
 		{
 			_mapper = mapper;
-			_supplierService = supplierService;
+			_supplierRepository = supplierRepository;
 		}
 
 		public async Task<List<GetAllSupplierQueryResponse>> Handle(GetAllSupplierQueryRequest request, CancellationToken cancellationToken)
 		{
-			var suppliers = await _supplierService.GetAllAsync();
+			var suppliers = await _supplierRepository.GetAllAsync();
 
 			List<GetAllSupplierQueryResponse> responses = _mapper.Map<List<GetAllSupplierQueryResponse>>(suppliers.ToList());
 

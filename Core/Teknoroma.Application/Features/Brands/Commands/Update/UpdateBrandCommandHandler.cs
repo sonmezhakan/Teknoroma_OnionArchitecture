@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Teknoroma.Application.Features.Brands.Rules;
-using Teknoroma.Application.Services.Brands;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Brands.Command.Update
@@ -9,19 +9,19 @@ namespace Teknoroma.Application.Features.Brands.Command.Update
 	public class UpdateBrandCommandHandler:IRequestHandler<UpdateBrandCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
-		private readonly IBrandService _brandService;
+		private readonly IBrandRepository _brandRepository;
 		private readonly BrandBusinessRules _brandBusinessRules;
 
-		public UpdateBrandCommandHandler(IMapper mapper, IBrandService brandService,BrandBusinessRules brandBusinessRules)
+		public UpdateBrandCommandHandler(IMapper mapper, IBrandRepository brandRepository,BrandBusinessRules brandBusinessRules)
 		{
 			_mapper = mapper;
-			_brandService = brandService;
+			_brandRepository = brandRepository;
 			_brandBusinessRules = brandBusinessRules;
 		}
 
 		public async Task<Unit> Handle(UpdateBrandCommandRequest request, CancellationToken cancellationToken)
 		{
-			Brand brand = await _brandService.GetAsync(x=>x.ID == request.ID);
+			Brand brand = await _brandRepository.GetAsync(x=>x.ID == request.ID);
 
 			//BusinessRules
 			await _brandBusinessRules.BrandNameCannotBeDuplicatedWhenUpdated(brand.BrandName,request.BrandName);
@@ -29,7 +29,7 @@ namespace Teknoroma.Application.Features.Brands.Command.Update
 
 			brand = _mapper.Map(request, brand);
 
-			await _brandService.UpdateAsync(brand);
+			await _brandRepository.UpdateAsync(brand);
 
 			return Unit.Value;
 		}

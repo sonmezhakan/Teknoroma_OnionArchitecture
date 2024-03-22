@@ -13,11 +13,11 @@ namespace Teknoroma.Application.Pipelines.Transaction
             try
             {
                 response = await next();
-                transactionScope.Complete();
+                transactionScope.Complete();//Eğer işlem başarılı ise işlemi tamamla.
             }
             catch (Exception)
             {
-                transactionScope.Dispose();
+                transactionScope.Dispose();//Eğer işlem başarısız ise işlemi geri al.
                 throw;
             }
             return response;

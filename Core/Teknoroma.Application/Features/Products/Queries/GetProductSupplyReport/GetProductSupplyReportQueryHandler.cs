@@ -1,19 +1,19 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.Products;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Products.Queries.GetProductSupplyReport
 {
 	public class GetProductSupplyReportQueryHandler : IRequestHandler<GetProductSupplyReportQueryRequest, List<GetProductSupplyReportQueryResponse>>
     {
-		private readonly IProductService _productService;
+		private readonly IProductRepository _productRepository;
 
-		public GetProductSupplyReportQueryHandler(IProductService productService)
+		public GetProductSupplyReportQueryHandler(IProductRepository productRespository)
         {
-			_productService = productService;
+			_productRepository = productRespository;
 		}
         public async Task<List<GetProductSupplyReportQueryResponse>> Handle(GetProductSupplyReportQueryRequest request, CancellationToken cancellationToken)
         {
-            var products = await _productService.GetAllAsync();
+            var products = await _productRepository.GetAllAsync();
 
             var bestSupplyProduct = products.GroupBy(product => product.ID)
                 .Select(grouped => new

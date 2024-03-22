@@ -1,13 +1,10 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
+using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Branches.Queries.GetAll
 {
-	public class GetAllBranchQueryRequest:IRequest<List<GetAllBranchQueryResponse>>
+    public class GetAllBranchQueryRequest:IRequest<List<GetAllBranchQueryResponse>>
 	{
-	}
+    }
 }

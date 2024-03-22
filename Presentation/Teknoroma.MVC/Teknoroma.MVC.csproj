@@ -27,8 +27,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Teknoroma.Application\Teknoroma.Application.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Teknoroma.Persistence\Teknoroma.Persistence.csproj" />
+    <ProjectReference Include="..\..\Core\Teknoroma.Application\Teknoroma.Application.csproj">
+      <PrivateAssets>All</PrivateAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\Teknoroma.Infrastructure\Teknoroma.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Teknoroma.Persistence\Teknoroma.Persistence.csproj">
+      <PrivateAssets>All</PrivateAssets>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

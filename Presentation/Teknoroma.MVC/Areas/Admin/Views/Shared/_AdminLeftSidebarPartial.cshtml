@@ -25,18 +25,30 @@
 				</li>
 
 				<!--Stocks-->
-				@if (User.IsInRole("Depo Temsilcisi") || User.IsInRole("Şube Müdürü"))
+				@if (User.IsInRole("Stok Girişi") || User.IsInRole("Stok Girişi Güncelle") || User.IsInRole("Stok Giriş Detayları") || User.IsInRole("Stok Giriş Listele") || User.IsInRole("Stok Takip Raporu"))
 				{
 					<li>
 						<a href="javascript: void(0);" class="has-arrow waves-effect">
 							<i class="feather-copy"></i><span>Stok İşlemleri</span>
 						</a>
 						<ul class="sub-menu" aria-expanded="false">
-							<li><a asp-controller="StockInput" asp-action="Create">Stok Girişi</a></li>
-							<li><a asp-controller="StockInput" asp-action="Update">Güncelle</a></li>
-							<li><a asp-controller="StockInput" asp-action="Detail">Detaylar</a></li>
-							<li><a asp-controller="StockInput" asp-action="StockInputList">Stok Giriş Listesi</a></li>
-							@if (User.IsInRole("Şube Müdürü"))
+							@if (User.IsInRole("Stok Girişi"))
+							{
+								<li><a asp-controller="StockInput" asp-action="Create">Stok Girişi</a></li>
+							}
+							@if(User.IsInRole("Stok Girişi Güncelle"))
+							{
+								<li><a asp-controller="StockInput" asp-action="Update">Güncelle</a></li>
+							}
+							@if(User.IsInRole("Stok Giriş Detayları"))
+							{
+								<li><a asp-controller="StockInput" asp-action="Detail">Detaylar</a></li>
+							}
+							@if(User.IsInRole("Stok Girişi Listele"))
+							{
+								<li><a asp-controller="StockInput" asp-action="StockInputList">Stok Giriş Listesi</a></li>
+							}
+							@if (User.IsInRole("Stok Takip Raporları"))
 							{
 								<li><a asp-controller="Stock" asp-action="StockTrackingReport">Stok Takip Raporu</a></li>
 							}
@@ -47,18 +59,30 @@
 
 
 				<!--Products-->
-				@if (User.IsInRole("Şube Müdürü") || User.IsInRole("Depo Temsilcisi"))
+				@if (User.IsInRole("Ürün Ekle") || User.IsInRole("Ürün Güncelle") || User.IsInRole("Ürün Sil") || User.IsInRole("Ürün Listele") || User.IsInRole("Ürün Raporları"))
 				{
 					<li>
 						<a href="javascript: void(0);" class="has-arrow waves-effect">
 							<i class="feather-copy"></i><span>Ürünler</span>
 						</a>
 						<ul class="sub-menu" aria-expanded="false">
-							<li><a asp-controller="Product" asp-action="Create">Ekle</a></li>
-							<li><a asp-controller="Product" asp-action="Update">Güncelle</a></li>
-							<li><a asp-controller="Product" asp-action="Detail">Detaylar</a></li>
-							<li><a asp-controller="Product" asp-action="ProductList">Ürün Listesi</a></li>
-							@if (User.IsInRole("Şube Müdürü"))
+							@if(User.IsInRole("Ürün Ekle"))
+							{
+								<li><a asp-controller="Product" asp-action="Create">Ekle</a></li>
+							}
+							@if(User.IsInRole("Ürün Güncelle"))
+							{
+								<li><a asp-controller="Product" asp-action="Update">Güncelle</a></li>
+							}
+							@if(User.IsInRole("Ürün Detayları"))
+							{
+								<li><a asp-controller="Product" asp-action="Detail">Detaylar</a></li>
+							}
+							@if (User.IsInRole("Ürün Listele"))
+							{
+								<li><a asp-controller="Product" asp-action="ProductList">Ürün Listesi</a></li>
+							}			
+							@if (User.IsInRole("Ürün Raporları"))
 							{
 								<li><a asp-controller="Product" asp-action="ProductReport">Ürün Raporları</a></li>
 							}
@@ -68,18 +92,30 @@
 				}
 
 				<!--Categories-->
-				@if (User.IsInRole("Şube Müdürü") || User.IsInRole("Depo Temsilcisi"))
+				@if (User.IsInRole("Kategori Ekle") || User.IsInRole("Kategori Güncelle") || User.IsInRole("Kategori Detayları") || User.IsInRole("Kategori Listele") || User.IsInRole("Kategori Raporları"))
 				{
 					<li>
 						<a href="javascript: void(0);" class="has-arrow waves-effect">
 							<i class="feather-copy"></i><span>Kategoriler</span>
 						</a>
 						<ul class="sub-menu" aria-expanded="false">
-							<li><a asp-controller="Category" asp-action="Create">Ekle</a></li>
-							<li><a asp-controller="Category" asp-action="Update">Güncelle</a></li>
-							<li><a asp-controller="Category" asp-action="Detail">Detaylar</a></li>
-							<li><a asp-controller="Category" asp-action="CategoryList">Kategori Listesi</a></li>
-							@if (User.IsInRole("Şube Müdürü"))
+							@if (User.IsInRole("Kategori Ekle"))
+							{
+								<li><a asp-controller="Category" asp-action="Create">Ekle</a></li>
+							}
+							@if(User.IsInRole("Kategori Güncelle"))
+							{
+								<li><a asp-controller="Category" asp-action="Update">Güncelle</a></li>
+							}
+							@if (User.IsInRole("Kategori Detayları"))
+							{
+								<li><a asp-controller="Category" asp-action="Detail">Detaylar</a></li>
+							}
+							@if(User.IsInRole("Kategori Listele"))
+							{
+								<li><a asp-controller="Category" asp-action="CategoryList">Kategori Listesi</a></li>
+							}
+							@if (User.IsInRole("Kategori Raporları"))
 							{
 								<li><a asp-controller="Category" asp-action="CategoryReport">Kategori Raporları</a></li>
 							}
@@ -88,34 +124,58 @@
 					</li>
 				}
 				<!--Users-->
-				@if (User.IsInRole("Şube Müdürü") || User.IsInRole("Muhasebe Temsilcisi"))
+				@if (User.IsInRole("Kullanıcı Ekle") || User.IsInRole("Kullanıcı Güncelle") || User.IsInRole("Kullanıcı Detayları") || User.IsInRole("Kullanıcı Listele"))
 				{
 					<li>
 						<a href="javascript: void(0);" class="has-arrow waves-effect">
 							<i class="feather-copy"></i><span>Kullanıcılar</span>
 						</a>
 						<ul class="sub-menu" aria-expanded="false">
-							<li><a asp-controller="AppUser" asp-action="Create">Ekle</a></li>
-							<li><a asp-controller="AppUser" asp-action="Update">Güncelle</a></li>
-							<li><a asp-controller="AppUser" asp-action="Detail">Detaylar</a></li>
-							<li><a asp-controller="AppUser" asp-action="AppUserList">Kullanıcı Listesi</a></li>
+							@if(User.IsInRole("Kullanıcı Ekle"))
+							{
+								<li><a asp-controller="AppUser" asp-action="Create">Ekle</a></li>
+							}
+							@if (User.IsInRole("Kullanıcı Güncelle"))
+							{
+								<li><a asp-controller="AppUser" asp-action="Update">Güncelle</a></li>
+							}
+							@if (User.IsInRole("Kullanıcı Detayları"))
+							{
+								<li><a asp-controller="AppUser" asp-action="Detail">Detaylar</a></li>
+							}
+							@if (User.IsInRole("Kullanıcı Listele"))
+							{
+								<li><a asp-controller="AppUser" asp-action="AppUserList">Kullanıcı Listesi</a></li>
+							}
 						</ul>
 					</li>
 				}
 
 
 				<!--User Roles-->
-				@if (User.IsInRole("Şube Müdürü") || User.IsInRole("Muhasebe Temsilcisi"))
+				@if (User.IsInRole("Yetki Ekle") || User.IsInRole("Yetki Güncelle") || User.IsInRole("Yetki Detayları") || User.IsInRole("Yetki Listele"))
 				{
 					<li>
 						<a href="javascript: void(0);" class="has-arrow waves-effect">
 							<i class="feather-copy"></i><span>Yetkiler</span>
 						</a>
 						<ul class="sub-menu" aria-expanded="false">
-							<li><a asp-controller="AppUserRole" asp-action="Create">Ekle</a></li>
-							<li><a asp-controller="AppUserRole" asp-action="Update">Güncelle</a></li>
-							<li><a asp-controller="AppUserRole" asp-action="Detail">Detaylar</a></li>
-							<li><a asp-controller="AppUserRole" asp-action="AppUserRoleList">Yetki Listesi</a></li>
+							@if (User.IsInRole("Yetki Ekle"))
+							{
+								<li><a asp-controller="AppUserRole" asp-action="Create">Ekle</a></li>
+							}
+							@if (User.IsInRole("Yetki Güncelle"))
+							{
+								<li><a asp-controller="AppUserRole" asp-action="Update">Güncelle</a></li>
+							}
+							@if (User.IsInRole("Yetki Detayları"))
+							{
+								<li><a asp-controller="AppUserRole" asp-action="Detail">Detaylar</a></li>
+							}
+							@if (User.IsInRole("Yetki Listele"))
+							{
+								<li><a asp-controller="AppUserRole" asp-action="AppUserRoleList">Yetki Listesi</a></li>
+							}
 						</ul>
 					</li>
 				}
@@ -123,34 +183,61 @@
 
 
 				<!--Branch-->
-				@if (User.IsInRole("Şube Müdürü"))
+				@if (User.IsInRole("Şube Ekle") || User.IsInRole("Şube Güncelle") || User.IsInRole("Şube Detayları") || User.IsInRole("Şube Listele") || User.IsInRole("Şube Raporları"))
 				{
 					<li>
 						<a href="javascript: void(0);" class="has-arrow waves-effect">
 							<i class="feather-copy"></i><span>Şubeler</span>
 						</a>
 						<ul class="sub-menu" aria-expanded="false">
-							<li><a asp-controller="Branch" asp-action="Create">Ekle</a></li>
-							<li><a asp-controller="Branch" asp-action="Update">Güncelle</a></li>
-							<li><a asp-controller="Branch" asp-action="Detail">Detaylar</a></li>
-							<li><a asp-controller="Branch" asp-action="BranchList">Şube Listesi</a></li>
-							<li><a asp-controller="Branch" asp-action="BranchReport">Şube Raporları</a></li>
+							@if (User.IsInRole("Şube Ekle"))
+							{
+								<li><a asp-controller="Branch" asp-action="Create">Ekle</a></li>
+							}
+							@if (User.IsInRole("Şube Güncelle"))
+							{
+								<li><a asp-controller="Branch" asp-action="Update">Güncelle</a></li>
+							}
+							@if (User.IsInRole("Şube Detayları"))
+							{
+								<li><a asp-controller="Branch" asp-action="Detail">Detaylar</a></li>
+							}
+							@if (User.IsInRole("Şube Listele"))
+							{
+								<li><a asp-controller="Branch" asp-action="BranchList">Şube Listesi</a></li>
+							}
+							@if (User.IsInRole("Şube Raporları"))
+							{
+								<li><a asp-controller="Branch" asp-action="BranchReport">Şube Raporları</a></li>
+							}			
 						</ul>
 					</li>
 				}
 
 				<!--Departments-->
-				@if (User.IsInRole("Şube Müdürü") || User.IsInRole("Muhasebe Temsilcisi"))
+				@if (User.IsInRole("Departman Ekle") || User.IsInRole("Departman Güncelle") || User.IsInRole("Departman Detayları") || User.IsInRole("Departman Listele"))
 				{
 					<li>
 						<a href="javascript: void(0);" class="has-arrow waves-effect">
 							<i class="feather-copy"></i><span>Departmanlar</span>
 						</a>
 						<ul class="sub-menu" aria-expanded="false">
-							<li><a asp-controller="Department" asp-action="Create">Ekle</a></li>
-							<li><a asp-controller="Department" asp-action="Update">Güncelle</a></li>
-							<li><a asp-controller="Department" asp-action="Detail">Detaylar</a></li>
-							<li><a asp-controller="Department" asp-action="DepartmentList">Departman Listesi</a></li>
+							@if (User.IsInRole("Departman Ekle"))
+							{
+								<li><a asp-controller="Department" asp-action="Create">Ekle</a></li>
+							}
+							@if (User.IsInRole("Departman Güncelle"))
+							{
+								<li><a asp-controller="Department" asp-action="Update">Güncelle</a></li>
+							}
+							@if (User.IsInRole("Departman Detayları"))
+							{
+								<li><a asp-controller="Department" asp-action="Detail">Detaylar</a></li>
+							}
+							@if (User.IsInRole("Departman Listele"))
+							{
+								<li><a asp-controller="Department" asp-action="DepartmentList">Departman Listesi</a></li>
+							}
 						</ul>
 					</li>
 				}
@@ -158,18 +245,30 @@
 
 
 				<!--Employee-->
-				@if (User.IsInRole("Şube Müdürü") || User.IsInRole("Muhasebe Temsilcisi"))
+				@if (User.IsInRole("Çalışan Ekle") || User.IsInRole("Çalışan Güncelle") || User.IsInRole("Çalışan Detayları") || User.IsInRole("Çalışan Listele") || User.IsInRole("Çalışan Raporları"))
 				{
 					<li>
 						<a href="javascript: void(0);" class="has-arrow waves-effect">
 							<i class="feather-copy"></i><span>Çalışanlar</span>
 						</a>
 						<ul class="sub-menu" aria-expanded="false">
-							<li><a asp-controller="Employee" asp-action="Create">Ekle</a></li>
-							<li><a asp-controller="Employee" asp-action="Update">Güncelle</a></li>
-							<li><a asp-controller="Employee" asp-action="Detail">Detaylar</a></li>
-							<li><a asp-controller="Employee" asp-action="EmployeeList">Çalışan Listesi</a></li>
-							@if (User.IsInRole("Şube Müdürü"))
+							@if (User.IsInRole("Çalışan Ekle"))
+							{
+								<li><a asp-controller="Employee" asp-action="Create">Ekle</a></li>
+							}
+							@if (User.IsInRole("Çalışan Güncelle"))
+							{
+								<li><a asp-controller="Employee" asp-action="Update">Güncelle</a></li>
+							}
+							@if (User.IsInRole("Çalışan Detayları"))
+							{
+								<li><a asp-controller="Employee" asp-action="Detail">Detaylar</a></li>
+							}
+							@if (User.IsInRole("Çalışan Listele"))
+							{
+								<li><a asp-controller="Employee" asp-action="EmployeeList">Çalışan Listesi</a></li>
+							}
+							@if (User.IsInRole("Çalışan Raporları"))
 							{
 								<li><a asp-controller="Employee" asp-action="EmployeeReport">Çalışan Raporları</a></li>
 							}
@@ -178,51 +277,57 @@
 				}
 
 				<!--Sales-->
-				@if (User.IsInRole("Şube Müdürü") || User.IsInRole("Satış Temsilcisi"))
+				@if (User.IsInRole("Sipariş Ekle") || User.IsInRole("Sipariş Listele") || User.IsInRole("Sipariş Raporları"))
 				{
 					<li>
 						<a href="javascript: void(0);" class="has-arrow waves-effect">
-							<i class="feather-copy"></i><span>Satışlar</span>
+							<i class="feather-copy"></i><span>Satışlar/Siparişler</span>
 						</a>
 						<ul class="sub-menu" aria-expanded="false">
-							<li><a asp-controller="Order" asp-action="Index">Satış Yap</a></li>
-							<li><a asp-controller="Order" asp-action="OrderList">Satış Listesi</a></li>
-							@if (User.IsInRole("Şube Müdürü"))
+							@if (User.IsInRole("Sipariş Ekle"))
+							{
+								<li><a asp-controller="Order" asp-action="Index">Satış Yap</a></li>
+							}
+							@if (User.IsInRole("Sipariş Listele"))
+							{
+								<li><a asp-controller="Order" asp-action="OrderList">Satış Listesi</a></li>
+							}
+							@if (User.IsInRole("Sipariş Raporları"))
 							{
 								<li><a asp-controller="Order" asp-action="SaleReport">Satış Raporları</a></li>
+
 							}
-						</ul>
-					</li>
-				}
 
-
-				<!--Orders-->
-				@if (User.IsInRole("Şube Müdürü") || User.IsInRole("Depo Temsilcisi"))
-				{
-					<li>
-						<a href="javascript: void(0);" class="has-arrow waves-effect">
-							<i class="feather-copy"></i><span>Siparişler</span>
-						</a>
-						<ul class="sub-menu" aria-expanded="false">
-							<li><a asp-controller="Order" asp-action="OrderList">Sipariş Listesi</a></li>
 						</ul>
 					</li>
 				}
 
 
 				<!--Customers-->
-				@if(User.IsInRole("Şube Müdürü") || User.IsInRole("Satış Temsilcisi"))
+				@if (User.IsInRole("Müşteri Ekle") || User.IsInRole("Müşteri Güncelle") || User.IsInRole("Müşteri Detayları") || User.IsInRole("Müşteri Listele") || User.IsInRole("Müşteri Raporları"))
 				{
 					<li>
 						<a href="javascript: void(0);" class="has-arrow waves-effect">
 							<i class="feather-copy"></i><span>Müşteriler</span>
 						</a>
 						<ul class="sub-menu" aria-expanded="false">
-							<li><a asp-controller="Customer" asp-action="Create">Ekle</a></li>
-							<li><a asp-controller="Customer" asp-action="Update">Güncelle</a></li>
-							<li><a asp-controller="Customer" asp-action="Detail">Detaylar</a></li>
-							<li><a asp-controller="Customer" asp-action="CustomerList">Müşteri Listesi</a></li>
-							@if(User.IsInRole("Şube Müdürü"))
+							@if (User.IsInRole("Müşteri Ekle"))
+							{
+								<li><a asp-controller="Customer" asp-action="Create">Ekle</a></li>
+							}
+							@if (User.IsInRole("Müşteri Güncelle"))
+							{
+								<li><a asp-controller="Customer" asp-action="Update">Güncelle</a></li>
+							}
+							@if (User.IsInRole("Müşteri Detayları"))
+							{
+								<li><a asp-controller="Customer" asp-action="Detail">Detaylar</a></li>
+							}
+							@if (User.IsInRole("Müşteri Listele"))
+							{
+								<li><a asp-controller="Customer" asp-action="CustomerList">Müşteri Listesi</a></li>
+							}
+							@if (User.IsInRole("Müşteri Raporları"))
 							{
 								<li><a asp-controller="Customer" asp-action="CustomerReport">Müşteri Raporları</a></li>
 							}
@@ -230,18 +335,30 @@
 					</li>
 				}
 				<!--Supplier-->
-				@if(User.IsInRole("Şube Müdürü") || User.IsInRole("Depo Temsilcisi"))
+				@if (User.IsInRole("Tedarikçi Ekle") || User.IsInRole("Tedarikçi Güncelle") || User.IsInRole("Tedarikçi Detayları") || User.IsInRole("Tedarikçi Listele") || User.IsInRole("Tedarikçi Raporları"))
 				{
 					<li>
 						<a href="javascript: void(0);" class="has-arrow waves-effect">
 							<i class="feather-copy"></i><span>Tedarikçiler</span>
 						</a>
 						<ul class="sub-menu" aria-expanded="false">
-							<li><a asp-controller="Supplier" asp-action="Create">Ekle</a></li>
-							<li><a asp-controller="Supplier" asp-action="Update">Güncelle</a></li>
-							<li><a asp-controller="Supplier" asp-action="Detail">Detaylar</a></li>
-							<li><a asp-controller="Supplier" asp-action="SupplierList">Tedarikçi Listesi</a></li>
-							@if(User.IsInRole("Şube Müdürü"))
+							@if (User.IsInRole("Tedarikçi Ekle"))
+							{
+								<li><a asp-controller="Supplier" asp-action="Create">Ekle</a></li>
+							}
+							@if (User.IsInRole("Tedarikçi Güncelle"))
+							{
+								<li><a asp-controller="Supplier" asp-action="Update">Güncelle</a></li>
+							}
+							@if (User.IsInRole("Tedarikçi Detayları"))
+							{
+								<li><a asp-controller="Supplier" asp-action="Detail">Detaylar</a></li>
+							}
+							@if (User.IsInRole("Tedarikçi Listele"))
+							{
+								<li><a asp-controller="Supplier" asp-action="SupplierList">Tedarikçi Listesi</a></li>
+							}
+							@if (User.IsInRole("Tedarikçi Raporları"))
 							{
 								<li><a asp-controller="Supplier" asp-action="SupplierReport">Tedarikçi Raporları</a></li>
 							}
@@ -250,18 +367,30 @@
 				}
 
 				<!--Brands-->
-				@if(User.IsInRole("Şube Müdürü") || User.IsInRole("Depo Temsilcisi"))
+				@if (User.IsInRole("Marka Ekle") || User.IsInRole("Marka Güncelle") || User.IsInRole("Marka Detayları") || User.IsInRole("Marka Listele") || User.IsInRole("Marka Raporları"))
 				{
 					<li>
 						<a href="javascript: void(0);" class="has-arrow waves-effect">
 							<i class="feather-copy"></i><span>Markalar</span>
 						</a>
 						<ul class="sub-menu" aria-expanded="false">
-							<li><a asp-controller="Brand" asp-action="Create">Ekle</a></li>
-							<li><a asp-controller="Brand" asp-action="Update">Güncelle</a></li>
-							<li><a asp-controller="Brand" asp-action="Detail">Detaylar</a></li>
-							<li><a asp-controller="Brand" asp-action="BrandList">Marka Listesi</a></li>
-							@if (User.IsInRole("Şube Müdürü"))
+							@if (User.IsInRole("Marka Ekle"))
+							{
+								<li><a asp-controller="Brand" asp-action="Create">Ekle</a></li>
+							}
+							@if (User.IsInRole("Marka Güncelle"))
+							{
+								<li><a asp-controller="Brand" asp-action="Update">Güncelle</a></li>
+							}
+							@if (User.IsInRole("Marka Detayları"))
+							{
+								<li><a asp-controller="Brand" asp-action="Detail">Detaylar</a></li>
+							}
+							@if (User.IsInRole("Marka Listele"))
+							{
+								<li><a asp-controller="Brand" asp-action="BrandList">Marka Listesi</a></li>
+							}
+							@if (User.IsInRole("Marka Raporları"))
 							{
 								<li><a asp-controller="Brand" asp-action="BrandReport">Marka Raporları</a></li>
 							}
@@ -270,35 +399,57 @@
 				}
 
 				<!--Expenses-->
-				@if (User.IsInRole("Şube Müdürü") || User.IsInRole("Muhasebe Temsilcisi"))
+				@if (User.IsInRole("Gider Ekle") || User.IsInRole("Gider Güncelle") || User.IsInRole("Gider Detayları") || User.IsInRole("Gider Listele") || User.IsInRole("Gider Raporları"))
 				{
 					<li>
 						<a href="javascript: void(0);" class="has-arrow waves-effect">
 							<i class="feather-copy"></i><span>Giderler</span>
 						</a>
 						<ul class="sub-menu" aria-expanded="false">
-							<li><a asp-controller="Expense" asp-action="Create">Ekle</a></li>
-							<li><a asp-controller="Expense" asp-action="Update">Güncelle</a></li>
-							<li><a asp-controller="Expense" asp-action="Detail">Detaylar</a></li>
-							<li><a asp-controller="Expense" asp-action="ExpenseList">Gider Listesi</a></li>
-							<li><a asp-controller="Expense" asp-action="ExpenseReport">Gider raporları</a></li>
+							@if (User.IsInRole("Gider Ekle"))
+							{
+								<li><a asp-controller="Expense" asp-action="Create">Ekle</a></li>
+							}
+							@if (User.IsInRole("Gider Güncelle"))
+							{
+								<li><a asp-controller="Expense" asp-action="Update">Güncelle</a></li>
+							}
+							@if (User.IsInRole("Gider Detayları"))
+							{
+								<li><a asp-controller="Expense" asp-action="Detail">Detaylar</a></li>
+							}
+							@if (User.IsInRole("Gider Listele"))
+							{
+								<li><a asp-controller="Expense" asp-action="ExpenseList">Gider Listesi</a></li>
+							}
+							@if (User.IsInRole("Gider Raporları"))
+							{
+								<li><a asp-controller="Expense" asp-action="ExpenseReport">Gider raporları</a></li>
+							}	
 						</ul>
 					</li>
 				}
 
 				<!--TechnicalProblems-->
-				<li>
-					<a href="javascript: void(0);" class="has-arrow waves-effect">
-						<i class="feather-copy"></i><span>Teknik</span>
-					</a>
-					<ul class="sub-menu" aria-expanded="false">
-						<li><a asp-controller="TechnicalProblem" asp-action="TechnicalProblemReport">Sorun Bildir</a></li>
-						@if (User.IsInRole("Teknik Servis") || User.IsInRole("Şube Müdürü"))
-						{
-							<li><a asp-controller="TechnicalProblem" asp-action="TechnicalProblemList">Sorun Listesi</a></li>
-						}
-					</ul>
-				</li>
+				@if(User.IsInRole("Teknik Problem Bildir") || User.IsInRole("Teknik Problem Listele"))
+				{
+					<li>
+						<a href="javascript: void(0);" class="has-arrow waves-effect">
+							<i class="feather-copy"></i><span>Teknik</span>
+						</a>
+						<ul class="sub-menu" aria-expanded="false">
+							@if(User.IsInRole("Teknik Problem Bildir"))
+							{
+								<li><a asp-controller="TechnicalProblem" asp-action="TechnicalProblemReport">Sorun Bildir</a></li>
+							}
+							@if (User.IsInRole("Teknik Problem Listele"))
+							{
+								<li><a asp-controller="TechnicalProblem" asp-action="TechnicalProblemList">Sorun Listesi</a></li>
+							}
+						</ul>
+					</li>
+				}
+				
 
 			</ul>
 		</div>

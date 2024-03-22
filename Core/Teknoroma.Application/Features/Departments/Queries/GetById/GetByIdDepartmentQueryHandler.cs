@@ -1,23 +1,23 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.Departments;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Departments.Queries.GetById
 {
 	public class GetByIdDepartmentQueryHandler:IRequestHandler<GetByIdDepartmentQueryRequest, GetByIdDepartmentQueryResponse>
 	{
 		private readonly IMapper _mapper;
-		private readonly IDepartmentService _departmentService;
+		private readonly IDepartmentRepository _departmentRepository;
 
-		public GetByIdDepartmentQueryHandler(IMapper mapper, IDepartmentService departmentService)
+		public GetByIdDepartmentQueryHandler(IMapper mapper, IDepartmentRepository departmentRepository)
 		{
 			_mapper = mapper;
-			_departmentService = departmentService;
+			_departmentRepository = departmentRepository;
 		}
 
 		public async Task<GetByIdDepartmentQueryResponse> Handle(GetByIdDepartmentQueryRequest request, CancellationToken cancellationToken)
 		{
-			var department = await _departmentService.GetAsync(x => x.ID == request.ID);
+			var department = await _departmentRepository.GetAsync(x => x.ID == request.ID);
 
 			GetByIdDepartmentQueryResponse response = _mapper.Map<GetByIdDepartmentQueryResponse>(department);
 

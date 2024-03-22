@@ -10,7 +10,7 @@ namespace Teknoroma.Application.Features.Categories.Rules
 
 		public CategoryBusinessRules(ICategoryRepository categoryRepository)
         {
-			_categoryRepository = categoryRepository;
+			_categoryRepository = categoryRepository;;
 		}
         public async Task CategoryNameCannotBeDuplicatedWhenInserted(string name)
 		{

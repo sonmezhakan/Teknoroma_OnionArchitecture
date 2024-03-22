@@ -8,6 +8,7 @@ using Teknoroma.Application.Features.Categories.Queries.GetCategoryEarningReport
 using Teknoroma.Application.Features.Categories.Queries.GetCategorySellingReport;
 using Teknoroma.Application.Features.Categories.Queries.GetCategorySupplyReport;
 using Teknoroma.Application.Features.Categories.Queries.GetList;
+using Teknoroma.Application.Features.Categories.Queries.GetListSelectIdAndName;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
@@ -17,23 +18,22 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
     {
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Kategori Ekle")]
 		public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Kategori Ekle")]
 		public async Task<IActionResult> Create(CreateCategoryViewModel model)
         {
             await CheckJwtBearer();
+
             if (!ModelState.IsValid)
-            {
-                 
-                return View(model);
-            }
-            CreateCategoryCommandRequest createCategoryCommandRequest = Mapper.Map<CreateCategoryCommandRequest>(model);
+				return View(model);
+
+			CreateCategoryCommandRequest createCategoryCommandRequest = Mapper.Map<CreateCategoryCommandRequest>(model);
 
             HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("category/create", createCategoryCommandRequest);
 
@@ -47,7 +47,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Kategori Güncelle")]
 		public async Task<IActionResult> Update(Guid? id)
         {
             await CheckJwtBearer();
@@ -63,14 +63,13 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Kategori Güncelle")]
 		public async Task<IActionResult> Update(CategoryViewModel model)
         {
             await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await CategoryViewBag();
-                 
                 return View(model);
             }
             UpdateCategoryCommandRequest updateCategoryCommandRequest = Mapper.Map<UpdateCategoryCommandRequest>(model);
@@ -87,7 +86,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return RedirectToAction("Update", model.ID);
         }
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Kategori Sil")]
 		public async Task<IActionResult> Delete(Guid id)
         {
             await CheckJwtBearer();
@@ -97,7 +96,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Kategori Detayları")]
 		public async Task<IActionResult> Detail(Guid? id)
         {
             await CheckJwtBearer();
@@ -113,7 +112,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Kategori Listele")]
 		public async Task<IActionResult> CategoryList()
         {
             await CheckJwtBearer();
@@ -126,7 +125,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(categoryViewModels);
         }
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü")]
+		[Authorize(Roles = "Kategori Raporları")]
 		public async Task<IActionResult> CategoryReport(DateTime? startDate, DateTime? endDate)
         {
             await CheckJwtBearer();
@@ -170,11 +169,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         private async Task CategoryViewBag()
         {
-            var getCategoryList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllCategoryQueryResponse>>("category/getall").Result.Select(x => new GetAllCategoryQueryResponse
-            {
-                CategoryName = x.CategoryName,
-                ID = x.ID
-            }).ToList();
+            var getCategoryList = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameCategoryQueryResponse>>("category/GetAllSelectIdAndName");
 
 			ViewBag.CategoryList = getCategoryList;
 		}

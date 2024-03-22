@@ -3,6 +3,7 @@
 @{
 	ViewData["Title"] = "Çalışan Listesi - Teknoroma";
 	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+	decimal totalSalary = 0;
 }
 
 
@@ -26,6 +27,7 @@
 							<th rowspan="1" colspan="1">Kimlik Numarası</th>
 							<th rowspan="1" colspan="1">Telefon Numarası</th>
 							<th rowspan="1" colspan="1">Adres</th>
+							<th rowspan="1" colspan="1">Maaş</th>
 							<th rowspan="1" colspan="1">Durum</th>
 							<th>
 
@@ -69,6 +71,9 @@
 												@item.Address
 											</td>
 											<td>
+												@item.Salary
+											</td>
+											<td>
 												@if (item.IsActive == true)
 												{
 													<span class="badge bg-success">Aktif</span>
@@ -79,25 +84,58 @@
 												}
 											</td>
 											<td>
-												<div>
-													<a class="btn btn-block btn-success waves-effect waves-light" asp-controller="Employee" asp-action="UpdateEmployeeActive" asp-route-id="@item.ID">Aktif Et</a>
-												</div>
+												@if(User.IsInRole("Çalışan Güncelle"))
+												{
+													<div>
+														<a class="btn btn-block btn-success waves-effect waves-light" asp-controller="Employee" asp-action="UpdateEmployeeActive" asp-route-id="@item.ID">Aktif Et</a>
+													</div>
+												}
 											</td>
 											<td>
-												<div>
-													<a class="btn btn-info btn-block waves-effect waves-light" asp-controller="Employee" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
-												</div>
-												<div>
-													<a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="Employee" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
-												</div>
-												<div>
-													<a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="Employee" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
-												</div>
+												@if (User.IsInRole("Çalışan Detayları"))
+												{
+													<div>
+														<a class="btn btn-info btn-block waves-effect waves-light" asp-controller="Employee" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
+													</div>
+												}
+												@if (User.IsInRole("Çalışan Güncelle"))
+												{
+													<div>
+														<a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="Employee" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
+													</div>
+												}
+												@if (User.IsInRole("Çalışan Sil"))
+												{
+													<div>
+														<a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="Employee" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
+													</div>
+												}
 											</td>
 										</tr>
+										if (item.IsActive == true)
+										{
+											totalSalary += (decimal)item.Salary;
+										}
 									}
 								}
 							</tbody>
+							<tfoot>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>
+								@totalSalary ₺
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							</tfoot>
 						</table>
 					</div>
 				</div>

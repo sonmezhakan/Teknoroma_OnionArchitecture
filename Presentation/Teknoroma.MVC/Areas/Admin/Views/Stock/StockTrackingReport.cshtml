@@ -1,9 +1,10 @@
 ﻿@using Teknoroma.Application.Features.Stocks.Models
 @model List<StockTrackingReportViewModel>
+
 @{
 	ViewData["Title"] = "Stok Takip Raporu - Teknoroma";
 	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
-	string branchName = ViewBag.Branch.Text;
+	string branchName = ViewData["BranchName"].ToString();
 }
 
 <div class="row">
@@ -12,7 +13,7 @@
 			<div class="card-header bg-info d-flex">
 				<div class="col-md-10">
 					<h5 class="text-white">Stok Takip Raporu</h5>
-					<h3 style="color:green">@ViewBag.Branch.Text</h3>
+					<h3 style="color:green">@branchName</h3>
 				</div>
 				<div class="col-md-2">
 					<a class="btn btn-success btn-block waves-effect waves-light" style="color:white;" asp-action="StockTrackingReport" >Hepsini Göster</a>
@@ -51,7 +52,7 @@
 											@item.CategoryName
 										</td>
 										<td>
-											@item.UnitPrice
+											@item.UnitPrice ₺
 										</td>
 										<td>
 											@item.UnitsInStock

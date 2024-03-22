@@ -1,11 +1,12 @@
 ﻿﻿@using Teknoroma.Application.Features.Stocks.Models
 
+
 @model List<StockListViewModel>
 @{
 	ViewData["Title"] = "Satış Yap - Teknoroma";
 	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 	decimal totalPrice = 0;
-	string branchName = ViewBag.Branch.Text;
+	string branchName = ViewData["BranchName"].ToString();
 }
 <div class="row">
 	<div class="col-md-12 mx-auto">
@@ -13,7 +14,7 @@
 			<div class="card-header bg-info">
 				<div class="form-group">
 					<h5 class="text-white">Stok Takip Raporu</h5>
-					<h3 style="color:green">@ViewBag.Branch.Text</h3>
+					<h3 style="color:green">@branchName</h3>
 				</div>
 			</div>
 			<div class="row">
@@ -49,7 +50,7 @@
 												@product.BrandName
 											</td>
 											<td>
-												@product.UnitPrice
+												@product.UnitPrice ₺
 											</td>
 											<td>
 												@product.UnitsInStock

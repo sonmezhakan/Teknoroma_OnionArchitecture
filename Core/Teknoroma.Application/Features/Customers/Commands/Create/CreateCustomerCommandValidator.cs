@@ -25,7 +25,7 @@ namespace Teknoroma.Application.Features.Customers.Command.Create
 		}
 		protected bool BeNumeric(string phoneNumber)
 		{
-			return int.TryParse(phoneNumber, out _);
+			return Int64.TryParse(phoneNumber, out _);
 		}
 	}
 }

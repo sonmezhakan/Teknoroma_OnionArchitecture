@@ -1,23 +1,23 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.Categories;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Categories.Queries.GetList
 {
 	public class GetAllCategoryQueryHandler : IRequestHandler<GetAllCategoryQueryRequest, List<GetAllCategoryQueryResponse>>
     {
-		private readonly ICategoryService _categoryService;
+        private readonly ICategoryRepository _categoryRepository;
 		private readonly IMapper _mapper;
 
-        public GetAllCategoryQueryHandler(ICategoryService categoryService, IMapper mapper)
+        public GetAllCategoryQueryHandler(ICategoryRepository categoryRepository, IMapper mapper)
         {
-			_categoryService = categoryService;
+			_categoryRepository = categoryRepository;
 			_mapper = mapper;
         }
 
         public async Task<List<GetAllCategoryQueryResponse>> Handle(GetAllCategoryQueryRequest request, CancellationToken cancellationToken)
         {
-            var categories = await _categoryService.GetAllAsync();
+            var categories = await _categoryRepository.GetAllAsync();
 
             List<GetAllCategoryQueryResponse> categoryDTOs = _mapper.Map<List<GetAllCategoryQueryResponse>>(categories.ToList());
 

@@ -15,14 +15,14 @@ using Teknoroma.MVC.Areas.Admin.Models;
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Authorize(Roles = "Şube Müdürü,Satış Temsilcisi,Depo Temsilcisi,Teknik Servis,Muhasebe Temsilcisi")]
+	[Authorize]
 	public class HomeController : BaseController
     {
         [HttpGet]
         public async Task<IActionResult> Index()
         {
 			await CheckJwtBearer();
-            await BranchViewBag();
+            await GetBranch();
 
 
 			DateTime startDate = DateTime.Now.Date;
@@ -31,7 +31,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			DashboardViewModel dashboardViewModel = new DashboardViewModel();
 
 
-            if (User.IsInRole("Şube Müdürü"))
+            if (User.IsInRole("Ürün Raporları") || User.IsInRole("Marka Raporları"))
 			{
                 var productSellingReport = await ApiService.HttpClient.GetFromJsonAsync<List<GetProductSellingReportQueryResponse>>($"product/ProductSellingReport/{startDate.ToString("yyyy-MM-dd")}/{endDate.ToString("yyyy-MM-dd")}");
 
@@ -39,28 +39,51 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
                 var brandSellingReports = await ApiService.HttpClient.GetFromJsonAsync<List<GetBrandSellingReportQueryResponse>>($"brand/BrandSellingReport/{startDate.ToString("yyyy.MM.dd")}/{endDate.ToString("yyyy.MM.dd")}");
 
-				dashboardViewModel.DailyBestSalesProduct = productSellingReport.First().ProductName;
+				if (productSellingReport.Count() > 0)
+					dashboardViewModel.DailyBestSalesProduct = productSellingReport.First().ProductName;
+				else
+					dashboardViewModel.DailyBestSalesProduct = "-";
+
+				if(brandSellingReports.Count() > 0)
+					dashboardViewModel.DailyBestSalesBrand = brandSellingReports.First().BrandName;
+				else
+					dashboardViewModel.DailyBestSalesBrand = "-";
+
 				dashboardViewModel.DailyTotalSales = productSellingReport.Sum(x => x.TotalSales);
 				dashboardViewModel.DailyTotalPrice = productEarningReport.Sum(x => x.TotalPrice);
-				dashboardViewModel.DailyBestSalesBrand = brandSellingReports.First().BrandName;
+				
             }
 			
-			if(User.IsInRole("Şube Müdürü") || User.IsInRole("Satış Temsilcisi") || User.IsInRole("Depo Temsilcisi"))
+			if(User.IsInRole("Sipariş Listele"))
 			{
-                var orderlist = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllOrderQueryResponse>>($"order/GetByBranchIdOrderList/{Guid.Parse(ViewBag.Branch.Value)}");
+                var orderlist = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllOrderQueryResponse>>($"order/GetByBranchIdOrderList/{Guid.Parse(ViewData["BranchID"].ToString())}");
 
-                List<OrderListViewModel> orderListViewModels = Mapper.Map<List<OrderListViewModel>>(orderlist);
+               if(orderlist.Count() > 0)
+				{
+					List<OrderListViewModel> orderListViewModels = Mapper.Map<List<OrderListViewModel>>(orderlist);
 
-				dashboardViewModel.OrderListViewModels = orderListViewModels.Take(10).ToList();
+					dashboardViewModel.OrderListViewModels = orderListViewModels.Take(10).ToList();
+				}
+				else
+				{
+					dashboardViewModel.OrderListViewModels = null;
+				}
             }
 
-			if(User.IsInRole("Şube Müdürü") || User.IsInRole("Satış Temsilcisi"))
+			if(User.IsInRole("Stok Listele"))
 			{
-                var stockList = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockQueryResponse>>($"stock/getall/{ViewBag.Branch.Value}");
+                var stockList = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockQueryResponse>>($"stock/getall/{Guid.Parse(ViewData["BranchID"].ToString())}");
 
-                List<StockListViewModel> stockListViewModel = Mapper.Map<List<StockListViewModel>>(stockList);
+                if(stockList.Count() > 0)
+				{
+					List<StockListViewModel> stockListViewModel = Mapper.Map<List<StockListViewModel>>(stockList);
 
-				dashboardViewModel.StockListViewModels = stockListViewModel;
+					dashboardViewModel.StockListViewModels = stockListViewModel;
+				}
+				else
+				{
+					dashboardViewModel.StockListViewModels = null;
+				}
             }
 
 			return View(dashboardViewModel);
@@ -72,19 +95,15 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			return getAppUserID;
 		}
-		private async Task BranchViewBag()
+		private async Task GetBranch()
 		{
 			Guid getAppUserID = await CheckAppUser();
 
-			var getEmployeeBranch = await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{getAppUserID}");
+			var getEmployee = await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{getAppUserID}");
 
-			ViewBag.Branch = new SelectListItem
-			{
-				Text = getEmployeeBranch.BranchName,
-				Value = getEmployeeBranch.BranchID.ToString(),
-			};
+			ViewData["BranchName"] = getEmployee.BranchName;
+			ViewData["BranchID"] = getEmployee.BranchID;
+
 		}
-
-
 	}
 }

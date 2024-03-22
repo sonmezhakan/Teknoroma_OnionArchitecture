@@ -3,7 +3,7 @@
 @{
 	ViewData["Title"] = "Sipariş Listesi - Teknoroma";
 	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
-	string branchName = ViewBag.Branch.Text;
+	string branchName = ViewData["BranchName"].ToString();
 }
 <div class="row">
 	<div class="col-md-12 mx-auto">
@@ -11,7 +11,7 @@
 			<div class="card-header bg-info">
 				<div class="form-group">
 					<h5 class="text-white">Sipariş/Satış Listesi</h5>
-					<h3 style="color:green">@ViewBag.Branch.Text</h3>
+					<h3 style="color:green">@branchName</h3>
 				</div>
 			</div>
 			<div class="card-body">
@@ -59,25 +59,24 @@
 										<td>
 											@order.TotalPrice
 										</td>
-
-										@if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.GettingReady)
-										{
-											<td style="background-color:darkred; color:white">
-												1- Hazırlanıyor
-											</td>
-										}
-										else if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Ready)
-										{
-											<td style="background-color:dodgerblue; color:white">
-												2- Hazırlandı
-											</td>
-										}
-										else if(order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Delivered)
-										{
-											<td>
-												3 - Teslim Edildi
-											</td>
-										}
+											@if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.GettingReady)
+											{
+												<td style="background-color:darkred; color:white">
+													1- Hazırlanıyor
+												</td>
+											}
+											else if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Ready)
+											{
+												<td style="background-color:dodgerblue; color:white">
+													2- Hazırlandı
+												</td>
+											}
+											else if (order.OrderStatu == Teknoroma.Domain.Enums.OrderStatu.Delivered)
+											{
+												<td>
+													3 - Teslim Edildi
+												</td>
+											}	
 										<td>
 											@order.OrderDate
 										</td>
@@ -85,106 +84,116 @@
 											@order.UserName
 										</td>
 										<td>
-											<div>
-												<a class="btn btn-danger btn-sm waves-effect waves-light" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.GettingReady">Hazırlanıyor</a>
-											</div>
-											<div>
-												<a class="btn btn-info btn-sm waves-effect waves-light" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.Ready">Hazırlandı</a>
-											</div>
+											@if (User.IsInRole("Sipariş Durum Güncelle"))
+											{
+												<div>
+													<a class="btn btn-danger btn-sm waves-effect waves-light" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.GettingReady">Hazırlanıyor</a>
+												</div>
+												<div>
+													<a class="btn btn-info btn-sm waves-effect waves-light" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.Ready">Hazırlandı</a>
+												</div>
 												<div>
 													<a class="btn btn-success btn-sm waves-effect waves-light" asp-controller="Order" asp-action="UpdateOrderStatu" asp-route-orderId="@order.ID" asp-route-orderStatu="@Teknoroma.Domain.Enums.OrderStatu.Delivered">Teslim Edildi</a>
 												</div>
+											}
+											
 										</td>
 
 										<td>
 
-											<!-- Button trigger modal -->
-											<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-@order.ID" onclick="initializeDataTable('datatable-buttons-orderDetail-@order.ID', 1, 'asc',[1,2,3,4],'@order.ID - Sipariş Listesi')">
-												Sipariş Detayı
-											</button>
-											<!-- Modal -->
-											<div class="container">
-												<div class="modal fade" id="exampleModal-@order.ID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-													<div class="modal-dialog modal-fullscreen">
-														<div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
-															<div class="modal-header">
-																<h5 class="modal-title" id="exampleModalLabel">@order.ID Numaralı Sipariş Detayı</h5>
-																<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-															</div>
+											@if(User.IsInRole("Sipariş Güncelle"))
+											{
+												<!-- Button trigger modal -->
+												<button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-toggle="modal" data-target="#exampleModal-@order.ID" onclick="initializeDataTable('datatable-buttons-orderDetail-@order.ID', 1, 'asc',[1,2,3,4],'@order.ID - Sipariş Listesi')">
+													Sipariş Detayı
+												</button>
+												<!-- Modal -->
+												<div class="container">
+													<div class="modal fade" id="exampleModal-@order.ID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal-dialog modal-fullscreen">
+															<div class="modal-content mx-auto" style="width:100%; position:fixed; top:0; bottom:0; left:0; right:0;">
+																<div class="modal-header">
+																	<h5 class="modal-title" id="exampleModalLabel">@order.ID Numaralı Sipariş Detayı</h5>
+																	<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+																</div>
 
-															<div class="modal-body">
-																<table id="datatable-buttons-orderDetail-@order.ID" width="100%" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
-																	<thead>
-																	<th rowspan="1" colspan="1">Resim</th>
-																	<th rowspan="1" colspan="1">Ürün</th>
-																	<th rowspan="1" colspan="1">Sipariş Adeti</th>
-																	<th rowspan="1" colspan="1">Fiyat</th>
-																	<th rowspan="1" colspan="1">Toplam fiyat</th>
-																	<th>
+																<div class="modal-body">
+																	<table id="datatable-buttons-orderDetail-@order.ID" width="100%" class="table table-striped nowrap dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+																		<thead>
+																		<th rowspan="1" colspan="1">Resim</th>
+																		<th rowspan="1" colspan="1">Ürün</th>
+																		<th rowspan="1" colspan="1">Sipariş Adeti</th>
+																		<th rowspan="1" colspan="1">Fiyat</th>
+																		<th rowspan="1" colspan="1">Toplam fiyat</th>
+																		<th>
 
-																	</th>
-																	<th>
+																		</th>
+																		<th>
 
-																	</th>
-																	</thead>
-																	<tbody>
+																		</th>
+																		</thead>
+																		<tbody>
 
-																		@if (Model != null)
-																		{
-																			@foreach (var orderDetail in order.OrderDetailViewModels)
+																			@if (Model != null)
 																			{
+																				@foreach (var orderDetail in order.OrderDetailViewModels)
+																				{
 
-																				<tr>
-																					<form method="post" asp-controller="Order" asp-action="UpdateOrderDetail" asp-route-orderId="@order.ID" asp-route-productId="@orderDetail.ProductId">
-																					<td>
-																						<img src="~/images/product/@orderDetail.ImagePath" width="125" height="100" />
-																					</td>
-																					<td>
-																							@orderDetail.ProductName
-																					</td>
-																					<td> 
-																						<div class="mx-4">
-																								@orderDetail.Quantity
-																						</div> 
-																						<div>
-																							<input class="form-control text-center me-4" name="quantity" type="number" value="@orderDetail.Quantity" style="max-width: 4rem">
-																						</div>
-																					</td>
-																					<td>
-																							@orderDetail.UnitPrice
-																					</td>
-																					<td>
-																							@orderDetail.TotalPrice
-																					</td>
-																						@if(order.OrderStatu != Teknoroma.Domain.Enums.OrderStatu.Delivered)
-																						{
+																					<tr>
+																						<form method="post" asp-controller="Order" asp-action="UpdateOrderDetail" asp-route-orderId="@order.ID" asp-route-productId="@orderDetail.ProductId">
 																						<td>
-																							<button class="btn btn-warning btn-block waves-effect waves-light" type="submit">Güncelle</button>
+																							<img src="~/images/product/@orderDetail.ImagePath" width="125" height="100" />
 																						</td>
+																						<td>
+																								@orderDetail.ProductName
+																						</td>
+																						<td>
+																							<div class="mx-4">
+																									@orderDetail.Quantity
+																							</div>
+																							<div>
+																								<input class="form-control text-center me-4" name="quantity" type="number" value="@orderDetail.Quantity" style="max-width: 4rem">
+																							</div>
+																						</td>
+																						<td>
+																								@orderDetail.UnitPrice
+																						</td>
+																						<td>
+																								@orderDetail.TotalPrice
+																						</td>
+																							@if (order.OrderStatu != Teknoroma.Domain.Enums.OrderStatu.Delivered)
+																							{
+																							<td>
+																								<button class="btn btn-warning btn-block waves-effect waves-light" type="submit">Güncelle</button>
+																							</td>
 
-																						<td>
-																							<a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="Order" asp-action="DeleteOrderDetail" asp-route-orderId="@order.ID" asp-route-productId="@orderDetail.ProductId">Sil</a>
-																						</td>
-																						}
-																					</form>
-																				</tr>
+																							<td>
+																								@if(User.IsInRole("Sipariş Sil"))
+																									{
+																									<a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="Order" asp-action="DeleteOrderDetail" asp-route-orderId="@order.ID" asp-route-productId="@orderDetail.ProductId">Sil</a>
+																									}
+																								</td>
+																							}
+																						</form>
+																					</tr>
+																				}
 																			}
-																		}
 
-																	</tbody>
-																</table>
+																		</tbody>
+																	</table>
 
-															</div>
+																</div>
 
-															<div class="modal-footer">
-																<button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Kapat</button>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Kapat</button>
+																</div>
 															</div>
 														</div>
 													</div>
 												</div>
-											</div>
+											}
 
-											@if (order.OrderStatu != Teknoroma.Domain.Enums.OrderStatu.Delivered)
+											@if (order.OrderStatu != Teknoroma.Domain.Enums.OrderStatu.Delivered && User.IsInRole("Sipariş Sil"))
 											{
 												<a class="btn btn-danger btn-sm waves-effect waves-light" asp-controller="Order" asp-action="Delete" asp-route-id="@order.ID">Siparişi Sil</a>
 											}

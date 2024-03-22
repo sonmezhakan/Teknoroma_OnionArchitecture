@@ -42,7 +42,6 @@ namespace Teknoroma.WebApi
 
 			builder.Services.AddAplicationServiceRegistration();
 			builder.Services.AddPersistenceServiceRegistration();
-			builder.Services.AddInfrastructureServiceRegistration();
 
 			var app = builder.Build();
 

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Teknoroma.Application.Features.Stocks.Command.Update;
-using Teknoroma.Application.Services.StockInputs;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.StockInputs.Command.Update
@@ -10,18 +10,18 @@ namespace Teknoroma.Application.Features.StockInputs.Command.Update
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-		private readonly IStockInputService _stockInputService;
+		private readonly IStockInputRepository _stockInputRepository;
 
-		public UpdateStockInputCommandHandler(IMediator mediator,IMapper mapper,IStockInputService stockInputService)
+		public UpdateStockInputCommandHandler(IMediator mediator,IMapper mapper,IStockInputRepository stockInputRepository)
         {
             _mediator = mediator;
             _mapper = mapper;
-			_stockInputService = stockInputService;
+			_stockInputRepository = stockInputRepository;
 		}
 
         public async Task<Unit> Handle(UpdateStockInputCommandRequest request, CancellationToken cancellationToken)
         {
-            StockInput stockInput = await _stockInputService.GetAsync(x => x.ID == request.ID);
+            StockInput stockInput = await _stockInputRepository.GetAsync(x => x.ID == request.ID);
 
             //stock Process
             var stock = stockInput.Branch.stocks.FirstOrDefault(x => x.BranchId == request.BranchID && x.ProductId == request.ProductID);
@@ -33,7 +33,7 @@ namespace Teknoroma.Application.Features.StockInputs.Command.Update
             //StockInput Process
             stockInput = _mapper.Map(request, stockInput);
 
-            await _stockInputService.UpdateAsync(stockInput);
+            await _stockInputRepository.UpdateAsync(stockInput);
 
             return Unit.Value;
         }

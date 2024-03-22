@@ -33,35 +33,30 @@
 												@item.Name
 											</td>
 											<td>
-												<div>
-													<a class="btn btn-info btn-block waves-effect waves-light" asp-controller="AppUserRole" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
-												</div>
-												<div>
-													<a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="AppUserRole" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
-												</div>
-												<div>
-													<a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="AppUserRole" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
-												</div>
+												@if(User.IsInRole("Yetki Detayları"))
+												{
+													<div>
+														<a class="btn btn-info btn-block waves-effect waves-light" asp-controller="AppUserRole" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
+													</div>
+												}
+												@if(User.IsInRole("Yetki Güncelle"))
+												{
+													<div>
+														<a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="AppUserRole" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
+													</div>
+												}
+												@if(User.IsInRole("Yetki Sil"))
+												{
+													<div>
+														<a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="AppUserRole" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
+													</div>
+												}
 											</td>
 										</tr>
 									}
 								}
 							</tbody>
 						</table>
-					</div>
-				</div><div class="row">
-					<div class="col-sm-12 col-md-5">
-						<div>
-							@if (Model != null)
-							{
-								@Model.Count()
-							}
-							else
-							{
-								<a>0</a>
-							}
-							adet yetki bulunmaktadır.
-						</div>
 					</div>
 				</div>
 			</div>

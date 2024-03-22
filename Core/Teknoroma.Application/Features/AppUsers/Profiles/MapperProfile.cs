@@ -6,6 +6,7 @@ using Teknoroma.Application.Features.AppUsers.Models;
 using Teknoroma.Application.Features.AppUsers.Queries.GetById;
 using Teknoroma.Application.Features.AppUsers.Queries.GetByUserName;
 using Teknoroma.Application.Features.AppUsers.Queries.GetList;
+using Teknoroma.Application.Features.AppUsers.Queries.GetListSelectIdAndName;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.AppUsers.Profiles
@@ -37,6 +38,11 @@ namespace Teknoroma.Application.Features.AppUsers.Profiles
             CreateMap<AppUserViewModel, GetAllAppUserQueryResponse>().ReverseMap();
 
             CreateMap<LoginViewModel, LoginAppUserCommandRequest>().ReverseMap();
+
+            CreateMap<AppUser, GetAllSelectIdAndNameAppUserQueryResponse>()
+                .ForMember(dest => dest.ID, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
+                .ReverseMap();
         }
     }
 }

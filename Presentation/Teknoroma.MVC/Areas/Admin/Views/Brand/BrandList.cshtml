@@ -38,9 +38,18 @@
 											@item.Description
 										</td>
 										<td>
-											<a class="btn btn-info waves-effect waves-light" asp-controller="Brand" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
-											<a class="btn btn-warning waves-effect waves-light" asp-controller="Brand" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
-											<a class="btn btn-danger waves-effect waves-light" asp-controller="Brand" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
+											@if (User.IsInRole("Marka Detayları"))
+											{
+												<a class="btn btn-info waves-effect waves-light" asp-controller="Brand" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
+											}
+											@if (User.IsInRole("Marka Güncelle"))
+											{
+												<a class="btn btn-warning waves-effect waves-light" asp-controller="Brand" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
+											}
+											@if (User.IsInRole("Marka Sil"))
+											{
+												<a class="btn btn-danger waves-effect waves-light" asp-controller="Brand" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
+											}	
 										</td>
 									</tr>
 								}

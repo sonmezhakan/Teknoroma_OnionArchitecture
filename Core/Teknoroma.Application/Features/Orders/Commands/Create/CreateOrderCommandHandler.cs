@@ -4,7 +4,7 @@ using Teknoroma.Application.Features.Customers.Queries.GetById;
 using Teknoroma.Application.Features.OrderDetails.Command.Create;
 using Teknoroma.Application.Pipelines.Transaction;
 using Teknoroma.Application.Services.EmailServices;
-using Teknoroma.Application.Services.Orders;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Orders.Command.Create
@@ -12,14 +12,14 @@ namespace Teknoroma.Application.Features.Orders.Command.Create
 	public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommandRequest, Unit>,ITransactionalRequest
 	{
 		private readonly IMapper _mapper;
-		private readonly IOrderService _orderService;
+		private readonly IOrderRepository _orderRepository;
 		private readonly IMediator _mediator;
         private readonly IMailService _mailService;
 
-        public CreateOrderCommandHandler(IMapper mapper,IOrderService orderService,IMediator mediator,IMailService mailService)
+        public CreateOrderCommandHandler(IMapper mapper,IOrderRepository orderRepository,IMediator mediator,IMailService mailService)
         {
 			_mapper = mapper;
-			_orderService = orderService;
+			_orderRepository = orderRepository;
 			_mediator = mediator;
             _mailService = mailService;
         }
@@ -27,7 +27,7 @@ namespace Teknoroma.Application.Features.Orders.Command.Create
 		{
 			Order order = _mapper.Map<Order>(request);
 
-			await _orderService.AddAsync(order);
+			await _orderRepository.AddAsync(order);
 
 			CreateOrderDetailCommandRequest createOrderDetailCommandRequest = new CreateOrderDetailCommandRequest
 			{

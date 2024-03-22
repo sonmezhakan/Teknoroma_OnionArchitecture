@@ -12,7 +12,7 @@ namespace Teknoroma.WebApi.Controllers
     public class StockController : BaseController
 	{
 		[HttpGet("{id}")]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Depo Temsilcisi,Şube Müdürü,Satış Temsilcisi")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Stok Listele")]
 		public async Task<IActionResult> GetAll(Guid? id)
 		{
 			if (id != null)
@@ -29,7 +29,7 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
 		[HttpGet("{id}")]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Stok Takip Raporları")]
 		public async Task<IActionResult> StockTrackingReport(Guid id)
 		{ 
 			var result = await Mediator.Send(new GetStockTrackingReportListQueryRequest { BranchId = id });

@@ -1,13 +1,15 @@
 ﻿@using Teknoroma.MVC.Areas.Admin.Models
 @model DashboardViewModel
+
 @{
 	ViewData["Title"] = "Dashboard - Teknoroma";
-	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";	
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
 }
 
 <div class="row">
 	<h2>Dashboard</h2>
-	@if(User.IsInRole("Şube Müdürü") && Model.DailyTotalSales != null && Model.DailyTotalPrice != null && Model.DailyBestSalesBrand != null && Model.DailyBestSalesProduct != null)
+	@if((User.IsInRole("Ürün Raporları") || User.IsInRole("Marka Raporları")) && Model.DailyTotalSales != null && Model.DailyTotalPrice != null && Model.DailyBestSalesBrand != null && Model.DailyBestSalesProduct != null)
 	{
 		<div class="col-md-12">
 			<div class="d-flex">
@@ -94,11 +96,11 @@
 			</div>
 		</div>
 	}
-	@if((User.IsInRole("Şube Müdürü") || User.IsInRole("Satış Temsilcisi")) && Model.StockListViewModels != null)
+	@if(User.IsInRole("Stok Listele")  && Model.StockListViewModels != null)
 	{
 		<div class="col-md-12">
 			<div class="d-flex">
-				<div class="col-md-7">
+				<div class="col-md-12">
 					<div class="card-body">
 						<table id="datatable-buttons-orderProductList" width="100%" class="table dt-responsive table-striped nowrap no-footer dtr-inline collapsed" role="grid" aria-describedby="basic-datatable_info">
 							<thead>
@@ -130,7 +132,7 @@
 												@product.BrandName
 											</td>
 											<td>
-												@product.UnitPrice
+												@product.UnitPrice ₺
 											</td>
 											<td>
 												@product.UnitsInStock
@@ -159,7 +161,7 @@
 			</div>
 		</div>
 	}
-	@if ((User.IsInRole("Şube Müdürü") || User.IsInRole("Satış Temsilcisi") || User.IsInRole("Depo Temsilcisi")) && Model.OrderListViewModels != null)
+	@if(User.IsInRole("Sipariş Listele") && Model.OrderListViewModels != null)
 	{
 		<div class="cold-md-12">
 			<div class="table-responsive">

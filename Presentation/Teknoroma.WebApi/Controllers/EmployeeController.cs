@@ -18,7 +18,7 @@ namespace Teknoroma.WebApi.Controllers
 	public class EmployeeController : BaseController
 	{
         [HttpPost]
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Çalışan Ekle")]
         public async Task<IActionResult> Create(CreateEmployeeCommandRequest createEmployeeCommandRequest)
 		{
 			var result = await Mediator.Send(createEmployeeCommandRequest);
@@ -27,7 +27,7 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
 		[HttpPut]
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Çalışan Güncelle")]
         public async Task<IActionResult> Update(UpdateEmployeeCommandRequest updateEmployeeCommandRequest)
 		{
 			var result = await Mediator.Send(updateEmployeeCommandRequest);
@@ -35,7 +35,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(result);
 		}
 		[HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Çalışan Sil")]
         public async Task<IActionResult> Delete(Guid id)
 		{
 			var result = await Mediator.Send(new DeleteEmployeeCommandRequest { ID = id });
@@ -43,7 +43,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(result);
 		}
 		[HttpGet("{id}")]
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi,Satış Temsilcisi,Depo Temsilcisi,Teknik Servis")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Çalışan Sorgula")]
         public async Task<IActionResult> GetById(Guid id)
 		{
 			var result = await Mediator.Send(new GetByIdEmployeeQueryRequest { ID = id });
@@ -51,7 +51,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(result);	
 		}
 		[HttpGet]
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Çalışan Listele")]
         public async Task<IActionResult> GetAll()
 		{
 			var result = await Mediator.Send(new GetAllEmployeeQueryRequest());
@@ -59,7 +59,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(result);
 		}
 		[HttpGet("{startDate}/{endDate}")]
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Çalışan Raporları")]
         public async Task<IActionResult> EmployeeSellingReport(string startDate,string endDate)
 		{
 			var result = await Mediator.Send(new GetEmployeeSellingReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
@@ -67,7 +67,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(result);
 		}
         [HttpGet("{startDate}/{endDate}")]
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Çalışan Raporları")]
         public async Task<IActionResult> EmployeeEarningReport(string startDate, string endDate)
         {
             var result = await Mediator.Send(new GetEmployeeEarningReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
@@ -75,7 +75,7 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
 		[HttpGet("{startDate}/{endDate}")]
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Çalışan Raporları")]
         public async Task<IActionResult> EmployeeDetailReport(string startDate,string endDate)
 		{
 			var result = await Mediator.Send(new GetEmployeeDetailReportQueryRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });
@@ -83,6 +83,7 @@ namespace Teknoroma.WebApi.Controllers
 			return Ok(result);
 		}
 		[HttpGet]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Çalışan Listele")]
 		public async Task<IActionResult> GetFullAll()
 		{
 			var result = await Mediator.Send(new GetFullListEmployeeQueryRequest());

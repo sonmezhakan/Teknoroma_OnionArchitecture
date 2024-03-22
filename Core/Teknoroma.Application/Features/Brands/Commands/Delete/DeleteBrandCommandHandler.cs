@@ -1,23 +1,23 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.Brands;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Brands.Command.Delete
 {
 	public class DeleteBrandCommandHandler:IRequestHandler<DeleteBrandCommandRequest, Unit>
 	{
-		private readonly IBrandService _brandService;
+		private readonly IBrandRepository _brandRepository;
 
-		public DeleteBrandCommandHandler(IBrandService brandService)
+		public DeleteBrandCommandHandler(IBrandRepository brandRepository)
 		{
-			_brandService = brandService;
+			_brandRepository = brandRepository;
 		}
 
 		public async Task<Unit> Handle(DeleteBrandCommandRequest request, CancellationToken cancellationToken)
 		{
-			Brand brand = await _brandService.GetAsync(x => x.ID == request.ID);
+			Brand brand = await _brandRepository.GetAsync(x => x.ID == request.ID);
 
-			await _brandService.DeleteAsync(brand);
+			await _brandRepository.DeleteAsync(brand);
 
 			return Unit.Value;
 		}

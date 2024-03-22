@@ -7,31 +7,31 @@ using Teknoroma.Application.Features.Branches.Queries.GetAll;
 using Teknoroma.Application.Features.Branches.Queries.GetBranchEarningReport;
 using Teknoroma.Application.Features.Branches.Queries.GetBranchSellingReport;
 using Teknoroma.Application.Features.Branches.Queries.GetById;
+using Teknoroma.Application.Features.Branches.Queries.GetListSelectIdAndName;
 using Teknoroma.Application.Features.Stocks.Models;
 using Teknoroma.Application.Features.Stocks.Queries.GetList;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-	[Authorize(Roles = "Şube Müdürü")]
+	[Authorize]
 	public class BranchController : BaseController
 	{
         [HttpGet]
+		[Authorize(Roles = "Şube Ekle")]
 		public async Task<IActionResult> Create()
 		{
 			return View();
 		}
 		[HttpPost]
+		[Authorize(Roles = "Şube Ekle")]
 		public async Task<IActionResult> Create(CreateBranchViewModel model)
 		{
             await CheckJwtBearer();
             if (!ModelState.IsValid)
-			{
-				 
-                return View(model);
-            }
+				return View(model);
 
-            CreateBranchCommandRequest createBranch = Mapper.Map<CreateBranchCommandRequest>(model);
+			CreateBranchCommandRequest createBranch = Mapper.Map<CreateBranchCommandRequest>(model);
 
             HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("branch/create", createBranch);
 
@@ -45,6 +45,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
 		[HttpGet]
+		[Authorize(Roles = "Şube Güncelle")]
 		public async Task<IActionResult> Update(Guid? id)
 		{
             await CheckJwtBearer();
@@ -62,13 +63,13 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Şube Güncelle")]
 		public async Task<IActionResult> Update(BranchViewModel model)
 		{
             await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await BranchViewBag();
-                 
                 return View(model);
             }
 
@@ -87,6 +88,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
 		[HttpGet]
+		[Authorize(Roles = "Şube Sil")]
 		public async Task<IActionResult> Delete(Guid id)
 		{
             await CheckJwtBearer();
@@ -96,6 +98,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Şube Detayları")]
 		public async Task<IActionResult> Detail(Guid? id)
 		{
             await CheckJwtBearer();
@@ -115,6 +118,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Şube Listele")]
 		public async Task<IActionResult> BranchList()
 		{
             await CheckJwtBearer();
@@ -127,6 +131,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(branchViewModels);
 		}
 		[HttpGet]
+		[Authorize(Roles = "Şube Raporları")]
 		public async Task<IActionResult> BranchReport(DateTime? startDate,DateTime? endDate)
 		{
             await CheckJwtBearer();
@@ -163,11 +168,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 		private async Task BranchViewBag()
 		{
-			var getBranchList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllBranchQueryResponse>>("branch/getall").Result.Select(x=> new GetAllBranchQueryResponse
-			{
-				ID = x.ID,
-				BranchName = x.BranchName
-			}).ToList();
+			var getBranchList = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameBranchQueryResponse>>("branch/GetAllSelectIdAndName");
 
 			ViewBag.BranchList = getBranchList;
 

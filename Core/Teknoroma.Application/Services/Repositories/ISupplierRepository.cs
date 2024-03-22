@@ -4,5 +4,6 @@ namespace Teknoroma.Application.Services.Repositories
 {
     public interface ISupplierRepository : IBaseRepository<Supplier>
     {
+        Task<IQueryable<Supplier>> GetAllSelectIdAndNameAsync();
     }
 }

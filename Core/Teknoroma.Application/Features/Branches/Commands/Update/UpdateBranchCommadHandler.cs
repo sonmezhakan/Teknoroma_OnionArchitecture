@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Teknoroma.Application.Features.Branches.Rules;
-using Teknoroma.Application.Services.Branches;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Branches.Command.Update
@@ -9,19 +9,19 @@ namespace Teknoroma.Application.Features.Branches.Command.Update
 	public class UpdateBranchCommadHandler : IRequestHandler<UpdateBranchCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
-		private readonly IBranchService _branchService;
+		private readonly IBranchRepository _branchRepository;
 		private readonly BranchBusinessRules _branchBusinessRules;
 
-		public UpdateBranchCommadHandler(IMapper mapper, IBranchService branchService,BranchBusinessRules branchBusinessRules)
+		public UpdateBranchCommadHandler(IMapper mapper, IBranchRepository branchRepository,BranchBusinessRules branchBusinessRules)
         {
 			_mapper = mapper;
-			_branchService = branchService;
+			_branchRepository = branchRepository;
 			_branchBusinessRules = branchBusinessRules;
 		}
 
         public async Task<Unit> Handle(UpdateBranchCommandRequest request, CancellationToken cancellationToken)
 		{
-			Branch branch = await _branchService.GetAsync(x => x.ID == request.ID);
+			Branch branch = await _branchRepository.GetAsync(x => x.ID == request.ID);
 
 			//BusinesRules
 			await _branchBusinessRules.BranchNameCannotBeDuplicatedWhenUpdated(branch.BranchName,request.BranchName);
@@ -29,7 +29,7 @@ namespace Teknoroma.Application.Features.Branches.Command.Update
 
 			branch = _mapper.Map(request, branch);
 
-			await _branchService.UpdateAsync(branch);
+			await _branchRepository.UpdateAsync(branch);
 
 			return Unit.Value;
 		}

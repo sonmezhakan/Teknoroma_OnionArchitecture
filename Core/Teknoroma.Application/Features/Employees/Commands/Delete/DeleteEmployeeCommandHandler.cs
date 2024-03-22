@@ -1,22 +1,22 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.Employees;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Employees.Command.Delete
 {
 	public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeCommandRequest, Unit>
 	{
-		private readonly IEmployeeService _employeeService;
+		private readonly IEmployeeRepository _employeeRepository;
 
-		public DeleteEmployeeCommandHandler(IEmployeeService employeeService)
+		public DeleteEmployeeCommandHandler(IEmployeeRepository employeeRepository)
         {
-			_employeeService = employeeService;
+			_employeeRepository = employeeRepository;
 		}
         public async Task<Unit> Handle(DeleteEmployeeCommandRequest request, CancellationToken cancellationToken)
 		{
-			Employee employee = await _employeeService.GetAsync(x => x.ID == request.ID);
+			Employee employee = await _employeeRepository.GetAsync(x => x.ID == request.ID);
 
-			await _employeeService.DeleteAsync(employee);
+			await _employeeRepository.DeleteAsync(employee);
 
 			return Unit.Value;
 		}

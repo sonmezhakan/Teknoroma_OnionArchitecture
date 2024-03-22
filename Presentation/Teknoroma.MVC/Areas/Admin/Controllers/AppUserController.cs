@@ -7,12 +7,13 @@ using Teknoroma.Application.Features.AppUsers.Command.Update;
 using Teknoroma.Application.Features.AppUsers.Models;
 using Teknoroma.Application.Features.AppUsers.Queries.GetById;
 using Teknoroma.Application.Features.AppUsers.Queries.GetList;
+using Teknoroma.Application.Features.AppUsers.Queries.GetListSelectIdAndName;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-    [Authorize(Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+    [Authorize]
     public class AppUserController : BaseController
     {
         private readonly SignInManager<AppUser> _signInManager;
@@ -22,22 +23,24 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             _signInManager = signInManager;
         }
         [HttpGet]
-        public async Task<IActionResult> Create()
+		[Authorize(Roles = "Kullanıcı Ekle")]
+		public async Task<IActionResult> Create()
         {
 			await CheckJwtBearer();
 			await AppUserRoleViewBag();
 			return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateAppUserViewModel model)
+		[Authorize(Roles = "Kullanıcı Ekle")]
+		public async Task<IActionResult> Create(CreateAppUserViewModel model)
         {
             await CheckJwtBearer();
             if (!ModelState.IsValid)
             {
                 await AppUserRoleViewBag();
-                 
                 return View(model);
             }
+
             CreateAppUserCommandRequest createAppUserCommandRequest = Mapper.Map<CreateAppUserCommandRequest>(model);
 
             HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("user/create", createAppUserCommandRequest);
@@ -49,7 +52,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
-        public async Task<IActionResult> Update(Guid? id)
+		[Authorize(Roles = "Kullanıcı Güncelle")]
+		public async Task<IActionResult> Update(Guid? id)
         {
             await CheckJwtBearer();
             await AppUserViewBag();
@@ -66,18 +70,16 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(appUserViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> Update(AppUserViewModel model)
+		[Authorize(Roles = "Kullanıcı Güncelle")]
+		public async Task<IActionResult> Update(AppUserViewModel model)
         {
             await CheckJwtBearer();
             await AppUserViewBag();
             await AppUserRoleViewBag();
             if (!ModelState.IsValid)
-            {
-                 
-                return View(model);
-            }
+				return View(model);
 
-            UpdateAppUserCommandRequest updateAppUserCommandRequest = Mapper.Map<UpdateAppUserCommandRequest>(model);
+			UpdateAppUserCommandRequest updateAppUserCommandRequest = Mapper.Map<UpdateAppUserCommandRequest>(model);
 
             HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("user/update", updateAppUserCommandRequest);
 
@@ -88,7 +90,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> Detail(Guid? id)
+		[Authorize(Roles = "Kullanıcı Detayları")]
+		public async Task<IActionResult> Detail(Guid? id)
         {
             await CheckJwtBearer();
             await AppUserViewBag();
@@ -105,7 +108,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(appUserViewModel);
         }
         [HttpGet]
-        public async Task<IActionResult> AppUserList()
+		[Authorize(Roles = "Kullanıcı Listele")]
+		public async Task<IActionResult> AppUserList()
         {
             await CheckJwtBearer();
             var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllAppUserQueryResponse>>("user/getall");
@@ -121,12 +125,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
         private async Task AppUserViewBag()
         {
-            var getAppUser = ApiService.HttpClient.GetFromJsonAsync<List<GetAllAppUserQueryResponse>>("user/getall")
-                .Result.Select(x=> new GetAllAppUserQueryResponse
-                {
-                    ID = x.ID,
-                    UserName = x.UserName
-                });
+            var getAppUser = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameAppUserQueryResponse>>("user/GetAllSelectIdAndName");
             ViewBag.AppUserList = getAppUser;
         }
         private async Task AppUserRoleViewBag()

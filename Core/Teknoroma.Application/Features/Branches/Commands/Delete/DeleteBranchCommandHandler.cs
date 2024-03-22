@@ -1,22 +1,22 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.Branches;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Branches.Command.Delete
 {
 	public class DeleteBranchCommandHandler : IRequestHandler<DeleteBranchCommandRequest, Unit>
 	{
-		private readonly IBranchService _branchService;
+		private readonly IBranchRepository _branchRepository;
 
-		public DeleteBranchCommandHandler(IBranchService branchService)
+		public DeleteBranchCommandHandler(IBranchRepository branchRepository)
         {
-			_branchService = branchService;
+			_branchRepository = branchRepository;
 		}
         public async Task<Unit> Handle(DeleteBranchCommandRequest request, CancellationToken cancellationToken)
 		{
-			Branch branch = await _branchService.GetAsync(x=>x.ID == request.ID);
+			Branch branch = await _branchRepository.GetAsync(x=>x.ID == request.ID);
 
-			await _branchService.DeleteAsync(branch);
+			await _branchRepository.DeleteAsync(branch);
 
 			return Unit.Value;
 		}

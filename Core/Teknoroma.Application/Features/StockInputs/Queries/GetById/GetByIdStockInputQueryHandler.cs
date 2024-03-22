@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.StockInputs;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.StockInputs.Queries.GetById
@@ -8,16 +8,16 @@ namespace Teknoroma.Application.Features.StockInputs.Queries.GetById
 	public class GetByIdStockInputQueryHandler : IRequestHandler<GetByIdStockInputQueryRequest, GetByIdStockInputQueryResponse>
     {
         private readonly IMapper _mapper;
-		private readonly IStockInputService _stockInputService;
+		private readonly IStockInputRepository _stockInputRepository;
 
-		public GetByIdStockInputQueryHandler(IMapper mapper,IStockInputService stockInputService)
+		public GetByIdStockInputQueryHandler(IMapper mapper,IStockInputRepository stockInputRepository)
         {
             _mapper = mapper;
-			_stockInputService = stockInputService;
+			_stockInputRepository = stockInputRepository;
 		}
         public async Task<GetByIdStockInputQueryResponse> Handle(GetByIdStockInputQueryRequest request, CancellationToken cancellationToken)
         {
-            StockInput stockInput = await _stockInputService.GetAsync(x=>x.ID == request.ID);
+            StockInput stockInput = await _stockInputRepository.GetAsync(x=>x.ID == request.ID);
 
             GetByIdStockInputQueryResponse getByIdStockInputQueryResponse = _mapper.Map<GetByIdStockInputQueryResponse>(stockInput);
 

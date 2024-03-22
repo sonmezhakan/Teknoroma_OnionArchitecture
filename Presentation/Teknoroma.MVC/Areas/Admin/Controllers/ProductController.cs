@@ -1,18 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Teknoroma.Application.Features.Brands.Quries.GetList;
-using Teknoroma.Application.Features.Categories.Queries.GetList;
+using Teknoroma.Application.Features.Brands.Quries.GetListSelectIdAndName;
+using Teknoroma.Application.Features.Categories.Queries.GetListSelectIdAndName;
 using Teknoroma.Application.Features.Products.Command.Create;
 using Teknoroma.Application.Features.Products.Command.Update;
 using Teknoroma.Application.Features.Products.Models;
 using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Application.Features.Products.Queries.GetList;
+using Teknoroma.Application.Features.Products.Queries.GetListSelectIdAndName;
 using Teknoroma.Application.Features.Products.Queries.GetProductEarningReport;
 using Teknoroma.Application.Features.Products.Queries.GetProductSalesDetailReport;
 using Teknoroma.Application.Features.Products.Queries.GetProductSellingReport;
 using Teknoroma.Application.Features.Products.Queries.GetProductSupplyDetailReport;
 using Teknoroma.Application.Features.Products.Queries.GetProductSupplyReport;
-using Teknoroma.Infrastructure.ImageHelpers;
+using Teknoroma.Application.Helpers.ImageHelpers;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
@@ -22,7 +23,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
     public class ProductController : BaseController
     {
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Ürün Ekle")]
 		public async Task<IActionResult> Create()
         {
             await CheckJwtBearer();
@@ -31,7 +32,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Ürün Ekle")]
 		public async Task<IActionResult> Create(CreateProductViewModel model,IFormFile? productImage)
         {
             await CheckJwtBearer();
@@ -62,7 +63,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Ürün Güncelle")]
 		public async Task<IActionResult> Update(Guid? id)
         {
             await CheckJwtBearer();
@@ -79,7 +80,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Ürün Güncelle")]
 		public async Task<IActionResult> Update(ProductViewModel model,IFormFile? productImage)
         {
             await CheckJwtBearer();
@@ -129,7 +130,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Ürün Sil")]
 		public async Task<IActionResult> Delete(Guid id)
         {
             await CheckJwtBearer();
@@ -140,7 +141,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Ürün Listele")]
 		public async Task<IActionResult> ProductList()
         {
             await CheckJwtBearer();
@@ -152,7 +153,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Ürün Detayları")]
 		public async Task<IActionResult> Detail(Guid? id)
         {
             await CheckJwtBearer();
@@ -170,7 +171,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü")]
+		[Authorize(Roles = "Ürün Raporları")]
 		public async Task<IActionResult> ProductReport(DateTime? startDate, DateTime? endDate)
         {
             await CheckJwtBearer();
@@ -224,33 +225,21 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
         private async Task ProductViewBag()
         {
-            var getProductList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllProductQueryResponse>>("product/getall").Result.Select(x => new GetAllProductQueryResponse
-			{
-				ProductName = x.ProductName,
-				ID = x.ID
-			});
+            var getProductList = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameProductQueryResponse>>("product/GetAllSelectIdAndName");
 
 			ViewBag.ProductList = getProductList;
 		}
 
         private async Task CategoryViewBag()
         {
-            var getCategoryList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllCategoryQueryResponse>>("category/getall").Result.Select(x => new GetAllCategoryQueryResponse
-			{
-				CategoryName = x.CategoryName,
-				ID = x.ID
-			});
+            var getCategoryList = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameCategoryQueryResponse>>("category/GetAllSelectIdAndName");
 
             ViewBag.CategoryList = getCategoryList;
         }
 
         private async Task BrandViewBag()
         {
-            var getBrandList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllBrandCommandResponse>>("brand/getall").Result.Select(x => new GetAllBrandCommandResponse
-			{
-				BrandName = x.BrandName,
-				ID = x.ID
-			});
+            var getBrandList = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameBrandQueryResponse>>("brand/GetAllSelectIdAndName");
 
 			ViewBag.BrandList = getBrandList;
 		}

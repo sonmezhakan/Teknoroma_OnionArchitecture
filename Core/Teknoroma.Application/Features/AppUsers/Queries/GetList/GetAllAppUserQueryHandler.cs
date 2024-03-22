@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Teknoroma.Application.Features.AppUserProfiles.Quıeries.GetList;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.AppUsers.Queries.GetList

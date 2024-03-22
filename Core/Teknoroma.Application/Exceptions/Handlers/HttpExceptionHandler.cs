@@ -13,6 +13,7 @@ namespace Teknoroma.Application.Exceptions.Handlers
 
         public HttpResponse Response 
         {
+            //_response var ise döndür yok ise hatayı oluştur ve döndür
             get => _response ?? throw new ArgumentException(nameof(_response));
 
             set => _response = value;
@@ -20,7 +21,8 @@ namespace Teknoroma.Application.Exceptions.Handlers
         protected override Task HandleException(BusinessException businessException)
         {
             Response.StatusCode = StatusCodes.Status400BadRequest;
-            string details = new BusinessProblemDetails(businessException.Message).AsJson();
+            string details = new BusinessProblemDetails(businessException.Message).AsJson();//Normalde ProblemDetails classından iherit ederek burada da işlemler gerçekleştirebilirdik. Fakat ilerleyen aşamalarda geri döndürülen hataya ekstra bilgiler eklemek istersek yani özelleştirmek istersek diye farklı bir class içerisinde bu işlemler yapıldı.Hatayı geriye json formatında döndürebilmek için Extensions metot oluşturup orada json formatına dönüştürebilmek için gerekli kod yazılarak burada kullanılıyor.
+            
             return Response.WriteAsync(details);
         }
 

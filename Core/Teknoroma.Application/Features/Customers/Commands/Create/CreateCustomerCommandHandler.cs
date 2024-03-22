@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Teknoroma.Application.Features.Customers.Rules;
-using Teknoroma.Application.Services.Customers;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Customers.Command.Create
@@ -9,13 +9,13 @@ namespace Teknoroma.Application.Features.Customers.Command.Create
 	public class CreateCustomerCommandHandler:IRequestHandler<CreateCustomerCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
-		private readonly ICustomerService _customerService;
+		private readonly ICustomerRepository _customerRepository;
 		private readonly CustomerBusinessRules _customerBusinessRules;
 
-		public CreateCustomerCommandHandler(IMapper mapper,ICustomerService customerService,CustomerBusinessRules customerBusinessRules)
+		public CreateCustomerCommandHandler(IMapper mapper,ICustomerRepository customerRepository,CustomerBusinessRules customerBusinessRules)
         {
 			_mapper = mapper;
-			_customerService = customerService;
+			_customerRepository = customerRepository;
 			_customerBusinessRules = customerBusinessRules;
 		}
 
@@ -26,7 +26,7 @@ namespace Teknoroma.Application.Features.Customers.Command.Create
 
 			Customer customer = _mapper.Map<Customer>(request);
 
-			await _customerService.AddAsync(customer);
+			await _customerRepository.AddAsync(customer);
 
 			return Unit.Value;
 		}

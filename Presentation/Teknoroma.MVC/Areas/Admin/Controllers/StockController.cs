@@ -13,13 +13,13 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 	public class StockController : BaseController
 	{
 		[HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Stok Takip Raporları")]
 		public async Task<IActionResult> StockTrackingReport(string? listStatus)
 		{
             await CheckJwtBearer();
-            await BranchIDViewBag();
+			await GetBranch();
 
-			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetStockTrackingReportListQueryResponse>>($"stock/StockTrackingReport/{ViewBag.Branch.Value}");
+			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetStockTrackingReportListQueryResponse>>($"stock/StockTrackingReport/{Guid.Parse(ViewData["BranchID"].ToString())}");
 			if (response == null) return View();
 			if(listStatus == "CriticalFilter")
 			{
@@ -37,19 +37,17 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			
 		}
 
-		private async Task BranchIDViewBag()
-		{
-			Guid getAppUserID = await CheckAppUser();
+        private async Task GetBranch()
+        {
+            Guid getAppUserID = await CheckAppUser();
 
-			var getEmployeeBranch = await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{getAppUserID}");
+            var getEmployee = await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{getAppUserID}");
 
-			ViewBag.Branch = new SelectListItem
-			{
-				Text = getEmployeeBranch.BranchName,
-				Value = getEmployeeBranch.BranchID.ToString(),
-			};
+			ViewData["BranchName"] = getEmployee.BranchName;
+			ViewData["BranchID"] = getEmployee.BranchID;
+
 		}
-		private async Task<Guid> CheckAppUser()
+        private async Task<Guid> CheckAppUser()
 		{
 			Guid getAppUserID = ApiService.HttpClient.GetFromJsonAsync<GetByUserNameAppUserQueryResponse>($"user/GetByUserName/{User.Identity.Name}").Result.ID;
 

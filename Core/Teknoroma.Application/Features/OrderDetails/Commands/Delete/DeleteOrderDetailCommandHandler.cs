@@ -2,8 +2,7 @@
 using MediatR;
 using Teknoroma.Application.Features.Orders.Command.Delete;
 using Teknoroma.Application.Features.Stocks.Command.Update;
-using Teknoroma.Application.Services.OrderDetails;
-using Teknoroma.Domain.Entities;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.OrderDetails.Command.Delete
 {
@@ -11,17 +10,17 @@ namespace Teknoroma.Application.Features.OrderDetails.Command.Delete
 	{
 		private readonly IMediator _mediator;
 		private readonly IMapper _mapper;
-		private readonly IOrderDetailService _orderDetailService;
+		private readonly IOrderDetailRepository _orderDetailRepository;
 
-		public DeleteOrderDetailCommandHandler(IMediator mediator,IMapper mapper,IOrderDetailService orderDetailService)
+		public DeleteOrderDetailCommandHandler(IMediator mediator,IMapper mapper,IOrderDetailRepository orderDetailRepository)
         {
 			_mediator = mediator;
 			_mapper = mapper;
-			_orderDetailService = orderDetailService;
+			_orderDetailRepository = orderDetailRepository;
 		}
         public async Task<Unit> Handle(DeleteOrderDetailCommandRequest request, CancellationToken cancellationToken)
 		{
-			var orderDetail = await _orderDetailService.GetAsync(x => x.ID == request.OrderId && x.ProductId == request.ProductId);
+			var orderDetail = await _orderDetailRepository.GetAsync(x => x.ID == request.OrderId && x.ProductId == request.ProductId);
 
 			//stock process
 			var stock = orderDetail.Order.Branch.stocks.FirstOrDefault(x => x.BranchId == request.BranchId && x.ProductId == request.ProductId);
@@ -31,9 +30,9 @@ namespace Teknoroma.Application.Features.OrderDetails.Command.Delete
 
 
 			//OrderDetail process
-			await _orderDetailService.DeleteAsync(orderDetail);
+			await _orderDetailRepository.DeleteAsync(orderDetail);
 
-			if(_orderDetailService.GetAllAsync(x=>x.ID == request.OrderId).Result.Count() <=0)
+			if(_orderDetailRepository.GetAllAsync(x=>x.ID == request.OrderId).Result.Count() <=0)
 			{
 				await _mediator.Send(new DeleteOrderCommandRequest { ID = request.OrderId });
 			}

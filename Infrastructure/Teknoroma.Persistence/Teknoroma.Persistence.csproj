@@ -24,8 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Teknoroma.Application\Teknoroma.Application.csproj" />
-    <ProjectReference Include="..\Teknoroma.Infrastructure\Teknoroma.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Core\Teknoroma.Application\Teknoroma.Application.csproj">
+      <PrivateAssets>All</PrivateAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\Teknoroma.Infrastructure\Teknoroma.Infrastructure.csproj">
+      <PrivateAssets>All</PrivateAssets>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

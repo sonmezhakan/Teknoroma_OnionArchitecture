@@ -6,10 +6,11 @@ using Teknoroma.Application.Features.AppUsers.Commands.Login;
 using Teknoroma.Application.Features.AppUsers.Queries.GetById;
 using Teknoroma.Application.Features.AppUsers.Queries.GetByUserName;
 using Teknoroma.Application.Features.AppUsers.Queries.GetList;
+using Teknoroma.Application.Features.AppUsers.Queries.GetListSelectIdAndName;
 
 namespace Teknoroma.WebApi.Controllers
 {
-	[Route("api/[controller]/[action]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : BaseController
     {
@@ -19,19 +20,19 @@ namespace Teknoroma.WebApi.Controllers
         {
             var result = await Mediator.Send(loginAppUserCommandRequest);
 
-           return Ok(result);
+            return Ok(result);
         }
 
         [HttpGet("{userName}")]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi,Depo Temsilcisi,Satış Temsilcisi")]
-		public async Task<IActionResult> GetByUserName(string userName)
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Kullanıcı Sorgula")]
+        public async Task<IActionResult> GetByUserName(string userName)
         {
-            var result = await Mediator.Send(new GetByUserNameAppUserQueryRequest { UserName = userName});
+            var result = await Mediator.Send(new GetByUserNameAppUserQueryRequest { UserName = userName });
             return Ok(result);
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Kullanıcı Ekle")]
         public async Task<IActionResult> Create(CreateAppUserCommandRequest createAppUserCommandRequest)
         {
             var result = await Mediator.Send(createAppUserCommandRequest);
@@ -49,8 +50,8 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi,Depo Temsilcisi,Satış Temsilcisi")]
-		public async Task<IActionResult> GetById(Guid id)
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Kullanıcı Sorgula")]
+        public async Task<IActionResult> GetById(Guid id)
         {
             var result = await Mediator.Send(new GetByIdAppUserQueryRequest { ID = id });
 
@@ -58,12 +59,22 @@ namespace Teknoroma.WebApi.Controllers
         }
 
         [HttpGet]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
-		public async Task<IActionResult> GetAll()
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Kullanıcı Listele")]
+        public async Task<IActionResult> GetAll()
         {
             var result = await Mediator.Send(new GetAllAppUserQueryRequest());
 
             return Ok(result);
         }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Kullanıcı Listele")]
+        public async Task<IActionResult> GetAllSelectIdAndName()
+        {
+            var result = await Mediator.Send(new GetAllSelectIdAndNameAppUserQueryRequest());
+
+            return Ok(result);
+        }
+
     }
 }

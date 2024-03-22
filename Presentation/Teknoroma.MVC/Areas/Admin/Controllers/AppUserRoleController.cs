@@ -10,23 +10,24 @@ using Teknoroma.MVC.Models;
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-	[Authorize(Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+	[Authorize]
 	public class AppUserRoleController : BaseController
     {
         [HttpGet]
-        public async Task<IActionResult> Create()
+		[Authorize(Roles = "Yetki Ekle")]
+		public async Task<IActionResult> Create()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateAppUserRoleViewModel model)
+		[Authorize(Roles = "Yetki Ekle")]
+		public async Task<IActionResult> Create(CreateAppUserRoleViewModel model)
         {
             await CheckJwtBearer();
             if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            CreateAppUserRoleCommandRequest createAppUserRoleCommandRequest = Mapper.Map<CreateAppUserRoleCommandRequest>(model);
+				return View(model);
+
+			CreateAppUserRoleCommandRequest createAppUserRoleCommandRequest = Mapper.Map<CreateAppUserRoleCommandRequest>(model);
 
             HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("role/create", createAppUserRoleCommandRequest);
 
@@ -36,7 +37,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
-        public async Task<IActionResult> Update(Guid? id)
+		[Authorize(Roles = "Yetki Güncelle")]
+		public async Task<IActionResult> Update(Guid? id)
         {
             await CheckJwtBearer();
             await AppUserRoleViewbag();
@@ -52,7 +54,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(appUserRoleViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> Update(AppUserRoleViewModel model)
+		[Authorize(Roles = "Yetki Güncelle")]
+		public async Task<IActionResult> Update(AppUserRoleViewModel model)
         {
             await CheckJwtBearer();
             
@@ -73,7 +76,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+		[Authorize(Roles = "Yetki Sil")]
+		public async Task<IActionResult> Delete(Guid id)
         {
             await CheckJwtBearer();
             await ApiService.HttpClient.DeleteAsync($"role/delete/{id}");
@@ -81,7 +85,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return RedirectToAction("AppUserRoleList", "AppUserRole");
         }
         [HttpGet]
-        public async Task<IActionResult> Detail(Guid? id)
+		[Authorize(Roles = "Yetki Detayları")]
+		public async Task<IActionResult> Detail(Guid? id)
         {
             await CheckJwtBearer();
             await AppUserRoleViewbag();
@@ -97,7 +102,8 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(appUserRoleViewModel);
         }
         [HttpGet]
-        public async Task<IActionResult> AppUserRoleList()
+		[Authorize(Roles = "Yetki Listele")]
+		public async Task<IActionResult> AppUserRoleList()
         {
             await CheckJwtBearer();
             var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllAppUserRoleQueryResponse>>("role/getall");
@@ -115,11 +121,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
         private async Task AppUserRoleViewbag()
         {
-            var appUserRoles = ApiService.HttpClient.GetFromJsonAsync<List<GetAllAppUserRoleQueryResponse>>("role/getall").Result.Select(x=> new GetAllAppUserRoleQueryResponse
-            {
-                ID = x.ID,
-                Name = x.Name
-            });
+            var appUserRoles = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllAppUserRoleQueryResponse>>("role/getall");
 
             ViewBag.AppUserRoleList = appUserRoles;
         }

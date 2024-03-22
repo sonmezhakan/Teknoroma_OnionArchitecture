@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Teknoroma.Application.Features.AppUsers.Queries.GetList;
+using Teknoroma.Application.Features.AppUsers.Queries.GetListSelectIdAndName;
 using Teknoroma.Application.Features.Branches.Queries.GetAll;
+using Teknoroma.Application.Features.Branches.Queries.GetListSelectIdAndName;
 using Teknoroma.Application.Features.Departments.Queries.GetList;
+using Teknoroma.Application.Features.Departments.Queries.GetListSelectIdAndName;
 using Teknoroma.Application.Features.Employees.Command.Create;
 using Teknoroma.Application.Features.Employees.Command.Update;
 using Teknoroma.Application.Features.Employees.Models;
@@ -15,10 +18,11 @@ using Teknoroma.Application.Features.Employees.Queries.GetFullList;
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Authorize(Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+	[Authorize]
 	public class EmployeeController : BaseController
 	{
 		[HttpGet]
+		[Authorize(Roles = "Çalışan Ekle")]
 		public async Task<IActionResult> Create()
 		{
             await CheckJwtBearer();
@@ -27,6 +31,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View();
 		}
 		[HttpPost]
+		[Authorize(Roles = "Çalışan Ekle")]
 		public async Task<IActionResult> Create(CreateEmployeeViewModel model)
 		{
             await CheckJwtBearer();
@@ -48,6 +53,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(model);
         }
 		[HttpGet]
+		[Authorize(Roles = "Çalışan Güncelle")]
 		public async Task<IActionResult> Update(Guid? id)
 		{
             await CheckJwtBearer();
@@ -62,6 +68,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(updateEmployeeViewModel);
 		}
 		[HttpPost]
+		[Authorize(Roles = "Çalışan Güncelle")]
 		public async Task<IActionResult> Update(UpdateEmployeeViewModel model)
 		{
             await CheckJwtBearer();
@@ -83,6 +90,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
         }
 		[HttpGet]
+		[Authorize(Roles = "Çalışan Sil")]
 		public async Task<IActionResult> Delete(Guid id)
 		{
             await CheckJwtBearer();
@@ -91,6 +99,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return RedirectToAction("EmployeeList","Employee");
 		}
 		[HttpGet]
+		[Authorize(Roles = "Çalışan Detayları")]
 		public async Task<IActionResult> Detail(Guid? id)
 		{
             await CheckJwtBearer();
@@ -105,6 +114,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(employeeViewModel);
 		}
 		[HttpGet]
+		[Authorize(Roles = "Çalışan Listele")]
 		public async Task<IActionResult> EmployeeList()
 		{
             await CheckJwtBearer();
@@ -116,6 +126,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Çalışan Raporları")]
 		public async Task<IActionResult> EmployeeReport(DateTime? startDate,DateTime? endDate)
 		{
             await CheckJwtBearer();
@@ -177,34 +188,19 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 		private async Task AppUserViewBag()
 		{
-			var appUser = ApiService.HttpClient.GetFromJsonAsync<List<GetAllAppUserQueryResponse>>("user/getall").Result
-				.Select(x => new GetAllAppUserQueryResponse
-				{
-					ID = x.ID,
-					UserName = x.UserName
-				});
+			var appUser = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameAppUserQueryResponse>>("user/GetAllSelectIdAndName");
 
 			ViewBag.AppUserList = appUser;
 		}
 		private async Task BranchViewBag()
 		{
-			var branches = ApiService.HttpClient.GetFromJsonAsync<List<GetAllBranchQueryResponse>>("branch/getall").Result
-				.Select(x => new GetAllBranchQueryResponse
-				{
-					ID = x.ID,
-					BranchName = x.BranchName
-				});
+			var branches = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameBranchQueryResponse>>("branch/GetAllSelectIdAndName");
 
 			ViewBag.BranchList = branches;
 		}
 		private async Task DepartmentViewBag()
 		{
-			var departments = ApiService.HttpClient.GetFromJsonAsync<List<GetAllDepartmentQueryResponse>>("department/getall").Result
-				.Select(x=> new GetAllDepartmentQueryResponse 
-				{ 
-					ID = x.ID, 
-					DepartmentName = x.DepartmentName 
-				});
+			var departments = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameDepartmentResponse>>("department/GetAllSelectIdAndName");
 
 			ViewBag.DepartmentList = departments;
 		}

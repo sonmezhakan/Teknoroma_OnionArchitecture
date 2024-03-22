@@ -1,23 +1,23 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.OrderDetails;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.OrderDetails.Queries.GetById
 {
 	public class GetByIdOrderDetailQueryHandler : IRequestHandler<GetByIdOrderDetailQueryRequest, GetByIdOrderDetailQueryResponse>
 	{
-		private readonly IOrderDetailService _orderDetailService;
+		private readonly IOrderDetailRepository _orderDetailRepository;
 		private readonly IMapper _mapper;
 
-		public GetByIdOrderDetailQueryHandler(IOrderDetailService orderDetailService,IMapper mapper)
+		public GetByIdOrderDetailQueryHandler(IOrderDetailRepository orderDetailRepository,IMapper mapper)
         {
-			_orderDetailService = orderDetailService;
+			_orderDetailRepository = orderDetailRepository;
 			_mapper = mapper;
 		}
         public async Task<GetByIdOrderDetailQueryResponse> Handle(GetByIdOrderDetailQueryRequest request, CancellationToken cancellationToken)
 		{
-			OrderDetail orderDetail = await _orderDetailService.GetAsync(x => x.ID == request.ID);
+			OrderDetail orderDetail = await _orderDetailRepository.GetAsync(x => x.ID == request.ID);
 
 			GetByIdOrderDetailQueryResponse getByIdOrderDetailQueryResponse = _mapper.Map<GetByIdOrderDetailQueryResponse>(orderDetail);
 

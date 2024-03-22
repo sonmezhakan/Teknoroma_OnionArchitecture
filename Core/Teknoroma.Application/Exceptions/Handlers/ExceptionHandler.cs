@@ -7,6 +7,7 @@ using Teknoroma.Application.Exceptions.Types;
 
 namespace Teknoroma.Application.Exceptions.Handlers
 {
+    //Gelen hataları handle(tetikleyecek) edecek yer
     public abstract class ExceptionHandler
     {
         public Task HandleExceptionAsync(Exception exception)=>
@@ -19,6 +20,7 @@ namespace Teknoroma.Application.Exceptions.Handlers
                 _ => HandleException(exception)//her ikisi de değil ise bunu çalıştıracak
             };
         
+        //bu classın ve metotların abstract olmasının nedeni bu classı inherit edecek classların aşağıdaki metotları doldurması gerektiği zorunlu olması içindir.
         protected abstract Task HandleException(BusinessException businessException);
 
 		protected abstract Task HandleException(ValidationException validationException);

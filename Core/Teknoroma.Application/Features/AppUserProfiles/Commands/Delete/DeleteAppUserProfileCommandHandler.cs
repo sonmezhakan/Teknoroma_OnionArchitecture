@@ -1,22 +1,22 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.AppUserProfiles;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.AppUserProfiles.Command.Delete
 {
 	public class DeleteAppUserProfileCommandHandler : IRequestHandler<DeleteAppUserProfileCommandRequest, Unit>
     {
-		private readonly IAppUserProfileService _appUserProfileService;
+		private readonly IAppUserProfileRepository _appUserProfileRepository;
 
-		public DeleteAppUserProfileCommandHandler(IAppUserProfileService appUserProfileService)
+		public DeleteAppUserProfileCommandHandler(IAppUserProfileRepository appUserProfileRepository)
         {
-			_appUserProfileService = appUserProfileService;
+			_appUserProfileRepository = appUserProfileRepository;
 		}
         public async Task<Unit> Handle(DeleteAppUserProfileCommandRequest request, CancellationToken cancellationToken)
         {
-            AppUserProfile appUserProfile = await _appUserProfileService.GetAsync(x => x.ID == request.ID);
+            AppUserProfile appUserProfile = await _appUserProfileRepository.GetAsync(x => x.ID == request.ID);
 
-            await _appUserProfileService.DeleteAsync(appUserProfile);
+            await _appUserProfileRepository.DeleteAsync(appUserProfile);
 
             return Unit.Value;
         }

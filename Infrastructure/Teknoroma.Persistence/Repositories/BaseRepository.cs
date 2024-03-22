@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Teknoroma.Application.Helpers.IpAddressHelpers;
 using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Interfaces;
-using Teknoroma.Infrastructure.IpAddressHelpers;
 using Teknoroma.Persistence.Context;
 
 namespace Teknoroma.Persistence.Repositories
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, IEntity
+	public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, IEntity
     {
         private readonly TeknoromaContext _context;
         private readonly DbSet<TEntity> _entities;

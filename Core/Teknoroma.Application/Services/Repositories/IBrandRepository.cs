@@ -4,5 +4,6 @@ namespace Teknoroma.Application.Services.Repositories
 {
     public interface IBrandRepository : IBaseRepository<Brand>
     {
+        Task<IQueryable<Brand>> GetAllSelectIdAndNameAsync();
     }
 }

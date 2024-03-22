@@ -1,5 +1,4 @@
 ﻿@using Teknoroma.Application.Features.Products.Models
-
 @model List<ProductListViewModel>
 @{
 	ViewData["Title"] = "Ürün Listesi - Teknoroma";
@@ -49,7 +48,7 @@
 										@item.CategoryName
 									</td>
 									<td>
-										@item.UnitPrice
+										@item.UnitPrice ₺
 									</td>
 									<td>
 										@item.UnitsInStock
@@ -70,15 +69,24 @@
 										@item.Description
 									</td>
 									<td>
-										<div>
-											<a class="btn btn-info btn-block waves-effect waves-light" asp-controller="Product" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
-										</div>
-										<div>
-											<a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="Product" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
-										</div>
-										<div>
-											<a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="Product" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
-										</div>
+										@if (User.IsInRole("Ürün Detayları"))
+										{
+											<div>
+												<a class="btn btn-info btn-block waves-effect waves-light" asp-controller="Product" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
+											</div>
+										}
+										@if (User.IsInRole("Ürün Güncelle"))
+										{
+											<div>
+												<a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="Product" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
+											</div>
+										}
+										@if (User.IsInRole("Ürün Sil"))
+										{
+											<div>
+												<a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="Product" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
+											</div>
+										}
 									</td>
 								</tr>
 							}

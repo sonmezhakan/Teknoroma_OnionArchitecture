@@ -27,7 +27,7 @@ namespace Teknoroma.Application.Features.Customers.Command.Update
 			if (string.IsNullOrEmpty(phoneNumber))
 				return true;
 
-			return int.TryParse(phoneNumber, out _);
+			return Int64.TryParse(phoneNumber, out _);
 		}
 	}
 }

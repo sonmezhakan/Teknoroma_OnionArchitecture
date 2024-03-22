@@ -1,22 +1,22 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.TechnicalProblems;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.TechnicalProblems.Commands.Delete
 {
 	public class DeleteTechnicalProblemCommandHandler : IRequestHandler<DeleteTechnicalProblemCommandRequest, Unit>
     {
-		private readonly ITechnicalProblemService _technicalProblemService;
+		private readonly ITechnicalProblemRepository _technicalProblemRepository;
 
-		public DeleteTechnicalProblemCommandHandler(ITechnicalProblemService technicalProblemService)
+		public DeleteTechnicalProblemCommandHandler(ITechnicalProblemRepository technicalProblemRepository)
         {
-			_technicalProblemService = technicalProblemService;
+			_technicalProblemRepository = technicalProblemRepository;
 		}
         public async Task<Unit> Handle(DeleteTechnicalProblemCommandRequest request, CancellationToken cancellationToken)
         {
-            TechnicalProblem technicalProblem = await _technicalProblemService.GetAsync(x => x.ID == request.ID);
+            TechnicalProblem technicalProblem = await _technicalProblemRepository.GetAsync(x => x.ID == request.ID);
 
-            await _technicalProblemService.DeleteAsync(technicalProblem);
+            await _technicalProblemRepository.DeleteAsync(technicalProblem);
 
             return Unit.Value;
         }

@@ -1,21 +1,21 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.ExpenseServices;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Expenses.Commands.Delete
 {
 	public class DeleteExpenseCommandHandler : IRequestHandler<DeleteExpenseCommandRequest, Unit>
 	{
-		private readonly IExpenseService _expenseService;
+		private readonly IExpenseRepository _expenseRepository;
 
-		public DeleteExpenseCommandHandler(IExpenseService expenseService)
+		public DeleteExpenseCommandHandler(IExpenseRepository expenseRepository)
         {
-			_expenseService = expenseService;
+			_expenseRepository = expenseRepository;
 		}
         public async Task<Unit> Handle(DeleteExpenseCommandRequest request, CancellationToken cancellationToken)
 		{
-			var expense = await _expenseService.GetAsync(x=>x.ID == request.ID);
+			var expense = await _expenseRepository.GetAsync(x=>x.ID == request.ID);
 
-			await _expenseService.DeleteAsync(expense);
+			await _expenseRepository.DeleteAsync(expense);
 
 			return Unit.Value;
 		}

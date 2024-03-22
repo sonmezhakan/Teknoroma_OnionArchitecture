@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Teknoroma.Application.Features.AppUsers.Queries.GetByUserName;
-using Teknoroma.Application.Features.Customers.Queries.GetList;
+using Teknoroma.Application.Features.Customers.Queries.GetListSelectIdAndPhoneNumber;
 using Teknoroma.Application.Features.Employees.Queries.GetById;
 using Teknoroma.Application.Features.OrderDetails.Command.Update;
 using Teknoroma.Application.Features.Orders.Command.Create;
@@ -14,25 +13,25 @@ using Teknoroma.Application.Features.Orders.Queries.GetSalesReport;
 using Teknoroma.Application.Features.Products.Queries.GetById;
 using Teknoroma.Application.Features.Stocks.Models;
 using Teknoroma.Application.Features.Stocks.Queries.GetList;
+using Teknoroma.Application.Helpers.SessionHelpers;
 using Teknoroma.Domain.Enums;
-using Teknoroma.Infrastructure.SessionHelpers;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+	[Area("Admin")]
 	[Authorize]
 	public class OrderController : BaseController
 	{
 		[HttpGet]
-		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
+		[Authorize(Roles = "Sipariş Ekle")]
 		public async Task<IActionResult> Index()
 		{
             await CheckJwtBearer();
-            await BranchViewBag();
+            await GetBranch();
 			await CartViewBag();
 			await CustomerViewBag();
 
-			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockQueryResponse>>($"stock/getall/{ViewBag.Branch.Value}");
+			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockQueryResponse>>($"stock/getall/{Guid.Parse(ViewData["BranchID"].ToString())}");
 
 			if(response == null) return View();
 
@@ -41,13 +40,12 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(stockListViewModel);
 		}
 		[HttpPost]
-		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
+		[Authorize(Roles = "Sipariş Ekle")]
 		public async Task<IActionResult> AddToCart(Guid id, int quantity)
 		{
             await CheckJwtBearer();
-            await BranchViewBag();
 			await CartViewBag();
-
+			await GetBranch();
 			Cart cartSession;
 
 			var getProductResponse = await ApiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"product/getbyid/{id}");
@@ -56,7 +54,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 			CartItem cartItem = Mapper.Map<CartItem>(getProductResponse);
 			cartItem.Quantity = quantity;
-			cartItem.BranchID = Guid.Parse(ViewBag.Branch.Value);
+			cartItem.BranchID = Guid.Parse(ViewData["BranchID"].ToString());
 
 			if(SessionHelper.GetProductFromJson<Cart>(HttpContext.Session, "sepet") == null)
 			{
@@ -85,10 +83,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
+		[Authorize(Roles = "Sipariş Ekle")]
 		public async Task<IActionResult> CartItemDelete(Guid id)
 		{
             await CheckJwtBearer();
+
             Cart cartSession;
 
 			if(SessionHelper.GetProductFromJson<Cart>(HttpContext.Session, "sepet") != null)
@@ -106,11 +105,11 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
+		[Authorize(Roles = "Sipariş Ekle")]
 		public async Task<IActionResult> CompleteCart(Guid customerId)
 		{
             await CheckJwtBearer();
-            await BranchViewBag();
+			await GetBranch();
 			Cart cartSession;
 
 			if(SessionHelper.GetProductFromJson<Cart>(HttpContext.Session, "sepet") != null)
@@ -134,7 +133,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 				CreateOrderCommandRequest createOrderCommandRequest = new CreateOrderCommandRequest
 				{
-					BranchId = Guid.Parse(ViewBag.Branch.Value),
+					BranchId = Guid.Parse(ViewData["BranchID"].ToString()),
 					EmployeeId = CheckAppUser().Result,
 					CustomerId = customerId,
 					OrderDate = DateTime.Now,
@@ -157,13 +156,13 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 
 		[HttpGet]
-		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Sipariş Listele")]
 		public async Task<IActionResult> OrderList()
 		{
             await CheckJwtBearer();
-            await BranchViewBag();
+			await GetBranch();
 
-			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetByBranchIdOrderListQueryResponse>>($"order/GetByBranchIdOrderList/{ViewBag.Branch.Value}");
+			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetByBranchIdOrderListQueryResponse>>($"order/GetByBranchIdOrderList/{Guid.Parse(ViewData["BranchID"].ToString())}");
 
 			if (response == null) return View();
 
@@ -173,17 +172,16 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
+		[Authorize(Roles = "Sipariş Güncelle")]
 		public async Task<IActionResult> UpdateOrderDetail(Guid orderId,Guid productId,int quantity)
 		{
             await CheckJwtBearer();
-            await BranchViewBag();
-
+			await GetBranch();
 			var getProduct = await ApiService.HttpClient.GetFromJsonAsync<GetByIdProductQueryResponse>($"product/getbyid/{productId}");
 
 			UpdateOrderDetailCommandRequest updateOrderDetailCommandRequest = new UpdateOrderDetailCommandRequest
 			{
-				BranchId = Guid.Parse(ViewBag.Branch.Value),
+				BranchId = Guid.Parse(ViewData["BranchID"].ToString()),
 				OrderId = orderId,
 				ProductId = productId,
 				Quantity = quantity,
@@ -196,19 +194,18 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
+		[Authorize(Roles = "Sipariş Sil")]
 		public async Task<IActionResult> DeleteOrderDetail(Guid orderId,Guid productId)
 		{
             await CheckJwtBearer();
-            await BranchViewBag();
-
-			await ApiService.HttpClient.DeleteAsync($"orderdetail/delete?orderId={orderId}&productId={productId}&branchId={Guid.Parse(ViewBag.Branch.Value)}");
+			await GetBranch();
+			await ApiService.HttpClient.DeleteAsync($"orderdetail/delete?orderId={orderId}&productId={productId}&branchId={Guid.Parse(ViewData["BranchID"].ToString())}");
 
 			return RedirectToAction("OrderList", "Order");
 		}
 
 		[HttpGet]
-		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Sipariş Durum Güncelle")]
 		public async Task<IActionResult> UpdateOrderStatu(Guid orderId,OrderStatu orderStatu)
 		{
             await CheckJwtBearer();
@@ -223,7 +220,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		[Authorize(Roles = "Satış Temsilcisi,Şube Müdürü")]
+		[Authorize(Roles = "Sipariş Sil")]
 		public async Task<IActionResult> Delete(Guid id)
 		{
 			await CheckJwtBearer();
@@ -234,7 +231,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 
 
 		[HttpGet]
-		[Authorize(Roles = "Şube Müdürü")]
+		[Authorize(Roles = "Sipariş Raporları")]
 		public async Task<IActionResult> SaleReport()
 		{
             await CheckJwtBearer();
@@ -247,17 +244,15 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(salesReportViewModel);
 		}
 
-		private async Task BranchViewBag()
+		private async Task GetBranch()
 		{
 			Guid getAppUserID = await CheckAppUser();
 
-			var getEmployeeBranch = await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{getAppUserID}");
+			var getEmployee = await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{getAppUserID}");
 
-			ViewBag.Branch = new SelectListItem
-			{
-				Text = getEmployeeBranch.BranchName,
-				Value = getEmployeeBranch.BranchID.ToString(),
-			};
+			ViewData["BranchName"] = getEmployee.BranchName;
+			ViewData["BranchID"] = getEmployee.BranchID;
+
 		}
 
 		private async Task CartViewBag()
@@ -273,12 +268,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 		private async Task CustomerViewBag()
 		{
-			var getCustomerList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllCustomerQueryResponse>>("customer/getall").Result
-				.Select(x=> new GetAllCustomerQueryResponse
-				{ 
-					ID = x.ID,
-					PhoneNumber = x.PhoneNumber
-				});
+			var getCustomerList = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndPhoneNumberCustomerQueryResponse>>("customer/GetAllSelectIdAndPhoneNumber");
 			ViewBag.CustomerList = getCustomerList;
 		}
 

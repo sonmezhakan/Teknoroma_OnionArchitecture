@@ -5,6 +5,7 @@ using Teknoroma.Application.Features.Suppliers.Command.Update;
 using Teknoroma.Application.Features.Suppliers.Models;
 using Teknoroma.Application.Features.Suppliers.Queries.GetById;
 using Teknoroma.Application.Features.Suppliers.Queries.GetList;
+using Teknoroma.Application.Features.Suppliers.Queries.GetListSelectIdAndName;
 using Teknoroma.Application.Features.Suppliers.Queries.GetSupplierSupplyDetailReport;
 using Teknoroma.Application.Features.Suppliers.Queries.GetSupplyReport;
 
@@ -15,22 +16,20 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 	public class SupplierController : BaseController
 	{
 		[HttpGet]
-		[Authorize(Roles = "Depo Temsilcisi,Şube Müdürü")]
+		[Authorize(Roles = "Tedarikçi Ekle")]
 		public async Task<IActionResult> Create()
 		{
 			return View();
 		}
 		[HttpPost]
-		[Authorize(Roles = "Depo Temsilcisi,Şube Müdürü")]
+		[Authorize(Roles = "Tedarikçi Ekle")]
 		public async Task<IActionResult> Create(CreateSupplierViewModel model)
 		{
             await CheckJwtBearer();
             if (!ModelState.IsValid)
-            {
-                 
-                return View(model);
-            }
-            CreateSupplierCommandRequest createSupplier = Mapper.Map<CreateSupplierCommandRequest>(model);
+				return View(model);
+
+			CreateSupplierCommandRequest createSupplier = Mapper.Map<CreateSupplierCommandRequest>(model);
 
             HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("supplier/create", createSupplier);
 
@@ -44,7 +43,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
 		[HttpGet]
-		[Authorize(Roles = "Depo Temsilcisi,Şube Müdürü")]
+		[Authorize(Roles = "Tedarikçi Güncelle")]
 		public async Task<IActionResult> Update(Guid? id)
 		{
             await CheckJwtBearer();
@@ -58,7 +57,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(supplierViewModel);
 		}
 		[HttpPost]
-		[Authorize(Roles = "Depo Temsilcisi,Şube Müdürü")]
+		[Authorize(Roles = "Tedarikçi Güncelle")]
 		public async Task<IActionResult> Update(SupplierViewModel model)
 		{
             await CheckJwtBearer();
@@ -82,7 +81,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return RedirectToAction("Update", model.ID);
         }
 		[HttpGet]
-		[Authorize(Roles = "Depo Temsilcisi,Şube Müdürü")]
+		[Authorize(Roles = "Tedarikçi Sil")]
 		public async Task<IActionResult> Delete(Guid id)
 		{
             await CheckJwtBearer();
@@ -91,7 +90,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return RedirectToAction("SupplierList", "Supplier");
 		}
 		[HttpGet]
-		[Authorize(Roles = "Depo Temsilcisi,Şube Müdürü")]
+		[Authorize(Roles = "Tedarikçi Detayları")]
 		public async Task<IActionResult> Detail(Guid? id)
 		{
 			await CheckJwtBearer();
@@ -107,7 +106,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 			return View(supplierViewModel);
 		}
 		[HttpGet]
-		[Authorize(Roles = "Depo Temsilcisi,Şube Müdürü")]
+		[Authorize(Roles = "Tedarikçi Listele")]
 		public async Task<IActionResult> SupplierList()
 		{
             await CheckJwtBearer();
@@ -119,7 +118,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		[Authorize(Roles = "Şube Müdürü")]
+		[Authorize(Roles = "Tedarikçi Raporları")]
 		public async Task<IActionResult> SupplierReport(DateTime? startDate, DateTime? endDate)
 		{
             await CheckJwtBearer();
@@ -156,11 +155,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
         private async Task SupplierViewBag()
 		{
-			var getSupplierList = ApiService.HttpClient.GetFromJsonAsync<List<GetAllSupplierQueryResponse>>("supplier/getall").Result.Select(x=> new GetAllSupplierQueryResponse
-			{
-				ID = x.ID,
-				CompanyName = x.CompanyName
-			}).ToList();
+			var getSupplierList = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameSupplierQueryResponse>>("supplier/GetAllSelectIdAndName");
 
 			ViewBag.SupplierList = getSupplierList;
 		}

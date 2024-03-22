@@ -1,23 +1,23 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.Categories;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Categories.Commands.Delete
 {
 	public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommandRequest, Unit>
     {
-		private readonly ICategoryService _categoryService;
+		private readonly ICategoryRepository _categoryRepository;
 
-		public DeleteCategoryCommandHandler(ICategoryService categoryService)
+		public DeleteCategoryCommandHandler(ICategoryRepository categoryRepository)
         {
-			_categoryService = categoryService;
+			_categoryRepository = categoryRepository;
 		}
 
         public async Task<Unit> Handle(DeleteCategoryCommandRequest request, CancellationToken cancellationToken)
         {
-            Category category = await _categoryService.GetAsync(x => x.ID == request.ID);
+            Category category = await _categoryRepository.GetAsync(x => x.ID == request.ID);
 
-            await _categoryService.DeleteAsync(category);
+            await _categoryRepository.DeleteAsync(category);
 
 			return Unit.Value;
 		}

@@ -18,11 +18,12 @@ namespace Teknoroma.Application.Exceptions
             _next = next;
             _httpExceptionHandler = new HttpExceptionHandler();
         }
-
+        //Kodlar Invoke metotu içerisinden geçerek hata kontrülü sağlanır. Eğer bu yöntemi uygulamasaydık. Tüm kodlarımız için ayrı ayrı try catch yapısı kurmak zorunda kalırdık.
         public async Task Invoke(HttpContext context)
         {
             try
             {
+                //Gelen isteğin çalıştır.
                 await _next(context);
             }
             catch (Exception exception)

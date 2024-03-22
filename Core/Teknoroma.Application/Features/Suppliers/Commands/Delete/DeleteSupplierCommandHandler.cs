@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.Suppliers;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Suppliers.Command.Delete
 {
@@ -8,19 +8,19 @@ namespace Teknoroma.Application.Features.Suppliers.Command.Delete
 	public class DeleteSupplierCommandHandler:IRequestHandler<DeleteSupplierCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
-		private readonly ISupplierService _supplierService;
+		private readonly ISupplierRepository _supplierRepository;
 
-		public DeleteSupplierCommandHandler(IMapper mapper,ISupplierService supplierService )
+		public DeleteSupplierCommandHandler(IMapper mapper,ISupplierRepository supplierRepository )
 		{
 			_mapper = mapper;
-			_supplierService = supplierService;
+			_supplierRepository = supplierRepository;
 		}
 
 		public async Task<Unit> Handle(DeleteSupplierCommandRequest request, CancellationToken cancellationToken)
 		{
-			Teknoroma.Domain.Entities.Supplier supplier = await _supplierService.GetAsync(x=>x.ID == request.ID);
+			Teknoroma.Domain.Entities.Supplier supplier = await _supplierRepository.GetAsync(x=>x.ID == request.ID);
 
-			await _supplierService.DeleteAsync(supplier);
+			await _supplierRepository.DeleteAsync(supplier);
 
 			return Unit.Value;
 		}

@@ -1,19 +1,19 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.Employees;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Employees.Queries.GetEmployeeSellingReport
 {
 	public class GetEmployeeSellingReportQueryHandler : IRequestHandler<GetEmployeeSellingReportQueryRequest, List<GetEmployeeSellingReportQueryResponse>>
     {
-		private readonly IEmployeeService _employeeService;
+		private readonly IEmployeeRepository _employeeRepository;
 
-		public GetEmployeeSellingReportQueryHandler(IEmployeeService employeeService)
+		public GetEmployeeSellingReportQueryHandler(IEmployeeRepository employeeRepository)
         {
-			_employeeService = employeeService;
+			_employeeRepository = employeeRepository;
 		}
         public async Task<List<GetEmployeeSellingReportQueryResponse>> Handle(GetEmployeeSellingReportQueryRequest request, CancellationToken cancellationToken)
         {
-            var employees = await _employeeService.GetFullAll();
+            var employees = await _employeeRepository.GetFullAll();
 
             var bestSellingEmployees = employees.GroupBy(employee=>employee.AppUser.UserName)
                 .Select(grouped=> new

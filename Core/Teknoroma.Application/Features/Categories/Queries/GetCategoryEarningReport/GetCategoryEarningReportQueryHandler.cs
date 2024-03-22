@@ -1,21 +1,19 @@
 ﻿using MediatR;
-using Teknoroma.Application.Features.Categories.Queries.GetCategorySellingReport;
-using Teknoroma.Application.Services.Categories;
 using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Categories.Queries.GetCategoryEarningReport
 {
-    public class GetCategoryEarningReportQueryHandler : IRequestHandler<GetCategoryEarningReportQueryRequest, List<GetCategoryEarningReportQueryResponse>>
+	public class GetCategoryEarningReportQueryHandler : IRequestHandler<GetCategoryEarningReportQueryRequest, List<GetCategoryEarningReportQueryResponse>>
     {
-		private readonly ICategoryService _categoryService;
+        private readonly ICategoryRepository _categoryRepository;
 
-		public GetCategoryEarningReportQueryHandler(ICategoryService categoryService)
+		public GetCategoryEarningReportQueryHandler(ICategoryRepository categoryRepository)
         {
-			_categoryService = categoryService;
+			_categoryRepository = categoryRepository;
 		}
         public async Task<List<GetCategoryEarningReportQueryResponse>> Handle(GetCategoryEarningReportQueryRequest request, CancellationToken cancellationToken)
         {
-            var categories = await _categoryService.GetAllAsync();
+            var categories = await _categoryRepository.GetAllAsync();
 
             var bestEarningCategories = categories.GroupBy(category => category.CategoryName)
                 .Select(grouped => new

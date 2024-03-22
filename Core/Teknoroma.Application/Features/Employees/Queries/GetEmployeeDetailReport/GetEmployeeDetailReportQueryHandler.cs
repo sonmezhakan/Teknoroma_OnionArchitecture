@@ -1,19 +1,19 @@
 ﻿using MediatR;
-using Teknoroma.Application.Services.Employees;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Employees.Queries.GetEmployeeDetailReport
 {
 	public class GetEmployeeDetailReportQueryHandler : IRequestHandler<GetEmployeeDetailReportQueryRequest, List<GetEmployeeDetailReportQueryResponse>>
     {
-		private readonly IEmployeeService _employeeService;
+		private readonly IEmployeeRepository _employeeRepository;
 
-		public GetEmployeeDetailReportQueryHandler(IEmployeeService employeeService)
+		public GetEmployeeDetailReportQueryHandler(IEmployeeRepository employeeRepository)
         {
-			_employeeService = employeeService;
+			_employeeRepository = employeeRepository;
 		}
         public async Task<List<GetEmployeeDetailReportQueryResponse>> Handle(GetEmployeeDetailReportQueryRequest request, CancellationToken cancellationToken)
         {
-            var employees = await _employeeService.GetFullAll();
+            var employees = await _employeeRepository.GetFullAll();
 
             List<GetEmployeeDetailReportQueryResponse> getByIdDetailReportQueryResponses = new List<GetEmployeeDetailReportQueryResponse>();
 

@@ -11,6 +11,7 @@ using Teknoroma.Application.Features.Brands.Quries.GetBrandEarningReport;
 using Teknoroma.Application.Features.Brands.Quries.GetBrandSellingReport;
 using Teknoroma.Application.Features.Brands.Quries.GetById;
 using Teknoroma.Application.Features.Brands.Quries.GetList;
+using Teknoroma.Application.Features.Brands.Quries.GetListSelectIdAndName;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Brands.Profiles
@@ -32,6 +33,8 @@ namespace Teknoroma.Application.Features.Brands.Profiles
 
 			CreateMap<BrandEarningReportViewModel, GetBrandEarningReportQueryResponse>().ReverseMap();
 			CreateMap<BrandSellingReportViewModel, GetBrandSellingReportQueryResponse>().ReverseMap();
+
+			CreateMap<Brand, GetAllSelectIdAndNameBrandQueryResponse>().ReverseMap();
 		}
 	}
 }

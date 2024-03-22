@@ -4,6 +4,6 @@ namespace Teknoroma.Application.Services.Repositories
 {
     public interface IDepartmentRepository : IBaseRepository<Department>
     {
-
+        Task<IQueryable<Department>> GetAllSelectIdAndNameAsync();
     }
 }

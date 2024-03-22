@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Teknoroma.Application.Services.EmailServices;
-using Teknoroma.Application.Services.Orders;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Orders.Command.Update
@@ -10,20 +10,20 @@ namespace Teknoroma.Application.Features.Orders.Command.Update
 	public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
-		private readonly IOrderService _orderService;
+		private readonly IOrderRepository _orderRepository;
 		private readonly IMailService _mailService;
 		private readonly UserManager<AppUser> _userManager;
 
-		public UpdateOrderCommandHandler(IMapper mapper, IOrderService orderService,IMailService mailService,UserManager<AppUser> userManager)
+		public UpdateOrderCommandHandler(IMapper mapper, IOrderRepository orderRepository,IMailService mailService,UserManager<AppUser> userManager)
         {
 			_mapper = mapper;
-			_orderService = orderService;
+			_orderRepository = orderRepository;
 			_mailService = mailService;
 			_userManager = userManager;
 		}
         public async Task<Unit> Handle(UpdateOrderCommandRequest request, CancellationToken cancellationToken)
 		{
-			Order order = await _orderService.GetAsync(x => x.ID == request.ID);
+			Order order = await _orderRepository.GetAsync(x => x.ID == request.ID);
 
 			if(order.OrderStatu != Domain.Enums.OrderStatu.Delivered && request.OrderStatu == Domain.Enums.OrderStatu.Delivered)
 			{
@@ -41,7 +41,7 @@ namespace Teknoroma.Application.Features.Orders.Command.Update
 
 			order = _mapper.Map(request,order);
 
-			await _orderService.UpdateAsync(order);
+			await _orderRepository.UpdateAsync(order);
 
 			return Unit.Value;    
 		}

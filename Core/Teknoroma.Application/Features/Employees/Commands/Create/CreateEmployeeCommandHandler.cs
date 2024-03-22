@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Teknoroma.Application.Features.Employees.Rules;
-using Teknoroma.Application.Services.Employees;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Employees.Command.Create
@@ -9,13 +9,13 @@ namespace Teknoroma.Application.Features.Employees.Command.Create
 	public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
-		private readonly IEmployeeService _employeeService;
+		private readonly IEmployeeRepository _employeeRepository;
 		private readonly EmployeeBusinessRules _employeeBusinessRules;
 
-		public CreateEmployeeCommandHandler(IMapper mapper,IEmployeeService employeeService,EmployeeBusinessRules employeeBusinessRules)
+		public CreateEmployeeCommandHandler(IMapper mapper,IEmployeeRepository employeeRepository,EmployeeBusinessRules employeeBusinessRules)
 		{
 			_mapper = mapper;
-			_employeeService = employeeService;
+			_employeeRepository = employeeRepository;
 			_employeeBusinessRules = employeeBusinessRules;
 		}
 
@@ -26,7 +26,7 @@ namespace Teknoroma.Application.Features.Employees.Command.Create
 
 			Employee employee = _mapper.Map<Employee>(request);
 
-			await _employeeService.AddAsync(employee);
+			await _employeeRepository.AddAsync(employee);
 
 			return Unit.Value;
 		}

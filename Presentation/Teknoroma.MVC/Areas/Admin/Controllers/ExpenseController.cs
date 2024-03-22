@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Teknoroma.Application.Features.AppUsers.Queries.GetByUserName;
 using Teknoroma.Application.Features.Expenses.Commands.Create;
 using Teknoroma.Application.Features.Expenses.Commands.Update;
@@ -12,10 +11,11 @@ using Teknoroma.Application.Features.Expenses.Queries.GetList;
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Authorize(Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+	[Authorize]
 	public class ExpenseController : BaseController
 	{
 		[HttpGet]
+		[Authorize(Roles = "Gider Ekle")]
 		public async Task<IActionResult> Create()
 		{
 			await CheckJwtBearer();
@@ -23,6 +23,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Gider Ekle")]
 		public async Task<IActionResult> Create(CreateExpenseViewModel model)
 		{
 			await CheckJwtBearer();
@@ -45,6 +46,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Gider Güncelle")]
 		public async Task<IActionResult> Update(Guid? id)
 		{
 			await CheckJwtBearer();
@@ -59,6 +61,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Gider Güncelle")]
 		public async Task<IActionResult> Update(ExpenseViewModel model)
 		{
 			await CheckJwtBearer();
@@ -80,6 +83,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Gider Sil")]
 		public async Task<IActionResult> Delete(Guid id)
 		{
 			await CheckJwtBearer();
@@ -90,6 +94,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Gider Detayları")]
 		public async Task<IActionResult> Detail(Guid? id)
 		{
 			await CheckJwtBearer();
@@ -104,6 +109,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Gider Listele")]
 		public async Task<IActionResult> ExpenseList()
 		{
 			await CheckJwtBearer();
@@ -118,6 +124,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Gider Raporları")]
 		public async Task<IActionResult> ExpenseReport(DateTime? startDate, DateTime? endDate)
 		{
 			await CheckJwtBearer();

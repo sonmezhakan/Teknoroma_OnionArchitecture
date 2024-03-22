@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.Customers;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Customers.Queries.GetById
@@ -8,17 +8,17 @@ namespace Teknoroma.Application.Features.Customers.Queries.GetById
 	public class GetByIdCustomerQueryHandler:IRequestHandler<GetByIdCustomerQueryRequest, GetByIdCustomerQueryResponse>
 	{
 		private readonly IMapper _mapper;
-		private readonly ICustomerService _customerService;
+		private readonly ICustomerRepository _customerRepository;
 
-		public GetByIdCustomerQueryHandler(IMapper mapper, ICustomerService customerService)
+		public GetByIdCustomerQueryHandler(IMapper mapper, ICustomerRepository customerRepository)
 		{
 			_mapper = mapper;
-			_customerService = customerService;
+			_customerRepository = customerRepository;
 		}
 
 		public async Task<GetByIdCustomerQueryResponse> Handle(GetByIdCustomerQueryRequest request, CancellationToken cancellationToken)
 		{
-			Customer customer = await _customerService.GetAsync(x => x.ID == request.ID);
+			Customer customer = await _customerRepository.GetAsync(x => x.ID == request.ID);
 
 			GetByIdCustomerQueryResponse response = _mapper.Map<GetByIdCustomerQueryResponse>(customer);
 

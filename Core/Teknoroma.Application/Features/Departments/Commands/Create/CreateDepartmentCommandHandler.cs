@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Teknoroma.Application.Features.Departments.Rules;
-using Teknoroma.Application.Services.Departments;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Departments.Command.Create
@@ -9,13 +9,13 @@ namespace Teknoroma.Application.Features.Departments.Command.Create
 	public class CreateDepartmentCommandHandler:IRequestHandler<CreateDepartmentCommandRequest, Unit>
 	{
 		private readonly IMapper _mapper;
-		private readonly IDepartmentService _departmentService;
+		private readonly IDepartmentRepository _departmentRepository;
 		private readonly DepartmentBusinessRules _departmentBusinessRules;
 
-		public CreateDepartmentCommandHandler(IMapper mapper, IDepartmentService departmentService,DepartmentBusinessRules departmentBusinessRules)
+		public CreateDepartmentCommandHandler(IMapper mapper, IDepartmentRepository departmentRepository,DepartmentBusinessRules departmentBusinessRules)
         {
 			_mapper = mapper;
-			_departmentService = departmentService;
+			_departmentRepository = departmentRepository;
 			_departmentBusinessRules = departmentBusinessRules;
 		}
 
@@ -26,7 +26,7 @@ namespace Teknoroma.Application.Features.Departments.Command.Create
 
 			Department department = _mapper.Map<Department>(request);
 
-			await _departmentService.AddAsync(department);
+			await _departmentRepository.AddAsync(department);
 
 			return Unit.Value;
 		}

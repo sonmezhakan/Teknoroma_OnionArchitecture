@@ -15,7 +15,7 @@ namespace Teknoroma.WebApi.Controllers
     public class StockInputController : BaseController
     {
         [HttpPost]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Depo Temsilcisi,Şube Müdürü")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Stok Girişi")]
 		public async Task<IActionResult> Create(CreateStockInputCommandRequest createStockInputCommandRequest)
         {
             var result = await Mediator.Send(createStockInputCommandRequest);
@@ -23,7 +23,7 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
         [HttpPut]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Depo Temsilcisi,Şube Müdürü")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Stok Girişi Güncelle")]
 		public async Task<IActionResult> Update(UpdateStockInputCommandRequest updateStockInputCommandRequest)
         {
             var result = await Mediator.Send(updateStockInputCommandRequest);
@@ -31,7 +31,7 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
         [HttpDelete("{id}")]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Depo Temsilcisi,Şube Müdürü")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Stok Girişi Sil")]
 		public async Task<IActionResult> Delete(Guid id)
         {
             var result = await Mediator.Send(new DeleteStockInputCommandRequest { ID = id });
@@ -39,7 +39,7 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
         [HttpGet("{id}")]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Depo Temsilcisi,Şube Müdürü")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Stok Girişi Sorgula")]
 		public async Task<IActionResult> GetById(Guid id)
         {
             var result = await Mediator.Send(new GetByIdStockInputQueryRequest { ID = id });
@@ -47,7 +47,7 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
         [HttpGet]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Depo Temsilcisi,Şube Müdürü")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Stok Girişi Listele")]
 		public async Task<IActionResult> GetAll()
         {
             var result = await Mediator.Send(new GetAllStockInputQueryRequest());
@@ -55,7 +55,7 @@ namespace Teknoroma.WebApi.Controllers
             return Ok(result);
         }
         [HttpGet("{id}")]
-		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Depo Temsilcisi,Şube Müdürü")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Stok Girişi Listele")]
 		public async Task<IActionResult> GetByBranchIdList(Guid id)
         {
             var result = await Mediator.Send(new GetByBranchIdStockInputQueryRequest { BranchId = id });

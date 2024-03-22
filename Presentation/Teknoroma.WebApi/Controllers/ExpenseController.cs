@@ -11,10 +11,11 @@ namespace Teknoroma.WebApi.Controllers
 {
 	[Route("api/[controller]/[action]")]
 	[ApiController]
-	[Authorize(AuthenticationSchemes = "Bearer", Roles = "Şube Müdürü,Muhasebe Temsilcisi")]
+	[Authorize(AuthenticationSchemes = "Bearer")]
 	public class ExpenseController : BaseController
 	{
 		[HttpPost]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Gider Ekle")]
 		public async Task<IActionResult> Create(CreateExpenseCommandRequest createExpenseCommandRequest)
 		{
 			var result = await Mediator.Send(createExpenseCommandRequest);
@@ -23,6 +24,7 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
 		[HttpPut]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Gider Güncelle")]
 		public async Task<IActionResult> Update(UpdateExpenseCommandRequest updateExpenseCommandRequest)
 		{
 			var result = await Mediator.Send(updateExpenseCommandRequest);
@@ -31,6 +33,7 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
 		[HttpDelete("{id}")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Gider Sil")]
 		public async Task<IActionResult> Delete(Guid id)
 		{
 			var result = await Mediator.Send(new DeleteExpenseCommandRequest { ID = id });
@@ -39,6 +42,7 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
 		[HttpGet("{id}")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Gider Sorgula")]
 		public async Task<IActionResult> GetById(Guid id)
 		{
 			var result = await Mediator.Send(new GetByIdExpenseQueryRequest { ID = id });
@@ -47,6 +51,7 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Gider Listele")]
 		public async Task<IActionResult> GetAll()
 		{
 			var result = await Mediator.Send(new GetAllExpenseQueryRequest());
@@ -55,6 +60,7 @@ namespace Teknoroma.WebApi.Controllers
 		}
 
 		[HttpGet("{startDate}/{endDate}")]
+		[Authorize(AuthenticationSchemes = "Bearer", Roles = "Gider Raporları")]
 		public async Task<IActionResult> ExpenseReport(string startDate, string endDate)
 		{
 			var result = await Mediator.Send(new GetExpenseDetailReportRequest { StartDate = DateTime.Parse(startDate), EndDate = DateTime.Parse(endDate) });

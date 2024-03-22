@@ -1,22 +1,22 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.ExpenseServices;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Expenses.Queries.GetById
 {
 	public class GetByIdExpenseQueryHandler : IRequestHandler<GetByIdExpenseQueryRequest, GetByIdExpenseQueryResponse>
 	{
-		private readonly IExpenseService _expenseService;
+		private readonly IExpenseRepository _expenseRepository;
 		private readonly IMapper _mapper;
 
-		public GetByIdExpenseQueryHandler(IExpenseService expenseService,IMapper mapper)
+		public GetByIdExpenseQueryHandler(IExpenseRepository expenseRepository,IMapper mapper)
         {
-			_expenseService = expenseService;
+			_expenseRepository = expenseRepository;
 			_mapper = mapper;
 		}
         public async Task<GetByIdExpenseQueryResponse> Handle(GetByIdExpenseQueryRequest request, CancellationToken cancellationToken)
 		{
-			var expense = await _expenseService.GetAsync(x => x.ID == request.ID);
+			var expense = await _expenseRepository.GetAsync(x => x.ID == request.ID);
 
 			GetByIdExpenseQueryResponse getByIdExpenseQueryResponse = _mapper.Map<GetByIdExpenseQueryResponse>(expense);
 

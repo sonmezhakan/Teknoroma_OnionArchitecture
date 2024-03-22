@@ -68,15 +68,28 @@
 										}
 
 										<td>
-											<div>
-												<a class="btn btn-info btn-block waves-effect waves-light" asp-controller="Customer" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
-											</div>
-											<div>
-												<a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="Customer" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
-											</div>
-											<div>
-												<a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="Customer" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
-											</div>
+											@if (User.IsInRole("Müşteri Detayları"))
+											{
+												<div>
+													<a class="btn btn-info btn-block waves-effect waves-light" asp-controller="Customer" asp-action="Detail" asp-route-id="@item.ID">Detaylar</a>
+												</div>
+											}
+											@if (User.IsInRole("Müşteri Güncelle"))
+											{
+												<div>
+													<a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="Customer" asp-action="Update" asp-route-id="@item.ID">Güncelle</a>
+												</div>
+											}
+											@if (User.IsInRole("Müşteri Sil"))
+											{
+												<div>
+													<a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="Customer" asp-action="Delete" asp-route-id="@item.ID">Sil</a>
+												</div>
+											}
+
+											
+											
+											
 										</td>
 									</tr>
 								}

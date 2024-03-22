@@ -1,27 +1,26 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.Stocks;
-using Teknoroma.Domain.Entities;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.Stocks.Command.Update
 {
 	public class UpdateStockCommandHandler : IRequestHandler<UpdateStockCommandRequest, Unit>
     {
         private readonly IMapper _mapper;
-		private readonly IStockService _stockService;
+		private readonly IStockRepository _stockRepository;
 
-		public UpdateStockCommandHandler(IMapper mapper, IStockService stockService)
+		public UpdateStockCommandHandler(IMapper mapper, IStockRepository stockRepository)
         {
             _mapper = mapper;
-			_stockService = stockService;
+			_stockRepository = stockRepository;
 		}
 
         public async Task<Unit> Handle(UpdateStockCommandRequest request, CancellationToken cancellationToken)
         {
-            var stock = await _stockService.GetAsync(x => x.BranchId == request.BranchId && x.ProductId == request.ProductId);
+            var stock = await _stockRepository.GetAsync(x => x.BranchId == request.BranchId && x.ProductId == request.ProductId);
 
             stock = _mapper.Map(request, stock);
-            await _stockService.UpdateAsync(stock);
+            await _stockRepository.UpdateAsync(stock);
 
             return Unit.Value;
         }

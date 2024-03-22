@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.Orders;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Orders.Queries.GetById
@@ -8,16 +8,16 @@ namespace Teknoroma.Application.Features.Orders.Queries.GetById
 	public class GetByIdOrderQueryHandler : IRequestHandler<GetByIdOrderQueryRequest, GetByIdOrderQueryResponse>
 	{
 		private readonly IMapper _mapper;
-		private readonly IOrderService _orderService;
+		private readonly IOrderRepository _orderRepository;
 
-		public GetByIdOrderQueryHandler(IMapper mapper, IOrderService orderService)
+		public GetByIdOrderQueryHandler(IMapper mapper, IOrderRepository orderRepository)
         {
 			_mapper = mapper;
-			_orderService = orderService;
+			_orderRepository = orderRepository;
 		}
         public async Task<GetByIdOrderQueryResponse> Handle(GetByIdOrderQueryRequest request, CancellationToken cancellationToken)
 		{
-			Order order = await _orderService.GetAsync(x => x.ID == request.ID);
+			Order order = await _orderRepository.GetAsync(x => x.ID == request.ID);
 
 			GetByIdOrderQueryResponse getByIdOrderQueryResponse = _mapper.Map<GetByIdOrderQueryResponse>(order);
 

@@ -1,7 +1,7 @@
 ﻿@using Teknoroma.Application.Features.TechnicalProblems.Models
 @model List<TechnicalProblemViewModel>
 @{
-    ViewData["Title"] = "Teknik Problem Listesi - Teknoroma";
+    ViewData["Title"] = " - Teknoroma";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -61,23 +61,35 @@
                                         </td>
                                     }
                                     <td>
-                                        <div>
-                                            <a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="UpdateTechnicalStatu" asp-route-id="@technicalProblem.ID" asp-route-technicalProblemStatu="@Teknoroma.Domain.Enums.TechnicalProblemStatu.Processed">İşleme Alındı</a>
-                                        </div>
-                                        <div>
-                                            <a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="UpdateTechnicalStatu" asp-route-id="@technicalProblem.ID" asp-route-technicalProblemStatu="@Teknoroma.Domain.Enums.TechnicalProblemStatu.ProblemSolved">Sorun Çözüldü</a>
-                                        </div>
+                                        @if(User.IsInRole("Teknik Problem Güncelle"))
+                                        {
+                                            <div>
+                                                <a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="UpdateTechnicalStatu" asp-route-id="@technicalProblem.ID" asp-route-technicalProblemStatu="@Teknoroma.Domain.Enums.TechnicalProblemStatu.Processed">İşleme Alındı</a>
+                                            </div>
+                                            <div>
+                                                <a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="UpdateTechnicalStatu" asp-route-id="@technicalProblem.ID" asp-route-technicalProblemStatu="@Teknoroma.Domain.Enums.TechnicalProblemStatu.ProblemSolved">Sorun Çözüldü</a>
+                                            </div>
+                                        }
                                     </td>
                                     <td>
-                                        <div>
-                                            <a class="btn btn-info btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="Detail" asp-route-id="@technicalProblem.ID">Detaylar</a>
-                                        </div>
-                                        <div>
-                                            <a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="Update" asp-route-id="@technicalProblem.ID">Güncelle</a>
-                                        </div>
-                                        <div>
-                                            <a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="TechnicalProblem" asp-route-id="@technicalProblem.ID">Sil</a>
-                                        </div>
+                                        @if (User.IsInRole("Teknik Problem Detayları"))
+                                        {
+                                            <div>
+                                                <a class="btn btn-info btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="Detail" asp-route-id="@technicalProblem.ID">Detaylar</a>
+                                            </div>
+                                        }
+                                        @if (User.IsInRole("Teknik Problem Güncelle"))
+                                        {
+                                            <div>
+                                                <a class="btn btn-warning btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="Update" asp-route-id="@technicalProblem.ID">Güncelle</a>
+                                            </div>
+                                        }
+                                        @if (User.IsInRole("Teknik Problem Sil"))
+                                        {
+                                            <div>
+                                                <a class="btn btn-danger btn-block waves-effect waves-light" asp-controller="TechnicalProblem" asp-action="TechnicalProblem" asp-route-id="@technicalProblem.ID">Sil</a>
+                                            </div>
+                                        }
                                     </td>
                                 </tr>
                             }

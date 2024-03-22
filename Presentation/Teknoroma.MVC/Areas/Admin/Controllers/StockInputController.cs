@@ -1,28 +1,26 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Teknoroma.Application.Features.AppUsers.Queries.GetByUserName;
-using Teknoroma.Application.Features.Branches.Queries.GetAll;
+using Teknoroma.Application.Features.Branches.Queries.GetListSelectIdAndName;
 using Teknoroma.Application.Features.Employees.Queries.GetById;
-using Teknoroma.Application.Features.Products.Queries.GetList;
+using Teknoroma.Application.Features.Products.Queries.GetListSelectIdAndName;
 using Teknoroma.Application.Features.StockInputs.Command.Create;
 using Teknoroma.Application.Features.StockInputs.Command.Update;
 using Teknoroma.Application.Features.StockInputs.Models;
 using Teknoroma.Application.Features.StockInputs.Queries.GetByBranchIdList;
 using Teknoroma.Application.Features.StockInputs.Queries.GetById;
 using Teknoroma.Application.Features.StockInputs.Queries.GetList;
-using Teknoroma.Application.Features.Stocks.Queries.GetByBranchId;
-using Teknoroma.Application.Features.Suppliers.Queries.GetList;
+using Teknoroma.Application.Features.Suppliers.Queries.GetListSelectIdAndName;
 
 namespace Teknoroma.MVC.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+	[Area("Admin")]
 	[Authorize]
 	public class StockInputController : BaseController
     {
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Stok Girişi")]
 		public async Task<IActionResult> Create()
         {
             await CheckJwtBearer();
@@ -30,18 +28,16 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Stok Girişi")]
 		public async Task<IActionResult> Create(CreateStockInputViewModel model)
         {
             await CheckJwtBearer();
 			await ViewBagList();
 			if (!ModelState.IsValid)
-            {
 				return View(model);
-            }
 
-            CreateStockInputCommandRequest createStockInput = Mapper.Map<CreateStockInputCommandRequest>(model);
-            createStockInput.BranchID = Guid.Parse(ViewBag.Branch.Value);
+			CreateStockInputCommandRequest createStockInput = Mapper.Map<CreateStockInputCommandRequest>(model);
+            createStockInput.BranchID = Guid.Parse(ViewData["BranchID"].ToString());
             createStockInput.AppUserID = CheckAppUser().Result;
 
             HttpResponseMessage response = await ApiService.HttpClient.PostAsJsonAsync("stockInput/create", createStockInput);
@@ -53,7 +49,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Stok Girişi Güncelle")]
 		public async Task<IActionResult> Update(Guid? id)
         {
             await CheckJwtBearer();
@@ -71,18 +67,16 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Stok Girişi Güncelle")]
 		public async Task<IActionResult> Update(StockInputViewModel model)
         {
             await CheckJwtBearer();
             await ViewBagList();
 			if (!ModelState.IsValid)
-            {
-                 
-                return View(model);
-            }
-            UpdateStockInputCommandRequest updateStockInput = Mapper.Map<UpdateStockInputCommandRequest>(model);
-            updateStockInput.BranchID = Guid.Parse(ViewBag.Branch.Value);
+				return View(model);
+
+			UpdateStockInputCommandRequest updateStockInput = Mapper.Map<UpdateStockInputCommandRequest>(model);
+            updateStockInput.BranchID = Guid.Parse(ViewData["BranchID"].ToString());
 
             HttpResponseMessage response = await ApiService.HttpClient.PutAsJsonAsync("stockInput/update", updateStockInput);
 
@@ -93,7 +87,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Stok Girişi Sil")]
 		public async Task<IActionResult> Delete(Guid id)
         {
             await CheckJwtBearer();
@@ -103,7 +97,7 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Stok Giriş Detayları")]
 		public async Task<IActionResult> Detail(Guid? id)
         {
             await CheckJwtBearer();
@@ -121,14 +115,14 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		[Authorize(Roles = "Şube Müdürü,Depo Temsilcisi")]
+		[Authorize(Roles = "Stok Girişi Listele")]
 		public async Task<IActionResult> StockInputList()
         {
             await CheckJwtBearer();
             await BranchViewBag();
-            await BranchIDViewBag();
+            await GetBranch();
 
-            var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockInputQueryResponse>>($"stockInput/GetByBranchIdList/{ViewBag.Branch.Value}");
+            var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllStockInputQueryResponse>>($"stockInput/GetByBranchIdList/{ViewData["BranchID"]}");
 
             if (response == null) return View();
 
@@ -137,28 +131,13 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
             return View(stockInputListViewModel);
         }
 
-        [HttpGet]
-		[Authorize(Roles = "Şube Müdürü")]
-		public async Task<IActionResult> StockTrackingReport()
-        {
-            await CheckJwtBearer();
-            await BranchIDViewBag();
-
-			var response = await ApiService.HttpClient.GetFromJsonAsync<List<GetByBranchIdStockQueryResponse>>($"stock/getbybranchid/{ViewBag.Branch.Value}");
-            if(response == null) return View();
-
-            
-
-            return View();
-        }
-
         private async Task<GetByIdStockInputQueryResponse> GetByStockInputId(Guid id)
         {
            return await ApiService.HttpClient.GetFromJsonAsync<GetByIdStockInputQueryResponse>($"stockInput/getbyid/{id}");
         }
         private async Task StockInputViewBag()
         {
-			var stockInputs = await ApiService.HttpClient.GetFromJsonAsync<List<GetByBranchIdStockInputQueryResponse>>($"stockInput/GetByBranchIdList/{Guid.Parse(ViewBag.Branch.Value)}");
+			var stockInputs = await ApiService.HttpClient.GetFromJsonAsync<List<GetByBranchIdStockInputQueryResponse>>($"stockInput/GetByBranchIdList/{Guid.Parse(ViewData["BranchID"].ToString())}");
 
             ViewBag.StockInputList = stockInputs;
         }
@@ -166,36 +145,30 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         private async Task ViewBagList()
         {
             await BranchViewBag();
-            await BranchIDViewBag();
+            await GetBranch();
             await StockInputViewBag();
             await ProductViewBag();
             await SupplierViewBag();
         }
         private async Task BranchViewBag()
         {
-            var branches = ApiService.HttpClient.GetFromJsonAsync<List<GetAllBranchQueryResponse>>("branch/getall").Result
-                .Select(branch => new GetAllBranchQueryResponse
-                {
-                    BranchName = branch.BranchName,
-                    ID = branch.ID
-                });
+            var branches =await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameBranchQueryResponse>>("branch/GetAllSelectIdAndName");
 
             ViewBag.BranchList = branches;
         }
 
-        private async Task BranchIDViewBag()
-        {
-            Guid getAppUserID = await CheckAppUser();
+		private async Task GetBranch()
+		{
+			Guid getAppUserID = await CheckAppUser();
 
-            var getEmployeeBranch = await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{getAppUserID}");
+			var getEmployee = await ApiService.HttpClient.GetFromJsonAsync<GetByIdEmployeeQueryResponse>($"employee/getbyid/{getAppUserID}");
 
-            ViewBag.Branch = new SelectListItem
-            {
-                Text = getEmployeeBranch.BranchName,
-                Value = getEmployeeBranch.BranchID.ToString(),
-            };
-        }
-        private async Task<Guid> CheckAppUser()
+			ViewData["BranchName"] = getEmployee.BranchName;
+			ViewData["BranchID"] = getEmployee.BranchID;
+
+		}
+
+		private async Task<Guid> CheckAppUser()
         {
             Guid getAppUserID = ApiService.HttpClient.GetFromJsonAsync<GetByUserNameAppUserQueryResponse>($"user/GetByUserName/{User.Identity.Name}").Result.ID;
 
@@ -203,23 +176,13 @@ namespace Teknoroma.MVC.Areas.Admin.Controllers
         }
         private async Task ProductViewBag()
         {
-            var products = ApiService.HttpClient.GetFromJsonAsync<List<GetAllProductQueryResponse>>("product/getall").Result
-                .Select(produduct => new GetAllProductQueryResponse
-                {
-                    ProductName = produduct.ProductName,
-                    ID = produduct.ID
-                });
+            var products =await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameProductQueryResponse>>("product/GetAllSelectIdAndName");
 
             ViewBag.ProductList = products;
         }
         private async Task SupplierViewBag()
         {
-            var suppliers = ApiService.HttpClient.GetFromJsonAsync<List<GetAllSupplierQueryResponse>>("supplier/getall").Result
-                .Select(supplier => new GetAllSupplierQueryResponse
-                {
-                    CompanyName = supplier.CompanyName,
-                    ID = supplier.ID
-                });
+            var suppliers = await ApiService.HttpClient.GetFromJsonAsync<List<GetAllSelectIdAndNameSupplierQueryResponse>>("supplier/GetAllSelectIdAndName");
 
             ViewBag.SupplierList = suppliers;
         }    

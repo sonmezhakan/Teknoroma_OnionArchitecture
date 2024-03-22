@@ -8,6 +8,7 @@ using Teknoroma.Application.Features.Categories.Queries.GetCategoryEarningReport
 using Teknoroma.Application.Features.Categories.Queries.GetCategorySellingReport;
 using Teknoroma.Application.Features.Categories.Queries.GetCategorySupplyReport;
 using Teknoroma.Application.Features.Categories.Queries.GetList;
+using Teknoroma.Application.Features.Categories.Queries.GetListSelectIdAndName;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.Categories.Profiles
@@ -21,6 +22,8 @@ namespace Teknoroma.Application.Features.Categories.Profiles
 
             CreateMap<Category, GetAllCategoryQueryResponse>().ReverseMap();
             CreateMap<Category,GetByIdCategoryQueryResponse>().ReverseMap();
+
+            CreateMap<Category, GetAllSelectIdAndNameCategoryQueryResponse>().ReverseMap();
 
             CreateMap<CreateCategoryViewModel, CreateCategoryCommandRequest>().ReverseMap();
             CreateMap<CategoryViewModel, UpdateCategoryCommandRequest>().ReverseMap();

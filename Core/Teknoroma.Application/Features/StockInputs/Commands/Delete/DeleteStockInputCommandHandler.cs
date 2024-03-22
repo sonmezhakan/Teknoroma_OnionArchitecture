@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Teknoroma.Application.Features.Stocks.Command.Update;
-using Teknoroma.Application.Services.StockInputs;
+using Teknoroma.Application.Services.Repositories;
 
 namespace Teknoroma.Application.Features.StockInputs.Command.Delete
 {
@@ -9,17 +9,17 @@ namespace Teknoroma.Application.Features.StockInputs.Command.Delete
     {
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
-		private readonly IStockInputService _stockInputService;
+		private readonly IStockInputRepository _stockInputRepository;
 
-		public DeleteStockInputCommandHandler(IMapper mapper,IMediator mediator,IStockInputService stockInputService)
+		public DeleteStockInputCommandHandler(IMapper mapper,IMediator mediator,IStockInputRepository stockInputRepository)
         {
             _mapper = mapper;
             _mediator = mediator;
-			_stockInputService = stockInputService;
+			_stockInputRepository = stockInputRepository;
 		}
         public async Task<Unit> Handle(DeleteStockInputCommandRequest request, CancellationToken cancellationToken)
         {
-            var stockInput = await _stockInputService.GetAsync(x => x.ID == request.ID);
+            var stockInput = await _stockInputRepository.GetAsync(x => x.ID == request.ID);
 
             //stock Process
             var stock = stockInput.Branch.stocks.FirstOrDefault(x=>x.BranchId == stockInput.BranchID && x.ProductId == stockInput.ProductID);
@@ -27,7 +27,7 @@ namespace Teknoroma.Application.Features.StockInputs.Command.Delete
 			UpdateStockCommandRequest updatestockCommandRequest = _mapper.Map<UpdateStockCommandRequest>(stock);
 			await _mediator.Send(updatestockCommandRequest);
 
-			await _stockInputService.DeleteAsync(stockInput);
+			await _stockInputRepository.DeleteAsync(stockInput);
 
             return Unit.Value;
         }

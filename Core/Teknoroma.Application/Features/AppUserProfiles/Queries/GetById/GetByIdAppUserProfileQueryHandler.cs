@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Teknoroma.Application.Services.AppUserProfiles;
+using Teknoroma.Application.Services.Repositories;
 using Teknoroma.Domain.Entities;
 
 namespace Teknoroma.Application.Features.AppUserProfiles.Quıeries.GetById
@@ -8,17 +8,17 @@ namespace Teknoroma.Application.Features.AppUserProfiles.Quıeries.GetById
 	public class GetByIdAppUserProfileQueryHandler : IRequestHandler<GetByIdAppUserProfileQueryRequest, GetByIdAppUserProfileQueryResponse>
     {
         private readonly IMapper _mapper;
-		private readonly IAppUserProfileService _appUserProfileService;
+		private readonly IAppUserProfileRepository _appUserProfileRepository;
 
-        public GetByIdAppUserProfileQueryHandler(IMapper mapper,IAppUserProfileService appUserProfileService)
+		public GetByIdAppUserProfileQueryHandler(IMapper mapper,IAppUserProfileRepository appUserProfileRepository)
         {
             _mapper = mapper;
-			_appUserProfileService = appUserProfileService;
-        }
+			_appUserProfileRepository = appUserProfileRepository;
+		}
 
         public async Task<GetByIdAppUserProfileQueryResponse> Handle(GetByIdAppUserProfileQueryRequest request, CancellationToken cancellationToken)
         {
-            AppUserProfile appUserProfile = await _appUserProfileService.GetAsync(x => x.ID == request.ID);
+            AppUserProfile appUserProfile = await _appUserProfileRepository.GetAsync(x => x.ID == request.ID);
 
             GetByIdAppUserProfileQueryResponse appUserProfileQueryResponse = _mapper.Map<GetByIdAppUserProfileQueryResponse>(appUserProfile);
 

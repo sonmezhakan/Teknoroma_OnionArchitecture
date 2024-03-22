@@ -17,22 +17,8 @@ using Teknoroma.Application.Features.Suppliers.Rules;
 using Teknoroma.Application.Pipelines.Transaction;
 using Teknoroma.Application.Pipelines.Validation;
 using Teknoroma.Application.Security.JWTHelpers;
-using Teknoroma.Application.Services.AppUserProfiles;
-using Teknoroma.Application.Services.Branches;
-using Teknoroma.Application.Services.Brands;
-using Teknoroma.Application.Services.Categories;
-using Teknoroma.Application.Services.Customers;
-using Teknoroma.Application.Services.Departments;
 using Teknoroma.Application.Services.EmailServices;
-using Teknoroma.Application.Services.Employees;
-using Teknoroma.Application.Services.ExpenseServices;
-using Teknoroma.Application.Services.OrderDetails;
-using Teknoroma.Application.Services.Orders;
-using Teknoroma.Application.Services.Products;
-using Teknoroma.Application.Services.StockInputs;
-using Teknoroma.Application.Services.Stocks;
-using Teknoroma.Application.Services.Suppliers;
-using Teknoroma.Application.Services.TechnicalProblems;
+using Teknoroma.Application.Services.WebApiServices;
 
 namespace Teknoroma.Persistence.DependencyResolvers
 {
@@ -43,6 +29,10 @@ namespace Teknoroma.Persistence.DependencyResolvers
             ServiceProvider provider = services.BuildServiceProvider();
 
             var configuration = provider.GetService<IConfiguration>();
+
+            //WebApi Service
+            services.AddHttpClient();
+            services.AddScoped<IApiService, ApiService>();
 
             //AutoMapper Profile Service
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -78,23 +68,6 @@ namespace Teknoroma.Persistence.DependencyResolvers
 			services.AddTransient<EmployeeBusinessRules>();
 			services.AddTransient<OrderBusinessRules>();
 			services.AddTransient<OrderDetailBusinessRules>();
-
-			//
-			services.AddScoped<IAppUserProfileService, AppUserProfileManager>();
-			services.AddScoped<IBranchService, BranchManager>();
-			services.AddScoped<IBrandService, BrandManager>();
-			services.AddScoped<ICategoryService, CategoryManager>();
-			services.AddScoped<ICustomerService , CustomerManager>();
-			services.AddScoped<IDepartmentService, DepartmentManager>();
-			services.AddScoped<IEmployeeService, EmployeeManager>();
-			services.AddScoped<IOrderDetailService , OrderDetailManager>();
-			services.AddScoped<IOrderService, OrderManager>();
-			services.AddScoped<IProductService, ProductManager>();
-			services.AddScoped<IStockInputService, StockInputManager>();
-			services.AddScoped<IStockService, StockManager>();
-			services.AddScoped<ISupplierService, SupplierManager>();
-			services.AddScoped<ITechnicalProblemService, TechnicalProblemManager>();
-			services.AddScoped<IExpenseService, ExpenseManager>();
 
             return services;
 		}
